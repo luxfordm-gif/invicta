@@ -1,0 +1,437 @@
+/* ==========================================================================
+   components.css — utility bar, nav, pill buttons, project bands, accordion
+   v3: Kolenda restyle.
+   ========================================================================== */
+
+/* --- Utility bar (STICKY, frosted — centred emergency call-out + number) -- */
+.ubar {
+  position: sticky;
+  top: 0;
+  z-index: 60;               /* above the nav, which sticks below it */
+  background: rgba(8, 24, 46, 0.82);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: var(--on-dark);
+  font-size: 13px;
+}
+.ubar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centred, like the reference */
+  gap: 8px;
+  min-height: var(--ubar-h);
+  text-align: center;
+}
+.ubar__alert { color: var(--on-dark-muted); letter-spacing: 0.01em; }
+.ubar__alert strong { color: var(--on-dark); font-weight: 600; }
+.ubar__msg--short { display: none; }
+.ubar__tel {
+  margin-left: 10px;
+  color: var(--on-dark);
+  font-weight: 700;
+  white-space: nowrap;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.ubar__tel:hover { color: var(--lime); border-bottom-color: currentColor; }
+@media (max-width: 640px) {
+  .ubar__msg--full { display: none; }
+  .ubar__msg--short { display: inline; }
+}
+
+/* --- Sticky nav (full-width bar, below the utility bar) ------------------- */
+.nav {
+  position: sticky;
+  top: var(--ubar-h);
+  z-index: 50;
+  background: rgba(11, 31, 58, 0.70);      /* translucent — the page frosts behind it on scroll */
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transition: background-color 0.3s ease;
+}
+.nav.is-scrolled { background: rgba(11, 31, 58, 0.80); }   /* no divider line — the blur separates it */
+/* 3-column grid → the links are TRULY centred on the page (aligned with the
+   centred utility-bar strapline), not just centred between brand and CTA. */
+.nav__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: 15px;                     /* a touch more presence than the cramped 11px */
+}
+.nav__brand {
+  justify-self: start;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--on-dark);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+/* Full name at the top; collapses to just "Invicta" on scroll. */
+.nav__brand-suffix {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 16em;
+  opacity: 1;
+  vertical-align: bottom;
+  transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.nav.is-scrolled .nav__brand-suffix { max-width: 0; opacity: 0; }
+.nav__links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 40px;                               /* more generous, confident spacing */
+}
+.nav__item { position: relative; }
+.nav__links > li > a {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--on-dark);
+  padding-block: 4px;
+  position: relative;
+}
+.nav__links > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav__links > li > a:hover::after,
+.nav__links > li > a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* caret on items that have a dropdown */
+.nav__caret {
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin-left: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  opacity: 0.6;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav__item.has-menu:hover .nav__caret,
+.nav__item.has-menu:focus-within .nav__caret { transform: translateY(0) rotate(-135deg); opacity: 0.9; }
+
+/* frosted-glass dropdown */
+.nav__menu {
+  position: absolute;
+  top: calc(100% + 17px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  min-width: 300px;
+  padding: 8px;
+  background: rgba(15, 31, 58, 0.985);     /* effectively opaque so bright content behind can't bleed through */
+  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  backdrop-filter: blur(30px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  z-index: 60;
+}
+.nav__menu::before { content: ""; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
+.nav__item.has-menu:hover .nav__menu,
+.nav__item.has-menu:focus-within .nav__menu {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav__menu a { display: block; padding: 10px 14px; border-radius: 10px; transition: background-color 0.18s ease; }
+.nav__menu a:hover { background: rgba(255, 255, 255, 0.08); }
+.nav__menu strong { display: block; font-size: 15px; font-weight: 600; color: var(--on-dark); letter-spacing: -0.01em; }
+.nav__menu span { display: block; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.76); margin-top: 2px; }
+
+/* compound selector so it beats the later .btn-inquiry base rule */
+.btn-inquiry.nav__cta {
+  justify-self: end;
+  padding: 8px 18px;                       /* smaller / less chunky */
+  font-size: 11px;
+  gap: 7px;
+}
+
+.nav__toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; }
+.nav__toggle span,
+.nav__toggle span::before,
+.nav__toggle span::after {
+  content: ""; display: block; width: 24px; height: 1.5px; background: var(--on-dark);
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.nav__toggle span { position: relative; }
+.nav__toggle span::before { position: absolute; top: -7px; }
+.nav__toggle span::after { position: absolute; top: 7px; }
+.nav__toggle[aria-expanded="true"] span { background: transparent; }
+.nav__toggle[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile-only extras (hidden on desktop) */
+.nav__mobile-extra { display: none; }
+.emergency-cta { display: none; }
+
+/* Floating full-width emergency call button — mobile only */
+@media (max-width: 900px) {
+  .emergency-cta {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; left: 20px; right: 20px; bottom: 22px; z-index: 250;
+    padding: 19px 28px;
+    background: var(--accent-emergency); color: var(--on-dark);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    font-family: var(--font-body); font-weight: 600; font-size: 15px; letter-spacing: 0.01em;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.42);
+  }
+  /* get it out of the way when a full-screen surface is open */
+  html.nav-open .emergency-cta,
+  html.enquiry-open .emergency-cta { display: none; }
+}
+
+@media (max-width: 900px) {
+  .ubar { display: none; }          /* emergency lives in the floating button on mobile */
+  .nav { top: 0; }                  /* no utility bar above, so stick to the very top */
+  .nav__inner { display: flex; align-items: center; }
+  .nav__brand { justify-self: auto; }
+  .nav__brand-suffix { max-width: 0; opacity: 0; }   /* mobile: just "Invicta" */
+  .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
+  .nav__toggle { display: inline-flex; order: 3; margin-left: auto; }
+  .nav__links {
+    order: 4; justify-self: auto;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--ground); border-bottom: 1px solid var(--line-dark);
+    padding: var(--space-2) var(--container-pad) var(--space-4);
+    margin: 0; display: none;
+  }
+  .nav__links.is-open { display: flex; max-height: calc(100vh - 120px); overflow-y: auto; }
+  .nav__links > li:not(.nav__mobile-extra) > a { width: 100%; font-size: 18px; padding-block: var(--space-2); border-bottom: 1px solid var(--line-dark); }
+  .nav__links > li > a::after { display: none; }
+  /* dropdowns are COLLAPSED accordions on mobile — tap the parent to expand */
+  .nav__item { position: static; }
+  .nav__caret { display: none; }
+  .nav__links > li.has-menu > a { padding-right: 26px; }
+  .nav__links > li.has-menu > a::after {
+    content: ""; display: block;
+    position: absolute; left: auto; bottom: auto; right: 4px; top: 50%; margin: 0;
+    width: 8px; height: 8px; background: none;
+    border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
+    transform: translateY(-60%) rotate(45deg); transition: transform 0.3s ease; opacity: 0.65;
+  }
+  .nav__links > li.has-menu.is-expanded > a::after { transform: translateY(-40%) rotate(-135deg); }
+  .nav__menu {
+    position: static; transform: none; opacity: 1; visibility: visible; pointer-events: auto;
+    min-width: 0; padding: 0 0 0 var(--space-3);
+    background: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+    border: 0; box-shadow: none; border-radius: 0;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+  }
+  .nav__item.is-expanded .nav__menu { max-height: 480px; padding-bottom: var(--space-2); }
+  /* neutralise the desktop hover/focus dropdown transform on mobile */
+  .nav__item.has-menu:hover .nav__menu,
+  .nav__item.has-menu:focus-within .nav__menu { transform: none; }
+  .nav__menu a { padding: 8px 0; }
+  .nav__menu span { display: none; }
+
+  /* Send Enquiry + emergency number, shown inside the mobile menu only */
+  .nav__mobile-extra { display: block; margin-top: var(--space-3); }
+  .nav__mobile-extra .nav__menu-cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 15px 20px; border-radius: 999px;
+    background: var(--on-dark); color: var(--ground);
+    font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
+    transition: background-color 0.2s ease;
+  }
+  .nav__mobile-extra .nav__menu-cta:hover { background: #F5F0E8; }
+  .nav__mobile-extra .nav__menu-cta .btn-inquiry__arrow { font-size: 14px; }
+  .nav__mobile-extra .nav__menu-tel {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    margin-top: var(--space-3); text-align: center;
+  }
+  .nav__mobile-extra .nav__menu-tel span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--on-dark-muted); }
+  .nav__mobile-extra .nav__menu-tel strong { font-family: var(--font-display); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; color: var(--on-dark); }
+
+  /* clear the fixed emergency button */
+  body { padding-bottom: 84px; }
+}
+
+/* --- Pill "Send Enquiry" button ------------------------------------------- */
+.btn-inquiry {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--on-dark);      /* pure white pill; warms to a slight cream on hover */
+  color: var(--ground);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  border-radius: var(--btn-radius);
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn-inquiry__arrow { font-size: 14px; transition: transform 0.25s ease; }
+.btn-inquiry:hover .btn-inquiry__arrow { transform: translate(2px, -2px); }
+/* Hover: the chalky pill brightens to white — nothing else. */
+.btn-inquiry:hover { background: #F5F0E8; }   /* slight cream */
+.btn-inquiry--lg { font-size: 13px; padding: 18px 30px; }
+/* On light (cream) sections chalky washes out, so the pill stays a solid navy fill
+   and brightens a step on hover. */
+.section--light .btn-inquiry { background: var(--ground); color: var(--on-dark); }
+.section--light .btn-inquiry:hover { background: var(--ground-raise); }
+
+/* Secondary / outlined pill (e.g. "Call …") */
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--on-dark);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  border-radius: var(--btn-radius);
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.btn-line:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.09); }
+.btn-line--lg { font-size: 13px; padding: 18px 30px; }
+
+/* --- Full-bleed project band --------------------------------------------- */
+.band {
+  position: relative;
+  display: block;
+  height: clamp(360px, 46vw, 560px);
+  overflow: hidden;
+  background: var(--ground-deep);
+}
+.band__media { position: absolute; inset: 0; }
+.band__media img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+.band::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(6, 18, 42, 0.44);
+  transition: background-color 0.4s ease;
+}
+.band:hover::after { background: rgba(6, 18, 42, 0.3); }
+.band__bar {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding-top: var(--space-4);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--on-dark);
+}
+.band__title { text-align: center; }
+.band__year { text-align: right; color: var(--on-dark-muted); }
+
+/* --- Placeholder media blocks (imagery TBD) ------------------------------- */
+.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 12px, transparent 12px 24px),
+    var(--ground-deep);
+  border: 1px solid var(--line-dark);
+  color: var(--on-dark-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.ph--light {
+  background:
+    repeating-linear-gradient(135deg, rgba(15,36,23,0.05) 0 12px, transparent 12px 24px),
+    var(--light-warm);
+  border-color: var(--line-light);
+  color: var(--ink-muted);
+}
+
+/* --- Numbered accordion (services) ---------------------------------------- */
+.accordion { margin-top: clamp(40px, 6vw, 88px); }
+.acc { border-top: 1px solid var(--line-light); }
+.acc:last-child { border-bottom: 1px solid var(--line-light); }
+.acc__head {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: clamp(22px, 2.6vw, 38px);
+  cursor: pointer;
+  list-style: none;
+}
+.acc__head::-webkit-details-marker { display: none; }
+.acc__num { font-size: 15px; font-weight: 500; color: var(--ink-muted); align-self: start; padding-top: 0.6em; }
+.acc__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 3vw, 40px); letter-spacing: -0.025em; line-height: 1.05; color: var(--ink); }
+/* + toggle */
+.acc__toggle { position: relative; width: 44px; height: 44px; border: 1px solid var(--line-light); border-radius: 999px; justify-self: end; transition: background-color 0.25s ease, border-color 0.25s ease; }
+.acc__toggle::before, .acc__toggle::after { content: ""; position: absolute; top: 50%; left: 50%; width: 13px; height: 1.5px; background: var(--ink); transform: translate(-50%, -50%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.acc__toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+/* On open, the vertical stroke retracts to the centre → clean + becomes − */
+.acc[open] .acc__toggle::after { transform: translate(-50%, -50%) rotate(90deg) scaleX(0); }
+.acc[open] .acc__toggle { background: var(--ground); border-color: var(--ground); }
+.acc[open] .acc__toggle::before, .acc[open] .acc__toggle::after { background: var(--lime); }
+.acc__head:hover .acc__toggle { border-color: var(--ink); }
+
+/* Hover affordance on CLOSED accordions — signals "clickable". The header nudge
+   is the main cue; behind it a whisper-light wash fades in, tapering to nothing at
+   the left/right edges so there's no harsh rectangle. Real pointers only. */
+.acc__num, .acc__title { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.acc__head { position: relative; isolation: isolate; }
+.acc:not([open]) .acc__head::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(15, 15, 15, 0.022) 9%,
+    rgba(15, 15, 15, 0.022) 91%,
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .acc:not([open]) .acc__head:hover::before { opacity: 1; }
+  .acc:not([open]) .acc__head:hover .acc__num,
+  .acc:not([open]) .acc__head:hover .acc__title { transform: translateX(10px); }
+}
+
+/* nav.js animates the clip's height (measured scrollHeight), so it works for
+   ANY content — image bodies and text-only FAQ answers alike. The clip is
+   padding-free; the body/answer keeps its own padding inside. */
+.acc__clip { overflow: hidden; transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (prefers-reduced-motion: reduce) { .acc__clip { transition: none; } }
+.acc__body {
+  display: grid;
+  gap: var(--space-4);
+  padding-bottom: clamp(32px, 4vw, 64px);
+  padding-left: 56px;
+}
+@media (min-width: 900px) {
+  .acc__body { grid-template-columns: 5fr 6fr; gap: clamp(40px, 5vw, 88px); align-items: start; }
+}
+.acc__media { align-self: stretch; }
+.acc__media img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
+.acc__copy p { font-size: 18px; line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
+.acc__copy .btn-inquiry { margin-top: var(--space-4); }
+@media (max-width: 899px) {
+  .acc__body { padding-left: 0; }
+}

@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Invicta Water Treatment — Design Tokens (v4: architectural NAVY)
+   Reference shifts from Kolenda (green glow) to navy-led editorial —
+   Chipperfield / Pawson / Vitsœ register. The H1 is quiet WHITE; the chalky
+   blue is a DETAIL accent only. Zero fluff — confidence in what's absent.
+   Token names kept from v3 for parity; only values + colour ROLES change.
+   ========================================================================== */
+:root {
+  /* --- Grounds (architectural navy) --- */
+  --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
+  --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
+  --ground-raise: #14294A;        /* raised navy surface */
+  --light: #F6F3EA;              /* creamy white content surface */
+  --light-warm: #EFEBDF;         /* warmer cream alt */
+
+  /* --- Chalky detail accent (NOT a hero colour; used small) --- */
+  --lime: #B8C8D4;               /* chalky pale blue-grey — eyebrows, hairlines, italics, underlines */
+  --accent-emergency: #2C4A73;   /* ONLY the emergency phone number chip — nowhere else */
+
+  /* --- Text on dark ground --- */
+  --on-dark: #FFFFFF;
+  --on-dark-muted: rgba(255, 255, 255, 0.60);
+  --line-dark: rgba(255, 255, 255, 0.16);
+
+  /* --- Text on light ground --- */
+  --ink: #0F0F0F;                /* near-black text on white */
+  --ink-muted: rgba(15, 15, 15, 0.58);
+  --line-light: rgba(15, 15, 15, 0.13);
+
+  /* --- Type --- */
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --font-display: 'Figtree', system-ui, sans-serif;
+  --font-emotional: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  /* --- Spacing scale --- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 128px;
+
+  /* --- Container --- */
+  --container-max: 1600px;
+  --container-pad: 40px;
+
+  /* Buttons — fully rounded pills */
+  --btn-radius: 999px;
+
+  /* --- Sticky utility bar height (nav offsets below it) --- */
+  --ubar-h: 40px;
+}
+
+@media (max-width: 900px) {
+  :root { --container-pad: 24px; }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Invicta Water Treatment",
+  "tel": "+441293781077",
+  "phone": "01293 781077",
+  "email": "enquiries@invictawatertreatment.co.uk",
+  "emergencyNote": "24-hour emergency line",
+  "address": { "street": "89 Castle Drive", "locality": "Horley", "region": "Surrey", "postcode": "RH6 9DD" },
+  "services": [
+    { "title": "Private Water Supplies", "href": "/services/private-water-supplies/", "desc": "Bespoke borehole systems, end to end." },
+    { "title": "Chlorination & New Mains", "href": "/services/chlorination/", "desc": "Disinfection of new and existing mains." },
+    { "title": "Design & Install", "href": "/services/design-install/", "desc": "Treatment specified and installed in-house." },
+    { "title": "Servicing & Maintenance", "href": "/services/servicing/", "desc": "Scheduled care and 24-hour callout." },
+    { "title": "Water Hygiene", "href": "/services/water-hygiene/", "desc": "Legionella control and compliance." }
+  ],
+  "sectors": [
+    { "title": "Pharmaceutical", "href": "/sectors/pharmaceutical/", "desc": "Purified process water and compliance." },
+    { "title": "Food & Beverage", "href": "/sectors/food-and-beverage/", "desc": "Process water treatment and hygiene." },
+    { "title": "Leisure Industry", "href": "/sectors/leisure/", "desc": "Pools, spas and hospitality systems." },
+    { "title": "Education Sector", "href": "/sectors/education/", "desc": "Safe, compliant supplies for campuses." },
+    { "title": "Manufacturing", "href": "/sectors/manufacturing/", "desc": "Process and cooling water treatment." },
+    { "title": "Construction", "href": "/sectors/construction/", "desc": "Chlorination and new mains." },
+    { "title": "Facilities Management", "href": "/sectors/facilities-management/", "desc": "Water hygiene and Legionella control." }
+  ]
+}

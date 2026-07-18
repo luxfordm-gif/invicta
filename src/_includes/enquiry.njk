@@ -1,0 +1,74 @@
+  <!-- ===================== ENQUIRY DRAWER ===================== -->
+  <div class="enquiry" data-enquiry hidden>
+    <div class="enquiry__backdrop" data-enquiry-close></div>
+    <div class="enquiry__panel" role="dialog" aria-modal="true" aria-labelledby="enquiry-title">
+      <button class="enquiry__close" type="button" data-enquiry-close aria-label="Close enquiry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="enquiry__scroll">
+        <div class="enquiry__inner">
+          <h2 class="enquiry__title" id="enquiry-title">Let's talk about your <span class="em">source.</span></h2>
+          <div class="rule"></div>
+          <p class="enquiry__lead">Tell us about your property and what you need. We'll come back to you personally, usually within a working day.</p>
+
+          <div class="enquiry__tabs" role="tablist" aria-label="Enquiry method">
+            <button class="enquiry__tab is-active" type="button" data-enquiry-tab="form" role="tab" aria-selected="true">Enquiry form</button>
+            <button class="enquiry__tab" type="button" data-enquiry-tab="contact" role="tab" aria-selected="false">Contact details</button>
+          </div>
+
+          <!-- Enquiry form -->
+          <form class="enquiry__form" data-enquiry-view="form" novalidate>
+            <div class="enquiry__group">
+              <h3 class="enquiry__legend">1. Your details</h3>
+              <div class="enquiry__fields">
+                <label class="field"><input type="text" name="name" placeholder="Full name" autocomplete="name"></label>
+                <label class="field"><input type="email" name="email" placeholder="Email address" autocomplete="email"></label>
+                <label class="field"><input type="tel" name="phone" placeholder="Phone number" autocomplete="tel"></label>
+                <label class="field"><input type="text" name="location" placeholder="Town or postcode" autocomplete="address-level2"></label>
+              </div>
+            </div>
+
+            <div class="enquiry__group">
+              <h3 class="enquiry__legend">2. What can we help with?</h3>
+              <div class="enquiry__cards">
+                {% for s in site.services %}
+                <label class="ecard">
+                  <input type="checkbox" name="interest" value="{{ s.title }}">
+                  <span class="ecard__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5 11-11"/></svg></span>
+                  <span class="ecard__title">{{ s.title }}</span>
+                </label>
+                {% endfor %}
+                <label class="ecard">
+                  <input type="checkbox" name="interest" value="Not sure yet">
+                  <span class="ecard__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5 11-11"/></svg></span>
+                  <span class="ecard__title">Not sure yet</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="enquiry__group">
+              <h3 class="enquiry__legend">3. Anything else?</h3>
+              <label class="field field--full"><textarea name="message" placeholder="Tell us a little about your supply or project, existing system, new build, a problem you're having…"></textarea></label>
+            </div>
+
+            <div class="enquiry__submit-row">
+              <label class="enquiry__consent">
+                <input type="checkbox" name="consent" required>
+                <span>I agree to Invicta contacting me about this enquiry. Your details are never shared or used for anything else.</span>
+              </label>
+              <button class="btn-inquiry btn-inquiry--lg" type="submit">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true">→</span></button>
+            </div>
+          </form>
+
+          <!-- Contact details -->
+          <div class="enquiry__contact" data-enquiry-view="contact" hidden>
+            <a class="enquiry__contact-row" href="tel:{{ site.tel }}">
+              <span class="enquiry__contact-label">Call</span>
+              <span class="enquiry__contact-value">{{ site.phone }}</span>
+              <span class="enquiry__contact-note">24-hour emergency line for existing clients</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

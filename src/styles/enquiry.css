@@ -1,0 +1,247 @@
+/* ==========================================================================
+   enquiry.css — slide-out enquiry drawer (opens from any "Send Enquiry" /
+   "Arrange a site visit" trigger). Navy panel, chalky accent, tick-to-select
+   service cards, plus a Contact-details tab.
+   ========================================================================== */
+
+.enquiry { position: fixed; inset: 0; z-index: 300; }
+.enquiry[hidden] { display: none; }
+
+.enquiry__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(4, 10, 22, 0.62);          /* darkened, but light enough for the blur to read */
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.enquiry.is-open .enquiry__backdrop { opacity: 1; }
+
+.enquiry__panel {
+  position: absolute; top: 0; right: 0;
+  height: 100%;
+  width: min(1180px, 90vw);
+  background: var(--ground-deep);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.22);   /* subtle depth, well down from the original */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;                 /* close stays pinned; inner scrolls */
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.enquiry.is-open .enquiry__panel { transform: translateX(0); }
+@media (prefers-reduced-motion: reduce) {
+  .enquiry__panel, .enquiry__backdrop { transition: none; }
+}
+
+.enquiry__close {
+  position: absolute;
+  top: clamp(22px, 3vw, 40px);
+  right: clamp(22px, 3vw, 40px);
+  z-index: 3;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
+  color: var(--on-dark);
+  background: var(--ground-deep);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.enquiry__close:hover { border-color: var(--on-dark); background: var(--ground-raise); }
+.enquiry__close svg { width: 20px; height: 20px; }
+
+.enquiry__scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable both-edges; }
+.enquiry__inner { padding: clamp(32px, 5vw, 80px); }
+
+/* Views are mutually exclusive — [hidden] must win over the display rules below. */
+.enquiry [data-enquiry-view][hidden] { display: none; }
+
+.enquiry__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 78px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--on-dark);
+  max-width: 12ch;
+}
+.enquiry__title .em { font-style: italic; }
+.enquiry__inner .rule { margin-top: clamp(24px, 3vw, 40px); }
+.enquiry__lead {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+  max-width: 58ch;
+}
+
+/* --- Form / Contact toggle --- */
+.enquiry__tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin: clamp(28px, 4vw, 48px) 0 clamp(24px, 3vw, 40px);
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+.enquiry__tab {
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+.enquiry__tab:hover { color: var(--on-dark); }
+.enquiry__tab.is-active { background: var(--lime); color: var(--ground); }
+
+.enquiry__group + .enquiry__group { margin-top: clamp(32px, 4vw, 52px); }
+.enquiry__legend {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+/* --- Fields --- */
+.enquiry__fields { display: grid; gap: 14px; }
+@media (min-width: 620px) {
+  .enquiry__fields { grid-template-columns: 1fr 1fr; }
+  .field--full { grid-column: 1 / -1; }
+}
+.field input, .field textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--line-dark);
+  color: var(--on-dark);
+  font-family: var(--font-body);
+  font-size: 16px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.field input { border-radius: 999px; padding: 20px 28px; }
+.field textarea { border-radius: 26px; padding: 20px 28px; min-height: 150px; resize: vertical; line-height: 1.5; }
+.field input::placeholder, .field textarea::placeholder { color: var(--on-dark-muted); }
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--lime);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* --- Tick-to-select service cards --- */
+.enquiry__cards { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 760px) { .enquiry__cards { grid-template-columns: repeat(3, 1fr); } }
+.ecard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-height: 132px;
+  padding: 20px 22px 22px;
+  border: 1px solid var(--line-dark);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.ecard:hover { border-color: rgba(255, 255, 255, 0.32); }
+.ecard input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.ecard__check {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: transparent;
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+.ecard__check svg { width: 20px; height: 20px; }
+.ecard__title {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+}
+.ecard:has(input:checked) { border-color: var(--lime); background: rgba(184, 200, 212, 0.07); }
+.ecard:has(input:checked) .ecard__check { background: var(--lime); color: var(--ground); }
+.ecard:has(input:focus-visible) { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+
+/* --- Footer: consent + submit --- */
+.enquiry__submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.enquiry__consent {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 46ch;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+  cursor: pointer;
+}
+.enquiry__consent input {
+  flex: none;
+  margin-top: 2px;
+  width: 20px; height: 20px;
+  accent-color: var(--lime);
+}
+.enquiry__submit-row .btn-inquiry { flex: none; }
+
+/* --- Contact-details view --- */
+.enquiry__contact { display: grid; gap: 4px; }
+.enquiry__contact-row {
+  display: block;
+  padding: clamp(22px, 3vw, 34px) 0;
+  border-top: 1px solid var(--line-dark);
+}
+.enquiry__contact-row:last-child { border-bottom: 1px solid var(--line-dark); }
+.enquiry__contact-label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 10px;
+}
+.enquiry__contact-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  line-height: 1.1;
+}
+a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
+.enquiry__contact-note { display: block; margin-top: 8px; font-size: 15px; color: var(--on-dark-muted); }
+
+/* --- Success state --- */
+.enquiry__success { padding: clamp(24px, 4vw, 48px) 0; }
+.enquiry__success h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 46px);
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+}
+.enquiry__success p { margin-top: 16px; font-size: 18px; line-height: 1.55; color: var(--on-dark-muted); max-width: 46ch; }
+
+/* Lock background scroll while open. */
+/* Scroll-lock: pin the body (JS sets top: -scrollY). The page stays exactly where
+   it was and the fixed drawer still covers the viewport (verified). */
+html.enquiry-open body { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
+/* The sticky header sits under the drawer; hide it so it can't be seen shifting. */
+html.enquiry-open .ubar, html.enquiry-open .nav { visibility: hidden; }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js');</script><!-- enables reveal-on-scroll without a flash of hidden content -->
+
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ ogTitle or title }}">
+  <meta property="og:description" content="{{ description }}">
+  {% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+
+  {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0B1F3A">
+
+  <!-- Fonts: Figtree (sans) + Playfair Display italic (emotional accent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/sections.css">
+  {% for s in extraStyles %}<link rel="stylesheet" href="/styles/{{ s }}.css">
+  {% endfor %}<link rel="stylesheet" href="/styles/enquiry.css">
+  <link rel="stylesheet" href="/styles/motion.css">
+  <link rel="stylesheet" href="/styles/prefs.css"><!-- build-time preview panel; remove before launch -->
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{ site.name }}",
+    "telephone": "{{ site.tel }}",
+    "email": "{{ site.email }}",
+    "areaServed": ["Surrey", "Sussex", "South East England"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site.address.street }}",
+      "addressLocality": "{{ site.address.locality }}",
+      "addressRegion": "{{ site.address.region }}",
+      "postalCode": "{{ site.address.postcode }}",
+      "addressCountry": "GB"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  {% include "ubar.njk" %}
+  {% include "nav.njk" %}
+
+  <main id="main">
+{{ content | safe }}
+
+{% include "footer.njk" %}
+  </main>
+
+{% include "emergency-cta.njk" %}
+{% include "enquiry.njk" %}
+{% include "prefs.njk" %}
+
+  <script src="/scripts/nav.js" defer></script>
+  <script src="/scripts/enquiry.js" defer></script>
+  <script src="/scripts/motion.js" defer></script>
+  <script src="/scripts/prefs.js" defer></script><!-- build-time preview panel; remove before launch -->
+</body>
+</html>

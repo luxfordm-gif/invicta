@@ -1,0 +1,260 @@
+/* ==========================================================================
+   sections.css — page-specific section layouts (v3: Kolenda restyle)
+   ========================================================================== */
+
+/* --- Hero ----------------------------------------------------------------- */
+.hero { padding-top: clamp(72px, 11vw, 168px); padding-bottom: clamp(64px, 9vw, 140px); }
+.hero__inner { display: flex; flex-direction: column; align-items: center; }
+.hero__eyebrow {
+  font-weight: 600; font-size: clamp(15px, 1.3vw, 19px); text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--lime); text-align: center;
+}
+.hero__title {
+  margin-top: clamp(14px, 1.8vw, 24px);
+  text-align: center;
+  color: var(--on-dark);          /* quiet white — the chalky blue is only on the italic accent */
+}
+.hero__title .em { display: inline-block; }
+.hero__scroll {
+  margin-top: clamp(28px, 4vw, 56px);
+  display: flex; justify-content: center;
+  color: var(--on-dark-muted);
+}
+.hero__scroll-arrow {
+  width: clamp(22px, 2.2vw, 30px); height: clamp(22px, 2.2vw, 30px);
+  animation: hero-scroll-bob 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes hero-scroll-bob {
+  0%, 100% { transform: translateY(-3px); opacity: 0.45; }
+  50%      { transform: translateY(6px);  opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-arrow { animation: none; opacity: 0.7; transform: none; }
+}
+.hero__lead {
+  margin-top: clamp(40px, 6vw, 96px);
+  margin-inline: auto;
+  max-width: 780px;
+}
+.hero__lead-lg {
+  font-size: clamp(23px, 2.9vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  max-width: none;
+}
+.hero__lead-sm {
+  margin-top: var(--space-4);
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+  max-width: none;
+}
+
+/* --- Statement (shared big H2 for services / positioning / clients) ------- */
+.statement {
+  margin-top: clamp(48px, 7vw, 110px);
+  max-width: 22ch;
+}
+.services .statement, .positioning .statement { max-width: 30ch; }
+
+/* --- Positioning / sectors (dark) ----------------------------------------- */
+.positioning__intro {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: clamp(48px, 6vw, 96px);
+}
+@media (min-width: 900px) {
+  .positioning__intro { grid-template-columns: 1fr 1fr; gap: clamp(48px, 6vw, 120px); }
+}
+.positioning__lead { font-size: clamp(20px, 2vw, 28px); line-height: 1.3; letter-spacing: -0.01em; color: var(--on-dark); }
+.positioning__note { font-size: 17px; line-height: 1.55; color: var(--on-dark-muted); }
+
+.sectors {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: clamp(56px, 7vw, 112px);
+}
+@media (min-width: 700px) { .sectors { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .sectors { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); } }
+.sector { display: flex; flex-direction: column; border-top: 1px solid var(--line-dark); padding-top: var(--space-3); }
+.sector h3 { font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.02em; }
+.sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); }
+.sector__media { margin-top: var(--space-4); }
+.sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); }
+
+/* --- Stats (light) -------------------------------------------------------- */
+.stats__grid { display: grid; gap: var(--space-5); }
+@media (min-width: 800px) { .stats__grid { grid-template-columns: repeat(3, 1fr); gap: 0; } }
+.stat { display: flex; flex-direction: column; padding: 0 clamp(0px, 3vw, 48px); }
+@media (min-width: 800px) { .stat + .stat { border-left: 1px solid var(--line-light); } .stat:first-child { padding-left: 0; } }
+.stat__num { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
+.stat__label { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; margin-top: var(--space-2); max-width: 12ch; min-height: 2.3em; }
+/* margin-top:auto pushes the figure to the bottom of each equal-height cell, so
+   all three big figures sit on a shared baseline regardless of label length.
+   padding-top guarantees a minimum gap when a label is tall / stacks single-column. */
+.stat__figure { font-family: var(--font-display); font-weight: 400; font-size: clamp(72px, 9vw, 140px); line-height: 0.9; letter-spacing: -0.04em; color: var(--ink); margin-top: auto; padding-top: clamp(var(--space-5), 8vw, var(--space-8)); }
+
+/* --- Clients / trust (dark) ----------------------------------------------- */
+.clients__grid {
+  display: grid;
+  gap: 1px;
+  margin-top: clamp(56px, 7vw, 112px);
+  background: var(--line-dark);
+  border: 1px solid var(--line-dark);
+}
+@media (min-width: 700px) { .clients__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .clients__grid { grid-template-columns: repeat(4, 1fr); } }
+.client { display: flex; align-items: center; justify-content: center; background: var(--ground); padding: clamp(48px, 6vw, 88px) var(--space-3); }
+.client span { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 2.4vw, 36px); letter-spacing: -0.02em; color: var(--on-dark); }
+/* Clients on a light (cream) section: cream tiles, hairline gaps, dark names. */
+.section--light .clients__grid { background: var(--line-light); border-color: var(--line-light); }
+.section--light .client { background: var(--light); }
+.section--light .client span { color: var(--ink); }
+
+/* --- FAQ (dark) ----------------------------------------------------------- */
+.faq__grid { display: grid; gap: var(--space-6); }
+@media (min-width: 1024px) {
+  .faq__grid { grid-template-columns: 4fr 6fr; gap: clamp(48px, 6vw, 120px); }
+  .faq__aside { position: sticky; top: calc(var(--ubar-h) + 88px); align-self: start; }
+}
+.faq__aside .eyebrow { display: block; }
+.faq__title { margin-top: var(--space-3); color: var(--on-dark); }
+.faq__intro { margin-top: var(--space-4); font-size: 17px; line-height: 1.55; color: var(--on-dark-muted); max-width: 40ch; }
+
+.faq__item { border-top: 1px solid var(--line-dark); }
+.faq__item:last-child { border-bottom: 1px solid var(--line-dark); }
+.faq__q {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding-block: clamp(20px, 2.4vw, 30px);
+  cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(18px, 1.5vw, 23px); letter-spacing: -0.01em;
+  color: var(--on-dark);
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: var(--lime); }
+.faq__icon {
+  flex: none; width: 18px; height: 18px; color: var(--on-dark-muted);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq__item[open] .faq__icon { transform: rotate(45deg); color: var(--lime); }
+.faq__a {
+  font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); max-width: 64ch;
+  padding-bottom: clamp(20px, 2.4vw, 30px);
+}
+
+/* --- Footer / CTA (dark) -------------------------------------------------- */
+.footer { background: var(--ground); padding-top: clamp(72px, 9vw, 150px); overflow: hidden; }
+.footer__cta { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+.footer__cta-text { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); max-width: 760px; }
+.footer__cta .eyebrow { display: block; }
+.footer__cta-line {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+  color: var(--on-dark);
+  max-width: 20ch;
+}
+.footer__cta-body { font-size: 18px; line-height: 1.55; color: var(--on-dark-muted); max-width: 54ch; }
+.footer__cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+/* Buttons move to the right and baseline with the paragraph on wider screens. */
+@media (min-width: 800px) {
+  .footer__cta {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .footer__cta-actions { flex-shrink: 0; }
+}
+.footer__cta + .rule { margin-top: var(--space-5); }
+.footer__grid { display: grid; gap: var(--space-6); margin-top: clamp(56px, 7vw, 104px); }
+@media (min-width: 800px) { .footer__grid { grid-template-columns: 1fr auto; align-items: start; } }
+.footer__email { display: block; font-size: clamp(24px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.1; }
+.footer__email:hover { color: var(--lime); }
+.footer__phone { display: block; font-size: clamp(24px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.15; margin-top: var(--space-1); }
+.footer__phone:hover { color: var(--lime); }
+.footer__tagline { font-size: 16px; line-height: 1.55; color: var(--on-dark-muted); max-width: 42ch; margin-top: var(--space-4); }
+.footer__addr { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-4); }
+.footer__nav { display: flex; flex-direction: column; gap: var(--space-1); text-align: left; }
+@media (min-width: 800px) { .footer__nav { text-align: right; } }
+.footer__nav a { font-size: 18px; color: var(--on-dark); }
+.footer__nav a:hover { color: var(--lime); }
+.footer__meta {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2);
+  margin-top: clamp(48px, 6vw, 88px);
+  font-size: 13px; color: var(--on-dark-muted);
+}
+.footer__wordmark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(96px, 27vw, 460px);
+  line-height: 0.78;
+  letter-spacing: -0.04em;
+  color: var(--ground-raise);      /* tone-on-tone — a quiet architectural whisper, not a shout */
+  text-align: center;
+  margin-top: clamp(24px, 4vw, 56px);
+  white-space: nowrap;
+}
+
+/* --- Footer B: oversized wordmark cropped at the baseline, legal row under - */
+.footer--b { padding-bottom: 0; }
+/* Aligned to the same container as the rest of the footer: the wordmark's LEFT
+   edge sits on the content margin (with the email / © / address), and it's
+   clipped on the RIGHT at the container edge — cut off on both the right + bottom. */
+.footer--b .footer__mark {
+  overflow: hidden;
+  margin-top: clamp(40px, 6vw, 96px);
+  margin-inline: auto;
+  width: calc(100% - 2 * var(--container-pad));           /* = the content column */
+  max-width: calc(var(--container-max) - 2 * var(--container-pad));
+  line-height: 1;
+}
+.footer--b .footer__mark span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;                /* a tad bolder than Footer A */
+  /* Sized so "Invicta" fills the content column (measured Figtree-700 width ratio
+     ≈ 2.80), so the whole word shows with both edges just inside the margins. */
+  font-size: min(calc((100vw - 2 * var(--container-pad)) * 0.352), 535px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  text-align: left;                /* left edge on the content margin */
+  margin-bottom: -0.30em;          /* crops the bottom of the letters */
+}
+.footer--b .footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: clamp(18px, 2.6vw, 30px);
+  border-top: 1px solid var(--line-dark);
+}
+.footer__copy { font-size: 13px; color: var(--on-dark-muted); }
+.footer__copy a { color: var(--on-dark-muted); border-bottom: 1px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; }
+.footer__copy a:hover { color: var(--lime); border-bottom-color: currentColor; }
+/* Square stroked icon button — up arrow only. */
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  color: var(--on-dark);
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;              /* stays a square stroked icon button */
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.footer__top:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.04); }
+.footer__top svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+.footer__top:hover svg { transform: translateY(-2px); }
+@media (max-width: 600px) {
+  .footer--b .footer__legal { justify-content: center; text-align: center; }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "invicta-water-treatment",
+  "version": "0.1.0",
+  "description": "Invicta Water Treatment — v4 site (Eleventy)",
+  "private": true,
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
