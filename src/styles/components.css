@@ -188,7 +188,7 @@
     display: flex; justify-content: center;
     position: fixed; left: 0; right: 0; margin-inline: auto; z-index: 250;
     width: max-content; max-width: min(calc(100vw - 32px), 360px);
-    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(22px + env(safe-area-inset-bottom, 0px));
     animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
     transition:
       opacity 0.45s ease,
@@ -198,15 +198,15 @@
   /* Soft blur + fade behind the button so it pops over whatever it floats on.
      Anchored to the viewport bottom; masked so the blur tapers upward. */
   .emergency-dock::before {
-    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 200px;
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 130px;
     z-index: -1; pointer-events: none;
     background: linear-gradient(to top,
-      rgba(6, 16, 34, 0.46) 0%,
-      rgba(6, 16, 34, 0.26) 34%,
+      rgba(6, 16, 34, 0.32) 0%,
+      rgba(6, 16, 34, 0.16) 38%,
       rgba(6, 16, 34, 0) 100%);
-    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
-    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 42%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 0%, #000 42%, transparent 100%);
+    -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
   }
   .emergency-cta {
     display: inline-flex; align-items: center; justify-content: center;
