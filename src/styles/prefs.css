@@ -103,6 +103,6 @@
 
 /* Desktop-only build tool — hide the panel on mobile so it never overlaps the
    floating emergency button. (The whole prefs layer is removed before launch.) */
-@media (max-width: 900px) {
+@media (max-width: 899.98px) {
   .prefs, .prefs-backdrop, .prefs-mobile { display: none !important; }
 }

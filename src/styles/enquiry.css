@@ -110,7 +110,7 @@
 
 /* --- Fields --- */
 .enquiry__fields { display: grid; gap: 14px; }
-@media (min-width: 620px) {
+@media (min-width: 600px) {
   .enquiry__fields { grid-template-columns: 1fr 1fr; }
   .field--full { grid-column: 1 / -1; }
 }
@@ -134,7 +134,7 @@
 
 /* --- Tick-to-select service cards --- */
 .enquiry__cards { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 760px) { .enquiry__cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 800px) { .enquiry__cards { grid-template-columns: repeat(3, 1fr); } }
 .ecard {
   position: relative;
   display: flex;
@@ -243,5 +243,3 @@ a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
 /* Scroll-lock: pin the body (JS sets top: -scrollY). The page stays exactly where
    it was and the fixed drawer still covers the viewport (verified). */
 html.enquiry-open body { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
-/* The sticky header sits under the drawer; hide it so it can't be seen shifting. */
-html.enquiry-open .ubar, html.enquiry-open .nav { visibility: hidden; }

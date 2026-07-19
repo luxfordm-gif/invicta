@@ -76,7 +76,7 @@ p { max-width: 68ch; }
   padding-inline: var(--container-pad);
 }
 
-.section { padding-block: clamp(72px, 9vw, 150px); }
+.section { padding-block: var(--section-y); }
 
 /* --- Section colour modes ------------------------------------------------- */
 /* Dark is the default (matches body). Light inverts for the alternating rhythm. */
@@ -89,7 +89,7 @@ p { max-width: 68ch; }
 .section--light :focus-visible { outline-color: var(--ink); }
 /* Two adjacent light sections read as ONE cream block — collapse the boundary gap. */
 .section--light + .section--light { padding-top: 0; }
-.section--light:has(+ .section--light) { padding-bottom: clamp(40px, 5vw, 72px); }
+.section--light:has(+ .section--light) { padding-bottom: var(--section-y-tight); }
 
 /* On dark, the emotional accent glows in lime. */
 .em { color: var(--lime); }

@@ -32,7 +32,7 @@
   --font-display: 'Figtree', system-ui, sans-serif;
   --font-emotional: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
-  /* --- Spacing scale --- */
+  /* --- Spacing scale (fixed steps, for gaps/padding between elements) --- */
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;
@@ -41,6 +41,17 @@
   --space-6: 64px;
   --space-7: 96px;
   --space-8: 128px;
+
+  /* --- Section rhythm (fluid vertical padding for full-width sections) ------
+     Every section uses one of these so the page keeps a single, scalable
+     vertical cadence instead of a different clamp() per section. */
+  --section-y: clamp(72px, 9vw, 150px);        /* default section block padding */
+  --section-y-tight: clamp(40px, 5vw, 72px);   /* collapsed gap between two light sections */
+
+  /* --- Flow gaps (fluid space from a section's intro/heading to its content) */
+  --flow-lg: clamp(56px, 7vw, 112px);          /* intro -> primary grid */
+  --flow-md: clamp(40px, 6vw, 90px);           /* secondary blocks / accordions */
+  --flow-sm: clamp(24px, 4vw, 56px);           /* small decorative gaps */
 
   /* --- Container --- */
   --container-max: 1600px;
@@ -53,6 +64,17 @@
   --ubar-h: 40px;
 }
 
-@media (max-width: 900px) {
+/* ==========================================================================
+   Canonical breakpoints — keep every media query on ONE of these values.
+   CSS can't read custom properties inside @media, so these live as fixed
+   numbers; treat this list as the source of truth when adding queries.
+     sm   600px   phone landscape / small
+     md   800px   tablet portrait — columns begin
+     lg   900px   nav switches to desktop; major layout shift
+     xl  1100px   wide desktop — 4-col grids + editorial 2-col splits
+   Convention: min-width for "-up"; max-width:(bp - 0.02px) for "-down"
+   so a min/max pair at the same breakpoint never both match at exactly bp.
+   ========================================================================== */
+@media (max-width: 899.98px) {
   :root { --container-pad: 24px; }
 }

@@ -53,7 +53,7 @@
 
 /* --- Statement (shared big H2 for services / positioning / clients) ------- */
 .statement {
-  margin-top: clamp(48px, 7vw, 110px);
+  margin-top: var(--flow-lg);
   max-width: 22ch;
 }
 .services .statement, .positioning .statement { max-width: 30ch; }
@@ -62,7 +62,7 @@
 .positioning__intro {
   display: grid;
   gap: var(--space-5);
-  margin-top: clamp(48px, 6vw, 96px);
+  margin-top: var(--flow-md);
 }
 @media (min-width: 900px) {
   .positioning__intro { grid-template-columns: 1fr 1fr; gap: clamp(48px, 6vw, 120px); }
@@ -73,9 +73,9 @@
 .sectors {
   display: grid;
   gap: var(--space-5);
-  margin-top: clamp(56px, 7vw, 112px);
+  margin-top: var(--flow-lg);
 }
-@media (min-width: 700px) { .sectors { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 600px) { .sectors { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .sectors { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); } }
 .sector { display: flex; flex-direction: column; border-top: 1px solid var(--line-dark); padding-top: var(--space-3); }
 .sector h3 { font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.02em; }
@@ -97,7 +97,7 @@
 /* Mobile: single column, so drop the equal-height baseline machinery and stack
    the stats compactly with a hairline between each — inset to the content gutter,
    never bleeding to the screen edge. */
-@media (max-width: 799px) {
+@media (max-width: 799.98px) {
   .stats.section { padding-block: var(--space-6); }
   .stats__grid { gap: 0; }
   .stat { padding-inline: 0; }
@@ -110,11 +110,11 @@
 .clients__grid {
   display: grid;
   gap: 1px;
-  margin-top: clamp(56px, 7vw, 112px);
+  margin-top: var(--flow-lg);
   background: var(--line-dark);
   border: 1px solid var(--line-dark);
 }
-@media (min-width: 700px) { .clients__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 600px) { .clients__grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .clients__grid { grid-template-columns: repeat(4, 1fr); } }
 .client { display: flex; align-items: center; justify-content: center; background: var(--ground); padding: clamp(48px, 6vw, 88px) var(--space-3); }
 .client span { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 2.4vw, 36px); letter-spacing: -0.02em; color: var(--on-dark); }
@@ -125,7 +125,7 @@
 
 /* --- FAQ (dark) ----------------------------------------------------------- */
 .faq__grid { display: grid; gap: var(--space-6); }
-@media (min-width: 1024px) {
+@media (min-width: 1100px) {
   .faq__grid { grid-template-columns: 4fr 6fr; gap: clamp(48px, 6vw, 120px); }
   .faq__aside { position: sticky; top: calc(var(--ubar-h) + 88px); align-self: start; }
 }
@@ -182,7 +182,7 @@
   .footer__cta-actions { flex-shrink: 0; }
 }
 .footer__cta + .rule { margin-top: var(--space-5); }
-.footer__grid { display: grid; gap: var(--space-6); margin-top: clamp(56px, 7vw, 104px); }
+.footer__grid { display: grid; gap: var(--space-6); margin-top: var(--flow-lg); }
 @media (min-width: 800px) { .footer__grid { grid-template-columns: 1fr auto; align-items: start; } }
 .footer__email { display: block; font-size: clamp(24px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.1; }
 .footer__email:hover { color: var(--lime); }
@@ -196,7 +196,7 @@
 .footer__nav a:hover { color: var(--lime); }
 .footer__meta {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2);
-  margin-top: clamp(48px, 6vw, 88px);
+  margin-top: var(--flow-md);
   font-size: 13px; color: var(--on-dark-muted);
 }
 .footer__wordmark {
@@ -266,7 +266,7 @@
 .footer__top:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.04); }
 .footer__top svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
 .footer__top:hover svg { transform: translateY(-2px); }
-@media (max-width: 600px) {
+@media (max-width: 599.98px) {
   .footer--b .footer__legal { justify-content: center; text-align: center; }
   /* Mobile: let the wordmark grow well past the content column so it reads as a
      bold, deliberately cropped watermark rather than a word that merely fits. */
