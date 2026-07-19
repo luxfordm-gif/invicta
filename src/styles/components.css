@@ -188,7 +188,7 @@
     display: flex; justify-content: center;
     position: fixed; left: 0; right: 0; margin-inline: auto; z-index: 250;
     width: max-content; max-width: min(calc(100vw - 32px), 360px);
-    bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(26px + env(safe-area-inset-bottom, 0px));
     animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
     transition:
       opacity 0.45s ease,
