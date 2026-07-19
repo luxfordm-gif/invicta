@@ -21,12 +21,13 @@
       root.classList.toggle("nav-open", !open);
     });
 
-    // Mobile: tapping a has-menu parent toggles its submenu instead of navigating.
+    // The dropdown labels ("Services", "Sectors") aren't pages — they're just the
+    // opener for their menu. Never navigate: on desktop the menu reveals on
+    // hover/focus, on mobile we toggle the accordion.
     [].forEach.call(links.querySelectorAll(".nav__item.has-menu > a"), function (parent) {
       parent.addEventListener("click", function (e) {
-        if (!mq.matches) return;
         e.preventDefault();
-        parent.parentNode.classList.toggle("is-expanded");
+        if (mq.matches) parent.parentNode.classList.toggle("is-expanded");
       });
     });
 

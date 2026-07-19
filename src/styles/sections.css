@@ -94,6 +94,17 @@
    all three big figures sit on a shared baseline regardless of label length.
    padding-top guarantees a minimum gap when a label is tall / stacks single-column. */
 .stat__figure { font-family: var(--font-display); font-weight: 400; font-size: clamp(72px, 9vw, 140px); line-height: 0.9; letter-spacing: -0.04em; color: var(--ink); margin-top: auto; padding-top: clamp(var(--space-5), 8vw, var(--space-8)); }
+/* Mobile: single column, so drop the equal-height baseline machinery and stack
+   the stats compactly with a hairline between each — inset to the content gutter,
+   never bleeding to the screen edge. */
+@media (max-width: 799px) {
+  .stats.section { padding-block: var(--space-6); }
+  .stats__grid { gap: 0; }
+  .stat { padding-inline: 0; }
+  .stat + .stat { border-top: 1px solid var(--line-light); margin-top: var(--space-4); padding-top: var(--space-4); }
+  .stat__label { min-height: 0; max-width: none; margin-top: var(--space-1); }
+  .stat__figure { padding-top: var(--space-2); }
+}
 
 /* --- Clients / trust (dark) ----------------------------------------------- */
 .clients__grid {
@@ -257,4 +268,10 @@
 .footer__top:hover svg { transform: translateY(-2px); }
 @media (max-width: 600px) {
   .footer--b .footer__legal { justify-content: center; text-align: center; }
+  /* Mobile: let the wordmark grow well past the content column so it reads as a
+     bold, deliberately cropped watermark rather than a word that merely fits. */
+  .footer--b .footer__mark span {
+    font-size: min(calc((100vw - 2 * var(--container-pad)) * 0.50), 535px);
+    margin-bottom: -0.34em;
+  }
 }
