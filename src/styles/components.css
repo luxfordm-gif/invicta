@@ -178,27 +178,56 @@
 .emergency-cta { display: none; }
 .emergency-dock { display: none; }
 
-/* Floating emergency dock — call button + social proof — mobile only */
+/* Floating emergency dock — call button + social proof — mobile only.
+   Centred, content-width, with a soft "gooey" liquid-glass press feel. */
 @media (max-width: 900px) {
   .emergency-dock {
-    display: flex; flex-direction: column; align-items: stretch; gap: 9px;
-    position: fixed; left: 20px; right: 20px; z-index: 250;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    position: fixed; left: 50%; transform: translateX(-50%); z-index: 250;
+    width: max-content; max-width: min(calc(100vw - 32px), 360px);
     bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   }
   .emergency-cta {
-    display: flex; align-items: center; justify-content: center;
-    padding: 19px 28px;
-    background: var(--accent-emergency); color: var(--on-dark);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 17px 32px; text-align: center; white-space: nowrap;
+    /* dimensional navy — lighter crown into a deeper base reads as a rounded, liquid pill */
+    background: linear-gradient(180deg, #365A8C 0%, var(--accent-emergency) 52%, #223E67 100%);
+    color: var(--on-dark);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
-    font-family: var(--font-body); font-weight: 600; font-size: 15px; letter-spacing: 0.01em;
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.42);
+    font-family: var(--font-body); font-weight: 600; font-size: 14.5px; letter-spacing: 0.01em;
+    /* layered depth: crisp top sheen + inner base shade + two ambient drops → floats */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -10px 18px rgba(4, 12, 26, 0.32),
+      0 6px 16px rgba(6, 16, 34, 0.38),
+      0 18px 40px rgba(6, 16, 34, 0.34);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition:
+      transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  /* gooey squish on press, then a springy release */
+  .emergency-cta:active {
+    transform: scale(0.94);
+    transition-duration: 0.11s;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -6px 14px rgba(4, 12, 26, 0.36),
+      0 4px 10px rgba(6, 16, 34, 0.40),
+      0 8px 20px rgba(6, 16, 34, 0.30);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .emergency-cta { transition: box-shadow 0.3s ease; }
+    .emergency-cta:active { transform: none; }
   }
   /* Trust markers, sitting on a slim frosted lozenge under the button */
   .emergency-proof {
     align-self: center; list-style: none; margin: 0;
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-    gap: 4px 9px; padding: 7px 15px; max-width: 100%;
+    gap: 3px 8px; padding: 6px 14px; max-width: 100%;
     background: rgba(8, 24, 46, 0.82);
     -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
     border: 1px solid var(--line-dark);
@@ -207,7 +236,7 @@
   }
   .emergency-proof li {
     display: inline-flex; align-items: center; gap: 5px;
-    font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
     color: var(--on-dark-muted); white-space: nowrap;
   }
   .emergency-proof li + li::before {
