@@ -178,14 +178,35 @@
 .emergency-cta { display: none; }
 .emergency-dock { display: none; }
 
-/* Floating emergency dock — call button + social proof — mobile only.
-   Centred, content-width, with a soft "gooey" liquid-glass press feel. */
+/* Floating emergency call button — mobile only.
+   Centred, content-width, with a soft "gooey" liquid-glass press feel, a
+   progressive-blur scrim so it lifts off the page, and a gentle load-in.
+   Centred with auto margins (not translateX) so the fixed scrim below can
+   anchor to the viewport rather than the transformed dock. */
 @media (max-width: 900px) {
   .emergency-dock {
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    position: fixed; left: 50%; transform: translateX(-50%); z-index: 250;
+    display: flex; justify-content: center;
+    position: fixed; left: 0; right: 0; margin-inline: auto; z-index: 250;
     width: max-content; max-width: min(calc(100vw - 32px), 360px);
     bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+    transition:
+      opacity 0.45s ease,
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 0s;
+  }
+  /* Soft blur + fade behind the button so it pops over whatever it floats on.
+     Anchored to the viewport bottom; masked so the blur tapers upward. */
+  .emergency-dock::before {
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 200px;
+    z-index: -1; pointer-events: none;
+    background: linear-gradient(to top,
+      rgba(6, 16, 34, 0.46) 0%,
+      rgba(6, 16, 34, 0.26) 34%,
+      rgba(6, 16, 34, 0) 100%);
+    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 42%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 0%, #000 42%, transparent 100%);
   }
   .emergency-cta {
     display: inline-flex; align-items: center; justify-content: center;
@@ -219,34 +240,30 @@
       0 4px 10px rgba(6, 16, 34, 0.40),
       0 8px 20px rgba(6, 16, 34, 0.30);
   }
+  /* Retreat once the footer scrolls into view — its contact details take over,
+     so the floating button bows out rather than sitting over them. */
+  html.footer-inview .emergency-dock {
+    opacity: 0; transform: translateY(16px); pointer-events: none;
+    visibility: hidden;
+    transition:
+      opacity 0.45s ease,
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 0.55s;
+  }
   @media (prefers-reduced-motion: reduce) {
+    .emergency-dock { animation: none; transition: opacity 0.2s ease, visibility 0s; }
     .emergency-cta { transition: box-shadow 0.3s ease; }
     .emergency-cta:active { transform: none; }
+    html.footer-inview .emergency-dock { transform: none; transition: opacity 0.2s ease, visibility 0s linear 0.2s; }
   }
-  /* Trust markers, sitting on a slim frosted lozenge under the button */
-  .emergency-proof {
-    align-self: center; list-style: none; margin: 0;
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-    gap: 3px 8px; padding: 6px 14px; max-width: 100%;
-    background: rgba(8, 24, 46, 0.82);
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-    border: 1px solid var(--line-dark);
-    border-radius: 999px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.30);
-  }
-  .emergency-proof li {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 9px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
-    color: var(--on-dark-muted); white-space: nowrap;
-  }
-  .emergency-proof li + li::before {
-    content: ""; width: 3px; height: 3px; border-radius: 50%;
-    background: currentColor; opacity: 0.5; margin-right: 4px;
-  }
-  .emergency-proof__mark { color: var(--lime); font-size: 12px; line-height: 1; }
   /* get the dock out of the way when a full-screen surface is open */
   html.nav-open .emergency-dock,
   html.enquiry-open .emergency-dock { display: none; }
+}
+
+@keyframes emergency-dock-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 900px) {
