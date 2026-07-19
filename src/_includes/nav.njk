@@ -6,7 +6,7 @@
     </button>
     <ul class="nav__links" id="nav-links">
       <li class="nav__item has-menu">
-        <a href="/services/"{% if current == "services" %} aria-current="page"{% endif %} aria-haspopup="true">Services <span class="nav__caret" aria-hidden="true"></span></a>
+        <a href="/services/private-water-supplies/"{% if current == "services" %} aria-current="page"{% endif %} aria-haspopup="true">Services <span class="nav__caret" aria-hidden="true"></span></a>
         <div class="nav__menu">
           {% for s in site.services %}
           <a href="{{ s.href }}"><strong>{{ s.title }}</strong><span>{{ s.desc }}</span></a>
