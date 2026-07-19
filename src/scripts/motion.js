@@ -51,6 +51,24 @@
   window.addEventListener("resize", onScroll, { passive: true });
 })();
 
+/* --- Mobile emergency button: hide once the footer is in view ---------------
+   The footer carries the same contact details, so the floating call button
+   bows out when the footer scrolls into view (and returns when it leaves).
+   Class toggled on <html>; the fade itself lives in components.css. --------- */
+(function () {
+  "use strict";
+  var dock = document.querySelector(".emergency-dock");
+  if (!dock || !("IntersectionObserver" in window)) return;
+  var footer = document.querySelector(".footer--b") ||
+               document.querySelector(".footer");
+  if (!footer) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    document.documentElement.classList.toggle("footer-inview", entries[0].isIntersecting);
+  }, { rootMargin: "0px 0px -12% 0px" });
+  io.observe(footer);
+})();
+
 /* --- About hero: scroll-scrub the background wordmark + portrait ------------
    As the hero stage moves up the viewport, the oversized "Invicta" wordmark
    shrinks (large -> small) and fades up (0.8 -> 1.0), and the portrait scales up.
