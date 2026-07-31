@@ -1,0 +1,131 @@
+---
+layout: base.njk
+title: "Contact Invicta Water Treatment | Private Water Supplies, Surrey & Sussex"
+description: "Speak to Invicta Water Treatment about a private water supply, a new mains chlorination, or a system you would like us to take over. Call 01293 781077 or send an enquiry. 24-hour emergency line."
+canonical: "https://www.invictawatertreatment.co.uk/contact/"
+permalink: "/contact/"
+current: "contact"
+extraStyles: ["contact"]
+---
+    <!-- ===================== CONTACT HERO (dark) ===================== -->
+    <section class="section contact-hero">
+      <div class="container contact-hero__inner">
+        <p class="eyebrow">(Contact)</p>
+        <h1 class="statement contact-hero__title">Let's talk about <span class="em">your source.</span></h1>
+        <p class="contact-hero__lead">Whether you are planning a new supply, taking on a property with an existing one, or need someone to look after a system that has been neglected, we would be glad to visit and advise. Every enquiry is read and answered by us personally, usually within a working day.</p>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT BODY (light: form + details) ===================== -->
+    <section class="section section--light contact-body" aria-labelledby="contact-form-title">
+      <div class="container contact-body__grid">
+
+        <!-- Form -->
+        <div class="contact-body__main">
+          <h2 id="contact-form-title" class="contact-body__heading">Send an enquiry</h2>
+          <p class="contact-body__sub">Tell us a little about your property and what you need. Nothing you enter here is ever shared or used for anything other than replying to you.</p>
+
+          <!--
+            Netlify Forms: this is a static POST form. Netlify detects it at deploy
+            time from the built HTML (name + data-netlify), stores each submission,
+            and can email/notify. The hidden form-name field is required for the POST
+            to be matched; bot-field is a honeypot. On success it redirects to /thank-you/.
+          -->
+          <form
+            name="contact"
+            method="POST"
+            action="/thank-you/"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="contact-form"
+          >
+            <input type="hidden" name="form-name" value="contact">
+            <p class="contact-form__hp" hidden aria-hidden="true">
+              <label>Do not fill this in if you are human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+
+            <div class="contact-form__group">
+              <h3 class="contact-form__legend">1. Your details</h3>
+              <div class="contact-form__fields">
+                <label class="cfield">
+                  <span class="cfield__label">Full name</span>
+                  <input type="text" name="name" autocomplete="name" required>
+                </label>
+                <label class="cfield">
+                  <span class="cfield__label">Email address</span>
+                  <input type="email" name="email" autocomplete="email" required>
+                </label>
+                <label class="cfield">
+                  <span class="cfield__label">Phone number</span>
+                  <input type="tel" name="phone" autocomplete="tel">
+                </label>
+                <label class="cfield">
+                  <span class="cfield__label">Town or postcode</span>
+                  <input type="text" name="location" autocomplete="address-level2">
+                </label>
+              </div>
+            </div>
+
+            <div class="contact-form__group">
+              <h3 class="contact-form__legend">2. What can we help with?</h3>
+              <div class="contact-form__cards">
+                {% for s in site.services %}
+                <label class="ccard">
+                  <input type="checkbox" name="interest" value="{{ s.title }}">
+                  <span class="ccard__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5 11-11"/></svg></span>
+                  <span class="ccard__title">{{ s.title }}</span>
+                </label>
+                {% endfor %}
+                <label class="ccard">
+                  <input type="checkbox" name="interest" value="Not sure yet">
+                  <span class="ccard__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5 11-11"/></svg></span>
+                  <span class="ccard__title">Not sure yet</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="contact-form__group">
+              <h3 class="contact-form__legend">3. Anything else?</h3>
+              <label class="cfield cfield--full">
+                <span class="cfield__label">Your message</span>
+                <textarea name="message" rows="5" placeholder="A few words about your supply or project: a new build, an existing borehole, a problem you are having, or simply that you would like a conversation."></textarea>
+              </label>
+            </div>
+
+            <div class="contact-form__submit">
+              <label class="contact-form__consent">
+                <input type="checkbox" name="consent" required>
+                <span>I agree to Invicta contacting me about this enquiry.</span>
+              </label>
+              <button class="btn-inquiry btn-inquiry--lg" type="submit">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Details -->
+        <aside class="contact-body__aside" aria-label="Contact details">
+          <div class="contact-detail contact-detail--call">
+            <p class="contact-detail__eyebrow">By phone</p>
+            <a class="contact-detail__value" href="tel:{{ site.tel }}">{{ site.phone }}</a>
+            <p class="contact-detail__note">Also our 24-hour emergency line. If your supply has been cut off, call and we will talk you through it.</p>
+          </div>
+
+          <div class="contact-detail">
+            <p class="contact-detail__eyebrow">By email</p>
+            <a class="contact-detail__value contact-detail__value--email" href="mailto:{{ site.email }}">{{ site.email }}</a>
+          </div>
+
+          <div class="contact-detail">
+            <p class="contact-detail__eyebrow">Where we are</p>
+            <address class="contact-detail__address">
+              {{ site.name }}<br>
+              {{ site.address.street }}<br>
+              {{ site.address.locality }}, {{ site.address.region }}<br>
+              {{ site.address.postcode }}
+            </address>
+            <p class="contact-detail__note">Working across Surrey, Sussex and the wider South East.</p>
+          </div>
+        </aside>
+
+      </div>
+    </section>

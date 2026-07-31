@@ -1,2 +1,7 @@
 node_modules/
 _site/
+
+# Local tooling / OS cruft (not part of the site)
+.claude/
+.DS_Store
+*.zip
