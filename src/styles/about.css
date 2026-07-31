@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* --- Hero: role (italic serif) + name (sans), portrait below (Kolenda-style) --- */
-.about-hero { padding-top: clamp(56px, 9vw, 150px); padding-bottom: clamp(48px, 7vw, 110px); overflow: hidden; }
+.about-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(48px, 7vw, 110px); overflow: hidden; }
 .about-hero__inner { display: flex; flex-direction: column; align-items: center; }
 .about-hero__title {
   margin-top: clamp(14px, 1.8vw, 24px);
@@ -29,21 +29,21 @@
 }
 .about-hero__wordmark {
   position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(var(--wm-scale, 1.28));
+  transform: translate(-50%, -50%) scale(var(--wm-scale, 1.2));
   font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(120px, 26vw, 460px);
-  line-height: 1; letter-spacing: -0.05em;
-  color: var(--ground-raise);
+  font-size: clamp(150px, 42vw, 760px);   /* much larger + wider: spills past the edges */
+  line-height: 1; letter-spacing: -0.02em;
+  color: var(--lime);
   white-space: nowrap;
   pointer-events: none;
-  opacity: var(--wm-opacity, 0.8);
+  opacity: var(--wm-opacity, 0.18);        /* starts faint; scrubs up to 1 on scroll */
   z-index: 0;
   will-change: transform, opacity;
 }
 .about-hero__portrait {
   position: relative; z-index: 1;
   width: min(440px, 82%);
-  transform: scale(var(--pt-scale, 0.94));
+  transform: scale(var(--pt-scale, 0.8));
   transform-origin: center bottom;
   will-change: transform;
 }

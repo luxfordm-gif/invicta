@@ -88,11 +88,11 @@
     ticking = false;
     var rect = stage.getBoundingClientRect();
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
-    var p = (vh - rect.top) / (vh + rect.height);   // 0 (below fold) -> 1 (scrolled past)
+    var p = (vh - rect.top) / (vh * 0.85);   // 0 (entering) -> 1 (settled near top), then holds
     p = Math.max(0, Math.min(1, p));
-    wordmark.style.setProperty("--wm-scale", (1.28 - 0.36 * p).toFixed(3));
-    wordmark.style.setProperty("--wm-opacity", (0.8 + 0.2 * p).toFixed(3));
-    portrait.style.setProperty("--pt-scale", (0.94 + 0.14 * p).toFixed(3));
+    wordmark.style.setProperty("--wm-scale", (1.2 - 0.2 * p).toFixed(3));    // big -> a touch smaller
+    wordmark.style.setProperty("--wm-opacity", (0.16 + 0.84 * p).toFixed(3)); // faint -> full
+    portrait.style.setProperty("--pt-scale", (0.8 + 0.28 * p).toFixed(3));   // smaller -> bigger, then stops
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 

@@ -3,7 +3,7 @@
    ========================================================================== */
 
 /* --- Hero ----------------------------------------------------------------- */
-.hero { padding-top: clamp(72px, 11vw, 168px); padding-bottom: clamp(64px, 9vw, 140px); }
+.hero { padding-top: var(--hero-y-top); padding-bottom: clamp(64px, 9vw, 140px); }
 .hero__inner { display: flex; flex-direction: column; align-items: center; }
 .hero__eyebrow {
   font-weight: 600; font-size: clamp(15px, 1.3vw, 19px); text-transform: uppercase; letter-spacing: 0.06em;

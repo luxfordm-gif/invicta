@@ -48,6 +48,11 @@
   --section-y: clamp(72px, 9vw, 150px);        /* default section block padding */
   --section-y-tight: clamp(40px, 5vw, 72px);   /* collapsed gap between two light sections */
 
+  /* Hero top gap: the space below the sticky nav to the first hero element.
+     Height-AWARE (mixes vw + vh) so it shrinks when the window is short, not
+     only when it is narrow. Used by every hero (home, about, contact, thank-you). */
+  --hero-y-top: clamp(44px, 2.5vw + 6vh, 148px);
+
   /* --- Flow gaps (fluid space from a section's intro/heading to its content) */
   --flow-lg: clamp(56px, 7vw, 112px);          /* intro -> primary grid */
   --flow-md: clamp(40px, 6vw, 90px);           /* secondary blocks / accordions */

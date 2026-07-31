@@ -51,6 +51,11 @@ h3 {
 
 p { max-width: 68ch; }
 
+/* Line-wrapping. Headings: balance line lengths (tidy, avoids a stray short last
+   line). Body copy: pretty, which mainly prevents last-line widows. */
+h1, h2, h3, h4, .statement, .footer__cta-line { text-wrap: balance; }
+p, li, figcaption, blockquote, dd { text-wrap: pretty; }
+
 /* --- Utility type classes ------------------------------------------------- */
 /* Small uppercase label used above rules and over media. */
 .eyebrow {

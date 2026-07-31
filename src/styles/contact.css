@@ -4,9 +4,9 @@
    ========================================================================== */
 
 /* --- Hero --- */
-.contact-hero { padding-bottom: clamp(48px, 6vw, 90px); }
-.contact-hero__inner { max-width: 940px; }
-.contact-hero__title { margin-top: var(--space-3); }
+.contact-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(48px, 6vw, 90px); }
+/* Left-aligned to the container edge (under the logo), not a centred column. */
+.contact-hero__title { margin-top: var(--space-3); max-width: 15ch; }
 .contact-hero__lead {
   margin-top: var(--space-4);
   max-width: 62ch;
@@ -191,6 +191,7 @@
 }
 
 /* --- Thank-you page --- */
+.contact-thanks { padding-top: var(--hero-y-top); }
 .contact-thanks__inner { max-width: 760px; padding-block: clamp(24px, 6vw, 80px); }
 .contact-thanks__title { margin-top: var(--space-3); }
 .contact-thanks__lead {
