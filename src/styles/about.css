@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: clamp(40px, 6vw, 84px);
+  margin-top: clamp(72px, 11vw, 168px);   /* sits lower, further from the scroll arrow */
 }
 .about-hero__wordmark {
   position: absolute; top: 50%; left: 50%;
@@ -36,9 +36,11 @@
   color: var(--lime);
   white-space: nowrap;
   pointer-events: none;
-  opacity: var(--wm-opacity, 0.18);        /* starts faint; scrubs up to 1 on scroll */
+  opacity: var(--wm-opacity, 0.05);        /* starts VERY faint; scrubs up to 1 on scroll */
   z-index: 0;
   will-change: transform, opacity;
+  /* gentle trailing ease so the scrub feels gooey, not locked to the scrollbar */
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.55s ease;
 }
 .about-hero__portrait {
   position: relative; z-index: 1;
@@ -46,11 +48,12 @@
   transform: scale(var(--pt-scale, 0.8));
   transform-origin: center bottom;
   will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .about-hero__portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
 @media (prefers-reduced-motion: reduce) {
-  .about-hero__wordmark { --wm-scale: 1; --wm-opacity: 1; }
-  .about-hero__portrait { --pt-scale: 1; }
+  .about-hero__wordmark { --wm-scale: 1; --wm-opacity: 1; transition: none; }
+  .about-hero__portrait { --pt-scale: 1; transition: none; }
 }
 
 /* --- Intro: a large lead line, then supporting copy in two columns --- */

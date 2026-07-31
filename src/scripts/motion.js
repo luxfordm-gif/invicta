@@ -88,11 +88,17 @@
     ticking = false;
     var rect = stage.getBoundingClientRect();
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
-    var p = (vh - rect.top) / (vh * 0.85);   // 0 (entering) -> 1 (settled near top), then holds
+    // Progress runs over a LONG travel so it never finishes abruptly: 0 while the
+    // stage sits low in the viewport, reaching 1 only once it has scrolled well
+    // past the top. Then it holds (clamped).
+    var h = rect.height || 1;
+    var startTop = vh * 0.9;    // p = 0 here
+    var endTop = -h * 0.35;     // p = 1 here
+    var p = (startTop - rect.top) / (startTop - endTop);
     p = Math.max(0, Math.min(1, p));
-    wordmark.style.setProperty("--wm-scale", (1.2 - 0.2 * p).toFixed(3));    // big -> a touch smaller
-    wordmark.style.setProperty("--wm-opacity", (0.16 + 0.84 * p).toFixed(3)); // faint -> full
-    portrait.style.setProperty("--pt-scale", (0.8 + 0.28 * p).toFixed(3));   // smaller -> bigger, then stops
+    wordmark.style.setProperty("--wm-scale", (1.2 - 0.2 * p).toFixed(3));     // big -> a touch smaller
+    wordmark.style.setProperty("--wm-opacity", (0.05 + 0.95 * p).toFixed(3)); // very faint -> full
+    portrait.style.setProperty("--pt-scale", (0.8 + 0.28 * p).toFixed(3));    // smaller -> bigger, then stops
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 
