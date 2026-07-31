@@ -1,6 +1,7 @@
     <!-- ===================== FOOTER A (standard) ===================== -->
     <footer class="footer footer--a">
       <div class="container">
+        {% if not hideFooterCta %}
         <div class="footer__cta">
           <div class="footer__cta-text">
             <p class="eyebrow">Speak to us</p>
@@ -13,6 +14,7 @@
           </div>
         </div>
         <div class="rule"></div>
+        {% endif %}
 
         <div class="footer__grid">
           <div class="footer__contact">
@@ -38,6 +40,7 @@
     <!-- ===================== FOOTER B (oversized cut-off wordmark) ===================== -->
     <footer class="footer footer--b">
       <div class="container">
+        {% if not hideFooterCta %}
         <div class="footer__cta">
           <div class="footer__cta-text">
             <p class="eyebrow">Speak to us</p>
@@ -50,6 +53,7 @@
           </div>
         </div>
         <div class="rule"></div>
+        {% endif %}
 
         <div class="footer__grid">
           <div class="footer__contact">
