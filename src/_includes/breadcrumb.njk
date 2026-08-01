@@ -1,0 +1,23 @@
+    <!-- ===================== BREADCRUMB ===================== -->
+    {# Fed by a page's `breadcrumb` front-matter array of { title, href? }.
+       Home is prepended automatically; the last crumb is the current page. #}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="container breadcrumb__list">
+        <li class="breadcrumb__item"><a href="/">Home</a></li>
+        {% for c in breadcrumb %}
+        <li class="breadcrumb__item"{% if loop.last %} aria-current="page"{% endif %}>
+          {% if c.href and not loop.last %}<a href="{{ c.href }}">{{ c.title }}</a>{% else %}<span>{{ c.title }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+    </nav>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" }{% for c in breadcrumb %},
+        { "@type": "ListItem", "position": {{ loop.index + 1 }}, "name": "{{ c.title }}"{% if c.href %}, "item": "{{ site.url }}{{ c.href }}"{% endif %} }{% endfor %}
+      ]
+    }
+    </script>

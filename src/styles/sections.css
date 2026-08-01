@@ -309,3 +309,22 @@
 .tag:hover { background: var(--on-dark); color: var(--ground); border-color: var(--on-dark); }
 .tag:hover .tag__arrow { opacity: 1; transform: translateX(3px); }
 .tag:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+
+/* ===================== BREADCRUMB ===================== */
+/* Sits above the hero on subpages. Takes the top-gap role (clears the sticky
+   nav) so the following hero doesn't add a second full gap. */
+.breadcrumb { padding-top: var(--hero-y-top); }
+.breadcrumb + .hero { padding-top: clamp(28px, 4vw, 60px); }
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+.breadcrumb__item { display: flex; align-items: center; gap: 10px; color: var(--on-dark-muted); }
+.breadcrumb__item:not(:first-child)::before { content: "/"; opacity: 0.45; }
+.breadcrumb__item a { color: var(--on-dark-muted); text-decoration: none; transition: color 0.2s ease; }
+.breadcrumb__item a:hover { color: var(--on-dark); }
+.breadcrumb__item[aria-current="page"] span { color: var(--on-dark); }
