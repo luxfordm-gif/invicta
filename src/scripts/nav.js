@@ -46,6 +46,16 @@
   }
   var nav = document.querySelector(".nav");
   if (nav) {
+    // Keep --nav-h matched to the nav's REAL height so the sticky breadcrumb sits
+    // flush beneath it (a hardcoded value drifts when fonts load or type reflows,
+    // opening a gap that shows the page behind it).
+    var setNavH = function () {
+      root.style.setProperty("--nav-h", nav.offsetHeight + "px");
+    };
+    setNavH();
+    window.addEventListener("resize", setNavH, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavH);
+
     var reduceNav = window.matchMedia("(prefers-reduced-motion: reduce)");
     var lastY = window.scrollY;
     var ticking = false;

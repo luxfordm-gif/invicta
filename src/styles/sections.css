@@ -321,7 +321,6 @@
 @media (min-width: 900px) {
   .breadcrumb {
     position: sticky; top: calc(var(--ubar-h) + var(--nav-h)); z-index: 40;
-    border-top: 1px solid var(--line-dark);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   html.header-up .breadcrumb { transform: translateY(calc(-100% - var(--ubar-h) - var(--nav-h))); }
