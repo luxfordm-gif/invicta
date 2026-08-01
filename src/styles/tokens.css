@@ -26,6 +26,7 @@
   --ink: #0F0F0F;                /* near-black text on white */
   --ink-muted: rgba(15, 15, 15, 0.58);
   --line-light: rgba(15, 15, 15, 0.13);
+  --line-field: rgba(15, 15, 15, 0.20);   /* slightly darker stroke for form fields */
 
   /* --- Type --- */
   --font-body: 'Figtree', system-ui, sans-serif;
@@ -57,16 +58,17 @@
   --flow-lg: clamp(56px, 7vw, 112px);          /* intro -> primary grid */
   --flow-md: clamp(40px, 6vw, 90px);           /* secondary blocks / accordions */
   --flow-sm: clamp(24px, 4vw, 56px);           /* small decorative gaps */
+  --flow-heading: clamp(18px, 1.6vw, 24px);    /* eyebrow -> its heading; ONE consistent gap everywhere */
 
   /* --- Container --- */
   --container-max: 1600px;
   --container-pad: 40px;
 
   /* Buttons — fully rounded pills */
-  --btn-radius: 999px;
+  --btn-radius: 999px;           /* fully-rounded pill buttons */
 
   /* --- Sticky utility bar height (nav offsets below it) --- */
-  --ubar-h: 40px;
+  --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
 }
 
 /* ==========================================================================

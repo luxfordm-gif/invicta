@@ -130,3 +130,19 @@ hideFooterCta: true
 
       </div>
     </section>
+
+    <!-- ===================== MAP ===================== -->
+    {% set mapQuery = site.address.street + ", " + site.address.locality + ", " + site.address.region + " " + site.address.postcode %}
+    <section class="contact-map" aria-label="Where to find us">
+      <iframe
+        class="contact-map__frame"
+        title="Map showing {{ site.name }} in {{ site.address.locality }}, {{ site.address.region }}"
+        src="https://maps.google.com/maps?q={{ mapQuery | urlencode }}&amp;z=15&amp;output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="contact-map__card">
+        <p class="contact-map__name">{{ site.name }}</p>
+        <address class="contact-map__addr">{{ site.address.street }}<br>{{ site.address.locality }}, {{ site.address.region }} {{ site.address.postcode }}</address>
+        <a class="contact-map__dir" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ mapQuery | urlencode }}" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </section>

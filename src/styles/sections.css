@@ -10,7 +10,7 @@
   color: var(--lime); text-align: center;
 }
 .hero__title {
-  margin-top: clamp(14px, 1.8vw, 24px);
+  margin-top: var(--flow-heading);
   text-align: center;
   color: var(--on-dark);          /* quiet white — the chalky blue is only on the italic accent */
 }
@@ -53,7 +53,7 @@
 
 /* --- Statement (shared big H2 for services / positioning / clients) ------- */
 .statement {
-  margin-top: var(--flow-lg);
+  margin-top: var(--flow-heading);
   max-width: 22ch;
 }
 .services .statement, .positioning .statement { max-width: 30ch; }
@@ -130,7 +130,7 @@
   .faq__aside { position: sticky; top: calc(var(--ubar-h) + 88px); align-self: start; }
 }
 .faq__aside .eyebrow { display: block; }
-.faq__title { margin-top: var(--space-3); color: var(--on-dark); }
+.faq__title { margin-top: var(--flow-heading); color: var(--on-dark); }
 .faq__intro { margin-top: var(--space-4); font-size: 17px; line-height: 1.55; color: var(--on-dark-muted); max-width: 40ch; }
 
 .faq__item { border-top: 1px solid var(--line-dark); }
@@ -275,3 +275,37 @@
     margin-bottom: -0.34em;
   }
 }
+
+/* ===================== EXPLORE OTHER SERVICES ===================== */
+/* Dark band of simple pill "tags" linking to the other service pages —
+   internal linking for SEO + an easy jump between services. */
+.services-explore__lead {
+  margin-top: var(--space-3);
+  max-width: 56ch;
+  color: var(--on-dark-muted);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+.services-explore__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--flow-md);
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--btn-radius);
+  color: var(--on-dark);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.tag__arrow { opacity: 0.5; transition: transform 0.2s ease, opacity 0.2s ease; }
+.tag:hover { background: var(--on-dark); color: var(--ground); border-color: var(--on-dark); }
+.tag:hover .tag__arrow { opacity: 1; transform: translateX(3px); }
+.tag:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }

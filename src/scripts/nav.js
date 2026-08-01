@@ -19,6 +19,9 @@
       toggle.setAttribute("aria-expanded", String(!open));
       links.classList.toggle("is-open", !open);
       root.classList.toggle("nav-open", !open);
+      // Opening the full-screen menu: make sure the nav has no transform, or it
+      // would become the containing block for the fixed inset:0 overlay.
+      if (!open && nav) nav.classList.remove("nav--hidden");
     });
 
     // The dropdown labels ("Services", "Sectors") aren't pages — they're just the
@@ -43,8 +46,29 @@
   }
   var nav = document.querySelector(".nav");
   if (nav) {
-    var onScroll = function () { nav.classList.toggle("is-scrolled", window.scrollY > 8); };
-    onScroll();
+    var reduceNav = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var lastY = window.scrollY;
+    var ticking = false;
+    function applyNav() {
+      ticking = false;
+      var y = window.scrollY;
+      nav.classList.toggle("is-scrolled", y > 8);
+      // Smart hide: slide the nav away when scrolling DOWN (past the top), bring it
+      // back on scroll UP. Never hide with the mobile menu open or reduced motion.
+      // The 6px deadzone stops jitter from tiny scroll wobbles.
+      if (!reduceNav.matches && !root.classList.contains("nav-open")) {
+        if (y - lastY > 6 && y > 160) {
+          nav.classList.add("nav--hidden");
+        } else if (lastY - y > 6 || y <= 160) {
+          nav.classList.remove("nav--hidden");
+        }
+      } else {
+        nav.classList.remove("nav--hidden");
+      }
+      lastY = y;
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(applyNav); } }
+    applyNav();
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
