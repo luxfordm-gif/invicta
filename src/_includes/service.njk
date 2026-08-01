@@ -39,6 +39,8 @@
           <p class="eyebrow">{{ pointsEyebrow or "What's involved" }}</p>
           <h2 id="points-title" class="statement">{{ pointsTitle | safe }}</h2>
           {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
+          {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
+          <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
         </aside>
         <ul class="service-checklist">
           {% for pt in points %}
@@ -60,15 +62,26 @@
         <div class="rule"></div>
         <h2 id="case-title" class="statement service-case__title">{{ caseStudy.title | safe }}</h2>
         <div class="service-case__grid">
-          <div class="service-case__body">
-            {% for p in caseStudy.body %}<p>{{ p | safe }}</p>{% endfor %}
+          <figure class="service-case__media">
+            {% if caseStudy.image %}
+            <img src="{{ caseStudy.image }}" alt="{{ caseStudy.imageAlt or '' }}" loading="lazy">
+            {% else %}
+            <div class="img-ph" role="img" aria-label="Project photo to follow">
+              <span class="img-ph__label">Project photo to follow</span>
+            </div>
+            {% endif %}
+          </figure>
+          <div class="service-case__text">
+            <div class="service-case__body">
+              {% for p in caseStudy.body %}<p>{{ p | safe }}</p>{% endfor %}
+            </div>
+            {% if caseStudy.highlight %}
+            <div class="service-case__highlight-wrap">
+              <p class="service-case__highlight">{{ caseStudy.highlight | safe }}</p>
+              {% if caseStudy.client %}<p class="service-case__client">{{ caseStudy.client }}</p>{% endif %}
+            </div>
+            {% endif %}
           </div>
-          {% if caseStudy.highlight %}
-          <aside class="service-case__aside">
-            <p class="service-case__highlight">{{ caseStudy.highlight | safe }}</p>
-            {% if caseStudy.client %}<p class="service-case__client">{{ caseStudy.client }}</p>{% endif %}
-          </aside>
-          {% endif %}
         </div>
       </div>
     </section>

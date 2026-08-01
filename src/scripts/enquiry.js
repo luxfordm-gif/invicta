@@ -29,6 +29,14 @@
   function open(e) {
     if (e) e.preventDefault();
     lastFocused = document.activeElement;
+    // If the trigger names a service (data-enquiry-service), pre-tick it.
+    var svc = e && e.currentTarget && e.currentTarget.getAttribute
+      ? e.currentTarget.getAttribute("data-enquiry-service") : null;
+    if (svc) {
+      [].forEach.call(drawer.querySelectorAll('input[name="interest"]'), function (b) {
+        if (b.value === svc) b.checked = true;
+      });
+    }
     drawer.hidden = false;
     lockScroll();
     var sc = panel.querySelector(".enquiry__scroll");   // always open anchored to the top
