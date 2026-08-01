@@ -21,7 +21,7 @@
       root.classList.toggle("nav-open", !open);
       // Opening the full-screen menu: make sure the nav has no transform, or it
       // would become the containing block for the fixed inset:0 overlay.
-      if (!open && nav) nav.classList.remove("nav--hidden");
+      if (!open) root.classList.remove("header-up");
     });
 
     // The dropdown labels ("Services", "Sectors") aren't pages — they're just the
@@ -58,12 +58,12 @@
       // The 6px deadzone stops jitter from tiny scroll wobbles.
       if (!reduceNav.matches && !root.classList.contains("nav-open")) {
         if (y - lastY > 6 && y > 160) {
-          nav.classList.add("nav--hidden");
+          root.classList.add("header-up");       // hide nav + breadcrumb together
         } else if (lastY - y > 6 || y <= 160) {
-          nav.classList.remove("nav--hidden");
+          root.classList.remove("header-up");     // reveal on scroll-up / near the top
         }
       } else {
-        nav.classList.remove("nav--hidden");
+        root.classList.remove("header-up");
       }
       lastY = y;
     }

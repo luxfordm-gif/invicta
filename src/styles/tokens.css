@@ -69,6 +69,7 @@
 
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
+  --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this) */
 }
 
 /* ==========================================================================

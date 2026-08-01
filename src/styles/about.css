@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: clamp(72px, 11vw, 168px);   /* sits lower, further from the scroll arrow */
+  margin-top: clamp(65px, 10vw, 151px);   /* ~10% tighter to the scroll arrow */
 }
 .about-hero__wordmark {
   position: absolute; top: 50%; left: 50%;

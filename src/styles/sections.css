@@ -311,10 +311,22 @@
 .tag:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
 
 /* ===================== BREADCRUMB ===================== */
-/* Sits above the hero on subpages. Takes the top-gap role (clears the sticky
-   nav) so the following hero doesn't add a second full gap. */
-.breadcrumb { padding-top: var(--hero-y-top); }
-.breadcrumb + .hero { padding-top: clamp(28px, 4vw, 60px); }
+/* A slim divided bar below the nav. On desktop it is sticky and slides away
+   WITH the nav (html.header-up) as one smart header. */
+.breadcrumb {
+  padding-block: 15px;
+  background: var(--ground);
+  border-bottom: 1px solid var(--line-dark);
+}
+@media (min-width: 900px) {
+  .breadcrumb {
+    position: sticky; top: calc(var(--ubar-h) + var(--nav-h)); z-index: 40;
+    border-top: 1px solid var(--line-dark);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  html.header-up .breadcrumb { transform: translateY(calc(-100% - var(--ubar-h) - var(--nav-h))); }
+}
+.breadcrumb + .hero { padding-top: clamp(40px, 6vw, 96px); }
 .breadcrumb__list {
   display: flex;
   flex-wrap: wrap;
