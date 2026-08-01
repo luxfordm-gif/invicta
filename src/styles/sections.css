@@ -184,7 +184,7 @@
 .footer__cta + .rule { margin-top: var(--space-5); }
 .footer__grid { display: grid; gap: var(--space-6); margin-top: var(--flow-lg); }
 @media (min-width: 800px) { .footer__grid { grid-template-columns: 1fr auto; align-items: start; } }
-.footer__email { display: block; font-size: clamp(24px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.1; }
+.footer__email { display: block; font-size: clamp(17px, 4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.15; overflow-wrap: anywhere; }
 .footer__email:hover { color: var(--lime); }
 .footer__phone { display: block; font-size: clamp(24px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--on-dark); line-height: 1.15; margin-top: var(--space-1); }
 .footer__phone:hover { color: var(--lime); }
@@ -268,11 +268,11 @@
 .footer__top:hover svg { transform: translateY(-2px); }
 @media (max-width: 599.98px) {
   .footer--b .footer__legal { justify-content: center; text-align: center; }
-  /* Mobile: let the wordmark grow well past the content column so it reads as a
-     bold, deliberately cropped watermark rather than a word that merely fits. */
+  /* Mobile: size the wordmark so the FULL word fits the content column (baseline
+     crop only), rather than overflowing and cutting letters off the right edge. */
   .footer--b .footer__mark span {
-    font-size: min(calc((100vw - 2 * var(--container-pad)) * 0.50), 535px);
-    margin-bottom: -0.34em;
+    font-size: min(calc((100vw - 2 * var(--container-pad)) * 0.34), 535px);
+    margin-bottom: -0.30em;
   }
 }
 

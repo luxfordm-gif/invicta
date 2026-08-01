@@ -92,7 +92,8 @@
 }
 
 /* --- Service cards (checkboxes) --- */
-.contact-form__cards { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+.contact-form__cards { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 520px) { .contact-form__cards { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 800px) { .contact-form__cards { grid-template-columns: repeat(3, 1fr); } }
 .ccard {
   position: relative;

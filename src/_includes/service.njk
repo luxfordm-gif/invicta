@@ -15,20 +15,6 @@
       </div>
     </section>
 
-    <!-- ===================== CASE STUDY BAND (optional) ===================== -->
-    {% if caseStudy %}
-    <a class="band" href="{{ caseStudy.href or '/case-studies/' }}" aria-label="Case study: {{ caseStudy.title }}">
-      <div class="band__media">
-        <img src="{{ caseStudy.image }}" alt="{{ caseStudy.alt or '' }}" loading="lazy">
-      </div>
-      <div class="container band__bar">
-        <span class="band__label">{{ caseStudy.label or "Case study" }}</span>
-        <span class="band__title">{{ caseStudy.title }}</span>
-        {% if caseStudy.year %}<span class="band__year">({{ caseStudy.year }})</span>{% endif %}
-      </div>
-    </a>
-    {% endif %}
-
     <!-- ===================== INTRO (light) ===================== -->
     {% if introTitle %}
     <section class="section section--light service-intro" aria-labelledby="intro-title">
@@ -62,6 +48,28 @@
           </li>
           {% endfor %}
         </ul>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- ===================== CASE STUDY (light, optional) ===================== -->
+    {% if caseStudy %}
+    <section class="section section--light service-case" aria-labelledby="case-title">
+      <div class="container">
+        <p class="eyebrow">Case study</p>
+        <div class="rule"></div>
+        <h2 id="case-title" class="statement service-case__title">{{ caseStudy.title | safe }}</h2>
+        <div class="service-case__grid">
+          <div class="service-case__body">
+            {% for p in caseStudy.body %}<p>{{ p | safe }}</p>{% endfor %}
+          </div>
+          {% if caseStudy.highlight %}
+          <aside class="service-case__aside">
+            <p class="service-case__highlight">{{ caseStudy.highlight | safe }}</p>
+            {% if caseStudy.client %}<p class="service-case__client">{{ caseStudy.client }}</p>{% endif %}
+          </aside>
+          {% endif %}
+        </div>
       </div>
     </section>
     {% endif %}
