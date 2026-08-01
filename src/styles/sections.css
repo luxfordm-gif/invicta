@@ -321,9 +321,14 @@
 @media (min-width: 900px) {
   .breadcrumb {
     position: sticky; top: calc(var(--ubar-h) + var(--nav-h)); z-index: 40;
+    /* Solid-navy fill above the bar: guarantees no page content is ever visible
+       between the nav and the breadcrumb, even if the nav height is a hair off. */
+    box-shadow: 0 -44px 0 0 var(--ground);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  html.header-up .breadcrumb { transform: translateY(calc(-100% - var(--ubar-h) - var(--nav-h))); }
+  /* Nav + breadcrumb slide the SAME distance so they never separate mid-animation. */
+  html.header-up .nav,
+  html.header-up .breadcrumb { transform: translateY(calc(-1 * (var(--ubar-h) + var(--nav-h) + 160px))); }
 }
 .breadcrumb + .hero { padding-top: clamp(40px, 6vw, 96px); }
 .breadcrumb__list {
