@@ -344,3 +344,17 @@
 .breadcrumb__item a { color: var(--on-dark-muted); text-decoration: none; transition: color 0.2s ease; }
 .breadcrumb__item a:hover { color: var(--on-dark); }
 .breadcrumb__item[aria-current="page"] span { color: var(--on-dark); }
+
+/* ===================== Grey image placeholder (global) ===================== */
+/* Reusable stand-in for a real photo; label centred both ways. */
+.img-ph {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  width: 100%; aspect-ratio: 4 / 3;
+  background: #C6CBD2; color: #565C66;
+}
+.img-ph__label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; }
+
+/* Stats and Clients are both light, which normally collapses the gap between
+   them. Keep them clearly separated with full padding and a hairline. */
+.stats:has(+ .clients) { padding-bottom: var(--section-y); }
+.stats + .clients { padding-top: var(--section-y); border-top: 1px solid var(--line-light); }

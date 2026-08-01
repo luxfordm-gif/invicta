@@ -38,18 +38,22 @@
         <aside class="service-points__aside">
           <p class="eyebrow">{{ pointsEyebrow or "What's involved" }}</p>
           <h2 id="points-title" class="statement">{{ pointsTitle | safe }}</h2>
-          {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
-          {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
-          <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
         </aside>
-        <ul class="service-checklist">
-          {% for pt in points %}
-          <li class="service-check">
-            <svg class="service-check__tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <div><span class="service-check__title">{{ pt.title }}</span>{% if pt.desc %}<span class="service-check__desc">{{ pt.desc | safe }}</span>{% endif %}</div>
-          </li>
-          {% endfor %}
-        </ul>
+        <div class="service-points__main">
+          <ul class="service-checklist">
+            {% for pt in points %}
+            <li class="service-check">
+              <span class="service-check__index" aria-hidden="true">{{ "0" ~ loop.index }}</span>
+              <div class="service-check__text"><span class="service-check__title">{{ pt.title }}</span>{% if pt.desc %}<span class="service-check__desc">{{ pt.desc | safe }}</span>{% endif %}</div>
+            </li>
+            {% endfor %}
+          </ul>
+          <div class="service-points__footer">
+            {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
+            {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
+            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
       </div>
     </section>
     {% endif %}
