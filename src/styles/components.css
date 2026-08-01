@@ -269,31 +269,41 @@
 @media (max-width: 899.98px) {
   .ubar { display: none; }          /* emergency lives in the floating button on mobile */
   .nav { top: 0; }                  /* no utility bar above, so stick to the very top */
+  /* A backdrop-filter on the bar would make it the containing block for the
+     fixed full-screen menu (inset:0 would size to the bar, not the viewport),
+     so drop the blur on mobile and lean on a near-solid navy instead. */
+  .nav, .nav.is-scrolled { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(11, 31, 58, 0.88); }
+  html.nav-open .nav { background: var(--ground); }   /* bar blends into the open menu */
   .nav__inner { display: flex; align-items: center; }
   .nav__brand { justify-self: auto; }
   .nav__brand-suffix { max-width: 0; opacity: 0; }   /* mobile: just "Invicta" */
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
   .nav__toggle { display: inline-flex; order: 3; margin-left: auto; }
+  /* Brand + toggle stay above the full-screen overlay so the X remains tappable. */
+  .nav__brand, .nav__toggle { position: relative; z-index: 2; }
+  /* Full-screen menu: a fixed navy surface that covers the whole viewport. */
   .nav__links {
     order: 4; justify-self: auto;
-    position: absolute; top: 100%; left: 0; right: 0;
+    position: fixed; inset: 0;
     flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--ground); border-bottom: 1px solid var(--line-dark);
-    padding: var(--space-2) var(--container-pad) var(--space-4);
+    background: var(--ground);
+    padding: calc(64px + env(safe-area-inset-top, 0px)) var(--container-pad)
+             calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
     margin: 0; display: none;
+    overflow-y: auto; overscroll-behavior: contain;
   }
-  .nav__links.is-open { display: flex; max-height: calc(100vh - 120px); overflow-y: auto; }
-  .nav__links > li:not(.nav__mobile-extra) > a { width: 100%; font-size: 18px; padding-block: var(--space-2); border-bottom: 1px solid var(--line-dark); }
+  .nav__links.is-open { display: flex; }
+  .nav__links > li:not(.nav__mobile-extra) > a { width: 100%; font-size: clamp(26px, 6.5vw, 34px); font-weight: 500; letter-spacing: -0.02em; padding-block: clamp(14px, 3.4vw, 20px); border-bottom: 1px solid var(--line-dark); }
   .nav__links > li > a::after { display: none; }
   /* dropdowns are COLLAPSED accordions on mobile — tap the parent to expand */
   .nav__item { position: static; }
   .nav__caret { display: none; }
-  .nav__links > li.has-menu > a { padding-right: 26px; }
+  .nav__links > li.has-menu > a { padding-right: 34px; }
   .nav__links > li.has-menu > a::after {
     content: ""; display: block;
-    position: absolute; left: auto; bottom: auto; right: 4px; top: 50%; margin: 0;
-    width: 8px; height: 8px; background: none;
-    border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
+    position: absolute; left: auto; bottom: auto; right: 6px; top: 50%; margin: 0;
+    width: 11px; height: 11px; background: none;
+    border-right: 1.8px solid currentColor; border-bottom: 1.8px solid currentColor;
     transform: translateY(-60%) rotate(45deg); transition: transform 0.3s ease; opacity: 0.65;
   }
   .nav__links > li.has-menu.is-expanded > a::after { transform: translateY(-40%) rotate(-135deg); }
@@ -305,33 +315,46 @@
     max-height: 0; overflow: hidden;
     transition: max-height 0.35s ease, padding 0.3s ease;
   }
-  .nav__item.is-expanded .nav__menu { max-height: 480px; padding-bottom: var(--space-2); }
+  .nav__item.is-expanded .nav__menu { max-height: 720px; padding-bottom: var(--space-2); }
   /* neutralise the desktop hover/focus dropdown transform on mobile */
   .nav__item.has-menu:hover .nav__menu,
   .nav__item.has-menu:focus-within .nav__menu { transform: none; }
-  .nav__menu a { padding: 8px 0; }
+  .nav__menu a { padding: 11px 0; }
+  .nav__menu strong { font-size: 18px; font-weight: 500; }
   .nav__menu span { display: none; }
 
-  /* Send Enquiry + emergency number, shown inside the mobile menu only */
-  .nav__mobile-extra { display: block; margin-top: var(--space-3); }
+  /* Send Enquiry + Contact + emergency number, pinned to the bottom of the
+     full-screen menu (margin-top:auto pushes them down when the list is short). */
+  .nav__mobile-extra { display: block; margin-top: auto; padding-top: var(--space-5); }
   .nav__mobile-extra .nav__menu-cta {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    width: 100%; padding: 15px 20px; border-radius: 999px;
+    width: 100%; padding: 17px 20px; border-radius: 999px;
     background: var(--on-dark); color: var(--ground);
     font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
     transition: background-color 0.2s ease;
   }
   .nav__mobile-extra .nav__menu-cta:hover { background: #F5F0E8; }
   .nav__mobile-extra .nav__menu-cta .btn-inquiry__arrow { font-size: 14px; }
+  /* Contact button — off-white/cream, sits beneath Send Enquiry. */
+  .nav__mobile-extra .nav__menu-contact {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; margin-top: var(--space-2); padding: 17px 20px; border-radius: 999px;
+    background: var(--light); color: var(--ground);
+    font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
+    transition: background-color 0.2s ease;
+  }
+  .nav__mobile-extra .nav__menu-contact:hover { background: var(--light-warm); }
   .nav__mobile-extra .nav__menu-tel {
     display: flex; flex-direction: column; align-items: center; gap: 3px;
-    margin-top: var(--space-3); text-align: center;
+    margin-top: var(--space-4); text-align: center;
   }
   .nav__mobile-extra .nav__menu-tel span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--on-dark-muted); }
   .nav__mobile-extra .nav__menu-tel strong { font-family: var(--font-display); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; color: var(--on-dark); }
 
   /* clear the fixed emergency button */
   body { padding-bottom: 84px; }
+  /* lock the page behind the full-screen menu so only the menu scrolls */
+  html.nav-open, html.nav-open body { overflow: hidden; }
 }
 
 /* --- Pill "Send Enquiry" button ------------------------------------------- */
