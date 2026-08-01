@@ -3,10 +3,16 @@
    Hero and FAQ reuse the global styles in sections.css.
    ========================================================================== */
 
-/* --- Intro (light) --- */
-.service-intro__body { margin-top: var(--flow-md); max-width: 70ch; }
+/* --- Intro (light): big statement, then supporting copy in two columns --- */
+.service-intro .statement { max-width: 24ch; }
+.service-intro__body { margin-top: var(--flow-md); }
 .service-intro__body p { font-size: clamp(16px, 1.4vw, 19px); line-height: 1.65; }
 .service-intro__body p + p { margin-top: 1.1em; }
+@media (min-width: 800px) {
+  .service-intro__body { columns: 2; column-gap: clamp(40px, 5vw, 88px); }
+  .service-intro__body p { break-inside: avoid; }
+  .service-intro__body p + p { margin-top: 0; padding-top: 1.1em; }
+}
 
 /* --- What's involved (dark): aside + checklist --- */
 .service-points__grid { display: grid; gap: var(--flow-md); }

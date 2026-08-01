@@ -8,7 +8,7 @@
   "address": { "street": "89 Castle Drive", "locality": "Horley", "region": "Surrey", "postcode": "RH6 9DD" },
   "services": [
     { "title": "Private Water Supplies", "href": "/services/private-water-supplies/", "desc": "Bespoke borehole systems, end to end." },
-    { "title": "Chlorination & New Mains", "href": "/services/chlorination/", "desc": "Disinfection of new and existing mains." },
+    { "title": "Flushing & Pre-Comm", "href": "/services/flushing-pre-comm/", "desc": "Pre-commission cleaning of new systems, to BSRIA guidelines." },
     { "title": "Design & Install", "href": "/services/design-install/", "desc": "Treatment specified and installed in-house." },
     { "title": "Servicing & Maintenance", "href": "/services/servicing/", "desc": "Scheduled care and 24-hour callout." },
     { "title": "Water Hygiene", "href": "/services/water-hygiene/", "desc": "Legionella control and compliance." }

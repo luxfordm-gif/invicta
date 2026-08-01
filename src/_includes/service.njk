@@ -15,6 +15,20 @@
       </div>
     </section>
 
+    <!-- ===================== CASE STUDY BAND (optional) ===================== -->
+    {% if caseStudy %}
+    <a class="band" href="{{ caseStudy.href or '/case-studies/' }}" aria-label="Case study: {{ caseStudy.title }}">
+      <div class="band__media">
+        <img src="{{ caseStudy.image }}" alt="{{ caseStudy.alt or '' }}" loading="lazy">
+      </div>
+      <div class="container band__bar">
+        <span class="band__label">{{ caseStudy.label or "Case study" }}</span>
+        <span class="band__title">{{ caseStudy.title }}</span>
+        {% if caseStudy.year %}<span class="band__year">({{ caseStudy.year }})</span>{% endif %}
+      </div>
+    </a>
+    {% endif %}
+
     <!-- ===================== INTRO (light) ===================== -->
     {% if introTitle %}
     <section class="section section--light service-intro" aria-labelledby="intro-title">
