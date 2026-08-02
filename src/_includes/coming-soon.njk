@@ -1,0 +1,19 @@
+---
+layout: base.njk
+extraStyles: ["contact"]
+hideFooterCta: true
+robots: "noindex"
+---
+    <!-- Reuses the thank-you hero treatment so placeholder pages look intentional
+         and on-brand rather than broken. Copy is driven by front-matter vars. -->
+    <section class="section contact-thanks">
+      <div class="container contact-thanks__inner">
+        <p class="eyebrow">{{ csEyebrow or "Coming soon" }}</p>
+        <h1 class="statement contact-thanks__title">{{ csTitle | safe }}</h1>
+        <p class="contact-thanks__lead">{{ csLead }}</p>
+        <div class="contact-thanks__actions">
+          <a class="btn-inquiry btn-inquiry--lg" href="/">Back to home <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn-line btn-line--lg" href="/contact/">Contact us</a>
+        </div>
+      </div>
+    </section>

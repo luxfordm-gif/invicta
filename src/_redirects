@@ -1,0 +1,5 @@
+# /enquiry/ is a JavaScript slide-out drawer, not a standalone page. With JS
+# enabled, enquiry.js intercepts the click and never navigates here. This is the
+# graceful fallback for no-JS visitors: send them to the contact page, which
+# carries the same enquiry form.
+/enquiry/   /contact/   302
