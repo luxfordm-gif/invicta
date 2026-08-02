@@ -79,7 +79,10 @@
 @media (min-width: 1100px) { .sectors { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); } }
 .sector { display: flex; flex-direction: column; border-top: 1px solid var(--line-dark); padding-top: var(--space-3); }
 .sector h3 { font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.02em; }
-.sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); }
+/* flex:1 lets the description fill the leftover height so the media sits at the
+   card's foot — with the grid row stretching all cards to equal height, that
+   bottom-aligns every placeholder even when descriptions run to different lengths. */
+.sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
 .sector__media { margin-top: var(--space-4); }
 .sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
@@ -127,7 +130,6 @@
     padding: var(--space-3) var(--space-3) var(--space-4);
     background: rgba(255, 255, 255, 0.02);
   }
-  .sector p { flex: 1; }           /* push the media to the card's foot so tiles align */
 }
 
 /* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */

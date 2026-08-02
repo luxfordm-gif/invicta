@@ -2,13 +2,13 @@
    prefs.css — BUILD-TIME preview panel + committed-design locks.
    REMOVE before launch (with prefs.js + the .prefs markup). When removing,
    bake the two locks below into the real files: keep only <footer class="footer
-   footer--b"> in index.html, and set --light: #F4F3F1 in tokens.css.
+   footer--b"> in index.html, and set --light: #F7F7F5 in tokens.css.
    ========================================================================== */
 
 /* --- Committed design (preview lock): Wordmark footer + Paper surface --- */
 .footer--a { display: none; }
 .footer--b { display: block; }
-:root { --light: #F4F3F1; }   /* Paper — cooler neutral off-white */
+:root { --light: #F7F7F5; }   /* Paper — cool near-white off-white */
 
 /* --- Floating preview panel --- */
 .prefs {

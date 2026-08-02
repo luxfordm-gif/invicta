@@ -165,69 +165,76 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 }
 
 .nav__toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; }
-.nav__toggle span,
+/* Modern asymmetric menu mark: two staggered strokes, the lower one shorter and
+   right-aligned. The span is just a 24px-wide anchor with no bar of its own; the
+   two visible strokes live on ::before / ::after so they can cross into an X. */
+.nav__toggle span { position: relative; display: block; width: 24px; height: 1.5px; background: transparent; }
 .nav__toggle span::before,
 .nav__toggle span::after {
-  content: ""; display: block; width: 24px; height: 1.5px; background: var(--on-dark);
-  transition: transform 0.3s ease, opacity 0.2s ease;
+  content: ""; display: block; position: absolute; right: 0; height: 1.5px;
+  background: var(--on-dark); border-radius: 2px;
+  transition: width 0.3s ease, top 0.3s ease, transform 0.3s ease, opacity 0.2s ease;
 }
-.nav__toggle span { position: relative; }
-.nav__toggle span::before { position: absolute; top: -7px; }
-.nav__toggle span::after { position: absolute; top: 7px; }
-.nav__toggle[aria-expanded="true"] span { background: transparent; }
-.nav__toggle[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
-.nav__toggle[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
+.nav__toggle span::before { width: 24px; top: -5px; }   /* top stroke — full width */
+.nav__toggle span::after  { width: 15px; top:  5px; }   /* bottom stroke — shorter, right-aligned */
+/* Subtle micro-interaction: the short stroke reaches out to match on hover. */
+.nav__toggle:hover span::after { width: 24px; }
+/* Open → the two strokes grow equal and cross into an X. */
+.nav__toggle[aria-expanded="true"] span::before { width: 24px; top: 0; transform: rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span::after  { width: 24px; top: 0; transform: rotate(-45deg); }
 
 /* Mobile-only extras (hidden on desktop) */
 .nav__mobile-extra { display: none; }
 .emergency-cta { display: none; }
 .emergency-dock { display: none; }
 
-/* Emergency call bar — mobile only.
-   A full-width dark navy "dock" pinned to the bottom edge of the viewport, in
-   the site's own palette (a pale slab read as dated and clashed on the lighter
-   sections). Near-solid deep navy with a light blur + hairline top edge so it
-   reads as a fixed glass layer over whatever scrolls beneath it. Holds the call
-   button plus a small reassurance line. */
+/* Emergency call button — mobile only.
+   A floating frosted PILL pinned near the bottom edge (no full-width slab). The
+   translucent fill + backdrop blur mask whatever scrolls behind it, and the pill
+   flips tone to keep contrast: light (cream) over the site's dark bands, deep
+   navy over light bands (driven by html.dock-on-light from nav.js). Holds the
+   call button plus a small reassurance line. */
 @media (max-width: 899.98px) {
   .emergency-dock {
-    display: flex; flex-direction: column; align-items: stretch; gap: 9px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
     position: fixed; left: 0; right: 0; z-index: 250;
     bottom: 0; width: 100%;
-    padding: 13px var(--container-pad) calc(13px + env(safe-area-inset-bottom, 0px));
-    background: var(--ground-deep);
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow: 0 -12px 34px -14px rgba(0, 0, 0, 0.55);
+    padding: 0 var(--container-pad) calc(26px + env(safe-area-inset-bottom, 0px));
+    background: none; border: 0; box-shadow: none;
+    pointer-events: none;                 /* only the button + note are interactive */
     animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
     transition:
       opacity 0.45s ease,
       transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       visibility 0s linear 0s;
   }
-  /* Solid button, softly rounded (not a full pill), full width within the bar,
-     with a phone glyph for instant read. */
+  /* Frosted pill, full width within its margins, with a phone glyph for instant
+     read. Default tone = light, for the dark bands it usually floats over. */
   .emergency-cta {
+    pointer-events: auto;
     display: flex; align-items: center; justify-content: center; gap: 9px;
-    width: 100%; padding: 15px 16px; text-align: center; white-space: nowrap;
-    background: var(--accent-emergency);
-    color: var(--on-dark);
-    border: 0;
-    border-radius: 12px;
+    width: 100%; padding: 15px 18px; text-align: center; white-space: nowrap;
+    background: rgba(247, 243, 236, 0.80);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    backdrop-filter: blur(16px) saturate(1.1);
+    color: var(--ground);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
     font-family: var(--font-body); font-weight: 600; font-size: clamp(12px, 3.3vw, 13px);
     text-transform: uppercase; letter-spacing: 0.05em;
-    box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     will-change: transform;
   }
   .emergency-cta__icon { width: 17px; height: 17px; flex: none; }
-  .emergency-cta:hover { background: #35578A; }
   .emergency-cta:active { transform: scale(0.99); }
-  /* Reassurance line under the button. */
-  .emergency-dock__note {
-    font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
-    color: var(--on-dark-muted); text-align: center;
+  /* Over a LIGHT band the pill flips to deep navy so its contrast holds. */
+  html.dock-on-light .emergency-cta {
+    background: rgba(11, 31, 58, 0.80);
+    color: var(--on-dark);
+    border-color: rgba(255, 255, 255, 0.14);
   }
   /* Retreat once the footer scrolls into view — its contact details take over,
      so the floating button bows out rather than sitting over them. */
@@ -272,20 +279,19 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      brand + close button glued to the top of the viewport. */
   html.nav-open .nav { position: fixed; top: 0; left: 0; right: 0; background: var(--light); }
   html.nav-open .nav__brand { color: var(--ink); }
-  html.nav-open .nav__toggle { border-color: var(--line-light); }
   /* Only recolour the two diagonal bars: the middle bar is already transparent
      (aria-expanded="true"), so recolouring it too would leave a horizontal
      stroke behind the X — the "close + burger at once" glitch. */
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
-  .nav__inner { display: flex; align-items: center; }
+  .nav__inner { display: flex; align-items: center; padding-block: 22px; }  /* 8px shorter bar than desktop */
   /* Full name on mobile too — scaled to fit on one line beside the menu button. */
-  .nav__brand { justify-self: auto; font-size: clamp(15px, 4.3vw, 22px); }
+  .nav__brand { justify-self: auto; font-size: clamp(17px, 5vw, 24px); }
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
-  /* Close button in a bordered square (Claude-style). */
+  /* Bare two-line mark, no bordered square — just the strokes. */
   .nav__toggle {
     display: inline-flex; order: 3; margin-left: auto;
-    border: 1px solid var(--line-dark); border-radius: 8px;
+    border: 0;
   }
   /* Brand + toggle stay above the full-screen overlay so the X remains tappable. */
   .nav__brand, .nav__toggle { position: relative; z-index: 2; }

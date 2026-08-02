@@ -57,15 +57,29 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavH);
 
     var reduceNav = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Smart-hide runs on desktop only. On mobile the utility bar is hidden and
+    // the nav is pinned to the very top, so it stays exactly as-is there.
+    var deskMq = window.matchMedia("(min-width: 900px)");
     var lastY = window.scrollY;
     var ticking = false;
     function applyNav() {
       ticking = false;
-      var y = window.scrollY;
+      var y = window.scrollY < 0 ? 0 : window.scrollY;
       nav.classList.toggle("is-scrolled", y > 8);
-      // Sticky header preview: the nav stays pinned and in view the whole time,
-      // so the smart-hide is disabled — header-up is never applied.
-      root.classList.remove("header-up");
+      // Smart header: on desktop, scrolling DOWN past the header slides the nav
+      // and breadcrumb up out of view; scrolling UP (or returning near the top)
+      // brings them back. The utility bar with the contact number stays pinned
+      // throughout. A small delta threshold avoids flicker on tiny jitters.
+      if (deskMq.matches && !reduceNav.matches) {
+        var delta = y - lastY;
+        if (delta > 4 && y > 160) {
+          root.classList.add("header-up");        // scrolling down, clear of the header
+        } else if (delta < -4 || y <= 160) {
+          root.classList.remove("header-up");     // scrolling up, or back near the top
+        }
+      } else {
+        root.classList.remove("header-up");
+      }
       lastY = y;
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(applyNav); } }
@@ -83,6 +97,59 @@
       window.scrollTo({ top: 0, left: 0, behavior: reduce ? "auto" : "smooth" });
     });
   }
+})();
+
+/* --- Emergency pill: adapt its tone to the band behind it --------------------
+   The floating call pill is frosted and translucent, so over a light band a
+   light pill would wash out. On each scroll we sample the element directly
+   behind the pill's centre and, if that band reads light, flip
+   html.dock-on-light (CSS then swaps the pill to deep navy). Mobile only. */
+(function () {
+  "use strict";
+  var dock = document.querySelector(".emergency-dock");
+  var cta = dock && dock.querySelector(".emergency-cta");
+  if (!cta) return;
+  var root = document.documentElement;
+  var mq = window.matchMedia("(max-width: 899.98px)");
+
+  // Luminance of the nearest ancestor with a non-transparent background.
+  function toneBehind(el) {
+    while (el && el !== document.body) {
+      var m = getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);
+      if (m) {
+        var p = m[1].split(",").map(parseFloat);
+        var a = p[3] === undefined ? 1 : p[3];
+        if (a > 0.1) {
+          var lum = 0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2];
+          return lum > 140 ? "light" : "dark";
+        }
+      }
+      el = el.parentElement;
+    }
+    return "dark";
+  }
+
+  var ticking = false;
+  function sampleDock() {
+    ticking = false;
+    if (!mq.matches) { root.classList.remove("dock-on-light"); return; }
+    var r = cta.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+    var cy = r.top + r.height / 2;
+    if (cy < 0 || cy > window.innerHeight) return;         // pill off-screen mid-transition
+    // Let the hit-test fall through the pill to the band underneath it.
+    var prev = cta.style.pointerEvents;
+    cta.style.pointerEvents = "none";
+    var behind = document.elementFromPoint(cx, cy);
+    cta.style.pointerEvents = prev;
+    if (behind) root.classList.toggle("dock-on-light", toneBehind(behind) === "light");
+  }
+  function onDockScroll() { if (!ticking) { ticking = true; requestAnimationFrame(sampleDock); } }
+
+  window.addEventListener("scroll", onDockScroll, { passive: true });
+  window.addEventListener("resize", onDockScroll, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sampleDock);
+  sampleDock();
 })();
 
 /* --- Sectors carousel: build pagination dots + keep them in sync -------------
