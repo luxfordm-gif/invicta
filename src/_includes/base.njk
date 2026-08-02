@@ -7,7 +7,11 @@
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
-  {% if robots %}<meta name="robots" content="{{ robots }}">{% endif %}
+  {# TEMPORARY: the whole site is hidden from search engines while it runs on the
+     pre-DNS preview URL. Once the real domain is connected, delete the hardcoded
+     line below and restore the per-page {{ robots }} line that follows it. #}
+  <meta name="robots" content="noindex, nofollow">
+  {# {% if robots %}<meta name="robots" content="{{ robots }}">{% endif %} #}
 
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
