@@ -84,11 +84,11 @@
    bottom-aligns every placeholder even when descriptions run to different lengths. */
 .sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
 .sector__media { margin-top: var(--space-4); }
-.sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
+.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
    bright grey block that reads as a broken image. */
 .sector__media .img-ph {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   background: var(--ground-raise);
   color: var(--on-dark-muted);
   border: 1px solid var(--line-dark);
@@ -129,6 +129,18 @@
     border-radius: 18px;
     padding: var(--space-3) var(--space-3) var(--space-4);
     background: rgba(255, 255, 255, 0.02);
+  }
+  /* Image LEADS the card and bleeds to its top + side edges, so the card reads
+     as one surface rather than a card-within-a-card. 16:9 crop suits the single
+     wide tile (the tall portrait is for the multi-column grid). */
+  .sector__media {
+    order: -1;
+    margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3);
+  }
+  .sector__media img,
+  .sector__media .img-ph {
+    aspect-ratio: 16 / 9;
+    border-radius: 17px 17px 0 0;   /* match the card's top corners; flush sides + bottom */
   }
 }
 
