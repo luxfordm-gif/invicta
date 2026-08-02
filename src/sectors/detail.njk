@@ -1,0 +1,15 @@
+---
+layout: coming-soon.njk
+pagination:
+  data: site.sectors
+  size: 1
+  alias: sector
+permalink: "{{ sector.href }}"
+current: "sectors"
+csEyebrow: "Sectors"
+eleventyComputed:
+  title: "{{ sector.title }} | Invicta Water Treatment"
+  description: "{{ sector.desc }} A dedicated {{ sector.title }} page from Invicta Water Treatment is coming soon."
+  csTitle: "{{ sector.title }}, <span class='em'>coming soon.</span>"
+  csLead: "{{ sector.desc }} A dedicated page is on the way. In the meantime, we would be glad to talk your requirements through personally."
+---

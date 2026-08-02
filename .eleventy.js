@@ -3,6 +3,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/styles");
   eleventyConfig.addPassthroughCopy("src/scripts");
   eleventyConfig.addPassthroughCopy("src/assets");
+  // Netlify redirects file, copied to the site root.
+  eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
 
   return {
     dir: {
