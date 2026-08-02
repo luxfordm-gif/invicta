@@ -315,6 +315,11 @@
 @media (min-width: 800px) { .footer__nav { text-align: right; } }
 .footer__nav a { font-size: 18px; color: var(--on-dark); }
 .footer__nav a:hover { color: var(--lime); }
+/* Services expands into its child pages, sitemap style. */
+.footer__nav-group { display: flex; flex-direction: column; gap: var(--space-1); }
+.footer__sublist { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+.footer__sublist a { font-size: 15px; color: var(--on-dark-muted); }
+.footer__sublist a:hover { color: var(--lime); }
 .footer__meta {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2);
   margin-top: var(--flow-md);
