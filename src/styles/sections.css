@@ -120,28 +120,69 @@
     overscroll-behavior-x: contain;
   }
   .sectors::-webkit-scrollbar { display: none; }
+
+  /* === ACTIVE mobile card: image IS the card, copy over a frosted top ========
+     The photo fills the whole tile; the heading + copy sit in a blurred, dark
+     gradient header that dissolves into the clear image below. */
   .sector {
+    position: relative;
     flex: 0 0 82%;                 /* ~18% of the next card peeks at the edge */
     scroll-snap-align: start;
     scroll-snap-stop: always;
     border-top: 0;
     border: 1px solid var(--line-dark);
     border-radius: 18px;
+    overflow: hidden;
+    padding: 0;
+    aspect-ratio: 5 / 8;           /* tall image tile */
+    background: var(--ground-raise);
+  }
+  .sector__media { position: absolute; inset: 0; order: -1; margin: 0; z-index: 0; }
+  .sector__media img,
+  .sector__media .img-ph {
+    position: absolute; inset: 0;
+    width: 100%; height: 145%;      /* zoom + top-align drops each subject clear of the header */
+    aspect-ratio: auto;
+    object-fit: cover; object-position: center top;
+    border-radius: 0;
+  }
+  /* Frosted gradient header behind the text. Its OWN top corners are rounded to
+     match the card: a backdrop-filter element is NOT clipped by the card's
+     rounded overflow, so without this its square corners show through. */
+  .sector::before {
+    content: "";
+    position: absolute; inset: 0 0 auto 0; height: 60%;
+    background: linear-gradient(to bottom,
+      rgba(6, 16, 34, 0.9) 0%, rgba(6, 16, 34, 0.5) 48%, rgba(6, 16, 34, 0) 100%);
+    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+    border-radius: 17px 17px 0 0;
+    z-index: 1; pointer-events: none;
+  }
+  .sector h3 {
+    position: relative; z-index: 2; order: 0; margin: 0;
+    padding: var(--space-4) var(--space-3) 0;
+    color: var(--on-dark);
+  }
+  .sector p {
+    position: relative; z-index: 2; order: 1; flex: 0 0 auto; margin: 0;
+    padding: 14px var(--space-3) 0;   /* title → copy gap: 16px − 2px */
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 34ch;
+  }
+
+  /* === PREVIOUS mobile card (image below the copy) — kept for easy revert;
+     delete the active block above and uncomment this to restore. =============
+  .sector {
+    flex: 0 0 82%; scroll-snap-align: start; scroll-snap-stop: always;
+    border-top: 0; border: 1px solid var(--line-dark); border-radius: 18px;
     padding: var(--space-3) var(--space-3) var(--space-4);
     background: rgba(255, 255, 255, 0.02);
   }
-  /* Image LEADS the card and bleeds to its top + side edges, so the card reads
-     as one surface rather than a card-within-a-card. 16:9 crop suits the single
-     wide tile (the tall portrait is for the multi-column grid). */
-  .sector__media {
-    order: -1;
-    margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3);
-  }
-  .sector__media img,
-  .sector__media .img-ph {
-    aspect-ratio: 16 / 9;
-    border-radius: 17px 17px 0 0;   /* match the card's top corners; flush sides + bottom */
-  }
+  .sector__media { order: -1; margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3); }
+  .sector__media img, .sector__media .img-ph { aspect-ratio: 16 / 9; border-radius: 17px 17px 0 0; }
+  === */
 }
 
 /* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */
