@@ -87,10 +87,10 @@ p, li, figcaption, blockquote, dd { text-wrap: pretty; }
 /* Dark is the default (matches body). Light inverts for the alternating rhythm. */
 .section--light { background: var(--light); color: var(--ink); }
 .section--light h1, .section--light h2, .section--light h3 { color: var(--ink); }
-.section--light .eyebrow { color: var(--ink); }
+.section--light .eyebrow { color: var(--steel); }   /* light-blue label on the cool surface */
 .section--light p { color: var(--ink-muted); }
 .section--light .index { color: var(--ink-muted); }
-.section--light .em { color: inherit; }
+.section--light .em { color: var(--steel); }         /* accent word picks up the same light blue */
 .section--light :focus-visible { outline-color: var(--ink); }
 /* Two adjacent light sections read as ONE cream block — collapse the boundary gap. */
 .section--light + .section--light { padding-top: 0; }

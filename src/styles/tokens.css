@@ -10,11 +10,12 @@
   --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
   --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
   --ground-raise: #14294A;        /* raised navy surface */
-  --light: #F6F3EA;              /* creamy white content surface */
+  --light: #F7F7F5;              /* cool near-white content surface */
   --light-warm: #EFEBDF;         /* warmer cream alt */
 
   /* --- Chalky detail accent (NOT a hero colour; used small) --- */
   --lime: #B8C8D4;               /* chalky pale blue-grey — eyebrows, hairlines, italics, underlines */
+  --steel: #5B76A0;              /* light-blue heading + eyebrow accent on light (cool) sections */
   --accent-emergency: #2C4A73;   /* ONLY the emergency phone number chip — nowhere else */
 
   /* --- Text on dark ground --- */
