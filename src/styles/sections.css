@@ -130,10 +130,18 @@
     padding: var(--space-3) var(--space-3) var(--space-4);
     background: rgba(255, 255, 255, 0.02);
   }
-  /* Wide 16:9 crop on phones (the tall portrait suits the multi-column grid,
-     not a single swipeable card). */
+  /* Image LEADS the card and bleeds to its top + side edges, so the card reads
+     as one surface rather than a card-within-a-card. 16:9 crop suits the single
+     wide tile (the tall portrait is for the multi-column grid). */
+  .sector__media {
+    order: -1;
+    margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3);
+  }
   .sector__media img,
-  .sector__media .img-ph { aspect-ratio: 16 / 9; }
+  .sector__media .img-ph {
+    aspect-ratio: 16 / 9;
+    border-radius: 17px 17px 0 0;   /* match the card's top corners; flush sides + bottom */
+  }
 }
 
 /* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */
