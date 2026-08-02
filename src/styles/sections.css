@@ -84,11 +84,11 @@
    bottom-aligns every placeholder even when descriptions run to different lengths. */
 .sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
 .sector__media { margin-top: var(--space-4); }
-.sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
+.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
    bright grey block that reads as a broken image. */
 .sector__media .img-ph {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   background: var(--ground-raise);
   color: var(--on-dark-muted);
   border: 1px solid var(--line-dark);
@@ -130,6 +130,10 @@
     padding: var(--space-3) var(--space-3) var(--space-4);
     background: rgba(255, 255, 255, 0.02);
   }
+  /* Wide 16:9 crop on phones (the tall portrait suits the multi-column grid,
+     not a single swipeable card). */
+  .sector__media img,
+  .sector__media .img-ph { aspect-ratio: 16 / 9; }
 }
 
 /* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */
