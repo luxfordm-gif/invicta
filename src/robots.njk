@@ -2,7 +2,13 @@
 permalink: /robots.txt
 eleventyExcludeFromCollections: true
 ---
+# TEMPORARY: this site is running on a preview URL before DNS is connected.
+# Block all crawling until launch, then restore the Allow + Sitemap lines below.
 User-agent: *
-Allow: /
+Disallow: /
 
-Sitemap: {{ site.url }}/sitemap.xml
+# --- Restore at launch: ---
+# User-agent: *
+# Allow: /
+#
+# Sitemap: {{ site.url }}/sitemap.xml
