@@ -79,16 +79,11 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   line-height: 1;
   white-space: nowrap;
 }
-/* Full name at the top; collapses to just "Invicta" on scroll. */
+/* Full brand name "Invicta Water Treatment" shown at all times. */
 .nav__brand-suffix {
   display: inline-block;
-  overflow: hidden;
-  max-width: 16em;
-  opacity: 1;
   vertical-align: bottom;
-  transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
-.nav.is-scrolled .nav__brand-suffix { max-width: 0; opacity: 0; }
 .nav__links {
   justify-self: center;
   display: flex;
@@ -200,9 +195,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     position: fixed; left: 0; right: 0; z-index: 250;
     bottom: 0; width: 100%;
     padding: 13px var(--container-pad) calc(13px + env(safe-area-inset-bottom, 0px));
-    background: rgba(8, 24, 46, 0.86);
-    -webkit-backdrop-filter: blur(16px) saturate(1.3);
-    backdrop-filter: blur(16px) saturate(1.3);
+    background: var(--ground-deep);
     border-top: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow: 0 -12px 34px -14px rgba(0, 0, 0, 0.55);
     animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
@@ -268,7 +261,10 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   /* A backdrop-filter on the bar would make it the containing block for the
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
      so drop the blur on mobile and lean on a near-solid navy instead. */
-  .nav, .nav.is-scrolled { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(11, 31, 58, 0.88); }
+  .nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(11, 31, 58, 0.88); }
+  /* Once scrolled the header is permanently in view, so make it fully solid — a
+     translucent bar would let page text ghost through behind the brand. */
+  .nav.is-scrolled { background: var(--ground); }
   /* Menu open: the top bar + brand + close button invert to sit on the cream menu.
      Pin the bar with position:fixed — while the menu is open <html> is
      overflow:hidden, which strands a position:sticky bar at its in-flow offset
@@ -283,8 +279,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
   .nav__inner { display: flex; align-items: center; }
-  .nav__brand { justify-self: auto; }
-  .nav__brand-suffix { max-width: 0; opacity: 0; }   /* mobile: just "Invicta" */
+  /* Full name on mobile too — scaled to fit on one line beside the menu button. */
+  .nav__brand { justify-self: auto; font-size: clamp(15px, 4.3vw, 22px); }
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
   /* Close button in a bordered square (Claude-style). */
   .nav__toggle {

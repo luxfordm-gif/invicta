@@ -63,18 +63,9 @@
       ticking = false;
       var y = window.scrollY;
       nav.classList.toggle("is-scrolled", y > 8);
-      // Smart hide: slide the nav away when scrolling DOWN (past the top), bring it
-      // back on scroll UP. Never hide with the mobile menu open or reduced motion.
-      // The 6px deadzone stops jitter from tiny scroll wobbles.
-      if (!reduceNav.matches && !root.classList.contains("nav-open")) {
-        if (y - lastY > 6 && y > 160) {
-          root.classList.add("header-up");       // hide nav + breadcrumb together
-        } else if (lastY - y > 6 || y <= 160) {
-          root.classList.remove("header-up");     // reveal on scroll-up / near the top
-        }
-      } else {
-        root.classList.remove("header-up");
-      }
+      // Sticky header preview: the nav stays pinned and in view the whole time,
+      // so the smart-hide is disabled — header-up is never applied.
+      root.classList.remove("header-up");
       lastY = y;
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(applyNav); } }
