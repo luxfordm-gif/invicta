@@ -11,7 +11,11 @@
 @media (min-width: 800px) {
   .service-intro__body { columns: 2; column-gap: clamp(40px, 5vw, 88px); }
   .service-intro__body p { break-inside: avoid; }
-  .service-intro__body p + p { margin-top: 0; padding-top: 1.1em; }
+  /* Space paragraphs with BOTTOM margin so the first line of each column
+     top-aligns; a top margin/padding pushes the paragraph that begins column 2
+     down, out of line with column 1. */
+  .service-intro__body p + p { margin-top: 0; }
+  .service-intro__body p:not(:last-child) { margin-bottom: 1.1em; }
 }
 
 /* --- What's involved (dark): sticky heading (left) + numbered list, with the
@@ -49,7 +53,10 @@
 }
 .service-case__media { margin: 0; }
 .service-case__media img,
-.service-case__media .img-ph { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 4px; }
+.service-case__media .img-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
+.service-case__media img { object-fit: cover; display: block; }
+/* leave the placeholder as flex (from .img-ph) so its label stays centred both
+   ways; a display:block here would strand the label at the top. */
 .service-case__body p { font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; }
 .service-case__body p + p { margin-top: 1.1em; }
 .service-case__highlight-wrap { margin-top: var(--flow-md); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
