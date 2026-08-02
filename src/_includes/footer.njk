@@ -24,12 +24,17 @@
           <ul class="footer__nav">
             <li><a href="/">Home</a></li>
             <li class="footer__nav-group">
-              <a href="/services/private-water-supplies/">Services</a>
-              <ul class="footer__sublist">
-                {% for s in site.services %}
-                <li><a href="{{ s.href }}">{{ s.title }}</a></li>
-                {% endfor %}
-              </ul>
+              <details class="footer__acc">
+                <summary class="footer__acc-summary">
+                  <span>Services</span>
+                  <span class="footer__acc-icon" aria-hidden="true"></span>
+                </summary>
+                <ul class="footer__sublist">
+                  {% for s in site.services %}
+                  <li><a href="{{ s.href }}">{{ s.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </details>
             </li>
             <li><a href="/sectors/">Sectors</a></li>
             <li><a href="/about/">About</a></li>
@@ -71,12 +76,17 @@
           <ul class="footer__nav">
             <li><a href="/">Home</a></li>
             <li class="footer__nav-group">
-              <a href="/services/private-water-supplies/">Services</a>
-              <ul class="footer__sublist">
-                {% for s in site.services %}
-                <li><a href="{{ s.href }}">{{ s.title }}</a></li>
-                {% endfor %}
-              </ul>
+              <details class="footer__acc">
+                <summary class="footer__acc-summary">
+                  <span>Services</span>
+                  <span class="footer__acc-icon" aria-hidden="true"></span>
+                </summary>
+                <ul class="footer__sublist">
+                  {% for s in site.services %}
+                  <li><a href="{{ s.href }}">{{ s.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </details>
             </li>
             <li><a href="/sectors/">Sectors</a></li>
             <li><a href="/about/">About</a></li>

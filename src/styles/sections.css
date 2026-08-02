@@ -315,9 +315,33 @@
 @media (min-width: 800px) { .footer__nav { text-align: right; } }
 .footer__nav a { font-size: 18px; color: var(--on-dark); }
 .footer__nav a:hover { color: var(--lime); }
-/* Services expands into its child pages, sitemap style. */
-.footer__nav-group { display: flex; flex-direction: column; gap: var(--space-1); }
-.footer__sublist { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+/* Services collapses into a click-to-open accordion of its child pages, using
+   the same +/− toggle idiom as the nav dropdowns and the page accordions. */
+.footer__acc summary { list-style: none; cursor: pointer; }
+.footer__acc summary::-webkit-details-marker { display: none; }
+.footer__acc-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  color: var(--on-dark);
+  transition: color 0.2s ease;
+}
+.footer__acc-summary:hover { color: var(--lime); }
+.footer__acc-summary:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 2px; }
+.footer__acc-icon { position: relative; width: 15px; height: 15px; flex: none; }
+.footer__acc-icon::before,
+.footer__acc-icon::after {
+  content: "";
+  position: absolute; top: 50%; left: 50%;
+  width: 11px; height: 1.5px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.footer__acc-icon::after { transform: translate(-50%, -50%) rotate(90deg); }        /* vertical stroke → "+" */
+.footer__acc[open] .footer__acc-icon::after { transform: translate(-50%, -50%) rotate(90deg) scaleX(0); opacity: 0; }  /* retracts → "−" */
+.footer__sublist { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 .footer__sublist a { font-size: 15px; color: var(--on-dark-muted); }
 .footer__sublist a:hover { color: var(--lime); }
 .footer__meta {
