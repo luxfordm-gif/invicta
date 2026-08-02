@@ -188,58 +188,51 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .emergency-cta { display: none; }
 .emergency-dock { display: none; }
 
-/* Floating emergency call button — mobile only.
-   Centred, content-width, with a soft "gooey" liquid-glass press feel, a
-   progressive-blur scrim so it lifts off the page, and a gentle load-in.
-   Centred with auto margins (not translateX) so the fixed scrim below can
-   anchor to the viewport rather than the transformed dock. */
+/* Emergency call bar — mobile only.
+   A full-width cream bar pinned to the bottom edge of the viewport (not a
+   floating card). Holds the call button plus a small reassurance line beneath
+   it, with a soft shadow cast up onto the page so it reads as a fixed layer. */
 @media (max-width: 899.98px) {
   .emergency-dock {
-    display: flex; justify-content: center;
-    position: fixed; left: 0; right: 0; margin-inline: auto; z-index: 250;
-    width: max-content; max-width: min(calc(100vw - 32px), 360px);
-    bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+    position: fixed; left: 0; right: 0; z-index: 250;
+    bottom: 0; width: 100%;
+    padding: 12px var(--container-pad) calc(12px + env(safe-area-inset-bottom, 0px));
+    background: var(--light);
+    border-top: 1px solid var(--line-light);
+    box-shadow: 0 -8px 28px -10px rgba(6, 16, 34, 0.22);
     animation: emergency-dock-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
     transition:
       opacity 0.45s ease,
       transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       visibility 0s linear 0s;
   }
-  /* Soft blur + fade behind the button so it pops over whatever it floats on.
-     Anchored to the viewport bottom; masked so the blur tapers upward. */
-  .emergency-dock::before {
-    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 130px;
-    z-index: -1; pointer-events: none;
-    background: linear-gradient(to top,
-      rgba(6, 16, 34, 0.32) 0%,
-      rgba(6, 16, 34, 0.16) 38%,
-      rgba(6, 16, 34, 0) 100%);
-    -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
-    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 100%);
-  }
-  /* Clean solid pill, consistent with the site's buttons (no gradient/glass). */
+  /* Solid button, softly rounded (not a full pill), full width within the bar. */
   .emergency-cta {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 16px 30px; text-align: center; white-space: nowrap;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 15px 22px; text-align: center; white-space: nowrap;
     background: var(--accent-emergency);
     color: var(--on-dark);
     border: 0;
-    border-radius: var(--btn-radius);
+    border-radius: 12px;
     font-family: var(--font-body); font-weight: 600; font-size: 13px;
     text-transform: uppercase; letter-spacing: 0.06em;
-    box-shadow: 0 12px 30px -8px rgba(6, 16, 34, 0.5);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     transition: transform 0.2s ease, background-color 0.2s ease;
     will-change: transform;
   }
   .emergency-cta:hover { background: #35578A; }
-  .emergency-cta:active { transform: scale(0.97); }
+  .emergency-cta:active { transform: scale(0.99); }
+  /* Reassurance line under the button. */
+  .emergency-dock__note {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--ink-muted); text-align: center;
+  }
   /* Retreat once the footer scrolls into view — its contact details take over,
      so the floating button bows out rather than sitting over them. */
   html.footer-inview .emergency-dock {
-    opacity: 0; transform: translateY(16px); pointer-events: none;
+    opacity: 0; transform: translateY(100%); pointer-events: none;
     visibility: hidden;
     transition:
       opacity 0.45s ease,
@@ -269,11 +262,17 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
      so drop the blur on mobile and lean on a near-solid navy instead. */
   .nav, .nav.is-scrolled { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(11, 31, 58, 0.88); }
-  /* Menu open: the top bar + brand + close button invert to sit on the cream menu. */
-  html.nav-open .nav { background: var(--light); }
+  /* Menu open: the top bar + brand + close button invert to sit on the cream menu.
+     Pin the bar with position:fixed — while the menu is open <html> is
+     overflow:hidden, which strands a position:sticky bar at its in-flow offset
+     (off-screen when you opened the menu after scrolling down). Fixed keeps the
+     brand + close button glued to the top of the viewport. */
+  html.nav-open .nav { position: fixed; top: 0; left: 0; right: 0; background: var(--light); }
   html.nav-open .nav__brand { color: var(--ink); }
   html.nav-open .nav__toggle { border-color: var(--line-light); }
-  html.nav-open .nav__toggle span,
+  /* Only recolour the two diagonal bars: the middle bar is already transparent
+     (aria-expanded="true"), so recolouring it too would leave a horizontal
+     stroke behind the X — the "close + burger at once" glitch. */
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
   .nav__inner { display: flex; align-items: center; }
@@ -317,7 +316,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   .nav__links > li.has-menu.is-expanded > a::before { transform: translateY(-50%) rotate(90deg) scaleX(0); opacity: 0; }  /* retracts → "−" */
   .nav__menu {
     position: static; transform: none; opacity: 1; visibility: visible; pointer-events: auto;
-    min-width: 0; padding: 0 0 0 var(--space-3);
+    min-width: 0; padding: 0;   /* submenu items sit in line with the parent label, not indented */
     background: none; -webkit-backdrop-filter: none; backdrop-filter: none;
     border: 0; box-shadow: none; border-radius: 0;
     max-height: 0; overflow: hidden;
@@ -350,8 +349,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   .nav__mobile-extra .nav__menu-tel span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
   .nav__mobile-extra .nav__menu-tel strong { font-family: var(--font-display); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; color: var(--ink); }
 
-  /* clear the fixed emergency button */
-  body { padding-bottom: 84px; }
+  /* No bottom padding needed to clear the floating dock: it retreats the moment
+     the footer scrolls into view (html.footer-inview), so the footer is never
+     covered — and padding here only left an empty band under the footer. */
   /* lock the page behind the full-screen menu so only the menu scrolls */
   html.nav-open, html.nav-open body { overflow: hidden; }
 }
@@ -433,6 +433,18 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 }
 .band__title { text-align: center; }
 .band__year { text-align: right; color: var(--on-dark-muted); }
+/* On phones the three-across row crowds and wraps awkwardly over the image —
+   stack the label lines vertically, all left-aligned, so it reads cleanly. */
+@media (max-width: 599.98px) {
+  .band__bar {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding-top: var(--space-3);
+  }
+  .band__label,
+  .band__title,
+  .band__year { text-align: left; }
+}
 
 /* --- Placeholder media blocks (imagery TBD) ------------------------------- */
 .ph {
