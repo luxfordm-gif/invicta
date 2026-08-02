@@ -92,15 +92,22 @@
 }
 
 /* --- Service cards (checkboxes) --- */
-.contact-form__cards { display: grid; gap: 12px; grid-template-columns: 1fr; }
-@media (min-width: 520px) { .contact-form__cards { grid-template-columns: repeat(2, 1fr); } }
+/* Two columns from the smallest screens (a 2x3 block for the six options),
+   three across on desktop. Equal-width tracks + grid's default stretch keep
+   both cards in a row the same height. */
+.contact-form__cards { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 800px) { .contact-form__cards { grid-template-columns: repeat(3, 1fr); } }
+/* Stacked layout: the checkbox sits at the top-left and the label drops to the
+   foot of the card. With the label on its own full-width row it always has room
+   to wrap at a space (e.g. "Servicing &" / "Maintenance") instead of breaking
+   mid-word in a cramped side column. */
 .ccard {
   position: relative;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 116px;
+  padding: 16px;
   border: 1px solid var(--line-field);
   border-radius: 14px;
   cursor: pointer;
@@ -120,7 +127,9 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .ccard__check svg { width: 16px; height: 16px; }
-.ccard__title { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+/* margin-top:auto drops the label to the bottom of the card (checkbox stays at
+   the top); overflow-wrap is a safety net for any unbroken long word. */
+.ccard__title { margin-top: auto; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; overflow-wrap: anywhere; }
 .ccard:has(input:checked) { border-color: var(--ground); background: rgba(11, 31, 58, 0.04); }
 .ccard:has(input:checked) .ccard__check { background: var(--ground); border-color: var(--ground); color: var(--on-dark); }
 .ccard:has(input:focus-visible) { outline: 2px solid var(--ground); outline-offset: 2px; }

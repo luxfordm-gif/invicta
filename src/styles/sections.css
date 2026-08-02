@@ -81,7 +81,73 @@
 .sector h3 { font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.02em; }
 .sector p { font-size: 16px; line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); }
 .sector__media { margin-top: var(--space-4); }
-.sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); }
+.sector__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
+/* On-brand placeholder (photos to follow): a quiet navy panel instead of a
+   bright grey block that reads as a broken image. */
+.sector__media .img-ph {
+  aspect-ratio: 4 / 3;
+  background: var(--ground-raise);
+  color: var(--on-dark-muted);
+  border: 1px solid var(--line-dark);
+  border-radius: 12px;
+}
+
+/* --- Sectors as a swipeable carousel on phones -----------------------------
+   Cards become self-contained tiles in a horizontal scroll-snap track that
+   bleeds to both screen edges, so a sliver of the next card always peeks —
+   the cue that there's more to swipe. */
+@media (max-width: 599.98px) {
+  .sectors {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--space-2);
+    /* bleed the track to the viewport edges, then pad it back to the content
+       margin so the first card lines up and the last card has trailing space */
+    margin-inline: calc(-1 * var(--container-pad));
+    padding-inline: var(--container-pad);
+    /* overflow-x:auto forces overflow-y to auto too, which would clip the cards'
+       top/bottom borders flush against the track edge — this padding gives the
+       strokes room so they're not shaved off. */
+    padding-block: 4px 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-pad);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .sectors::-webkit-scrollbar { display: none; }
+  .sector {
+    flex: 0 0 82%;                 /* ~18% of the next card peeks at the edge */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    border-top: 0;
+    border: 1px solid var(--line-dark);
+    border-radius: 18px;
+    padding: var(--space-3) var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .sector p { flex: 1; }           /* push the media to the card's foot so tiles align */
+}
+
+/* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */
+.sectors__dots { display: none; }
+@media (max-width: 599.98px) {
+  .sectors__dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px;
+    margin-top: var(--space-4);
+  }
+  .sectors__dot {
+    width: 7px; height: 7px; padding: 0;
+    border: 0; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.24);
+    cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+  }
+  .sectors__dot.is-active { width: 22px; background: var(--on-dark); }
+  .sectors__dot:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
+}
 
 /* --- Stats (light) -------------------------------------------------------- */
 .stats__grid { display: grid; gap: var(--space-5); }
