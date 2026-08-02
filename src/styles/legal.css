@@ -1,0 +1,54 @@
+/* ==========================================================================
+   legal.css — Terms of Service & Privacy Policy.
+   Shared dark hero + a single readable column of light prose. Built on the
+   design tokens so the type, spacing and colour match the rest of the site.
+   ========================================================================== */
+
+/* --- Hero (dark) --- */
+.legal-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(40px, 5vw, 72px); }
+.legal-hero__title { margin-top: var(--flow-heading); max-width: 20ch; }
+.legal-hero__meta {
+  margin-top: var(--space-4);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--on-dark-muted);
+}
+
+/* --- Body: one measured prose column on the cream surface --- */
+.legal-prose { max-width: 74ch; }
+.legal-prose__lead {
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--ink);
+}
+.legal-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(21px, 2.4vw, 29px);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.legal-prose h3 {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: var(--space-5);
+}
+.legal-prose p,
+.legal-prose li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+.legal-prose p { margin-top: var(--space-3); }
+.legal-prose h2 + p,
+.legal-prose h3 + p { margin-top: var(--space-2); }
+/* base.css strips list styling globally; restore it for readable prose lists. */
+.legal-prose ul { margin-top: var(--space-3); padding-left: 1.3em; list-style: disc; }
+.legal-prose li { margin-top: var(--space-1); }
+.legal-prose li::marker { color: var(--steel); }
+.legal-prose a { color: var(--ground); text-decoration: underline; text-underline-offset: 3px; }
+.legal-prose a:hover { color: var(--steel); }
+.legal-prose strong { color: var(--ink); font-weight: 600; }
