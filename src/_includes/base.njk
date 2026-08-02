@@ -69,7 +69,7 @@
 {% include "footer.njk" %}
   </main>
 
-{% include "emergency-cta.njk" %}
+{% if not hideEmergencyCta %}{% include "emergency-cta.njk" %}{% endif %}
 {% include "enquiry.njk" %}
 {% include "prefs.njk" %}
 
