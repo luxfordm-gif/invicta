@@ -13,14 +13,6 @@
           {% endfor %}
         </div>
       </li>
-      <li class="nav__item has-menu">
-        <a href="/sectors/"{% if current == "sectors" %} aria-current="page"{% endif %} aria-haspopup="true">Sectors <span class="nav__caret" aria-hidden="true"></span></a>
-        <div class="nav__menu">
-          {% for s in site.sectors %}
-          <a href="{{ s.href }}"><strong>{{ s.title }}</strong><span>{{ s.desc }}</span></a>
-          {% endfor %}
-        </div>
-      </li>
       <li class="nav__item"><a href="/about/"{% if current == "about" %} aria-current="page"{% endif %}>About</a></li>
       <li class="nav__item"><a href="/contact/"{% if current == "contact" %} aria-current="page"{% endif %}>Contact Us</a></li>
       <li class="nav__mobile-extra">
