@@ -1,11 +1,14 @@
 {
   "name": "Invicta Water Treatment",
+  "legalName": "Invicta Water Treatment Ltd",
+  "contactName": "Stefan Massingham",
   "url": "https://www.invictawatertreatment.co.uk",
   "tel": "+447970154529",
   "phone": "07970 154529",
   "email": "sales@invictawatertreatment.co.uk",
   "emergencyNote": "24-hour emergency line",
   "address": { "street": "89 Castle Drive", "locality": "Horley", "region": "Surrey", "postcode": "RH6 9DD" },
+  "mapsPlaceUrl": "https://www.google.com/maps/search/?api=1&query=Invicta%20Water%20Treatment%20Ltd%2C%2089%20Castle%20Drive%2C%20Horley%20RH6%209DD",
   "services": [
     { "title": "Private Water Supplies", "href": "/services/private-water-supplies/", "desc": "Bespoke borehole systems, end to end." },
     { "title": "Design & Install", "href": "/services/design-install/", "desc": "Treatment specified and installed in-house." },

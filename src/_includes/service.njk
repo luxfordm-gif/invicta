@@ -91,6 +91,16 @@
     </section>
     {% endif %}
 
+    <!-- ============ RELEVANT CASE STUDIES (carousel, light) ============ -->
+    {% set serviceSlug = currentService | replace("/services/", "") | replace("/", "") %}
+    {% set studies = [] %}
+    {% for cs in caseStudies %}{% if serviceSlug in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
+    {% set carouselId = serviceSlug %}
+    {% set carouselEyebrow = "Selected work" %}
+    {% set carouselTitle = "Projects like this, <span class='em'>across the South East.</span>" %}
+    {% set carouselLead = "A few of the private supplies we've designed, installed and looked after. Swipe through, or see them all on our <a href='/case-studies/'>case studies</a>." %}
+    {% include "case-carousel.njk" %}
+
     <!-- ===================== FAQ (dark) ===================== -->
     {% if faqs %}
     <section class="section faq" aria-labelledby="faq-title">
