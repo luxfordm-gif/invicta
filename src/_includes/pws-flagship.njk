@@ -256,6 +256,18 @@
       </div>
     </section>
 
+    <!-- ===================== COVERAGE HEAT-MAP (dark) ===================== -->
+    {% include "coverage-map.njk" %}
+
+    <!-- ============ CASE STUDIES (carousel, light) ============ -->
+    {% set studies = [] %}
+    {% for cs in caseStudies %}{% if "private-water-supplies" in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
+    {% set carouselId = "pws" %}
+    {% set carouselEyebrow = "Selected work" %}
+    {% set carouselTitle = "Private supplies we've <span class='em'>designed and delivered.</span>" %}
+    {% set carouselLead = "From a National Trust restoration to multi-source estate systems. Swipe through, or see them all on our <a href='/case-studies/'>case studies</a>." %}
+    {% include "case-carousel.njk" %}
+
     <!-- ===================== FAQ (dark) ===================== -->
     <section class="section faq" aria-labelledby="faq-title">
       <div class="container faq__grid">

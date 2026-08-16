@@ -1,0 +1,61 @@
+{#
+  Case-study carousel. Expects `studies` (array of caseStudies entries) set by
+  the including page, plus optional `carouselEyebrow`, `carouselTitle`,
+  `carouselLead`. Renders nothing when there are no studies.
+
+  Behaviour (progressive enhancement): the track is a horizontal scroll-snap
+  list that works with no JS. carousel.js adds prev/next arrows, dots and
+  keyboard control on top.
+#}
+{% if studies and studies.length %}
+<section class="section section--light case-cc" aria-labelledby="cc-title-{{ carouselId or 'x' }}">
+  <div class="container">
+    <div class="case-cc__head">
+      <div class="case-cc__heading">
+        <p class="eyebrow">{{ carouselEyebrow or "Selected work" }}</p>
+        <h2 id="cc-title-{{ carouselId or 'x' }}" class="statement case-cc__title">{{ carouselTitle | safe or "Relevant projects, <span class='em'>in the field.</span>" }}</h2>
+        {% if carouselLead %}<p class="case-cc__lead">{{ carouselLead | safe }}</p>{% endif %}
+      </div>
+      {% if studies.length > 1 %}
+      <div class="case-cc__arrows">
+        <button type="button" class="case-cc__arrow" data-cc-prev aria-label="Previous project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button type="button" class="case-cc__arrow" data-cc-next aria-label="Next project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      {% endif %}
+    </div>
+
+    <ul class="case-cc__track" role="list">
+      {% for cs in studies %}
+      <li class="case-cc__item">
+        <article class="case-card" id="cc-{{ cs.id }}">
+          <div class="case-card__media">
+            {% if cs.image %}
+            <img src="{{ cs.image }}" alt="{{ cs.imageAlt or (cs.name + ', ' + cs.location) }}" loading="lazy">
+            {% else %}
+            <div class="img-ph" role="img" aria-label="Project photo to follow">
+              <span class="img-ph__label">Photo to follow</span>
+            </div>
+            {% endif %}
+            <span class="case-card__pin">{{ cs.location }}</span>
+          </div>
+          <div class="case-card__body">
+            <h3 class="case-card__name">{{ cs.name }}</h3>
+            <p class="case-card__blurb">{{ cs.blurb }}</p>
+            {% if cs.highlight %}<p class="case-card__highlight">{{ cs.highlight }}</p>{% endif %}
+            <a class="case-card__link" href="/case-studies/#{{ cs.id }}">Read the project <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if studies.length > 1 %}
+    <div class="case-cc__dots" role="tablist" aria-label="Project slides"></div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
