@@ -1,0 +1,95 @@
+/* ==========================================================================
+   coverage-band.css — full-bleed grayscale map with the served counties
+   shaded, and the coverage claim set over the middle of it.
+
+   The basemap is desaturated by the Google Maps style array in
+   coverage-band.js, NOT by a CSS filter. A filter here would grey out the
+   county polygons along with the map, and the polygons are the point.
+
+   Height is driven by padding-block rather than a fixed height, so the
+   heading can never overflow the band on a narrow screen.
+   ========================================================================== */
+
+.coverage-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(104px, 15vw, 210px);
+  /* Neutral ground: what shows before the tiles paint, and all that shows if
+     no API key is configured. Sits between the cream section above and the
+     navy footer below. */
+  background: #E6E7E7;
+  border-top: 1px solid var(--line-light);
+}
+
+/* --- The map canvas ------------------------------------------------------- */
+.coverage-band__map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Google injects its own content here; nothing of ours should be clickable
+     over the top of it, and the band is deliberately not a tool. */
+  pointer-events: none;
+}
+
+/* Google stamps inline styles on its container; make sure ours still reads as
+   a plain light ground underneath the tiles while they load. */
+.coverage-band__map > div { background: transparent !important; }
+
+/* --- Legibility veil ------------------------------------------------------
+   Lightens the middle so the heading always has contrast, while letting the
+   shaded counties stay legible out toward the edges. The vertical pass fades
+   the band into the sections above and below. */
+.coverage-band__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 50%,
+      rgba(247, 247, 245, 0.93) 0%,
+      rgba(247, 247, 245, 0.80) 42%,
+      rgba(247, 247, 245, 0.34) 72%,
+      rgba(247, 247, 245, 0.06) 100%),
+    linear-gradient(to bottom,
+      rgba(247, 247, 245, 0.55) 0%,
+      rgba(247, 247, 245, 0) 22%,
+      rgba(247, 247, 245, 0) 78%,
+      rgba(247, 247, 245, 0.55) 100%);
+}
+
+/* --- The claim ------------------------------------------------------------ */
+.coverage-band__overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.coverage-band__eyebrow {
+  display: block;
+  max-width: none;               /* override the base p{max-width:68ch} so the centred label isn't offset */
+  color: var(--steel);           /* light-section accent: this band reads as a light surface */
+}
+
+.coverage-band__title {
+  margin-top: var(--flow-heading);
+  margin-inline: auto;
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 62px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.coverage-band__title .em { color: var(--steel); }
+
+/* --- No API key configured ------------------------------------------------
+   Nothing is requested from Google. Soften the scrim so the band still reads
+   as a deliberate surface rather than a blank grey gap. */
+.coverage-band.is-mapless .coverage-band__scrim {
+  background: linear-gradient(to bottom,
+    rgba(247, 247, 245, 0.72) 0%,
+    rgba(247, 247, 245, 0.38) 50%,
+    rgba(247, 247, 245, 0.72) 100%);
+}
