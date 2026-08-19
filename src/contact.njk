@@ -19,7 +19,7 @@ hideEmergencyCta: true
     </section>
 
     <!-- ===================== CONTACT BODY (light: form + details) ===================== -->
-    <section class="section section--light contact-body" aria-labelledby="contact-form-title">
+    <section class="section section--paper contact-body" aria-labelledby="contact-form-title">
       <div class="container contact-body__grid">
 
         <!-- Form -->
@@ -132,62 +132,25 @@ hideEmergencyCta: true
       </div>
     </section>
 
-    <!-- ===================== FIND US (business card + business-pin map) ===================== -->
+    <!-- ===================== MAP =====================
+      Full-bleed, desaturated. The query is the business name plus the address,
+      so Google drops a named pin on the Invicta listing rather than a bare
+      address marker.
+    -->
     {% set placeQuery = site.legalName + ", " + site.address.street + ", " + site.address.locality + ", " + site.address.region + " " + site.address.postcode %}
-    <section class="section section--light contact-locate" aria-labelledby="locate-title">
-      <div class="container contact-locate__grid">
-
-        <!-- business card -->
-        <div class="contact-locate__card">
-          <p class="eyebrow">Find us on Google</p>
-          <h2 id="locate-title" class="contact-locate__name">{{ site.legalName }}</h2>
-          <p class="contact-locate__person">{{ site.contactName }}</p>
-
-          <div class="contact-locate__photos">
-            {% if site.businessPhotos and site.businessPhotos.length %}
-            {% for p in site.businessPhotos %}
-            <img src="{{ p.src }}" alt="{{ p.alt or (site.name + ' work') }}" loading="lazy">
-            {% endfor %}
-            {% else %}
-            <div class="img-ph contact-locate__ph" role="img" aria-label="Photos of our work to follow">
-              <span class="img-ph__label">Photos to follow</span>
-            </div>
-            {% endif %}
-          </div>
-
-          <dl class="contact-locate__meta">
-            <div class="contact-locate__row">
-              <dt>Call</dt>
-              <dd><a href="tel:{{ site.tel }}">{{ site.phone }}</a></dd>
-            </div>
-            <div class="contact-locate__row">
-              <dt>Email</dt>
-              <dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd>
-            </div>
-            <div class="contact-locate__row">
-              <dt>Visit</dt>
-              <dd>
-                <address class="contact-locate__addr">{{ site.address.street }}, {{ site.address.locality }}, {{ site.address.region }} {{ site.address.postcode }}</address>
-              </dd>
-            </div>
-          </dl>
-
-          <a class="btn-inquiry contact-locate__cta" href="{{ site.mapsPlaceUrl }}" target="_blank" rel="noopener noreferrer">View on Google Maps <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
-        </div>
-
-        <!-- map centred on the business pin -->
-        <div class="contact-locate__map">
-          <iframe
-            class="contact-locate__frame"
-            title="Map showing {{ site.legalName }} in {{ site.address.locality }}, {{ site.address.region }}"
-            src="https://maps.google.com/maps?q={{ placeQuery | urlencode }}&amp;z=16&amp;output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
+    <section class="contact-map" aria-label="Where to find us">
+      <iframe
+        class="contact-map__frame"
+        title="Map showing {{ site.legalName }} in {{ site.address.locality }}, {{ site.address.region }}"
+        src="https://maps.google.com/maps?q={{ placeQuery | urlencode }}&amp;z=15&amp;output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="contact-map__card">
+        <p class="contact-map__name">{{ site.legalName }}</p>
+        <address class="contact-map__addr">{{ site.address.street }}<br>{{ site.address.locality }}, {{ site.address.region }} {{ site.address.postcode }}</address>
+        <p class="contact-map__links">
+          <a class="contact-map__dir" href="{{ site.mapsPlaceUrl }}" target="_blank" rel="noopener noreferrer">View on Google Maps <span aria-hidden="true">&rarr;</span></a>
+          <a class="contact-map__dir" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ placeQuery | urlencode }}" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">&rarr;</span></a>
+        </p>
       </div>
     </section>
-
-    <!-- ===================== COVERAGE HEAT-MAP (dark) ===================== -->
-    {% set coverageTitle = "Where we've <span class='em'>installed and serviced.</span>" %}
-    {% include "coverage-map.njk" %}

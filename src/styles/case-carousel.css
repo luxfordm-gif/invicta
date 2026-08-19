@@ -1,16 +1,36 @@
 /* ==========================================================================
-   Case-study carousel (light section)
-   A horizontal scroll-snap track of project cards, enhanced by carousel.js
-   with arrows + dots. Works without JS as a plain swipeable row.
+   Case studies (light section)
+
+   A horizontal scroll-snap track where each slide is a whole case study at
+   full width: headline, project photo, write-up, highlight. Enhanced by
+   carousel.js with arrows + dots. Works without JS as a swipeable track.
+
+   Loaded site-wide from base.njk, because the case studies appear on the
+   private water supplies page as well as the other service pages.
    ========================================================================== */
 .case-cc__head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-4);
-  flex-wrap: wrap;
+  display: grid;
+  align-items: end;
+  gap: var(--space-2) clamp(24px, 3vw, 56px);
+}
+/* stack: lead sits under the heading, arrows to the right of both */
+.case-cc--stack .case-cc__head { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 800px) {
+  .case-cc--stack .case-cc__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "heading arrows" "lead arrows";
+  }
+  .case-cc--stack .case-cc__heading { grid-area: heading; }
+  .case-cc--stack .case-cc__lead    { grid-area: lead; }
+  .case-cc--stack .case-cc__arrows  { grid-area: arrows; }
+}
+/* split / mirror: heading and lead share one row, which is ~80px shorter */
+@media (min-width: 900px) {
+  .case-cc--split .case-cc__head,
+  .case-cc--mirror .case-cc__head { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 }
 .case-cc__title { margin-top: var(--flow-heading); max-width: 20ch; }
+:is(.case-cc--split, .case-cc--mirror) .case-cc__lead { margin-top: 0; padding-bottom: 6px; }
 .case-cc__lead {
   margin-top: var(--space-2);
   max-width: 54ch;
@@ -37,116 +57,186 @@
 .case-cc__arrow:disabled:hover { background: transparent; border-color: var(--line-field); color: var(--ink); }
 
 /* track --------------------------------------------------------------------- */
+/* Tight to the header on purpose: the picture and the opening lines of the
+   study should be on screen with it, not a scroll below it. */
+.case-cc__stage { position: relative; margin-top: clamp(24px, 2.6vw, 44px); }
 .case-cc__track {
-  margin: var(--flow-md) 0 0;
-  padding: 4px 0 8px;
+  margin: 0;
+  padding: 0;
   list-style: none;
   display: flex;
-  gap: clamp(16px, 2vw, 28px);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 0;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;           /* Firefox */
 }
 .case-cc__track::-webkit-scrollbar { display: none; }
 .case-cc__track:focus-visible { outline: 2px solid var(--steel); outline-offset: 4px; border-radius: 4px; }
 
+/* One study per screen: the whole point of the layout. */
 .case-cc__item {
-  flex: 0 0 auto;
-  width: min(86%, 460px);
+  flex: 0 0 100%;
+  min-width: 0;
   scroll-snap-align: start;
 }
-@media (min-width: 800px) { .case-cc__item { width: min(48%, 460px); } }
-@media (min-width: 1100px) { .case-cc__item { width: clamp(360px, 31%, 460px); } }
 
-/* card ---------------------------------------------------------------------- */
-.case-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #FFFFFF;
-  border: 1px solid var(--line-light);
-  border-radius: 6px;
-  overflow: hidden;
+/* slide --------------------------------------------------------------------- */
+.case-slide__grid { display: grid; gap: var(--flow-md); align-items: start; }
+@media (min-width: 900px) {
+  .case-slide__grid { grid-template-columns: 1fr 1fr; gap: clamp(40px, 5vw, 80px); }
 }
-.case-card__media { position: relative; }
-.case-card__media img,
-.case-card__media .img-ph {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  display: block;
+.case-slide__media { margin: 0; }
+.case-slide__media img,
+.case-slide__media .img-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
+.case-slide__media img { object-fit: cover; display: block; }
+/* leave the placeholder as flex (from .img-ph) so its label stays centred both
+   ways; a display:block here would strand the label at the top. */
+.case-slide__body p { font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; }
+.case-slide__body p + p { margin-top: 1.1em; }
+.case-slide__highlight-wrap { margin-top: var(--flow-md); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
+.case-slide__highlight {
+  font-family: var(--font-emotional); font-style: italic;
+  font-size: clamp(21px, 2.2vw, 30px); line-height: 1.25; letter-spacing: -0.01em; color: var(--ink);
 }
-.case-card__media img { object-fit: cover; }
-.case-card__pin {
-  position: absolute;
-  left: 14px; bottom: 14px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--on-dark);
-  background: rgba(11, 31, 58, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--btn-radius);
-  backdrop-filter: blur(4px);
+.case-slide__client {
+  margin-top: var(--space-3);
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted);
 }
-.case-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: clamp(20px, 2.2vw, 30px);
-  flex: 1;
-}
-.case-card__name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(19px, 1.7vw, 23px);
-  line-height: 1.2;
-}
-.case-card__blurb {
-  color: var(--ink-muted);
-  font-size: 15.5px;
-  line-height: 1.6;
-}
-.case-card__highlight {
-  margin-top: auto;
-  padding-left: 16px;
-  border-left: 2px solid var(--steel);
-  font-family: var(--font-emotional);
-  font-style: italic;
-  font-size: 16px;
-  line-height: 1.45;
-  color: var(--ink);
-}
-.case-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.case-card__link span { transition: transform 0.2s ease; }
-.case-card__link:hover span { transform: translateX(4px); }
-.case-card__link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* dots ---------------------------------------------------------------------- */
+/* Modelled on the iOS page control: uniform small dots, tight spacing, and the
+   current one simply solid. The old version scaled the active dot up, which is
+   what made it read as a web widget rather than a page indicator. The tap
+   target stays 44px via padding while the dot itself stays 7px. */
 .case-cc__dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: var(--space-3);
+  align-items: center;
+  gap: 0;
+  margin-top: var(--space-5);
 }
 .case-cc__dot {
-  width: 9px; height: 9px;
-  padding: 0;
+  width: 7px; height: 7px;
+  box-sizing: content-box;
+  padding: 14px 5px;
   border: 0;
+  background: rgba(15, 15, 15, 0.2);
+  background-clip: content-box;
   border-radius: 50%;
-  background: var(--line-field);
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.25s ease;
 }
-.case-cc__dot.is-active { background: var(--ground); transform: scale(1.25); }
+.case-cc__dot:hover { background-color: rgba(15, 15, 15, 0.38); }
+.case-cc__dot.is-active { background-color: var(--ground); }
+@media (prefers-reduced-motion: reduce) { .case-cc__dot { transition: none; } }
+
+
+/* ==========================================================================
+   ALTERNATIVE LAYOUTS
+   Both are shorter than the default stack and both move the arrows out to the
+   section edges, big enough to hit without aiming. Compare at /lab/case-layouts/.
+   ========================================================================== */
+
+/* --- Edge arrows (split + mirror) ------------------------------------------
+   A full-width overlay pinned to the stage, so the two buttons sit hard left
+   and hard right of the picture and are vertically centred on it. The overlay
+   itself ignores the pointer so it never blocks the copy underneath. */
+:is(.case-cc--split, .case-cc--mirror) .case-cc__arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--cc-media-h, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+:is(.case-cc--split, .case-cc--mirror) .case-cc__arrow {
+  pointer-events: auto;
+  width: clamp(48px, 4.6vw, 68px);
+  height: clamp(48px, 4.6vw, 68px);
+  background: var(--paper);
+  border-color: var(--line-light);
+  box-shadow: 0 10px 30px -14px rgba(8, 24, 46, 0.45);
+}
+:is(.case-cc--split, .case-cc--mirror) .case-cc__arrow svg { width: 26px; height: 26px; }
+:is(.case-cc--split, .case-cc--mirror) .case-cc__arrow:disabled:hover {
+  background: var(--paper); border-color: var(--line-light);
+}
+/* Nudge the pair out over the container padding on wide screens so they read as
+   page-edge controls rather than something sitting on the photograph. */
+@media (min-width: 1100px) {
+  :is(.case-cc--split, .case-cc--mirror) .case-cc__arrows {
+    left: calc(-1 * var(--container-pad) / 2);
+    right: calc(-1 * var(--container-pad) / 2);
+  }
+}
+
+/* --- B: split -------------------------------------------------------------
+   Header spread across a single row, a wider 16:9 photograph, copy beside it.
+   Roughly a third shorter than the stack. */
+@media (min-width: 900px) {
+  /* The copy gets the WIDER column. Counter-intuitive, but the three
+     paragraphs are what set the height: widen them and they wrap in fewer
+     lines, while a 16:9 photo stays short whatever width it gets. */
+  .case-cc--split .case-slide__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(28px, 3.4vw, 60px);
+    align-items: start;
+  }
+}
+.case-cc--split .case-slide__media img,
+.case-cc--split .case-slide__media .img-ph {
+  aspect-ratio: auto;
+  height: var(--cc-media-h);
+  object-fit: cover;
+}
+/* A capped photo height rather than a ratio does two jobs: the section stops
+   growing on wide screens, and the edge arrows have a known height to centre
+   themselves on, so they sit level with the picture instead of adrift in the
+   whitespace beside the copy. */
+.case-cc--split { --cc-media-h: clamp(280px, 28vw, 420px); }
+.case-cc--split .case-slide__highlight-wrap { margin-top: var(--space-5); }
+
+/* --- C: mirror ------------------------------------------------------------
+   Copy first, photograph on the right at a CAPPED height rather than a fixed
+   aspect ratio, so the section stops growing on wide screens. Shortest of the
+   three, and it reads the other way round from every other section. */
+.case-cc--mirror .case-slide__media { order: 2; }
+.case-cc--mirror .case-slide__text  { order: 1; }
+@media (min-width: 900px) {
+  .case-cc--mirror .case-slide__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(28px, 3.4vw, 60px);
+    align-items: start;
+  }
+  .case-cc--mirror .case-slide__media img,
+  .case-cc--mirror .case-slide__media .img-ph {
+    aspect-ratio: auto;
+    height: var(--cc-media-h);
+    object-fit: cover;
+  }
+}
+.case-cc--mirror { --cc-media-h: clamp(300px, 30vw, 440px); }
+.case-cc--mirror .case-slide__highlight-wrap { margin-top: var(--space-5); }
+
+/* --- Internal lab page (/lab/case-layouts/) -------------------------------
+   Delete along with src/lab-case-layouts.njk once a layout is chosen. */
+.lab-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(32px, 5vw, 64px); }
+.lab-hero__lead { margin-top: var(--space-4); max-width: 62ch; color: var(--on-dark-muted); font-size: 17px; line-height: 1.6; }
+.lab-label { background: var(--ground-deep); border-block: 1px solid var(--line-dark); padding-block: var(--space-3); }
+.lab-label p { font-size: 14px; color: var(--on-dark-muted); max-width: none; }
+.lab-label strong { color: var(--lime); font-weight: 600; }
+.lab-metrics { margin-top: var(--space-4); display: grid; gap: 10px; max-width: 460px; }
+.lab-metrics li { display: flex; justify-content: space-between; gap: var(--space-4); padding-bottom: 10px; border-bottom: 1px solid var(--line-dark); font-size: 16px; }
+.lab-metrics strong { font-variant-numeric: tabular-nums; }
+
+/* Between 900px and the point where the arrows step outside the container they
+   overlay the copy column, so the text is inset to clear them. */
+@media (min-width: 900px) and (max-width: 1099.98px) {
+  .case-cc--split .case-slide__text  { padding-right: clamp(52px, 5.4vw, 72px); }
+  .case-cc--mirror .case-slide__text { padding-left: clamp(52px, 5.4vw, 72px); }
+}

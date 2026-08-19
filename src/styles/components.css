@@ -388,8 +388,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .btn-inquiry--lg { font-size: 13px; padding: 18px 30px; }
 /* On light (cream) sections chalky washes out, so the pill stays a solid navy fill
    and brightens a step on hover. */
-.section--light .btn-inquiry { background: var(--ground); color: var(--on-dark); }
-.section--light .btn-inquiry:hover { background: var(--ground-raise); }
+:is(.section--light, .section--paper) .btn-inquiry { background: var(--ground); color: var(--on-dark); }
+:is(.section--light, .section--paper) .btn-inquiry:hover { background: var(--ground-raise); }
 
 /* Secondary / outlined pill (e.g. "Call …") */
 .btn-line {
@@ -424,9 +424,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .band::after {
   content: ""; position: absolute; inset: 0;
   background: rgba(6, 18, 42, 0.44);
-  transition: background-color 0.4s ease;
 }
-.band:hover::after { background: rgba(6, 18, 42, 0.3); }
 .band__bar {
   position: relative;
   z-index: 1;

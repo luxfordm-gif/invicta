@@ -84,24 +84,73 @@ p, li, figcaption, blockquote, dd { text-wrap: pretty; }
 .section { padding-block: var(--section-y); }
 
 /* --- Section colour modes ------------------------------------------------- */
-/* Dark is the default (matches body). Light inverts for the alternating rhythm. */
-.section--light { background: var(--light); color: var(--ink); }
-.section--light h1, .section--light h2, .section--light h3 { color: var(--ink); }
-.section--light .eyebrow { color: var(--steel); }   /* light-blue label on the cool surface */
-.section--light p { color: var(--ink-muted); }
-.section--light .index { color: var(--ink-muted); }
-.section--light .em { color: var(--steel); }         /* accent word picks up the same light blue */
-.section--light :focus-visible { outline-color: var(--ink); }
-/* Two adjacent light sections read as ONE cream block — collapse the boundary gap. */
-.section--light + .section--light { padding-top: 0; }
-.section--light:has(+ .section--light) { padding-bottom: var(--section-y-tight); }
+/* Three surfaces, not two. Dark navy is the default (matches body); --paper is
+   pure white, the base light surface; --light is the cream STEP between them,
+   used where a block should read as set apart. Alternating navy and cream alone
+   made every scroll the same two-tone bounce, so cream is now a panel colour
+   rather than half the page. Both light surfaces share one ink treatment. */
+.section--paper { background: var(--paper); }
+.section--light { background: var(--light); }
+:is(.section--light, .section--paper) { color: var(--ink); }
+:is(.section--light, .section--paper) :is(h1, h2, h3) { color: var(--ink); }
+:is(.section--light, .section--paper) .eyebrow { color: var(--steel); }   /* light-blue label on the cool surface */
+:is(.section--light, .section--paper) p { color: var(--ink-muted); }
+:is(.section--light, .section--paper) .index { color: var(--ink-muted); }
+:is(.section--light, .section--paper) .em { color: var(--steel); }        /* accent word picks up the same light blue */
+:is(.section--light, .section--paper) :focus-visible { outline-color: var(--ink); }
+/* Two sections on the SAME surface read as one block — collapse the boundary
+   gap. Cream against white is a deliberate step, so it keeps its full padding. */
+.section--light + .section--light,
+.section--paper + .section--paper { padding-top: 0; }
+.section--light:has(+ .section--light),
+.section--paper:has(+ .section--paper) { padding-bottom: var(--section-y-tight); }
+
+/* --- Themes ---------------------------------------------------------------
+   .theme-dark / .theme-light flip the semantic roles for a subtree, so a
+   component can declare what it IS rather than inheriting whatever the section
+   around it happens to be. This is what stops a dark card on a cream section
+   coming out with near-black text on navy.
+
+   These come AFTER the section rules on purpose: .theme-dark p and
+   :is(.section--light, .section--paper) p carry the same specificity, so the
+   later one has to be the theme for a component to override its surroundings. */
+.theme-light {
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --fg-subtle: rgba(15, 15, 15, 0.42);
+  --fg-accent: var(--steel);
+  --line: var(--line-light);
+  --surface: var(--light);
+  --surface-raise: var(--paper);
+}
+.theme-dark {
+  --fg: var(--on-dark);
+  --fg-muted: var(--on-dark-muted);
+  --fg-subtle: rgba(255, 255, 255, 0.34);
+  --fg-accent: var(--lime);
+  --line: var(--line-dark);
+  --surface: var(--ground);
+  --surface-raise: var(--ground-raise);
+}
+/* Applying the roles. A themed element sets its own colour and re-asserts it
+   for the elements the section rules above would otherwise have claimed. */
+:is(.theme-dark, .theme-light) { color: var(--fg); }
+:is(.theme-dark, .theme-light) :is(h1, h2, h3, h4) { color: var(--fg); }
+:is(.theme-dark, .theme-light) p { color: var(--fg-muted); }
+:is(.theme-dark, .theme-light) .eyebrow { color: var(--fg-accent); }
+:is(.theme-dark, .theme-light) .em { color: var(--fg-accent); }
+:is(.theme-dark, .theme-light) .rule { background: var(--line); }
+
+/* The existing section modifiers ARE themes; wire them up so every page already
+   written keeps working and new components can rely on the roles. */
+.section--light, .section--paper { --fg: var(--ink); --fg-muted: var(--ink-muted); --fg-subtle: rgba(15, 15, 15, 0.42); --fg-accent: var(--steel); --line: var(--line-light); }
 
 /* On dark, the emotional accent glows in lime. */
 .em { color: var(--lime); }
 
 /* Hairline rule that spans the container, used under eyebrow labels. */
 .rule { height: 1px; background: var(--line-dark); margin-top: var(--space-4); }
-.section--light .rule { background: var(--line-light); }
+:is(.section--light, .section--paper) .rule { background: var(--line-light); }
 
 /* --- Accessibility -------------------------------------------------------- */
 .visually-hidden {

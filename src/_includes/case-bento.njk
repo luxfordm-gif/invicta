@@ -1,0 +1,90 @@
+{#
+  Case studies, bento grid.
+
+  All the studies at a glance instead of one at a time: a tall lead card beside
+  a stack of smaller ones, each one a photograph with the copy sat over it.
+
+  WHAT REVEALS — deliberately little. The card shows one short line from
+  `blurb`; hovering slides up one more from `highlight`, set as plain body copy
+  rather than as a pull quote. Revealing a whole paragraph was tried and it made
+  the cards work too hard for a grid whose job is to be scanned. A study with no
+  `highlight` simply does not expand.
+
+  Expects the same `studies` array as case-carousel.njk, plus the same
+  `carouselEyebrow` / `carouselTitle` / `carouselLead`.
+
+  A study needs `name` (or `client`) and `blurb` to look right here. The
+  hand-written `caseStudy` in a service page's front matter has neither, which
+  is why only the private water supplies page uses this layout so far: the other
+  three would need a one-line `blurb` writing for their lead study first. Every
+  field is guarded, so a missing one leaves nothing out of place rather than an
+  empty hole.
+
+  SURFACE — `bentoSurface` picks the section behind the grid: omit it for navy,
+  or pass "section--light" / "section--paper". The cards carry .theme-dark and
+  so stay dark whatever sits behind them, because the copy is set over a
+  photograph and needs the contrast; on a light section they read as dark objects
+  on cream rather than a navy band, which is the point of putting them there.
+
+  HOW IT HANDLES THE COUNT — the grid is defined per count, so it never leaves a
+  hole:
+    3  lead card spanning two rows on the left, two stacked on the right
+    2  two equal cards side by side
+    1  one wide card
+  Anything past three is dropped, same ceiling as the carousel.
+
+  ON A PHONE the card stops being a photograph with text over it. The picture
+  sits on top with only the tags and the name over its foot; the body copy sits
+  underneath it on the card. Nothing hides behind a hover that cannot happen.
+
+  NEEDS PHOTOGRAPHY. Every card is a picture, so with `image: null` the grid is
+  three navy panels. Until real project photos exist this reads worse than the
+  editorial layout, not better.
+#}
+{% if studies %}{% set studies = studies.slice(0, 3) %}{% endif %}
+{% if studies and studies.length %}
+<section class="section {{ bentoSurface }} case-bento case-bento--{{ studies.length }}" aria-labelledby="bento-title-{{ carouselId or 'x' }}">
+  <div class="container">
+    <div class="case-bento__head">
+      <p class="eyebrow">{{ carouselEyebrow or "Selected work" }}</p>
+      <h2 id="bento-title-{{ carouselId or 'x' }}" class="statement case-bento__title">{{ carouselTitle | safe or "Projects like this, <span class='em'>across the South East.</span>" }}</h2>
+      {% if carouselLead %}<p class="case-bento__lead">{{ carouselLead | safe }}</p>{% endif %}
+    </div>
+
+    <ul class="bento" role="list">
+      {% for cs in studies %}
+      {%- set more = cs.highlight -%}
+      <li class="bento__cell">
+        <article class="bento__card theme-dark">
+          <div class="bento__media" aria-hidden="true">
+            {% if cs.image %}
+            <img src="{{ cs.image }}" alt="" loading="lazy">
+            {% else %}
+            <div class="bento__ph"><span>Project photo to follow</span></div>
+            {% endif %}
+          </div>
+
+          <div class="bento__copy">
+            <div class="bento__head">
+              {% if cs.flagship or cs.county or cs.location %}
+              <p class="bento__tags">
+                {% if cs.flagship %}<span class="bento__tag">Flagship project</span>{% endif %}
+                {% if cs.county or cs.location %}<span class="bento__tag">{{ cs.county or cs.location }}</span>{% endif %}
+              </p>
+              {% endif %}
+              <h3 class="bento__name">{{ cs.name or cs.client }}</h3>
+            </div>
+            <div class="bento__text">
+              {% if cs.blurb %}<p class="bento__blurb">{{ cs.blurb }}</p>{% endif %}
+              {% if more %}
+              <div class="bento__reveal"><p class="bento__more">{{ more }}</p></div>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

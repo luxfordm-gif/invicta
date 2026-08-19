@@ -17,7 +17,7 @@
 
     <!-- ===================== INTRO (light) ===================== -->
     {% if introTitle %}
-    <section class="section section--light service-intro" aria-labelledby="intro-title">
+    <section class="section section--paper service-intro" aria-labelledby="intro-title">
       <div class="container">
         <p class="eyebrow">{{ introEyebrow or "Overview" }}</p>
         <div class="rule"></div>
@@ -58,48 +58,25 @@
     </section>
     {% endif %}
 
-    <!-- ===================== CASE STUDY (light, optional) ===================== -->
-    {% if caseStudy %}
-    <section class="section section--light service-case" aria-labelledby="case-title">
-      <div class="container">
-        <p class="eyebrow">Case study</p>
-        <div class="rule"></div>
-        <h2 id="case-title" class="statement service-case__title">{{ caseStudy.title | safe }}</h2>
-        <div class="service-case__grid">
-          <figure class="service-case__media">
-            {% if caseStudy.image %}
-            <img src="{{ caseStudy.image }}" alt="{{ caseStudy.imageAlt or '' }}" loading="lazy">
-            {% else %}
-            <div class="img-ph" role="img" aria-label="Project photo to follow">
-              <span class="img-ph__label">Project photo to follow</span>
-            </div>
-            {% endif %}
-          </figure>
-          <div class="service-case__text">
-            <div class="service-case__body">
-              {% for p in caseStudy.body %}<p>{{ p | safe }}</p>{% endfor %}
-            </div>
-            {% if caseStudy.highlight %}
-            <div class="service-case__highlight-wrap">
-              <p class="service-case__highlight">{{ caseStudy.highlight | safe }}</p>
-              {% if caseStudy.client %}<p class="service-case__client">{{ caseStudy.client }}</p>{% endif %}
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
-    {% endif %}
-
-    <!-- ============ RELEVANT CASE STUDIES (carousel, light) ============ -->
+    <!-- ============ CASE STUDIES (bento, cream) ============
+      The page's own hand-written `caseStudy` leads, then the studies tagged to
+      this service in _data/caseStudies.js. All of them show at once; the grid
+      adapts to two or three cards and caps the set at three.
+    -->
     {% set serviceSlug = currentService | replace("/services/", "") | replace("/", "") %}
     {% set studies = [] %}
+    {% if caseStudy %}{% set _ = studies.push(caseStudy) %}{% endif %}
     {% for cs in caseStudies %}{% if serviceSlug in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = serviceSlug %}
+    {% set bentoSurface = "section--light" %}
     {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Projects like this, <span class='em'>across the South East.</span>" %}
-    {% set carouselLead = "A few of the private supplies we've designed, installed and looked after. Swipe through, or see them all on our <a href='/case-studies/'>case studies</a>." %}
-    {% include "case-carousel.njk" %}
+    {% if studies.length > 1 %}
+    {% set carouselLead = "A few of the supplies we've designed, installed and looked after." %}
+    {% else %}
+    {% set carouselLead = "One of the supplies we've designed, installed and looked after." %}
+    {% endif %}
+    {% include "case-bento.njk" %}
 
     <!-- ===================== FAQ (dark) ===================== -->
     {% if faqs %}

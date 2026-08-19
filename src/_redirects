@@ -4,7 +4,10 @@
 # carries the same enquiry form.
 /enquiry/   /contact/   302
 
-# Sectors section and the Flushing & Pre-Comm service have been retired.
-# Redirect any old inbound links so they land somewhere useful rather than 404.
+# Sectors section, the Flushing & Pre-Comm service and the standalone case
+# studies index have been retired. Case studies now live only as carousels on
+# the service pages. Redirect any old inbound links so they land somewhere
+# useful rather than 404.
 /services/flushing-pre-comm/   /services/private-water-supplies/   301
 /sectors/*                     /                                    301
+/case-studies/                 /services/private-water-supplies/    301
