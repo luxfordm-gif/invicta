@@ -111,14 +111,15 @@
 }
 
 /* --- The reveal.
-   0fr -> 1fr on a grid row animates the height without hard-coding one, so the
-   outcome line can be any length. --- */
+   A 0fr -> 1fr grid row is the tidier trick, but in a grid of indefinite height
+   an fr track resolves to its content and the row never collapses, which left
+   the line permanently on show. max-height is blunter but dependable, and the
+   revealed copy is one short line so the easing has nothing to give away. --- */
 .bento__reveal {
-  display: grid;
-  grid-template-rows: minmax(0, 0fr);
-  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.bento__reveal > div { overflow: hidden; }
 .bento__more {
   margin-top: 0.9em;
   max-width: 54ch;
@@ -130,13 +131,13 @@
   /* the whole copy block lifts a little as the line appears */
   .bento__copy { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
   .bento__card:hover .bento__reveal,
-  .bento__card:focus-within .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+  .bento__card:focus-within .bento__reveal { max-height: 9em; }
   .bento__card:hover .bento__media img { transform: scale(1.04); }
   .bento__media img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 }
 /* No hover: nothing is hidden behind an interaction that cannot happen. */
 @media (hover: none) {
-  .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+  .bento__reveal { max-height: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bento__reveal { transition: none; }
@@ -188,5 +189,5 @@
   .bento__blurb { margin-top: 0; }
 
   /* nothing is held back behind a hover that cannot happen */
-  .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+  .bento__reveal { max-height: none; }
 }

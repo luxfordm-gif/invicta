@@ -58,25 +58,25 @@
     </section>
     {% endif %}
 
-    <!-- ============ CASE STUDIES (one per screen, light) ============
+    <!-- ============ CASE STUDIES (bento, cream) ============
       The page's own hand-written `caseStudy` leads, then the studies tagged to
-      this service in _data/caseStudies.js. One shows at a time; the include
-      adds arrows when there is more than one, and caps the set at three.
+      this service in _data/caseStudies.js. All of them show at once; the grid
+      adapts to two or three cards and caps the set at three.
     -->
     {% set serviceSlug = currentService | replace("/services/", "") | replace("/", "") %}
     {% set studies = [] %}
     {% if caseStudy %}{% set _ = studies.push(caseStudy) %}{% endif %}
     {% for cs in caseStudies %}{% if serviceSlug in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = serviceSlug %}
+    {% set bentoSurface = "section--light" %}
     {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Projects like this, <span class='em'>across the South East.</span>" %}
-    {# no "step through" prompt when the split leaves a service with a single study #}
     {% if studies.length > 1 %}
-    {% set carouselLead = "A few of the supplies we've designed, installed and looked after. Step through to see the work." %}
+    {% set carouselLead = "A few of the supplies we've designed, installed and looked after." %}
     {% else %}
     {% set carouselLead = "One of the supplies we've designed, installed and looked after." %}
     {% endif %}
-    {% include "case-carousel.njk" %}
+    {% include "case-bento.njk" %}
 
     <!-- ===================== FAQ (dark) ===================== -->
     {% if faqs %}
