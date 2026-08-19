@@ -50,7 +50,7 @@
     "name": "{{ site.name }}",
     "telephone": "{{ site.tel }}",
     "email": "{{ site.email }}",
-    "areaServed": ["Surrey", "Sussex", "South East England"],
+    "areaServed": [{% for c in maps.counties %}"{{ c }}"{% if not loop.last %}, {% endif %}{% endfor %}],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "{{ site.address.street }}",
@@ -82,6 +82,7 @@
   <script src="/scripts/nav.js" defer></script>
   <script src="/scripts/carousel.js" defer></script>
   <script src="/scripts/enquiry.js" defer></script>
+  <script src="/scripts/coverage-band.js" defer></script>
   <script src="/scripts/motion.js" defer></script>
   <script src="/scripts/prefs.js" defer></script><!-- build-time preview panel; remove before launch -->
 </body>
