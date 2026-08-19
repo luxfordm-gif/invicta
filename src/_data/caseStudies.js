@@ -1,72 +1,82 @@
 /* ==========================================================================
-   Case studies — single source of truth.
+   Case studies, single source of truth.
 
-   Feeds three places:
-     1. /case-studies/            (the full index page)
-     2. service pages             (a carousel of the studies tagged to each)
-     3. the coverage map          (each study's map.x / map.y places a glow)
+   These feed one place: the case-study section on each service page, where one
+   study fills the screen at a time and the arrows step to the next. There is
+   no project page behind them, so each study is read here in full: `title`,
+   `body` and `highlight` are what the reader gets.
 
-   Locations are deliberately AGNOSTIC. Named clients are anonymised to
-   initials (as the client supplied them) and map coordinates are approximate,
-   town/county-level only — never a precise address. `map.x` / `map.y` are
-   percentages (0–100) across the coverage-map canvas, west→east / north→south,
-   laid out to mirror the real relative geography of the South East.
+   `services` is the split. Each study belongs to exactly ONE service so the
+   studies are shared out across the four service pages rather than the same
+   handful appearing everywhere. Three per service is the ceiling, counting the
+   hand-written `caseStudy` in a page's front matter, which leads; the
+   case-carousel template enforces it.
 
-   `image` is the web asset once added (see /assets); null renders a tasteful
-   "photo to follow" placeholder. `services` tags map to service page slugs so
-   each service can pull the studies relevant to it.
+   Locations are deliberately AGNOSTIC: named clients are anonymised to
+   initials (as the client supplied them) and locations are given at town or
+   county level, never a precise address.
+
+   No em dashes anywhere in the copy. `image` is the web asset once added (see
+   /assets); null renders a tasteful "photo to follow" placeholder.
+
+   `blurb` is the CARD copy: one short sentence, all a bento card shows before
+   you hover it. `highlight` is the line that slides up under it. Keep both
+   tight; the full write-up lives in `body` and is what the editorial carousel
+   layout renders. `title` is held but not currently rendered anywhere: a
+   per-study headline was tried and dropped, because stacked under the section's
+   own header it pushed the picture and the copy below the fold.
    ========================================================================== */
 
 module.exports = [
   {
     id: "lk-effingham",
     name: "LK, Effingham",
+    title: "One house, three sources, <span class=\"em\">and everything else we found.</span>",
     location: "Effingham, Surrey",
     county: "Surrey",
-    map: { x: 52, y: 40 },
-    services: ["private-water-supplies", "design-install"],
+    services: ["private-water-supplies"],
     flagship: true,
     blurb:
-      "A multi-million-pound house with two failed boreholes and a ground-source heat system that would not run. We designed a supply around borehole, rainwater and mains — then kept solving what we found.",
+      "Two failed boreholes and a ground-source heat system that would not run.",
     body: [
       "A flagship project. A multi-million-pound house came to us with two failed boreholes and a ground-source heat system that would not work. We designed a water treatment system to look after borehole, rainwater and mains water together.",
       "While on site we were asked to design and install a chlorine-free pool system. Then we noticed the ground-source heat pump was not working, investigated it alongside a misbehaving solar system, installed an on-site generator, and identified exactly where things were going wrong so the owners could hold their contractors to account.",
       "The next task was to find water on site, which we did with our chalk-geology specialist, drilling and carefully developing a new borehole. We like to help where we can.",
     ],
-    highlight: "One supply across borehole, rainwater and mains — plus a chlorine-free pool.",
+    highlight: "One supply across borehole, rainwater and mains, plus a chlorine-free pool.",
     image: null,
     imageAlt: null,
   },
   {
     id: "u-farm-kent",
     name: "U Farm, Kent",
+    title: "Water like carrot juice, <span class=\"em\">made clear.</span>",
     location: "Kent",
     county: "Kent",
-    map: { x: 82, y: 46 },
-    services: ["private-water-supplies", "design-install", "water-hygiene"],
+    services: ["design-install"],
     blurb:
-      "Water like carrot juice one day, coffee the next. We designed and built an ultrafiltration membrane system, with chlorination and control, feeding the main house and several cottages.",
+      "Water like carrot juice one day, coffee the next.",
     body: [
-      "We picked this project up after the driller decided the water treatment was beyond them. The supply was heavily silted, with high iron and manganese, and quality swung wildly from a clay-rich aquifer — like carrot juice some days, coffee others.",
+      "We picked this project up after the driller decided the water treatment was beyond them. The supply was heavily silted, with high iron and manganese, and quality swung wildly from a clay-rich aquifer, like carrot juice some days, coffee others.",
       "We designed and installed a full treatment system, including our own design-and-build ultrafiltration membrane unit, along with chlorination and a control panel. It now feeds the main house and several cottages.",
       "The ultrafiltration unit is genuinely impressive: it can be retrofitted to any borehole system and improves water clarity almost instantly.",
     ],
-    highlight: "In-house ultrafiltration — clear water from a clay-rich, variable source.",
+    highlight: "In-house ultrafiltration: clear water from a clay-rich, variable source.",
     image: null,
     imageAlt: null,
   },
   {
     id: "uppark-sussex",
     name: "Uppark, National Trust",
+    title: "A National Trust restoration, <span class=\"em\">right down to the water.</span>",
     location: "South Harting, Sussex",
     county: "Sussex",
-    map: { x: 34, y: 66 },
-    services: ["design-install", "water-hygiene", "servicing", "private-water-supplies"],
+    services: ["water-hygiene"],
     blurb:
-      "For the National Trust's restored Uppark House, a bespoke treatment and chlorination system — then a programmable tank control retrofitted to meet the site's varying demand.",
+      "Treatment and chlorination for a house coming back into real use.",
     body: [
       "Uppark House underwent a major restoration, and Invicta was selected to design and install a bespoke water treatment system, including chlorination.",
-      "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site — the kind of adaptation that only shows up once a building is back in real use.",
+      "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site, the kind of adaptation that only shows up once a building is back in real use.",
     ],
     highlight: "A bespoke system for a National Trust restoration.",
     image: null,
@@ -75,15 +85,15 @@ module.exports = [
   {
     id: "rf-estate-woking",
     name: "RF Estate, Woking",
+    title: "An inherited system, <span class=\"em\">put right and passed.</span>",
     location: "Woking, Surrey",
     county: "Surrey",
-    map: { x: 46, y: 38, anchor: "end", dy: -6 },
-    services: ["design-install", "servicing", "private-water-supplies"],
+    services: ["private-water-supplies"],
     blurb:
-      "An inherited system that never quite worked. We redesigned and refurbished it until the final water passed the local EHO tests with flying colours — which led to a second, properly designed supply nearby.",
+      "An inherited system that never quite worked.",
     body: [
       "Another inherited project, where the original company had installed a system that never quite worked well enough. We redesigned and refurbished where necessary to make it perform.",
-      "The final water passed the local EHO tests with flying colours. The work led to a second project very close by, where we could install a properly designed system from the start — giving that owner the independence they wanted.",
+      "The final water passed the local EHO tests with flying colours. The work led to a second project very close by, where we could install a properly designed system from the start, giving that owner the independence they wanted.",
     ],
     highlight: "Passed the local EHO tests with flying colours.",
     image: null,
@@ -92,15 +102,15 @@ module.exports = [
   {
     id: "b-farm-cotswolds",
     name: "B Farm, Cotswolds",
+    title: "A silted spring and a saline borehole, <span class=\"em\">both made to behave.</span>",
     location: "Cotswolds",
     county: "Gloucestershire",
-    map: { x: 12, y: 16 },
-    services: ["design-install", "private-water-supplies"],
+    services: ["design-install"],
     blurb:
-      "A damaged spring running with silt and a saline borehole had defeated several firms. We reconfigured the system — settling tank, better filtration, a redesigned RO — to work on genuinely fouling water.",
+      "A silted spring and a saline borehole that had defeated several firms.",
     body: [
       "The client had tried several water treatment companies to solve the borehole and spring problems on site. The spring had been damaged during site works and was producing a lot of silt; the borehole was saline.",
-      "We reconfigured the existing system — adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",
+      "We reconfigured the existing system, adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",
     ],
     highlight: "A redesigned RO that copes with fouling, saline water.",
     image: null,
@@ -109,15 +119,15 @@ module.exports = [
   {
     id: "b-stud-berkshire",
     name: "B Stud, Berkshire",
+    title: "Excellent water needs a light touch, <span class=\"em\">kept up for years.</span>",
     location: "Berkshire",
     county: "Berkshire",
-    map: { x: 33, y: 30 },
-    services: ["servicing", "water-hygiene", "private-water-supplies"],
+    services: ["servicing"],
     blurb:
-      "A chalk aquifer that produces great water needs only a simple system — and steady care. Over the years we've upgraded the pumps and kept the whole site running, with annual cleans, chlorinations and UKAS sampling.",
+      "A chalk aquifer that produces excellent water and does not need fighting.",
     body: [
       "We installed a very simple treatment system here, because the chalk aquifer produces excellent water and does not need fighting.",
-      "Over the years we have upgraded the pumps and kept the whole site going — including annual cleans and chlorinations, with UKAS-accredited sampling.",
+      "Over the years we have upgraded the pumps and kept the whole site going, including annual cleans and chlorinations, with UKAS-accredited sampling.",
     ],
     highlight: "Years of steady care: annual cleans, chlorination, UKAS sampling.",
     image: null,
@@ -126,12 +136,12 @@ module.exports = [
   {
     id: "roundhurst-haslemere",
     name: "Roundhurst House, Haslemere",
+    title: "A private supply looked after <span class=\"em\">on the county border.</span>",
     location: "Haslemere",
     county: "Surrey / Sussex border",
-    map: { x: 42, y: 55 },
-    services: ["servicing", "private-water-supplies"],
+    services: ["servicing"],
     blurb:
-      "A private supply looked after on the Surrey–Sussex border, near Haslemere.",
+      "A private supply we look after on the Surrey and Sussex border.",
     body: [
       "A private supply on the Surrey–Sussex border that we look after near Haslemere.",
     ],

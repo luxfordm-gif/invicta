@@ -10,7 +10,8 @@
   --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
   --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
   --ground-raise: #14294A;        /* raised navy surface */
-  --light: #F7F7F5;              /* cool near-white content surface */
+  --paper: #FFFFFF;              /* pure white — the base light surface */
+  --light: #F7F7F5;              /* cool near-white — the CREAM step, a panel colour */
   --light-warm: #EFEBDF;         /* warmer cream alt */
 
   /* --- Chalky detail accent (NOT a hero colour; used small) --- */
@@ -28,6 +29,21 @@
   --ink-muted: rgba(15, 15, 15, 0.58);
   --line-light: rgba(15, 15, 15, 0.13);
   --line-field: rgba(15, 15, 15, 0.20);   /* slightly darker stroke for form fields */
+
+  /* --- THEMES ---------------------------------------------------------------
+     Semantic colour ROLES that flip with the surface a thing sits on. Components
+     should reach for these, not for --ink or --on-dark directly, so that a dark
+     card sitting on a cream section resolves correctly on its own instead of
+     fighting the section's rules. Set the theme with .theme-dark / .theme-light
+     on any element and its whole subtree follows. Dark is the default, because
+     the body is navy. */
+  --fg: var(--on-dark);
+  --fg-muted: var(--on-dark-muted);
+  --fg-subtle: rgba(255, 255, 255, 0.34);
+  --fg-accent: var(--lime);
+  --line: var(--line-dark);
+  --surface: var(--ground);
+  --surface-raise: var(--ground-raise);
 
   /* --- Type --- */
   --font-body: 'Figtree', system-ui, sans-serif;

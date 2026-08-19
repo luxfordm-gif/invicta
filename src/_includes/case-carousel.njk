@@ -1,60 +1,101 @@
 {#
-  Case-study carousel. Expects `studies` (array of caseStudies entries) set by
-  the including page, plus optional `carouselEyebrow`, `carouselTitle`,
-  `carouselLead`. Renders nothing when there are no studies.
+  Case studies.
+
+  One study fills the section at a time, in the full editorial layout:
+  project photo, the write-up, then the highlight rule. Arrows step to the next
+  one. With a single study there are no arrows and it simply sits there as a
+  static case study.
+
+  The section's own header (`carouselTitle`, `carouselLead`) is the only
+  heading. Studies do NOT print their `title`: a second headline on every slide
+  pushed the picture and the copy below the fold. The study is identified by
+  the `client` / `location` label under the highlight instead.
+
+  LAYOUTS — set `carouselVariant`:
+    "stack"  (default) header block, then a 1:1 split of 4:3 photo and copy.
+    "split"  header spread across one row, wider 16:9 photo, copy beside it,
+             big arrows out at the section edges. About a third shorter.
+    "bleed"  copy in the container on the left, photo running off the right
+             edge of the page at a capped height. Shortest of the three.
+  Compare them at /lab/case-layouts/.
+
+  Expects `studies` — an array set by the including page. A study needs `body`
+  (array of paragraphs); `highlight`, `client` / `location`, `image` and
+  `imageAlt` are optional. Two shapes feed this: the hand-written `caseStudy`
+  in a service page's front matter, which leads, and the entries tagged to that
+  service in _data/caseStudies.js.
+
+  Three per service is the ceiling, capped here so a later addition to the
+  data file cannot quietly overflow a page.
 
   Behaviour (progressive enhancement): the track is a horizontal scroll-snap
-  list that works with no JS. carousel.js adds prev/next arrows, dots and
-  keyboard control on top.
+  list that works with no JS. carousel.js adds the arrows, dots and keyboard
+  control on top.
 #}
+{% macro ccArrows() %}
+<div class="case-cc__arrows">
+  <button type="button" class="case-cc__arrow" data-cc-prev aria-label="Previous case study">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button type="button" class="case-cc__arrow" data-cc-next aria-label="Next case study">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+{% endmacro %}
+{% if studies %}{% set studies = studies.slice(0, 3) %}{% endif %}
 {% if studies and studies.length %}
-<section class="section section--light case-cc" aria-labelledby="cc-title-{{ carouselId or 'x' }}">
+{%- set ccVariant = carouselVariant or "stack" -%}
+{%- set ccEdgeArrows = ccVariant != "stack" -%}
+{# `carouselSurface` lets the including page pick cream or white, so the section
+   never lands on the same surface as the one above it. #}
+<section class="section {{ carouselSurface or 'section--light' }} case-cc case-cc--{{ ccVariant }}" aria-labelledby="cc-title-{{ carouselId or 'x' }}">
   <div class="container">
     <div class="case-cc__head">
       <div class="case-cc__heading">
         <p class="eyebrow">{{ carouselEyebrow or "Selected work" }}</p>
-        <h2 id="cc-title-{{ carouselId or 'x' }}" class="statement case-cc__title">{{ carouselTitle | safe or "Relevant projects, <span class='em'>in the field.</span>" }}</h2>
-        {% if carouselLead %}<p class="case-cc__lead">{{ carouselLead | safe }}</p>{% endif %}
+        <h2 id="cc-title-{{ carouselId or 'x' }}" class="statement case-cc__title">{{ carouselTitle | safe or "Projects like this, <span class='em'>across the South East.</span>" }}</h2>
       </div>
-      {% if studies.length > 1 %}
-      <div class="case-cc__arrows">
-        <button type="button" class="case-cc__arrow" data-cc-prev aria-label="Previous project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-        </button>
-        <button type="button" class="case-cc__arrow" data-cc-next aria-label="Next project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      {% endif %}
+      {% if carouselLead %}<p class="case-cc__lead">{{ carouselLead | safe }}</p>{% endif %}
+      {% if studies.length > 1 and not ccEdgeArrows %}{{ ccArrows() }}{% endif %}
     </div>
 
-    <ul class="case-cc__track" role="list">
-      {% for cs in studies %}
-      <li class="case-cc__item">
-        <article class="case-card" id="cc-{{ cs.id }}">
-          <div class="case-card__media">
-            {% if cs.image %}
-            <img src="{{ cs.image }}" alt="{{ cs.imageAlt or (cs.name + ', ' + cs.location) }}" loading="lazy">
-            {% else %}
-            <div class="img-ph" role="img" aria-label="Project photo to follow">
-              <span class="img-ph__label">Photo to follow</span>
+    {# The stage is the positioning context the edge arrows hang off. #}
+    <div class="case-cc__stage">
+      {% if studies.length > 1 and ccEdgeArrows %}{{ ccArrows() }}{% endif %}
+      <ul class="case-cc__track" role="list">
+        {% for cs in studies %}
+        <li class="case-cc__item">
+          <article class="case-slide" aria-label="{{ cs.client or cs.location }}">
+            <div class="case-slide__grid">
+              <figure class="case-slide__media">
+                {% if cs.image %}
+                <img src="{{ cs.image }}" alt="{{ cs.imageAlt or (cs.name + ', ' + cs.location) }}" loading="lazy">
+                {% else %}
+                <div class="img-ph" role="img" aria-label="Project photo to follow">
+                  <span class="img-ph__label">Project photo to follow</span>
+                </div>
+                {% endif %}
+              </figure>
+              <div class="case-slide__text">
+                <div class="case-slide__body">
+                  {% for p in cs.body %}<p>{{ p | safe }}</p>{% endfor %}
+                </div>
+                {% if cs.highlight %}
+                <div class="case-slide__highlight-wrap">
+                  <p class="case-slide__highlight">{{ cs.highlight | safe }}</p>
+                  {% if cs.client or cs.location %}<p class="case-slide__client">{{ cs.client or cs.location }}</p>{% endif %}
+                </div>
+                {% endif %}
+              </div>
             </div>
-            {% endif %}
-            <span class="case-card__pin">{{ cs.location }}</span>
-          </div>
-          <div class="case-card__body">
-            <h3 class="case-card__name">{{ cs.name }}</h3>
-            <p class="case-card__blurb">{{ cs.blurb }}</p>
-            {% if cs.highlight %}<p class="case-card__highlight">{{ cs.highlight }}</p>{% endif %}
-            <a class="case-card__link" href="/case-studies/#{{ cs.id }}">Read the project <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
-      </li>
-      {% endfor %}
-    </ul>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
     {% if studies.length > 1 %}
-    <div class="case-cc__dots" role="tablist" aria-label="Project slides"></div>
+    <div class="case-cc__dots" role="tablist" aria-label="Case studies"></div>
     {% endif %}
   </div>
 </section>

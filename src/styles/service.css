@@ -45,26 +45,5 @@
 .service-points__approach { margin-top: var(--space-3); font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); }
 .service-points__cta { margin-top: var(--space-5); }
 
-/* --- Case study (light): image + story with a highlighted outcome --- */
-.service-case__title { max-width: 26ch; }
-.service-case__grid { margin-top: var(--flow-md); display: grid; gap: var(--flow-md); align-items: start; }
-@media (min-width: 900px) {
-  .service-case__grid { grid-template-columns: 1fr 1fr; gap: clamp(40px, 5vw, 80px); }
-}
-.service-case__media { margin: 0; }
-.service-case__media img,
-.service-case__media .img-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
-.service-case__media img { object-fit: cover; display: block; }
-/* leave the placeholder as flex (from .img-ph) so its label stays centred both
-   ways; a display:block here would strand the label at the top. */
-.service-case__body p { font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; }
-.service-case__body p + p { margin-top: 1.1em; }
-.service-case__highlight-wrap { margin-top: var(--flow-md); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
-.service-case__highlight {
-  font-family: var(--font-emotional); font-style: italic;
-  font-size: clamp(21px, 2.2vw, 30px); line-height: 1.25; letter-spacing: -0.01em; color: var(--ink);
-}
-.service-case__client {
-  margin-top: var(--space-3);
-  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted);
-}
+/* Case studies live in case-carousel.css now, shared with the private water
+   supplies page: the same image-plus-story layout, one study per screen. */

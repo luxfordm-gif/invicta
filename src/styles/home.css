@@ -1,0 +1,310 @@
+/* ==========================================================================
+   home.css — the home page only.
+
+   Surface rhythm: photo hero (dark) -> white -> cream -> navy -> white ->
+   cream. The white steps are what stop the page reading as navy/cream all the
+   way down; cream is used where a block should sit slightly apart from it.
+   ========================================================================== */
+
+/* --- Hero: full-bleed photograph ------------------------------------------ */
+.home-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: min(88svh, 900px);
+  padding-block: var(--hero-y-top) clamp(56px, 8vw, 120px);
+  background: var(--ground-deep);
+  overflow: hidden;
+}
+.home-hero__media { position: absolute; inset: 0; z-index: -2; }
+.home-hero__media img { width: 100%; height: 100%; object-fit: cover; }
+/* Two washes: a flat one to sit the whole picture back, and a bottom-weighted
+   gradient so the copy has contrast wherever the photograph is light. */
+.home-hero::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to top, rgba(8, 24, 46, 0.92) 0%, rgba(8, 24, 46, 0.55) 42%, rgba(8, 24, 46, 0.30) 100%),
+    rgba(8, 24, 46, 0.18);
+}
+.home-hero__inner { position: relative; }
+.home-hero__eyebrow { color: var(--lime); }
+.home-hero__title {
+  margin-top: var(--flow-heading);
+  max-width: 16ch;
+  color: var(--on-dark);
+}
+.home-hero__lead {
+  margin-top: var(--space-4);
+  max-width: 56ch;
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+.home-hero__actions {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+/* Who we work for, as a rail across the foot of the hero. The reference runs a
+   display-size marquee of room names here; at Invicta's register that would
+   shout, so it sits at index scale on a hairline instead, which also matches
+   the (01) numbering used across the site. */
+.home-hero__rail {
+  margin-top: clamp(32px, 4vw, 56px);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-dark);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px clamp(20px, 3vw, 44px);
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.72);
+}
+.home-hero__rail li { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
+/* A chalky dot between items, drawn after each but the last. */
+.home-hero__rail li:not(:last-child)::after {
+  content: "";
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--lime);
+  opacity: 0.75;
+}
+/* On a phone the first screen is already carrying the headline, the lead, two
+   CTAs and the floating emergency dock. The rail is the one thing here that is
+   said again in full further down the site, so it steps aside rather than
+   pushing the CTAs under the dock. */
+@media (max-width: 599.98px) {
+  .home-hero__rail { display: none; }
+}
+
+.home-hero__scroll {
+  position: absolute;
+  right: var(--container-pad);
+  bottom: clamp(56px, 8vw, 120px);
+  color: rgba(255, 255, 255, 0.7);
+}
+.home-hero__scroll svg { width: 26px; height: 26px; }
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero__scroll svg { animation: home-hero-nudge 2.4s ease-in-out infinite; }
+}
+@keyframes home-hero-nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(7px); opacity: 1; }
+}
+@media (max-width: 799.98px) {
+  /* The floating emergency dock sits over the foot of the first screen, so the
+     hero is tightened up and given foot room to keep both CTAs clear of it. */
+  .home-hero { min-height: min(78svh, 720px); padding-block: var(--space-4) 116px; }
+  .home-hero__scroll { display: none; }
+  .home-hero__lead { margin-top: var(--space-3); font-size: 16px; line-height: 1.55; }
+  .home-hero__actions { margin-top: var(--space-4); }
+  .home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
+}
+
+/* --- About + USPs --------------------------------------------------------- */
+.home-about__grid { display: grid; gap: var(--flow-sm); }
+@media (min-width: 900px) {
+  .home-about__grid { grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr); gap: clamp(40px, 5vw, 90px); }
+  /* the label rides alongside the copy as it scrolls, as on the reference */
+  .home-about__label { position: sticky; top: calc(var(--ubar-h) + var(--nav-h) + 32px); align-self: start; }
+}
+.home-about__title { margin-top: 0; max-width: 24ch; }
+.home-about__lead {
+  margin-top: var(--space-4);
+  max-width: 62ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.65;
+}
+
+/* Cream cards on the white surface: the cream earns its place as a panel. */
+.usps {
+  margin-top: var(--flow-md);
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+@media (min-width: 800px) { .usps { grid-template-columns: repeat(3, 1fr); } }
+.usp {
+  background: var(--light);
+  border: 1px solid var(--line-light);
+  border-radius: 6px;
+  padding: clamp(22px, 2.2vw, 32px);
+}
+.usp__icon { display: block; color: var(--ink); }
+.usp__icon svg { width: 26px; height: 26px; }
+.usp .usp__figure {
+  margin-top: clamp(32px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(38px, 4.2vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.usp__label {
+  margin-top: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+}
+
+/* --- Services as cards ---------------------------------------------------- */
+.home-services__title { max-width: 22ch; }
+.svc-cards {
+  margin-top: var(--flow-md);
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+/* Explicit counts, not auto-fit: four cards were breaking to 3 + 1 orphan. */
+@media (min-width: 800px)  { .svc-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .svc-cards { grid-template-columns: repeat(4, 1fr); } }
+.svc-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line-light);
+  border-radius: 6px;
+  padding: clamp(24px, 2.4vw, 34px);
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+}
+.svc-card__index { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+.svc-card__title {
+  margin-top: clamp(40px, 5vw, 72px);
+  font-family: var(--font-display);
+  font-size: clamp(21px, 1.9vw, 26px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.svc-card__desc { margin-top: var(--space-2); font-size: 15.5px; line-height: 1.55; color: var(--ink-muted); }
+.svc-card__cta {
+  margin-top: auto;          /* pin to the card foot so the row of CTAs lines up */
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.svc-card__arrow { transition: transform 0.28s ease; }
+
+.svc-card:hover,
+.svc-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--ground);
+  box-shadow: 0 22px 44px -26px rgba(8, 24, 46, 0.5);
+}
+.svc-card:hover .svc-card__arrow,
+.svc-card:focus-visible .svc-card__arrow { transform: translateX(6px); }
+.svc-card:hover .svc-card__title { color: var(--steel); }
+@media (prefers-reduced-motion: reduce) {
+  .svc-card, .svc-card__arrow { transition: none; }
+  .svc-card:hover, .svc-card:focus-visible { transform: none; }
+}
+
+/* --- How we work: stacking cards ------------------------------------------ */
+.home-process__title { max-width: 22ch; }
+.stack { margin-top: var(--flow-md); display: grid; gap: clamp(20px, 3vw, 32px); }
+.stack__card {
+  /* Each card rests at the same height under the sticky header, offset a little
+     further down per card so the one beneath still shows a sliver. */
+  position: sticky;
+  top: calc(var(--ubar-h) + var(--nav-h) + 24px + var(--i, 0) * 14px);
+  display: grid;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: center;
+  padding: clamp(24px, 3vw, 48px);
+  background: var(--ground-raise);
+  border: 1px solid var(--line-dark);
+  border-radius: 10px;
+}
+@media (min-width: 800px) {
+  .stack__card { grid-template-columns: 1fr 1fr; }
+}
+.stack__index { font-size: 13px; font-weight: 600; color: var(--lime); }
+.stack__title {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--on-dark);
+}
+.stack__copy {
+  margin-top: var(--space-3);
+  max-width: 46ch;
+  font-size: clamp(15.5px, 1.3vw, 17px);
+  line-height: 1.6;
+  color: var(--on-dark-muted);
+}
+.stack__cta { margin-top: var(--space-4); }
+.stack__media { border-radius: 6px; overflow: hidden; }
+.stack__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* A card taller than the viewport can never come to rest, and the stack turns
+   into a jitter. Below that, fall back to a plain column of cards. */
+@media (max-width: 799.98px), (max-height: 700px) {
+  .stack__card { position: static; }
+}
+
+/* --- Trusted by ----------------------------------------------------------- */
+.home-clients .clients__grid { margin-top: var(--flow-md); }
+
+/* --- Reviews -------------------------------------------------------------- */
+.home-reviews__title { max-width: 22ch; }
+.reviews {
+  margin-top: var(--flow-md);
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+@media (min-width: 800px) { .reviews { grid-template-columns: repeat(2, 1fr); } }
+.review {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line-light);
+  border-radius: 6px;
+  padding: clamp(24px, 2.4vw, 34px);
+}
+.review__mark { color: var(--steel); }
+.review__mark svg { width: 26px; height: 26px; }
+.review__quote {
+  margin: var(--space-4) 0 0;
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.6;
+  color: var(--ink);
+}
+.review .review__by {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-light);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.review__by span { display: block; font-weight: 400; font-size: 14px; color: var(--ink-muted); }
+
+/* Placeholder state — same treatment as the "photo to follow" blocks. */
+.review--empty { min-height: 200px; }
+.review__placeholder {
+  margin: var(--space-4) 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}

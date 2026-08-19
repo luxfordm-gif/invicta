@@ -27,20 +27,22 @@
       </div>
     </section>
 
-    <!-- ===================== PROJECT BAND 1 ===================== -->
-    <a class="band" href="/case-studies/" aria-label="Case study: Cowdray Estate borehole supply, 2023">
+    <!-- ===================== PROJECT BAND 1 =====================
+      Not a link: projects live in the carousel below, not on a page of their own.
+    -->
+    <figure class="band">
       <div class="band__media">
         <img src="/assets/estate-dawn.webp" alt="A country estate at dawn, with mist settling over the parkland." loading="lazy">
       </div>
-      <div class="container band__bar">
+      <figcaption class="container band__bar">
         <span class="band__label">Private Estate Supply</span>
         <span class="band__title">Cowdray Estate.</span>
         <span class="band__year">(2023)</span>
-      </div>
-    </a>
+      </figcaption>
+    </figure>
 
     <!-- ===================== SERVICES (light) ===================== -->
-    <section class="section section--light services" aria-labelledby="services-title">
+    <section class="section section--paper services" aria-labelledby="services-title">
       <div class="container">
         <p class="eyebrow">A tailored water supply, end to end</p>
         <div class="rule"></div>
@@ -219,7 +221,7 @@
     </section>
 
     <!-- ===================== STATS (light) ===================== -->
-    <section class="section section--light stats" aria-labelledby="stats-title">
+    <section class="section section--paper stats" aria-labelledby="stats-title">
       <h2 id="stats-title" class="visually-hidden">Invicta by the numbers</h2>
       <div class="container stats__grid">
         <div class="stat">
@@ -241,7 +243,7 @@
     </section>
 
     <!-- ===================== CLIENTS / TRUST (light) ===================== -->
-    <section class="section section--light clients" aria-labelledby="clients-title">
+    <section class="section section--paper clients" aria-labelledby="clients-title">
       <div class="container">
         <h2 id="clients-title" class="statement">
           Chosen by clients who <span class="em">expect it done properly.</span>
@@ -256,17 +258,15 @@
       </div>
     </section>
 
-    <!-- ===================== COVERAGE HEAT-MAP (dark) ===================== -->
-    {% include "coverage-map.njk" %}
-
-    <!-- ============ CASE STUDIES (carousel, light) ============ -->
+    <!-- ============ CASE STUDIES (one per screen, light) ============ -->
     {% set studies = [] %}
     {% for cs in caseStudies %}{% if "private-water-supplies" in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = "pws" %}
+    {% set bentoSurface = "section--light" %}
     {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Private supplies we've <span class='em'>designed and delivered.</span>" %}
-    {% set carouselLead = "From a National Trust restoration to multi-source estate systems. Swipe through, or see them all on our <a href='/case-studies/'>case studies</a>." %}
-    {% include "case-carousel.njk" %}
+    {% set carouselLead = "From failed boreholes to multi-source estate systems." %}
+    {% include "case-bento.njk" %}
 
     <!-- ===================== FAQ (dark) ===================== -->
     <section class="section faq" aria-labelledby="faq-title">

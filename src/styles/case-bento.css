@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Case studies, bento grid (dark section)
+
+   A tall lead card beside a stack of smaller ones, each a photograph with the
+   copy over it. Hover slides the copy up and brings the outcome line with it.
+   Pairs with _includes/case-bento.njk.
+   ========================================================================== */
+
+/* --- Header. House treatment, not the mockup's: left aligned, Figtree, with
+   the italic Playfair kept for the emphasised clause via .em. The mockup was a
+   reference for the GRID, not for the typography. --- */
+.case-bento__title { margin-top: var(--flow-heading); max-width: 20ch; }
+.case-bento__lead {
+  margin-top: var(--space-2);
+  max-width: 54ch;
+  color: var(--fg-muted);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+
+/* --- Grid. Defined per count so a service with fewer studies never leaves a
+   hole in the layout. --- */
+.bento {
+  /* Close to the header on purpose: the grid is the point of the section. */
+  margin-top: clamp(24px, 2.6vw, 44px);
+  display: grid;
+  gap: clamp(12px, 1.4vw, 20px);
+}
+@media (min-width: 900px) {
+  .case-bento--3 .bento {
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    min-height: clamp(600px, 53vw, 780px);
+  }
+  /* the lead study takes the full-height cell on the left */
+  .case-bento--3 .bento__cell:first-child { grid-row: span 2; }
+
+  .case-bento--2 .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-bento--2 .bento__cell { min-height: clamp(380px, 34vw, 500px); }
+
+  .case-bento--1 .bento__cell { min-height: clamp(420px, 38vw, 560px); }
+}
+
+/* --- Card --- */
+.bento__cell { display: flex; }
+.bento__card {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-raise);
+}
+.bento__media { position: absolute; inset: 0; z-index: -2; }
+.bento__media img { width: 100%; height: 100%; object-fit: cover; }
+.bento__ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 14%;                      /* clear of the copy block at the foot */
+  background: var(--surface-raise);
+}
+.bento__ph span {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-subtle);
+}
+/* Scrim, so the copy holds up over any photograph. */
+.bento__card::after {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top,
+    rgba(6, 18, 42, 0.94) 0%,
+    rgba(6, 18, 42, 0.72) 34%,
+    rgba(6, 18, 42, 0.18) 68%,
+    rgba(6, 18, 42, 0.06) 100%);
+}
+
+/* Anchored to the base of the card, so revealing the outcome line grows the
+   block UPWARDS over the photograph instead of making the card taller and
+   shoving the rest of the grid down. */
+.bento__copy {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: clamp(20px, 2.2vw, 34px);
+}
+.bento__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.bento__tag {
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+  border-radius: var(--btn-radius);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.bento__name {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.bento__blurb {
+  margin-top: 10px;
+  max-width: 54ch;
+  font-size: clamp(14.5px, 1.15vw, 16px);
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+
+/* --- The reveal.
+   0fr -> 1fr on a grid row animates the height without hard-coding one, so the
+   outcome line can be any length. --- */
+.bento__reveal {
+  display: grid;
+  grid-template-rows: minmax(0, 0fr);
+  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bento__reveal > div { overflow: hidden; }
+.bento__more {
+  margin-top: 0.9em;
+  max-width: 54ch;
+  font-size: clamp(14.5px, 1.15vw, 16px);
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+@media (hover: hover) {
+  /* the whole copy block lifts a little as the line appears */
+  .bento__copy { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bento__card:hover .bento__reveal,
+  .bento__card:focus-within .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+  .bento__card:hover .bento__media img { transform: scale(1.04); }
+  .bento__media img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+/* No hover: nothing is hidden behind an interaction that cannot happen. */
+@media (hover: none) {
+  .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bento__reveal { transition: none; }
+  .bento__copy { transition: none; }
+  .bento__media img { transition: none; }
+}
+
+/* ==========================================================================
+   PHONE / TABLET
+   The card stops being a photograph with text over it. Only the tags and the
+   name stay on the picture, sat at its foot; the body copy moves below it onto
+   the card. There is no hover to reveal anything with, so everything shows.
+   ========================================================================== */
+@media (max-width: 899.98px) {
+  .bento__card {
+    --bento-media-h: clamp(190px, 46vw, 260px);
+    display: block;
+  }
+  /* picture in flow at the top, at a fixed height */
+  .bento__media {
+    position: relative;
+    z-index: 0;
+    height: var(--bento-media-h);
+  }
+  /* keep the placeholder label clear of the tags sat on the picture */
+  .bento__ph { align-items: flex-start; padding-top: 16%; }
+  /* scrim over the foot of the PICTURE only, for the name sat on it */
+  .bento__card::after {
+    inset: 0 0 auto 0;
+    height: var(--bento-media-h);
+    background: linear-gradient(to top,
+      rgba(6, 18, 42, 0.9) 0%,
+      rgba(6, 18, 42, 0.5) 46%,
+      rgba(6, 18, 42, 0) 100%);
+  }
+
+  .bento__copy { position: static; padding: 0; }
+  /* pulled back up over the foot of the picture: translateY(-100%) is relative
+     to the element's own height, so it does not need one hard-coding */
+  .bento__head {
+    position: absolute;
+    top: var(--bento-media-h);
+    left: 0;
+    right: 0;
+    transform: translateY(-100%);
+    padding: clamp(16px, 4vw, 22px);
+  }
+  .bento__text { padding: clamp(16px, 4vw, 22px); }
+  .bento__blurb { margin-top: 0; }
+
+  /* nothing is held back behind a hover that cannot happen */
+  .bento__reveal { grid-template-rows: minmax(0, 1fr); }
+}
