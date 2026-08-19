@@ -1,0 +1,41 @@
+{#
+  Coverage band — a full-bleed grayscale Google map with the counties we serve
+  shaded on top, and the claim itself set over the middle of it.
+
+  Unlike coverage-map.njk (the impressionistic heat-map on /case-studies/) this
+  one is real cartography: an actual Google basemap, desaturated through the
+  Maps style array rather than a CSS filter. That distinction matters — a CSS
+  grayscale filter would grey out the county shading too, and the shading is the
+  whole point.
+
+  The county polygons come from /assets/coverage-counties.json (ONS Local
+  Authority Districts, OGL v3, dissolved to ceremonial counties). The band is
+  deliberately non-interactive: it is a statement, not a tool. /contact/ is
+  where a map you can actually drive lives.
+
+  Needs GOOGLE_MAPS_API_KEY. Without it the map never loads, no request goes to
+  Google, and the heading sits over a plain tinted ground instead.
+#}
+<section class="coverage-band{% if not maps.apiKey %} is-mapless{% endif %}" aria-labelledby="coverage-band-title">
+
+  {# The map paints itself in here. aria-hidden because the heading beside it
+     already states the coverage in words; a screen reader gains nothing from
+     an unlabelled tile canvas. #}
+  <div class="coverage-band__map"
+       data-coverage-map
+       data-maps-key="{{ maps.apiKey }}"
+       data-counties-src="/assets/coverage-counties.json"
+       aria-hidden="true"></div>
+
+  <div class="coverage-band__scrim" aria-hidden="true"></div>
+
+  <div class="container coverage-band__overlay">
+    <p class="eyebrow coverage-band__eyebrow">{{ coverageBandEyebrow or "Where we work" }}</p>
+    <h2 id="coverage-band-title" class="coverage-band__title">
+      {# `x | safe or "default"` does NOT fall through — the filter runs first and
+         yields an empty SafeString. Default inside the parens, filter outside. #}
+      {{ (coverageBandTitle or "Covering Surrey, Sussex, Kent, Hampshire, Berkshire and <span class='em'>Greater London.</span>") | safe }}
+    </h2>
+  </div>
+
+</section>
