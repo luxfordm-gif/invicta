@@ -14,7 +14,15 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: clamp(104px, 15vw, 210px);
+  /* Optical centring. The eyebrow stacks above the heading, but the heading is
+     what the eye centres on, so a symmetric band reads as sitting low. Move
+     half the eyebrow's stack (its line box plus the gap under it) from the head
+     of the band to the foot: the heading lands on the middle and the band keeps
+     its height. */
+  --band-pad: clamp(104px, 15vw, 210px);
+  --band-lift: calc((21px + var(--flow-heading)) / 2);
+  padding-block: calc(var(--band-pad) - var(--band-lift))
+                 calc(var(--band-pad) + var(--band-lift));
   /* Neutral ground: what shows before the tiles paint, and all that shows if
      no API key is configured. Sits between the cream section above and the
      navy footer below. */
