@@ -19,14 +19,17 @@
     {% if introTitle %}
     <section class="section section--paper service-intro" aria-labelledby="intro-title">
       <div class="container">
-        <p class="eyebrow">{{ introEyebrow or "Overview" }}</p>
-        <div class="rule"></div>
-        <h2 id="intro-title" class="statement">{{ introTitle | safe }}</h2>
-        {% if introBody %}
-        <div class="service-intro__body">
-          {% for p in introBody %}<p>{{ p | safe }}</p>{% endfor %}
+        <div class="service-intro__inner">
+          <p class="eyebrow">{{ introEyebrow or "Overview" }}</p>
+          <div class="rule"></div>
+          <h2 id="intro-title" class="statement">{{ introTitle | safe }}</h2>
+          {% if introBody %}
+          <div class="service-intro__body">
+            {% for p in introBody %}<p{% if loop.first %} class="service-intro__lead"{% endif %}>{{ p | safe }}</p>{% endfor %}
+          </div>
+          {% endif %}
+          {% if introNote %}<p class="service-intro__note">{{ introNote | safe }}</p>{% endif %}
         </div>
-        {% endif %}
       </div>
     </section>
     {% endif %}
