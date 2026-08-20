@@ -259,3 +259,67 @@
 }
 .contact-thanks__lead a { color: var(--on-dark); text-decoration: underline; text-underline-offset: 3px; }
 .contact-thanks__actions { margin-top: var(--space-5); display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* Consent link: new tab, so reading the policy never costs a half-filled form. */
+.contact-form__consent a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.contact-form__consent a:hover { color: var(--ground); }
+
+/* --- Sent state -----------------------------------------------------------
+   The form column becomes the confirmation in place. No redirect, no modal:
+   sending an enquiry is a small event, and the details aside and map staying
+   put is what makes it read as reassurance rather than an interruption.       */
+.contact-body__main { transition: opacity 0.28s ease; }
+.contact-body__main.is-clearing { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .contact-body__main { transition: none; }
+}
+
+.contact-sent { max-width: 46ch; }
+.contact-sent:focus { outline: none; }
+.contact-sent .eyebrow { margin-bottom: clamp(16px, 2vw, 22px); }
+.contact-sent__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4.2vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.contact-sent__title .em { font-style: italic; }
+.contact-sent .rule { margin-top: clamp(22px, 2.6vw, 32px); }
+.contact-sent__lead {
+  margin-top: clamp(24px, 3vw, 34px);
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+.contact-sent__note {
+  margin-top: clamp(14px, 1.6vw, 18px);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+.contact-sent__note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.contact-sent__note a:hover { color: var(--ground); }
+
+/* --- Submission error --- */
+.contact-form__error {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line-light);
+  border-left: 3px solid var(--ground);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 56ch;
+}
+.contact-form__error a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }

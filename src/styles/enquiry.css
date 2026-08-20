@@ -228,16 +228,57 @@
 a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
 .enquiry__contact-note { display: block; margin-top: 8px; font-size: 15px; color: var(--on-dark-muted); }
 
-/* --- Success state --- */
-.enquiry__success { padding: clamp(24px, 4vw, 48px) 0; }
-.enquiry__success h3 {
+/* --- Sent state -----------------------------------------------------------
+   On success the panel stops being an enquiry form and becomes a confirmation.
+   The whole inner cross-fades, the header retires, and the thank-you takes the
+   title's place at the top. Leaving the header up made the change too quiet to
+   notice: the only thing that moved was below where the eye was resting.       */
+.enquiry__inner { transition: opacity 0.28s ease; }
+.enquiry__inner.is-clearing { opacity: 0; }
+.enquiry__inner.is-sent > .enquiry__title,
+.enquiry__inner.is-sent > .rule,
+.enquiry__inner.is-sent > .enquiry__lead,
+.enquiry__inner.is-sent > .enquiry__tabs { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .enquiry__inner { transition: none; }
+}
+
+/* --- Confirmation --- */
+.enquiry-sent { max-width: 62ch; }
+.enquiry-sent .eyebrow { margin-bottom: clamp(18px, 2vw, 26px); }
+.enquiry-sent:focus { outline: none; }
+.enquiry-sent__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(28px, 3.4vw, 46px);
-  letter-spacing: -0.02em;
+  font-size: clamp(40px, 6vw, 78px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
   color: var(--on-dark);
+  max-width: 14ch;
 }
-.enquiry__success p { margin-top: 16px; font-size: 18px; line-height: 1.55; color: var(--on-dark-muted); max-width: 46ch; }
+.enquiry-sent__title .em { font-style: italic; }
+.enquiry-sent .rule { margin-top: clamp(24px, 3vw, 40px); }
+.enquiry-sent__lead {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+  max-width: 52ch;
+}
+.enquiry-sent__note {
+  margin-top: clamp(16px, 2vw, 22px);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--on-dark-muted);
+  max-width: 52ch;
+}
+.enquiry-sent__note a {
+  color: var(--on-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.enquiry-sent__note a:hover { color: var(--lime); }
+.enquiry-sent__actions { margin-top: clamp(32px, 4vw, 48px); }
 
 /* Lock background scroll while open. */
 /* Scroll-lock: pin the body (JS sets top: -scrollY). The page stays exactly where
@@ -260,6 +301,13 @@ html.enquiry-open body { position: fixed; left: 0; right: 0; width: 100%; overfl
 }
 .enquiry__error a { color: var(--lime); text-decoration: underline; text-underline-offset: 3px; }
 
-/* --- Success state focus: it takes focus on submit, so tame the ring --- */
-.enquiry__success:focus { outline: none; }
-.enquiry__success:focus-visible { outline: 2px solid var(--lime); outline-offset: 6px; }
+/* Consent link: opens in a new tab, so reading the policy never costs the
+   visitor a half-filled form. Clicking it must not toggle the surrounding
+   label's checkbox. */
+.enquiry__consent a {
+  color: var(--on-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.enquiry__consent a:hover { color: var(--lime); }
