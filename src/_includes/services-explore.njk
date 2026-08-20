@@ -1,20 +1,65 @@
-    <!-- ===================== EXPLORE OTHER SERVICES (internal links) ===================== -->
-    <section class="section services-explore" aria-labelledby="explore-title">
-      <div class="container">
+{#
+  Explore other services — the internal-link block that closes every service
+  page.
+
+  It used to be a row of pill "tags" on navy, which sat between the navy FAQ and
+  the navy footer and read as one undifferentiated dark run. This is the same
+  job (link the other three services, for readers and for internal linking) laid
+  out as a split: a white card of link rows on cream, beside a large photograph.
+  A light band here also puts a deliberate break between the FAQ above and the
+  footer CTA below, which is half of why the old version disappeared.
+
+  THE PHOTOGRAPH FOLLOWS THE POINTER. Each row has a matching shot stacked in
+  the media panel; hovering or tab-focusing a row crossfades to it. That is done
+  with :has() rather than JavaScript, so the whole thing is a plain list of
+  links that happens to have a picture attached. Browsers without :has() simply
+  keep showing the resting image, which is the first service's.
+
+  Imagery and one-line descriptions come from site.services, so adding a service
+  needs nothing here.
+#}
+
+{# The current page's own service is dropped, so this is three rows, and the
+   rows and the shots share an index by sitting in the same order. #}
+{% set others = [] %}
+{% for s in site.services %}{% if s.href != currentService %}{% set _ = others.push(s) %}{% endif %}{% endfor %}
+
+{% if others.length %}
+<section class="section section--light services-explore" aria-labelledby="explore-title">
+  <div class="container">
+    <div class="services-explore__split">
+
+      <div class="services-explore__panel">
         <p class="eyebrow">More from Invicta</p>
-        <h2 id="explore-title" class="statement">Explore our other services.</h2>
+        <h2 id="explore-title" class="statement services-explore__title">Explore our other services.</h2>
         <p class="services-explore__lead">Water treatment is only ever part of the picture. Whatever your property needs, it is looked after by the same team.</p>
-        <ul class="services-explore__tags">
-          {% for s in site.services %}
-          {% if s.href != currentService %}
-          <li>
-            <a class="tag" href="{{ s.href }}">
-              <span>{{ s.title }}</span>
-              <span class="tag__arrow" aria-hidden="true">&rarr;</span>
+
+        <ul class="services-explore__card" role="list">
+          {% for s in others %}
+          <li class="services-explore__row">
+            <a class="services-explore__link" href="{{ s.href }}">
+              <span class="services-explore__index" aria-hidden="true">{{ "0" ~ loop.index }}</span>
+              <span class="services-explore__text">
+                <span class="services-explore__name">{{ s.title }}</span>
+                {% if s.desc %}<span class="services-explore__desc">{{ s.desc }}</span>{% endif %}
+              </span>
+              <span class="services-explore__arrow" aria-hidden="true">&rarr;</span>
             </a>
           </li>
-          {% endif %}
           {% endfor %}
         </ul>
       </div>
-    </section>
+
+      {# aria-hidden: the shots are decorative here. Each one names a service
+         that is already spelled out in the link beside it, so announcing three
+         alternating images would only repeat the list. #}
+      <div class="services-explore__media" aria-hidden="true">
+        {% for s in others %}
+        <img class="services-explore__shot" src="{{ s.image }}" alt="" loading="lazy" decoding="async" width="1200" height="961">
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}

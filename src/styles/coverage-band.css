@@ -36,6 +36,20 @@
    a plain light ground underneath the tiles while they load. */
 .coverage-band__map > div { background: transparent !important; }
 
+/* Keyless fallback: the same Google Maps embed /contact/ uses. The embed has no
+   style array, so here the greying IS a CSS filter — there are no county
+   polygons in this variant for a filter to wash out. */
+.coverage-band__frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* /contact/ lightens its map (contrast 0.92 / brightness 1.03) because nothing
+     is set over it. Here a heading is, and the band is veiled on top, so the
+     map is pushed the other way to survive both. */
+  filter: grayscale(1) contrast(1.06) brightness(0.99);
+}
+
 /* --- Legibility veil ------------------------------------------------------
    Lightens the middle so the heading always has contrast, while letting the
    shaded counties stay legible out toward the edges. The vertical pass fades
@@ -56,6 +70,43 @@
       rgba(247, 247, 245, 0) 22%,
       rgba(247, 247, 245, 0) 78%,
       rgba(247, 247, 245, 0.55) 100%);
+}
+
+/* Keyless variant: there is no county shading to protect, and the embed's own
+   palette is far paler than the styled basemap, so the veil that keeps the
+   heading legible over the JS map wipes this one out completely. Lighten it,
+   and pull the middle in, so the coastline and the towns actually read. */
+.coverage-band--embed .coverage-band__scrim {
+  background:
+    radial-gradient(ellipse 54% 50% at 50% 52%,
+      rgba(247, 247, 245, 0.88) 0%,
+      rgba(247, 247, 245, 0.66) 44%,
+      rgba(247, 247, 245, 0.20) 74%,
+      rgba(247, 247, 245, 0) 100%),
+    linear-gradient(to bottom,
+      rgba(247, 247, 245, 0.62) 0%,
+      rgba(247, 247, 245, 0) 24%,
+      rgba(247, 247, 245, 0) 76%,
+      rgba(247, 247, 245, 0.62) 100%);
+}
+
+/* On a narrow screen the band is a lot smaller but the map detail is not, so
+   the same veil leaves the heading fighting road labels. Push it back up and
+   spread it wider; the map still reads around the edges. */
+@media (max-width: 899.98px) {
+  .coverage-band--embed .coverage-band__scrim {
+    background:
+      radial-gradient(ellipse 80% 62% at 50% 50%,
+        rgba(247, 247, 245, 0.95) 0%,
+        rgba(247, 247, 245, 0.84) 44%,
+        rgba(247, 247, 245, 0.40) 76%,
+        rgba(247, 247, 245, 0.06) 100%),
+      linear-gradient(to bottom,
+        rgba(247, 247, 245, 0.60) 0%,
+        rgba(247, 247, 245, 0) 22%,
+        rgba(247, 247, 245, 0) 78%,
+        rgba(247, 247, 245, 0.60) 100%);
+  }
 }
 
 /* --- The claim ------------------------------------------------------------ */
@@ -84,9 +135,11 @@
 }
 .coverage-band__title .em { color: var(--steel); }
 
-/* --- No API key configured ------------------------------------------------
-   Nothing is requested from Google. Soften the scrim so the band still reads
-   as a deliberate surface rather than a blank grey gap. */
+/* --- No map at all --------------------------------------------------------
+   Set by coverage-band.js when the Maps script or the county GeoJSON fails.
+   Nothing is on the ground, so soften the scrim: the band should still read as
+   a deliberate surface rather than a blank grey gap. */
+.coverage-band.is-mapless .coverage-band__frame { display: none; }
 .coverage-band.is-mapless .coverage-band__scrim {
   background: linear-gradient(to bottom,
     rgba(247, 247, 245, 0.72) 0%,

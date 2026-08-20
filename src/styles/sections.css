@@ -429,38 +429,145 @@
 }
 
 /* ===================== EXPLORE OTHER SERVICES ===================== */
-/* Dark band of simple pill "tags" linking to the other service pages —
-   internal linking for SEO + an easy jump between services. */
+/* A cream band closing each service page: a white card of link rows to the
+   other services, beside a photograph that follows the pointer.
+
+   It sits between the navy FAQ and the navy footer, and being light is half
+   of its job — three dark blocks in a row is what made the old pill version
+   vanish into its neighbours. */
+.services-explore__split {
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  /* Card slightly narrower than the picture, so the photograph carries the
+     block and the card reads as an object placed on it. */
+  .services-explore__split { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr); gap: clamp(40px, 5vw, 88px); }
+}
+
+.services-explore__title { max-width: 15ch; }
 .services-explore__lead {
   margin-top: var(--space-3);
-  max-width: 56ch;
-  color: var(--on-dark-muted);
+  max-width: 46ch;
   font-size: clamp(16px, 1.4vw, 18px);
   line-height: 1.6;
 }
-.services-explore__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: var(--flow-md);
+
+/* --- The card ------------------------------------------------------------- */
+/* White on cream rather than a border, so it lifts off the section the way the
+   bento cards lift off theirs. */
+.services-explore__card {
+  margin-top: clamp(28px, 3.5vw, 48px);
+  background: var(--paper);
+  border-radius: 16px;
+  padding: 8px clamp(14px, 1.6vw, 22px);
+  box-shadow: 0 22px 50px -32px rgba(8, 24, 46, 0.5);
 }
-.tag {
+.services-explore__row + .services-explore__row { border-top: 1px solid var(--line-light); }
+
+.services-explore__link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding-block: clamp(18px, 2vw, 26px);
+  color: var(--ink);
+  text-decoration: none;
+}
+.services-explore__index {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--steel);
+  font-variant-numeric: tabular-nums;
+}
+.services-explore__name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+.services-explore__desc {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+/* Filled circle rather than a bare glyph: it gives each row a visible target
+   and an obvious hover state without a button's weight. */
+.services-explore__arrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 22px;
-  border: 1px solid var(--line-dark);
-  border-radius: var(--btn-radius);
-  color: var(--on-dark);
-  text-decoration: none;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line-light);
+  color: var(--ground);
   font-size: 15px;
-  font-weight: 500;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
-.tag__arrow { opacity: 0.5; transition: transform 0.2s ease, opacity 0.2s ease; }
-.tag:hover { background: var(--on-dark); color: var(--ground); border-color: var(--on-dark); }
-.tag:hover .tag__arrow { opacity: 1; transform: translateX(3px); }
-.tag:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
+.services-explore__link:hover .services-explore__name { color: var(--steel); }
+.services-explore__link:hover .services-explore__arrow,
+.services-explore__link:focus-visible .services-explore__arrow {
+  background: var(--ground);
+  border-color: var(--ground);
+  color: var(--on-dark);
+  transform: translateX(3px);
+}
+.services-explore__link:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: 10px; }
+
+/* --- The photograph ------------------------------------------------------- */
+.services-explore__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--ground);
+  aspect-ratio: 4 / 3;
+}
+@media (min-width: 900px) {
+  /* Taller than the card is a deliberate mismatch: the picture overhangs the
+     card top and bottom, which is what stops the split reading as two boxes. */
+  .services-explore__media { aspect-ratio: 5 / 6; }
+}
+.services-explore__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.55s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Resting state: the first service's shot. Also the whole of the fallback for
+   browsers without :has() — the list still works, the picture just holds. */
+.services-explore__shot:first-child { opacity: 1; transform: scale(1); }
+
+/* Hover or tab-focus a row and its own shot comes forward. Drop every shot
+   first, then raise the matching one; the second rule is the more specific of
+   the two, so it wins. Row n and shot n line up because the template emits
+   both from the same list, in the same order. */
+.services-explore__split:has(.services-explore__row .services-explore__link:is(:hover, :focus-visible)) .services-explore__shot { opacity: 0; }
+.services-explore__split:has(.services-explore__row:nth-child(1) .services-explore__link:is(:hover, :focus-visible)) .services-explore__shot:nth-child(1),
+.services-explore__split:has(.services-explore__row:nth-child(2) .services-explore__link:is(:hover, :focus-visible)) .services-explore__shot:nth-child(2),
+.services-explore__split:has(.services-explore__row:nth-child(3) .services-explore__link:is(:hover, :focus-visible)) .services-explore__shot:nth-child(3),
+.services-explore__split:has(.services-explore__row:nth-child(4) .services-explore__link:is(:hover, :focus-visible)) .services-explore__shot:nth-child(4) {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Touch: there is no hover to drive the crossfade, so the picture is one fixed
+   image above the card. Keep it shallow, it is scenery, not content. */
+@media (max-width: 899.98px) {
+  .services-explore__media { aspect-ratio: 16 / 10; }
+}
 
 /* ===================== BREADCRUMB ===================== */
 /* A slim divided bar below the nav. On desktop it is sticky and slides away
