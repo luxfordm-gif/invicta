@@ -243,3 +243,23 @@ a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
 /* Scroll-lock: pin the body (JS sets top: -scrollY). The page stays exactly where
    it was and the fixed drawer still covers the viewport (verified). */
 html.enquiry-open body { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
+
+/* --- Honeypot: kept in the DOM for Netlify, never shown or focusable --- */
+.enquiry__hp { display: none; }
+
+/* --- Submission error --- */
+.enquiry__error {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line-dark);
+  border-left: 3px solid var(--lime);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--on-dark);
+  max-width: 56ch;
+}
+.enquiry__error a { color: var(--lime); text-decoration: underline; text-underline-offset: 3px; }
+
+/* --- Success state focus: it takes focus on submit, so tame the ring --- */
+.enquiry__success:focus { outline: none; }
+.enquiry__success:focus-visible { outline: 2px solid var(--lime); outline-offset: 6px; }
