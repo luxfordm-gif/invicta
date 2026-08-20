@@ -204,29 +204,6 @@
   .sectors__dot:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
 }
 
-/* --- Stats (light) -------------------------------------------------------- */
-.stats__grid { display: grid; gap: var(--space-5); }
-@media (min-width: 800px) { .stats__grid { grid-template-columns: repeat(3, 1fr); gap: 0; } }
-.stat { display: flex; flex-direction: column; padding: 0 clamp(0px, 3vw, 48px); }
-@media (min-width: 800px) { .stat + .stat { border-left: 1px solid var(--line-light); } .stat:first-child { padding-left: 0; } }
-.stat__num { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
-.stat__label { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; margin-top: var(--space-2); max-width: 12ch; min-height: 2.3em; }
-/* margin-top:auto pushes the figure to the bottom of each equal-height cell, so
-   all three big figures sit on a shared baseline regardless of label length.
-   padding-top guarantees a minimum gap when a label is tall / stacks single-column. */
-.stat__figure { font-family: var(--font-display); font-weight: 400; font-size: clamp(72px, 9vw, 140px); line-height: 0.9; letter-spacing: -0.04em; color: var(--ink); margin-top: auto; padding-top: clamp(var(--space-5), 8vw, var(--space-8)); }
-/* Mobile: single column, so drop the equal-height baseline machinery and stack
-   the stats compactly with a hairline between each — inset to the content gutter,
-   never bleeding to the screen edge. */
-@media (max-width: 799.98px) {
-  .stats.section { padding-block: var(--space-6); }
-  .stats__grid { gap: 0; }
-  .stat { padding-inline: 0; }
-  .stat + .stat { border-top: 1px solid var(--line-light); margin-top: var(--space-4); padding-top: var(--space-4); }
-  .stat__label { min-height: 0; max-width: none; margin-top: var(--space-1); }
-  .stat__figure { padding-top: var(--space-2); }
-}
-
 /* --- Clients / trust (dark) ----------------------------------------------- */
 .clients__grid {
   display: grid;
@@ -522,6 +499,14 @@
   transform: translateX(3px);
 }
 .services-explore__link:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: 10px; }
+
+/* Mobile: the index column costs width the copy needs more than the numbering
+   does. A three-item list reads as ordered without it, so drop the numbers and
+   give the row back to the name and its line of description. */
+@media (max-width: 599.98px) {
+  .services-explore__index { display: none; }
+  .services-explore__link { grid-template-columns: minmax(0, 1fr) auto; }
+}
 
 /* --- The photograph ------------------------------------------------------- */
 .services-explore__media {

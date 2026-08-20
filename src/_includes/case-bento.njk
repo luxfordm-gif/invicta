@@ -115,6 +115,12 @@
       </li>
       {% endfor %}
     </ul>
+
+    {# Page control for the phone/tablet swipe track. carousel.js fills it in;
+       with no JS the track is still swipeable and this stays empty. #}
+    {% if studies.length > 1 %}
+    <div class="bento__dots" role="tablist" aria-label="Case studies"></div>
+    {% endif %}
   </div>
 </section>
 {% endif %}

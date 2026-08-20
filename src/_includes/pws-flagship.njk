@@ -220,27 +220,11 @@
       </div>
     </section>
 
-    <!-- ===================== STATS (light) ===================== -->
-    <section class="section section--paper stats" aria-labelledby="stats-title">
-      <h2 id="stats-title" class="visually-hidden">Invicta by the numbers</h2>
-      <div class="container stats__grid">
-        <div class="stat">
-          <span class="stat__num">(01)</span>
-          <h3 class="stat__label">Years serving the South East</h3>
-          <p class="stat__figure">20+</p>
-        </div>
-        <div class="stat">
-          <span class="stat__num">(02)</span>
-          <h3 class="stat__label">Emergency response</h3>
-          <p class="stat__figure">24h</p>
-        </div>
-        <div class="stat">
-          <span class="stat__num">(03)</span>
-          <h3 class="stat__label">Testing to source</h3>
-          <p class="stat__figure">UKAS</p>
-        </div>
-      </div>
-    </section>
+    <!-- ===================== STATS (light, with imagery) ===================== -->
+    {# The shared band, so this page quotes the same figures as every other. It
+       used to carry its own numbered, picture-less variant with a different
+       year count on it. #}
+    {% include "stats-band.njk" %}
 
     <!-- ===================== CLIENTS / TRUST (light) ===================== -->
     <section class="section section--paper clients" aria-labelledby="clients-title">

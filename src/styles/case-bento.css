@@ -243,8 +243,26 @@
    the card. There is no hover to reveal anything with, so everything shows.
    ========================================================================== */
 @media (max-width: 899.98px) {
+  /* One card at a time on a swipe track, the same page-control pattern the
+     case-study carousel uses, rather than three tall cards stacked into a very
+     long scroll. Falls back to a plain swipeable list with no JS: the dots are
+     built by carousel.js and simply are not there without it. */
+  .bento {
+    display: flex;
+    grid-template-columns: none;
+    gap: clamp(12px, 3vw, 18px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;                 /* Firefox */
+  }
+  .bento::-webkit-scrollbar { display: none; }
+  /* flex row + stretch: every card takes the height of the tallest, so the
+     dots below never move as you swipe. */
+  .bento__cell { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+
   .bento__card {
-    --bento-media-h: clamp(190px, 46vw, 260px);
+    --bento-media-h: clamp(240px, 58vw, 330px);
     display: block;
   }
   /* picture in flow at the top, at a fixed height */
@@ -283,3 +301,32 @@
   .bento__reveal { max-height: none; }
   .bento__more { opacity: 1; transform: none; }
 }
+
+/* --- Page control ---------------------------------------------------------
+   Only on the swipe track: on the desktop grid every card is already on screen,
+   so there is nothing to indicate. Built from currentColor so the same markup
+   works on the navy section and on the light one. */
+.bento__dots { display: none; }
+@media (max-width: 899.98px) {
+  .bento__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin-top: var(--space-2);
+  }
+  .bento__dot {
+    width: 7px; height: 7px;
+    box-sizing: content-box;
+    padding: 14px 5px;
+    border: 0;
+    background: currentColor;
+    background-clip: content-box;
+    border-radius: 50%;
+    opacity: 0.28;
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+  }
+  .bento__dot.is-active { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .bento__dot { transition: none; } }

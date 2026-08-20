@@ -1,0 +1,61 @@
+/* ==========================================================================
+   stats-band.css — the numbers, each one carried by a photograph.
+
+   Pairs with _includes/stats-band.njk, and is loaded site-wide from base.njk
+   because the band is a component now rather than an /about/ section: it is
+   the only stats block on the site, and it looks the same wherever it lands.
+
+   The layout's one trick is that the picture is pushed to the FOOT of an
+   equal-height column (margin-top:auto) rather than given a height of its own.
+   That is what keeps the three big figures on a shared baseline and the three
+   pictures on a shared top edge, whatever the labels do.
+   ========================================================================== */
+
+.stats-band__grid { display: grid; gap: var(--space-5); }
+.stat { display: flex; flex-direction: column; padding: 0 clamp(0px, 3vw, 44px); }
+
+/* Three columns, with the gutter carried by `gap` rather than per-column padding.
+   Padding would make the flush-left first column wider than the other two, and a
+   wider column means a taller 16:10 image; an even gap keeps all three content
+   boxes identical, so the media line up without being pinned to a fixed height.
+   The divider is a pseudo-element centred in the gutter, where a border-left
+   would have sat. */
+@media (min-width: 800px) {
+  .stats-band__grid {
+    --stat-gutter: clamp(48px, 6vw, 88px);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 var(--stat-gutter);
+  }
+  .stat { padding-inline: 0; position: relative; }
+  .stat + .stat::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--stat-gutter) / -2);
+    border-left: 1px solid var(--line-light);
+  }
+}
+
+.stat__label { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; max-width: 14ch; }
+/* Reserve 2 lines so every figure starts at the same baseline. Only worth doing
+   once the three sit side by side; stacked, it just strands a blank line under
+   the one-line labels. */
+@media (min-width: 800px) { .stat__label { min-height: 2.3em; } }
+
+.stat__figure {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(56px, 6.5vw, 104px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+@media (min-width: 800px) { .stat__figure { margin-top: var(--space-4); } }
+
+.stat__media { margin-top: auto; padding-top: clamp(28px, 4vw, 56px); }
+.stat__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+
+/* On a dark section the figure has to come off the navy, not off cream. */
+.stats-band:not(.section--paper):not(.section--light) .stat__figure { color: var(--on-dark); }

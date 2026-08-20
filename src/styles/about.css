@@ -27,6 +27,12 @@
   width: 100%;
   margin-top: clamp(65px, 10vw, 151px);   /* ~10% tighter to the scroll arrow */
 }
+/* Mobile: the portrait is drawn at 0.8 scale from its bottom edge, so it already
+   carries ~80px of empty space above the picture. Stacked on the full gap under
+   the scroll arrow that reads as a hole, so take 22px back off it. */
+@media (max-width: 599.98px) {
+  .about-hero__stage { margin-top: 43px; }
+}
 .about-hero__wordmark {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%) scale(var(--wm-scale, 1.2));
@@ -69,41 +75,6 @@
   .about-intro__body { grid-template-columns: 1fr 1fr; margin-left: auto; max-width: 920px; }
 }
 .about-intro__body p { font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); }
-
-/* --- Stats with imagery (light) --- */
-.about-stats__grid { display: grid; gap: var(--space-5); }
-.astat { display: flex; flex-direction: column; padding: 0 clamp(0px, 3vw, 44px); }
-/* Three columns, with the gutter carried by `gap` rather than per-column padding.
-   Padding would make the flush-left first column wider than the other two, and a
-   wider column means a taller 16:10 image; an even gap keeps all three content
-   boxes identical, so the media line up without being pinned to a fixed height.
-   The divider is a pseudo-element centred in the gutter, where the old
-   border-left sat. */
-@media (min-width: 800px) {
-  .about-stats__grid {
-    --astat-gutter: clamp(48px, 6vw, 88px);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0 var(--astat-gutter);
-  }
-  .astat { padding-inline: 0; position: relative; }
-  .astat + .astat::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(var(--astat-gutter) / -2);
-    border-left: 1px solid var(--line-light);
-  }
-}
-.astat__label { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; max-width: 14ch; }
-/* Reserve 2 lines so every figure starts at the same baseline. Only worth doing
-   once the three sit side by side; stacked, it just strands a blank line under
-   the one-line labels. */
-@media (min-width: 800px) { .astat__label { min-height: 2.3em; } }
-.astat__figure { font-family: var(--font-display); font-weight: 400; font-size: clamp(56px, 6.5vw, 104px); line-height: 0.9; letter-spacing: -0.04em; color: var(--ink); margin-top: var(--space-2); }
-@media (min-width: 800px) { .astat__figure { margin-top: var(--space-4); } }
-.astat__media { margin-top: auto; padding-top: clamp(28px, 4vw, 56px); }
-.astat__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
 
 /* --- Approach: centred intro, three numbered steps (italic serif numbers) --- */
 .approach__intro { max-width: 820px; margin-inline: auto; text-align: center; }
