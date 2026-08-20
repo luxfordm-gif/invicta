@@ -19,9 +19,14 @@
   "use strict";
 
   var ENDPOINT = "/";           // any static path works; Netlify matches on form-name
-  var PHONE_HREF = "tel:+447970154529";
-  var PHONE_TEXT = "07970 154529";
   var FADE = 280;               // must match the CSS opacity transition
+
+  /* The number lives in site.json and reaches us on the drawer, which every page
+     carries. Hardcoding it here would leave these two confirmations as the only
+     place on the site that would not follow if the client ever changed it. */
+  var drawerEl = document.querySelector("[data-enquiry]");
+  var PHONE_TEXT = (drawerEl && drawerEl.getAttribute("data-phone")) || "07970 154529";
+  var PHONE_HREF = "tel:" + ((drawerEl && drawerEl.getAttribute("data-tel")) || "+447970154529");
 
   function reduced() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -64,7 +69,11 @@
     wrap.setAttribute("role", "status");
 
     var eyebrow = document.createElement("p");
-    eyebrow.className = "eyebrow";
+    // motion.css holds ".section .eyebrow" at opacity 0 until motion.js marks it
+    // in, and motion.js only observes what was on the page at load. Without
+    // is-in this would sit invisible but still taking up space, pushing the
+    // title down and out of line with the details alongside it.
+    eyebrow.className = "eyebrow is-in";
     eyebrow.textContent = "Enquiry received";
     wrap.appendChild(eyebrow);
 
@@ -189,7 +198,7 @@
   }
 
   // ---------------------------------------------------------------- drawer
-  var drawer = document.querySelector("[data-enquiry]");
+  var drawer = drawerEl;
   var form = drawer && drawer.querySelector('form[name="enquiry"]');
   if (!form) return;
 

@@ -55,6 +55,9 @@ p { max-width: 68ch; }
    line). Body copy: pretty, which mainly prevents last-line widows. */
 h1, h2, h3, h4, .statement, .footer__cta-line { text-wrap: balance; }
 p, li, figcaption, blockquote, dd { text-wrap: pretty; }
+/* A phone number is one object: never let it break at the space inside it.
+   text-wrap: pretty above improves ragging but treats that space as fair game. */
+a[href^="tel:"] { white-space: nowrap; }
 
 /* --- Utility type classes ------------------------------------------------- */
 /* Small uppercase label used above rules and over media. */

@@ -281,7 +281,12 @@
 
 .contact-sent { max-width: 46ch; }
 .contact-sent:focus { outline: none; }
-.contact-sent .eyebrow { margin-bottom: clamp(16px, 2vw, 22px); }
+.contact-sent .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-2);
+}
 .contact-sent__title {
   font-family: var(--font-display);
   font-weight: 400;
