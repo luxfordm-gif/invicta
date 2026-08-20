@@ -42,6 +42,11 @@ hideEmergencyCta: true
             class="contact-form"
           >
             <input type="hidden" name="form-name" value="contact">
+            <!-- Netlify uses a field named "subject" as the notification email's
+                 subject line. This is the no-JS default; forms.js rewrites it to
+                 include the sender's name so the client can triage from the inbox. -->
+            <input type="hidden" name="subject" value="Website enquiry, Invicta Water Treatment">
+            <input type="hidden" name="page" value="/contact/">
             <p class="contact-form__hp" hidden aria-hidden="true">
               <label>Do not fill this in if you are human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
             </p>

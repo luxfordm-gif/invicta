@@ -55,13 +55,21 @@
     unlockScroll();
     document.removeEventListener("keydown", onKey);
     var done = function () {
-      drawer.hidden = true;
+      hide();
       panel.removeEventListener("transitionend", done);
     };
     panel.addEventListener("transitionend", done);
     // fallback if transitionend doesn't fire
-    setTimeout(function () { if (!drawer.classList.contains("is-open")) drawer.hidden = true; }, 700);
+    setTimeout(function () { if (!drawer.classList.contains("is-open")) hide(); }, 700);
     if (lastFocused && lastFocused.focus) lastFocused.focus({ preventScroll: true });
+  }
+
+  // Hide the drawer and tell forms.js the visit is over, so a submitted form can
+  // be swapped back for the next time the drawer opens.
+  function hide() {
+    if (drawer.hidden) return;
+    drawer.hidden = true;
+    document.dispatchEvent(new CustomEvent("enquiry:closed"));
   }
 
   function onKey(e) {
@@ -80,7 +88,6 @@
 
   // Tabs: swap views
   var tabs = drawer.querySelectorAll("[data-enquiry-tab]");
-  var views = drawer.querySelectorAll("[data-enquiry-view]");
   [].forEach.call(tabs, function (tab) {
     tab.addEventListener("click", function () {
       var name = tab.getAttribute("data-enquiry-tab");
@@ -89,7 +96,9 @@
         t.classList.toggle("is-active", active);
         t.setAttribute("aria-selected", active ? "true" : "false");
       });
-      [].forEach.call(views, function (v) {
+      // Queried fresh each time: after a submission forms.js swaps the form for
+      // the confirmation panel, so a cached list would go stale.
+      [].forEach.call(drawer.querySelectorAll("[data-enquiry-view]"), function (v) {
         v.hidden = v.getAttribute("data-enquiry-view") !== name;
       });
       var sc = drawer.querySelector(".enquiry__scroll");
@@ -97,20 +106,6 @@
     });
   });
 
-  // Submit — no backend yet, so show a confirmation state.
-  var form = drawer.querySelector(".enquiry__form");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var consent = form.querySelector('[name="consent"]');
-      if (consent && !consent.checked) { consent.focus(); return; }
-      var name = (form.querySelector('[name="name"]') || {}).value || "there";
-      var wrap = document.createElement("div");
-      wrap.className = "enquiry__success";
-      wrap.innerHTML =
-        "<h3>Thank you, " + name.split(" ")[0].replace(/[<>&]/g, "") + ".</h3>" +
-        "<p>Your enquiry is on its way. We'll be in touch personally, usually within a working day.</p>";
-      form.replaceWith(wrap);
-    });
-  }
+  // Submission itself lives in forms.js, which posts to Netlify Forms and
+  // renders the confirmation in place of the form.
 })();

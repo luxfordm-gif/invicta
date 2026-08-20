@@ -16,13 +16,35 @@
             <button class="enquiry__tab" type="button" data-enquiry-tab="contact" role="tab" aria-selected="false">Contact details</button>
           </div>
 
-          <!-- Enquiry form -->
-          <form class="enquiry__form" data-enquiry-view="form" novalidate>
+          <!--
+            Netlify Forms: the drawer posts to the same backend as the contact
+            page, under its own form name so the client can tell at a glance
+            where an enquiry came from. Netlify detects the form at deploy time
+            from the built HTML (name + data-netlify); the hidden form-name field
+            is what matches the POST to it, and bot-field is a honeypot.
+            enquiry.js submits it over fetch so the drawer can show its own
+            success state; the action below is the no-JS fallback.
+          -->
+          <form
+            class="enquiry__form"
+            data-enquiry-view="form"
+            name="enquiry"
+            method="POST"
+            action="/thank-you/"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+          >
+            <input type="hidden" name="form-name" value="enquiry">
+            <input type="hidden" name="subject" value="Website enquiry, Invicta Water Treatment">
+            <input type="hidden" name="page" value="">
+            <p class="enquiry__hp" hidden aria-hidden="true">
+              <label>Do not fill this in if you are human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
             <div class="enquiry__group">
               <h3 class="enquiry__legend">1. Your details</h3>
               <div class="enquiry__fields">
-                <label class="field"><input type="text" name="name" placeholder="Full name" autocomplete="name"></label>
-                <label class="field"><input type="email" name="email" placeholder="Email address" autocomplete="email"></label>
+                <label class="field"><input type="text" name="name" placeholder="Full name" autocomplete="name" required></label>
+                <label class="field"><input type="email" name="email" placeholder="Email address" autocomplete="email" required></label>
                 <label class="field"><input type="tel" name="phone" placeholder="Phone number" autocomplete="tel"></label>
                 <label class="field"><input type="text" name="location" placeholder="Town or postcode" autocomplete="address-level2"></label>
               </div>
