@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Filmstrip, drag-along photography band (dark ground)
+
+   A full-bleed, centre-snapping row of identical frames, tall enough to fill
+   most of the window. It carries no heading and no captions on purpose: it
+   reads as a continuation of the section above it, which is why it has no
+   background of its own and no top padding.
+
+   Pairs with _includes/filmstrip.njk and scripts/filmstrip.js.
+   ========================================================================== */
+
+.filmstrip {
+  /* The section above supplies the gap; this one only closes the run. */
+  padding-block: 0 var(--section-y);
+  position: relative;
+}
+
+/* --- Track ---------------------------------------------------------------
+   Frames are sized from their HEIGHT so the band fills the window whatever
+   the viewport shape, and the width follows the crop. --- */
+.filmstrip__track {
+  --fs-h: clamp(340px, 80vh, 880px);
+  --fs-w: min(calc(var(--fs-h) * 4 / 3), calc(100vw - 2 * var(--container-pad)));
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: clamp(14px, 1.6vw, 26px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;   /* a fling at the end must not page back */
+  scrollbar-width: none;            /* Firefox */
+  cursor: grab;
+}
+.filmstrip__track::-webkit-scrollbar { display: none; }
+.filmstrip__track:focus-visible { outline: 2px solid var(--lime); outline-offset: 6px; border-radius: 4px; }
+
+/* On a phone the window is too tall and too narrow to size from height: a
+   landscape photograph cropped to 80vh would be a slot. Width leads instead,
+   with a sliver of the next frame showing so the swipe is discoverable. */
+@media (max-width: 899.98px) {
+  .filmstrip__track {
+    --fs-w: calc(100vw - 2 * var(--container-pad) - 36px);
+    --fs-h: calc(var(--fs-w) * 3 / 4);
+  }
+}
+
+/* Once filmstrip.js has cloned the set either side of itself there is always
+   a frame to the left and to the right, and no end to reach. Until then, and
+   for anyone without JS, the track pads itself by half a window so the first
+   and last frames can still reach the centre. --- */
+.filmstrip:not(.is-loop) .filmstrip__track { padding-inline: calc(50% - var(--fs-w) / 2); }
+
+/* While a drag is in progress the browser's own snapping has to stand down,
+   or it fights every scrollLeft we write. filmstrip.js keeps .is-free on
+   through the settle and drops it once the track comes to rest. */
+.filmstrip.is-free .filmstrip__track { scroll-snap-type: none; }
+.filmstrip.is-dragging .filmstrip__track { cursor: grabbing; user-select: none; }
+/* The cue bubble replaces the pointer, so the arrow itself goes away. */
+.filmstrip.has-cue .filmstrip__track { cursor: none; }
+
+/* --- Frame. One fixed box for every photograph, whatever shape it arrives
+   in: every frame is the same height and the same width, wherever it sits in
+   the row. --- */
+.filmstrip__item {
+  flex: 0 0 var(--fs-w);
+  min-width: 0;
+  /* Centre snapping belongs with the centred rest position JS scrolls to.
+     On its own the track is a plain swipe list, where start reads better. */
+  scroll-snap-align: start;
+}
+.filmstrip.is-live .filmstrip__item { scroll-snap-align: center; }
+.filmstrip__item img {
+  display: block;
+  width: var(--fs-w);
+  height: var(--fs-h);
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--surface-raise);
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* --- Cursor cue. A bubble that follows the pointer while it is over the
+   track. Positioned by JS on the outer element (no transition, so it tracks
+   the pointer exactly), scaled and faded on the inner span (transitioned, so
+   it grows in). --- */
+.filmstrip__cue {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  width: 104px;
+  height: 104px;
+  margin: -52px 0 0 -52px;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+.filmstrip__cue span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ground);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  /* Letter-spacing is added after the last letter too, which drags the word
+     off centre. Indenting by the same amount puts it back. */
+  text-indent: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.filmstrip__cue.is-on span { opacity: 1; transform: scale(1); }
+.filmstrip.is-dragging .filmstrip__cue.is-on span { transform: scale(0.82); }
+
+@media (prefers-reduced-motion: reduce) {
+  .filmstrip__cue span { transition: opacity 0.2s ease; transform: none; }
+  .filmstrip__cue.is-on span,
+  .filmstrip.is-dragging .filmstrip__cue.is-on span { transform: none; }
+}

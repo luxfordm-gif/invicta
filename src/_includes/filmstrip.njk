@@ -1,0 +1,33 @@
+{#
+  Filmstrip, a drag-along band of site photography.
+
+  A full-bleed row of identical, near-full-height frames on the dark ground,
+  dragged sideways with the mouse or swiped on touch. No heading, no captions:
+  it is a way to show the work, and it carries on from whatever section sits
+  above it. Let go mid-drag and the nearest frame settles back into the centre.
+
+  Behaviour (progressive enhancement): the track is a centre-snapping
+  horizontal scroll list that works with no JS at all. filmstrip.js adds the
+  mouse drag, the fling-and-settle, the "Drag" cursor cue and keyboard control
+  on top.
+
+  Expects `strip` — an array of { image, alt }. Set it on the page before
+  including, the way index.njk sets `steps`. Six to eight frames is the sweet
+  spot: enough that the row never looks short, few enough to reach the end.
+
+  Every frame is cropped to one fixed box, so photographs of different shapes
+  can be dropped in without breaking the rhythm. Landscape sources suit it
+  best, since that is the shape being cropped to.
+#}
+{% if strip and strip.length %}
+<section class="filmstrip" aria-label="{{ filmstripLabel or 'Photographs from our work' }}">
+  <ul class="filmstrip__track" role="list">
+    {% for f in strip %}
+    <li class="filmstrip__item">
+      <img src="{{ f.image }}" alt="{{ f.alt }}" width="1200" height="961" loading="lazy" decoding="async" draggable="false">
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="filmstrip__cue" aria-hidden="true"><span>Drag</span></div>
+</section>
+{% endif %}

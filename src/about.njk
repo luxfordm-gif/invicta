@@ -5,7 +5,7 @@ description: "Invicta Water Treatment is run by Stefan Massingham MSc, a water c
 canonical: "https://www.invictawatertreatment.co.uk/about/"
 permalink: "/about/"
 current: "about"
-extraStyles: ["about", "coverage-band"]
+extraStyles: ["about", "filmstrip", "coverage-band"]
 ---
     <!-- ===================== ABOUT HERO (Kolenda-style name treatment) ===================== -->
     <section class="about-hero">
@@ -70,6 +70,29 @@ extraStyles: ["about", "coverage-band"]
         </div>
       </div>
     </section>
+
+    <!-- ===================== FILMSTRIP =====================
+      A drag-along band of the job, carrying straight on from the three steps
+      above it on the same dark ground: the process described, then shown.
+      No heading and no captions, it is only the photography.
+    -->
+    {% set strip = [
+      { image: "/assets/step-survey.webp",
+        alt: "A country house and garden buildings across a lawn on a private estate, the kind of property surveyed before a supply is specified." },
+      { image: "/assets/service-water-hygiene.webp",
+        alt: "Labelled sample bottles from a day's testing lined up on a laboratory bench beside the results sheet." },
+      { image: "/assets/step-design.webp",
+        alt: "Architectural floor-plan and elevation drawings with a pen and brass ruler." },
+      { image: "/assets/step-treatment.webp",
+        alt: "A garage plant room with a brine tank, pressure filter vessels and a UV steriliser installed against the wall." },
+      { image: "/assets/step-install.webp",
+        alt: "An installed plant room with a storage tank, booster pumps, cylinder and a control panel wired and commissioned." },
+      { image: "/assets/step-service.webp",
+        alt: "An engineer's hand turning a brass gate valve on copper pipework, with a pressure gauge behind." },
+      { image: "/assets/service-servicing.webp",
+        alt: "An Invicta van on the drive of a period property, with the borehole chamber open and the pump and rising main lifted out." }
+    ] %}
+    {% include "filmstrip.njk" %}
 
     <!-- ===================== WHAT'S INCLUDED (light) ===================== -->
     <section class="section section--light included" aria-labelledby="included-title">
