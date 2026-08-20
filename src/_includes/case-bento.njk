@@ -26,9 +26,11 @@
   photograph and needs the contrast; on a light section they read as dark objects
   on cream rather than a navy band, which is the point of putting them there.
 
-  HOW IT HANDLES THE COUNT — the grid is defined per count, so it never leaves a
-  hole:
-    3  lead card spanning two rows on the left, two stacked on the right
+  HOW IT HANDLES THE COUNT — three is the layout the grid is built for: a lead
+  card spanning two rows on the left and two stacked on the right. A page that
+  owns fewer than three studies BORROWS from the rest of the file to make the
+  set up, so the two-up and one-up fallbacks below are now only a safety net for
+  a data file with fewer than three studies in it at all:
     2  two equal cards side by side
     1  one wide card
   Anything past three is dropped, same ceiling as the carousel.
@@ -41,7 +43,35 @@
   three navy panels. Until real project photos exist this reads worse than the
   editorial layout, not better.
 #}
-{% if studies %}{% set studies = studies.slice(0, 3) %}{% endif %}
+{#
+  TOP UP TO THREE. The grid is at its best as three cards, and a service with
+  only one or two studies of its own would otherwise drop to a two-up. So the
+  short ones borrow from the rest of the file.
+
+  Borrowed studies come LAST, after whatever the page owns, so the page's own
+  work still leads and takes the tall card. They are not badged as borrowed:
+  the section only ever claims to be selected work, and the tags on each card
+  already say which county it is in. Taken in file order unless a page sets
+  `bentoTopUp` (an array of study ids) to choose them by hand.
+
+  The slice makes a copy first, so pushing here cannot mutate the array the
+  including page built.
+#}
+{% if studies %}
+  {% set studies = studies.slice(0, 3) %}
+  {% if studies.length < 3 and caseStudies %}
+    {% set used = [] %}
+    {% for cs in studies %}{% set _ = used.push(cs.id or cs.name) %}{% endfor %}
+    {% for id in bentoTopUp or [] %}
+      {% for cs in caseStudies %}
+        {% if cs.id == id and studies.length < 3 and cs.id not in used %}{% set _ = studies.push(cs) %}{% set _ = used.push(cs.id) %}{% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% for cs in caseStudies %}
+      {% if studies.length < 3 and cs.id not in used %}{% set _ = studies.push(cs) %}{% set _ = used.push(cs.id) %}{% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
 {% if studies and studies.length %}
 <section class="section {{ bentoSurface }} case-bento case-bento--{{ studies.length }}" aria-labelledby="bento-title-{{ carouselId or 'x' }}">
   <div class="container">

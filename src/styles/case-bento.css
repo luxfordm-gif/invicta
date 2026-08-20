@@ -6,6 +6,12 @@
    Pairs with _includes/case-bento.njk.
    ========================================================================== */
 
+/* Opt in to animating to intrinsic sizes. Scoped to this component rather than
+   :root so it cannot quietly change how anything else transitions. */
+@supports (interpolate-size: allow-keywords) {
+  .bento { interpolate-size: allow-keywords; }
+}
+
 /* --- Header. House treatment, not the mockup's: left aligned, Figtree, with
    the italic Playfair kept for the emphasised clause via .em. The mockup was a
    reference for the GRID, not for the typography. --- */
@@ -55,6 +61,20 @@
 }
 .bento__media { position: absolute; inset: 0; z-index: -2; }
 .bento__media img { width: 100%; height: 100%; object-fit: cover; }
+/* Hover wash. Sits inside .bento__media (its own stacking context at z-index
+   -2) so it lands under the scrim and over the picture without any z-index
+   juggling. It deepens the card as the copy grows into it, which is what makes
+   a card with no photograph yet still respond to the pointer. */
+.bento__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(4, 12, 30, 0.55) 0%,
+    rgba(4, 12, 30, 0.30) 45%,
+    rgba(4, 12, 30, 0.10) 100%);
+  opacity: 0;
+}
 .bento__ph {
   width: 100%; height: 100%;
   display: flex; align-items: flex-start; justify-content: center;
@@ -89,6 +109,7 @@
   padding: 5px 12px;
   border: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
   border-radius: var(--btn-radius);
+  background: transparent;
   font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--fg);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
@@ -111,15 +132,28 @@
 }
 
 /* --- The reveal.
-   A 0fr -> 1fr grid row is the tidier trick, but in a grid of indefinite height
-   an fr track resolves to its content and the row never collapses, which left
-   the line permanently on show. max-height is blunter but dependable, and the
-   revealed copy is one short line so the easing has nothing to give away. --- */
+   HEIGHT. `max-height` to a fixed cap is the old, blunt way to do this and it
+   is what made the hover feel cheap: easing a 9em cap that the copy only ever
+   filled 2.5em of meant the block snapped open in the first few frames and then
+   sat still for the rest of the 450ms, and on the way out it hung open for
+   300ms before snapping shut. The curve was being spent on height the line
+   never occupies.
+
+   So where the browser can animate to an intrinsic size (interpolate-size,
+   Chrome/Edge 129+ and Safari 26+) it animates to the exact content height and
+   the easing lands where the eye is. Everywhere else it falls back to a cap
+   kept CLOSE to reality: measured, the line runs 39px on a wide card and 58px
+   in the narrow right-hand ones, so 6em (102px) still leaves room for a third
+   wrapped line without wasting most of the curve.
+
+   A 0fr -> 1fr grid row is the other tidy trick, but in a grid of indefinite
+   height an fr track resolves to its content and the row never collapses,
+   which left the line permanently on show. --- */
 .bento__reveal {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .bento__more {
   margin-top: 0.9em;
   max-width: 54ch;
@@ -127,22 +161,79 @@
   line-height: 1.55;
   color: var(--fg-muted);
 }
+
 @media (hover: hover) {
-  /* the whole copy block lifts a little as the line appears */
-  .bento__copy { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* Everything runs on the same family of decelerating curves so the card reads
+     as one gesture rather than four effects that happen to fire together. The
+     picture is the slowest on purpose: a zoom that finishes with the text looks
+     mechanical, one still settling afterwards reads as weight. */
+  .bento__card { transition: border-color 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bento__media img { transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1); }
+  .bento__media::after { transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bento__ph span { transition: opacity 0.55s ease; }
+  .bento__tag { transition: border-color 0.45s ease, background-color 0.45s ease; }
+  /* Leaving is quicker than arriving and carries no delay, so the card is
+     visibly done with you the moment the pointer goes. */
+  .bento__reveal { transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1); }
+  .bento__more {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .bento__card:hover,
+  .bento__card:focus-within { border-color: color-mix(in srgb, var(--fg) 34%, transparent); }
+  .bento__card:hover .bento__media img,
+  .bento__card:focus-within .bento__media img { transform: scale(1.06); }
+  .bento__card:hover .bento__media::after,
+  .bento__card:focus-within .bento__media::after { opacity: 1; }
+  /* the scaffolding label steps back instead of riding up with the copy */
+  .bento__card:hover .bento__ph span,
+  .bento__card:focus-within .bento__ph span { opacity: 0.45; }
+  .bento__card:hover .bento__tag,
+  .bento__card:focus-within .bento__tag {
+    border-color: color-mix(in srgb, var(--fg) 48%, transparent);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
   .bento__card:hover .bento__reveal,
-  .bento__card:focus-within .bento__reveal { max-height: 9em; }
-  .bento__card:hover .bento__media img { transform: scale(1.04); }
-  .bento__media img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bento__card:focus-within .bento__reveal {
+    max-height: 6em;
+    transition: max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Arriving: held back a beat so the line rises into space the copy block has
+     already begun opening for it, on a longer curve than it leaves on. */
+  .bento__card:hover .bento__more,
+  .bento__card:focus-within .bento__more {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.5s ease 0.1s,
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  /* The exact-height path. Same curves, but now the whole of them is spent on
+     height the line actually occupies, which is the difference between the
+     block easing open and the block flicking open. */
+  @supports (interpolate-size: allow-keywords) {
+    .bento__card:hover .bento__reveal,
+    .bento__card:focus-within .bento__reveal { max-height: max-content; }
+  }
 }
 /* No hover: nothing is hidden behind an interaction that cannot happen. */
 @media (hover: none) {
   .bento__reveal { max-height: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bento__reveal { transition: none; }
-  .bento__copy { transition: none; }
-  .bento__media img { transition: none; }
+  .bento__reveal,
+  .bento__more,
+  .bento__card,
+  .bento__tag,
+  .bento__ph span,
+  .bento__media img,
+  .bento__media::after { transition: none; }
+  .bento__more { transform: none; }
+  .bento__card:hover .bento__media img,
+  .bento__card:focus-within .bento__media img { transform: none; }
 }
 
 /* ==========================================================================
@@ -190,4 +281,5 @@
 
   /* nothing is held back behind a hover that cannot happen */
   .bento__reveal { max-height: none; }
+  .bento__more { opacity: 1; transform: none; }
 }

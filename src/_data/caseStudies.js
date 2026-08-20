@@ -19,6 +19,11 @@
    No em dashes anywhere in the copy. `image` is the web asset once added (see
    /assets); null renders a tasteful "photo to follow" placeholder.
 
+   TEMPORARY: every study currently points at the SAME stand-in photograph,
+   /assets/case-placeholder.webp, so the card and carousel layouts can be judged
+   with imagery in them. Swap each one for its own project photo as they arrive,
+   or set it back to null to get the "photo to follow" placeholder back.
+
    `blurb` is the CARD copy: one short sentence, all a bento card shows before
    you hover it. `highlight` is the line that slides up under it. Keep both
    tight; the full write-up lives in `body` and is what the editorial carousel
@@ -44,8 +49,8 @@ module.exports = [
       "The next task was to find water on site, which we did with our chalk-geology specialist, drilling and carefully developing a new borehole. We like to help where we can.",
     ],
     highlight: "One supply across borehole, rainwater and mains, plus a chlorine-free pool.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "u-farm-kent",
@@ -62,8 +67,8 @@ module.exports = [
       "The ultrafiltration unit is genuinely impressive: it can be retrofitted to any borehole system and improves water clarity almost instantly.",
     ],
     highlight: "In-house ultrafiltration: clear water from a clay-rich, variable source.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "uppark-sussex",
@@ -79,8 +84,8 @@ module.exports = [
       "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site, the kind of adaptation that only shows up once a building is back in real use.",
     ],
     highlight: "A bespoke system for a National Trust restoration.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "rf-estate-woking",
@@ -96,8 +101,8 @@ module.exports = [
       "The final water passed the local EHO tests with flying colours. The work led to a second project very close by, where we could install a properly designed system from the start, giving that owner the independence they wanted.",
     ],
     highlight: "Passed the local EHO tests with flying colours.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "b-farm-cotswolds",
@@ -113,8 +118,8 @@ module.exports = [
       "We reconfigured the existing system, adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",
     ],
     highlight: "A redesigned RO that copes with fouling, saline water.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "b-stud-berkshire",
@@ -130,8 +135,8 @@ module.exports = [
       "Over the years we have upgraded the pumps and kept the whole site going, including annual cleans and chlorinations, with UKAS-accredited sampling.",
     ],
     highlight: "Years of steady care: annual cleans, chlorination, UKAS sampling.",
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
   {
     id: "roundhurst-haslemere",
@@ -146,7 +151,7 @@ module.exports = [
       "A private supply on the Surrey–Sussex border that we look after near Haslemere.",
     ],
     highlight: null,
-    image: null,
-    imageAlt: null,
+    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
+    imageAlt: "A stone barn conversion under construction at dusk.",
   },
 ];
