@@ -1,31 +1,50 @@
 {#
-  Coverage band — a full-bleed grayscale Google map with the counties we serve
-  shaded on top, and the claim itself set over the middle of it.
+  Coverage band — a full-bleed grayscale map with the counties we serve shaded
+  on top, and the claim itself set over the middle of it.
 
   Unlike coverage-map.njk (the impressionistic heat-map on /case-studies/) this
-  one is real cartography: an actual Google basemap, desaturated through the
-  Maps style array rather than a CSS filter. That distinction matters — a CSS
-  grayscale filter would grey out the county shading too, and the shading is the
-  whole point.
+  one is real cartography: an actual Google basemap.
 
-  The county polygons come from /assets/coverage-counties.json (ONS Local
-  Authority Districts, OGL v3, dissolved to ceremonial counties). The band is
-  deliberately non-interactive: it is a statement, not a tool. /contact/ is
-  where a map you can actually drive lives.
+  Two ways it can draw, picked here rather than in JS:
 
-  Needs GOOGLE_MAPS_API_KEY. Without it the map never loads, no request goes to
-  Google, and the heading sits over a plain tinted ground instead.
+  1. With GOOGLE_MAPS_API_KEY set — the Maps JavaScript API, desaturated
+     through the Maps style array, with the county polygons from
+     /assets/coverage-counties.json shaded on top. The style array does the
+     greying rather than a CSS filter, because a filter would grey the county
+     shading out too, and the shading is the whole point.
+
+  2. Without a key — the keyless Google Maps embed, exactly as /contact/ uses,
+     framed on the South East and greyed with a CSS filter. No counties are
+     shaded (the embed cannot draw polygons), so this is the weaker of the two:
+     a real map of the right patch of England behind the claim, standing in
+     until the key lands.
+
+  Either way the band is deliberately non-interactive: it is a statement, not a
+  tool. /contact/ is where a map you can actually drive lives.
 #}
-<section class="coverage-band{% if not maps.apiKey %} is-mapless{% endif %}" aria-labelledby="coverage-band-title">
+<section class="coverage-band{% if not maps.apiKey %} coverage-band--embed{% endif %}" aria-labelledby="coverage-band-title">
 
   {# The map paints itself in here. aria-hidden because the heading beside it
      already states the coverage in words; a screen reader gains nothing from
      an unlabelled tile canvas. #}
   <div class="coverage-band__map"
-       data-coverage-map
+       {% if maps.apiKey %}data-coverage-map
        data-maps-key="{{ maps.apiKey }}"
-       data-counties-src="/assets/coverage-counties.json"
-       aria-hidden="true"></div>
+       data-counties-src="/assets/coverage-counties.json"{% endif %}
+       aria-hidden="true">
+    {% if not maps.apiKey %}
+      {# ll + z rather than q: a query would drop a pin, and a pin in the
+         middle of the band would sit right behind the heading. tabindex="-1"
+         keeps the frame out of the tab order, since there is nothing in it to
+         operate. #}
+      <iframe class="coverage-band__frame"
+              src="https://maps.google.com/maps?ll=51.15,-0.15&amp;z=9&amp;output=embed"
+              title="Map of the South East of England"
+              loading="lazy"
+              tabindex="-1"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+    {% endif %}
+  </div>
 
   <div class="coverage-band__scrim" aria-hidden="true"></div>
 

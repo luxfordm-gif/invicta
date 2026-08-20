@@ -13,9 +13,10 @@
    Google Cloud console with an HTTP-referrer restriction to our own domains,
    and limited to the Maps JavaScript API only.
 
-   With no key set, coverage-band.js leaves the band in its fallback state: the
-   heading still renders over a plain tinted ground, and no request is made to
-   Google. The build never fails for want of a key.
+   With no key set the band falls back to the keyless Google Maps embed that
+   /contact/ uses: a real, greyed basemap of the South East behind the heading,
+   but with none of the counties shaded. The build never fails for want of a
+   key; the key only buys the county shading.
    ========================================================================== */
 
 module.exports = {

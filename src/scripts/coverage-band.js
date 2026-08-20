@@ -18,8 +18,8 @@
    3. The map is inert. No gestures, no controls, no clickable POIs. It is a
       statement about coverage, not a tool. /contact/ has the map you can drive.
 
-   With no API key the band keeps its `is-mapless` class from the template,
-   nothing is requested, and the heading simply sits over a tinted ground.
+   With no API key the template never renders [data-coverage-map] at all — it
+   drops in the keyless Google Maps embed instead, and this file no-ops.
    ========================================================================== */
 (function () {
   "use strict";
@@ -29,7 +29,7 @@
 
   var key = el.getAttribute("data-maps-key");
   var src = el.getAttribute("data-counties-src");
-  if (!key || !src) return;                     // template already set .is-mapless
+  if (!key || !src) return;
 
   var started = false;
 
