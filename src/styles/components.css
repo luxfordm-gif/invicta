@@ -312,17 +312,24 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   /* dropdowns are COLLAPSED accordions on mobile — tap the parent to expand */
   .nav__item { position: static; }
   .nav__caret { display: none; }
-  /* plus / minus toggle (Claude-style) instead of a chevron; centred to align
+  /* Chevron, not a plus: the row opens an accordion of pages rather than adding
+     anything, and the arrow says which way it goes. Drawn from two borders of a
+     square so it takes the label's colour and needs no asset. Centred to align
      horizontally with the close button (both ~20px in from the content edge). */
   .nav__links > li.has-menu > a { padding-right: 44px; }
-  .nav__links > li.has-menu > a::before,
   .nav__links > li.has-menu > a::after {
-    content: ""; display: block; position: absolute; right: 12px; left: auto; top: 50%; bottom: auto; margin: 0;
-    width: 16px; height: 2px; background: currentColor; border: 0; opacity: 0.8;
-    transform: translateY(-50%); transition: transform 0.3s ease, opacity 0.2s ease;
+    content: ""; display: block; position: absolute; right: 15px; left: auto; top: 50%; bottom: auto; margin: 0;
+    width: 11px; height: 11px;
+    background: none;
+    border: 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    opacity: 0.8;
+    /* the glyph's optical centre sits below the box centre, hence -70% / -30% */
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform 0.3s ease, opacity 0.2s ease;
   }
-  .nav__links > li.has-menu > a::before { transform: translateY(-50%) rotate(90deg); }   /* vertical stroke → "+" */
-  .nav__links > li.has-menu.is-expanded > a::before { transform: translateY(-50%) rotate(90deg) scaleX(0); opacity: 0; }  /* retracts → "−" */
+  .nav__links > li.has-menu.is-expanded > a::after { transform: translateY(-30%) rotate(-135deg); }   /* points back up when open */
   .nav__menu {
     position: static; transform: none; opacity: 1; visibility: visible; pointer-events: auto;
     min-width: 0; padding: 0;   /* submenu items sit in line with the parent label, not indented */

@@ -1,0 +1,49 @@
+{#
+  Stats band — the numbers, each one carried by a photograph.
+
+  THE ONLY STATS BLOCK ON THE SITE. There used to be two: this one on /about/
+  and a numbered, picture-less variant inside the private water supplies
+  flagship, which quoted a different number of years. One component, one set of
+  figures: change site.stats and every page that shows the band follows.
+
+  Content comes from `site.stats` by default, so a page normally includes this
+  with no variables at all:
+
+      {% include "stats-band.njk" %}
+
+  Overrides, all optional:
+    statsItems    an array in place of site.stats, same shape
+                  ({ label, figure, image, alt })
+    statsSurface  the section behind the band: omit for paper, or pass
+                  "section--light" / "" (navy)
+    statsId       suffix for the hidden heading's id, if two ever share a page
+    statsHeading  the hidden heading itself
+
+  A stat with no `image` simply has no picture; the figure and label still line
+  up with the others, because the media sits at the foot of an equal-height
+  column rather than setting the column's height.
+#}
+{% set statsItems = statsItems or site.stats %}
+{% if statsItems and statsItems.length %}
+<section class="section {{ statsSurface if statsSurface is defined else "section--paper" }} stats-band"
+         aria-labelledby="stats-band-title-{{ statsId or 'x' }}">
+  <h2 id="stats-band-title-{{ statsId or 'x' }}" class="visually-hidden">{{ statsHeading or "Invicta by the numbers" }}</h2>
+  <div class="container stats-band__grid">
+    {% for s in statsItems %}
+    <article class="stat">
+      <h3 class="stat__label">{{ s.label }}</h3>
+      <p class="stat__figure">{{ s.figure }}</p>
+      {% if s.image %}
+      <div class="stat__media">
+        {# The frame that clips has to hug the picture, and .stat__media carries
+           padding-top above it, so the parallax sits on an inner wrapper. #}
+        <div class="parallax">
+          <img src="{{ s.image }}" alt="{{ s.alt }}" width="1000" height="625" loading="lazy" decoding="async">
+        </div>
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
