@@ -15,7 +15,7 @@
   min-height: min(88svh, 900px);
   padding-block: var(--hero-y-top) clamp(56px, 8vw, 120px);
   background: var(--ground-deep);
-  overflow: hidden;
+  overflow: clip;         /* clip, not hidden: see the parallax note in motion.css */
 }
 .home-hero__media { position: absolute; inset: 0; z-index: -2; }
 .home-hero__media img { width: 100%; height: 100%; object-fit: cover; }

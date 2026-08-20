@@ -54,3 +54,62 @@
     transform: translateY(0);
   }
 }
+
+/* ==========================================================================
+   Parallax media
+
+   A photograph that drifts against the page as its frame crosses the viewport,
+   a few percent out of step with everything around it. Enough to read as
+   depth, not enough to notice as an effect.
+
+   How it works: the picture is scaled up a little to buy headroom, then slid
+   between the top and bottom of that headroom across the frame's whole pass.
+   Travel stays well inside the headroom, so an edge can never show. The frame
+   does the clipping, and it must clip with `overflow: clip`, NOT `hidden`:
+   `hidden` makes the frame a scroll container, and `view()` then measures the
+   picture against the frame it sits inside rather than against the page, so the
+   progress never changes and nothing moves. Every clipping ancestor between the
+   picture and the page has to be `clip` for the same reason.
+
+   To give any other picture on the site the same drift, put `parallax` on the
+   element that wraps it. Nothing else is needed. Both knobs are per-component:
+   override `--parallax-travel` (and keep `--parallax-scale` above twice it) to
+   make one surface move more or less than the rest, or set travel to 0 to sit
+   a picture out entirely.
+
+   Two engines, identical numbers. Where scroll-driven animations are supported
+   the browser runs this off the scroll position itself, away from the main
+   thread. Everywhere else motion.js does the same sum on rAF. The animation is
+   kept inside @supports deliberately: with no view() timeline it would have no
+   duration, and `both` would pin every picture at the far end of its travel.
+   ========================================================================== */
+.parallax { overflow: clip; }
+.parallax > img {
+  --parallax-travel: 8%;    /* each way, as a share of the picture's own height */
+  --parallax-scale: 1.2;    /* headroom; keep it above travel * 2 */
+  display: block;           /* no baseline gap, so the frame hugs the picture */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .parallax > img {
+      transform: scale(var(--parallax-scale));
+      animation: parallax-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes parallax-drift {
+  from { transform: translate3d(0, calc(var(--parallax-travel) * -1), 0) scale(var(--parallax-scale)); }
+  to   { transform: translate3d(0, var(--parallax-travel), 0) scale(var(--parallax-scale)); }
+}
+
+/* The phone sector card is its own composition: the picture is already blown up
+   to 145% and top-aligned so each subject clears the frosted header. Sit it out
+   rather than fight that, and let it drift again once the cards go back to a
+   plain grid. */
+@media (max-width: 899.98px) {
+  .sector__media.parallax > img { --parallax-travel: 0%; --parallax-scale: 1; }
+}

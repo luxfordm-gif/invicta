@@ -108,3 +108,62 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 })();
+
+/* --- Parallax media: the fallback engine ------------------------------------
+   motion.css drives the drift off `animation-timeline: view()` wherever that
+   exists. This is the same sum on rAF for the browsers that do not have it
+   yet. Both read their numbers from the same two custom properties, so a
+   component that overrides them is honoured either way, and travel:0 sits a
+   picture out.
+
+   Progress is measured on the FRAME, never the picture: the picture carries
+   the transform, so measuring it would feed its own movement back in. Only
+   what is on screen gets touched; an observer keeps the working set small. -- */
+(function () {
+  "use strict";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.CSS && CSS.supports && CSS.supports("animation-timeline", "view()")) return;
+  if (!("IntersectionObserver" in window)) return;
+
+  var pics = [].slice.call(document.querySelectorAll(".parallax > img"));
+  if (!pics.length) return;
+
+  var live = [];
+  var ticking = false;
+
+  function place(img) {
+    var cs = getComputedStyle(img);
+    var travel = parseFloat(cs.getPropertyValue("--parallax-travel")) || 0;
+    var scale = parseFloat(cs.getPropertyValue("--parallax-scale")) || 1;
+    if (!travel) { img.style.transform = ""; return; }
+
+    var r = img.parentNode.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight || 1;
+    // 0 as the frame starts entering, 1 as it finishes leaving: the same span
+    // `animation-range: cover 0% cover 100%` covers in the CSS.
+    var p = (vh - r.top) / (vh + r.height);
+    p = Math.max(0, Math.min(1, p));
+
+    img.style.transform =
+      "translate3d(0," + ((p - 0.5) * 2 * travel).toFixed(2) + "%,0) scale(" + scale + ")";
+  }
+
+  function update() {
+    ticking = false;
+    for (var i = 0; i < live.length; i++) place(live[i]);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+  var io = new IntersectionObserver(function (entries) {
+    for (var i = 0; i < entries.length; i++) {
+      var at = live.indexOf(entries[i].target);
+      if (entries[i].isIntersecting) { if (at === -1) live.push(entries[i].target); }
+      else if (at !== -1) { live.splice(at, 1); }
+    }
+    update();
+  });
+
+  pics.forEach(function (img) { place(img); io.observe(img); });   // no unscaled first frame
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+})();
