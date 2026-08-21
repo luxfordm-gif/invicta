@@ -87,13 +87,20 @@
 .parallax > img {
   --parallax-travel: 8%;    /* each way, as a share of the picture's own height */
   --parallax-scale: 1.2;    /* headroom; keep it above travel * 2 */
+  /* Where the drift is CENTRED, as a share of the picture's own height. The
+     scale crops evenly top and bottom, which frames a subject well only if it
+     sits in the middle of the photograph — a subject low in frame just sits low.
+     A negative offset lifts the picture, showing more of its lower half. Keep
+     |offset| + travel inside the headroom (scale - 1) / 2, or the crop runs off
+     the edge of the picture and leaves a gap. */
+  --parallax-offset: 0%;
   display: block;           /* no baseline gap, so the frame hugs the picture */
 }
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .parallax > img {
-      transform: scale(var(--parallax-scale));
+      transform: translate3d(0, var(--parallax-offset), 0) scale(var(--parallax-scale));
       animation: parallax-drift linear both;
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
@@ -102,8 +109,8 @@
 }
 
 @keyframes parallax-drift {
-  from { transform: translate3d(0, calc(var(--parallax-travel) * -1), 0) scale(var(--parallax-scale)); }
-  to   { transform: translate3d(0, var(--parallax-travel), 0) scale(var(--parallax-scale)); }
+  from { transform: translate3d(0, calc(var(--parallax-offset) - var(--parallax-travel)), 0) scale(var(--parallax-scale)); }
+  to   { transform: translate3d(0, calc(var(--parallax-offset) + var(--parallax-travel)), 0) scale(var(--parallax-scale)); }
 }
 
 /* The phone sector card is its own composition: the picture is already blown up

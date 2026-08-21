@@ -99,6 +99,24 @@
   /* Buttons — fully rounded pills */
   --btn-radius: 999px;           /* fully-rounded pill buttons */
 
+  /* --- READING SCALE ---------------------------------------------------------
+     Body copy only. Display sizes live with the headings in base.css, and UI
+     text (nav, buttons, tags, eyebrows, field labels) is deliberately not on
+     this scale — it is labelling, not reading, and sizing it as prose only
+     makes the page coarser.
+
+     Two rules hold the tiers apart, and both were broken before this existed,
+     when every component carried its own hardcoded value and prose had drifted
+     to six different sizes:
+       · a lead is never smaller than the body it introduces
+       · only copy INSIDE a card sits below the body size
+     --------------------------------------------------------------------------- */
+  --text-lead: clamp(19px, 1.5vw, 21px);    /* section lead paragraphs */
+  --text-body: clamp(18px, 1.3vw, 20px);    /* reading copy in the open */
+  --text-card: clamp(16px, 1.15vw, 17px);   /* secondary copy inside a card */
+  --text-note: 15px;                        /* captions, notes, consent lines */
+  --text-legal: 13px;                       /* the copyright line */
+
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
   --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this) */

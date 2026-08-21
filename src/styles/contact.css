@@ -11,7 +11,7 @@
   margin-top: var(--space-4);
   max-width: 62ch;
   color: var(--on-dark-muted);
-  font-size: clamp(19px, 1.5vw, 20px);
+  font-size: var(--text-lead);
   line-height: 1.6;
 }
 
@@ -32,7 +32,7 @@
   margin-top: var(--space-2);
   max-width: 54ch;
   color: var(--ink-muted);
-  font-size: 18px;
+  font-size: var(--text-body);
   line-height: 1.6;
 }
 
@@ -199,13 +199,13 @@
 .contact-detail__note {
   margin-top: var(--space-2);
   max-width: 34ch;
-  font-size: 15px;
+  font-size: var(--text-note);
   line-height: 1.55;
   color: var(--ink-muted);
 }
 .contact-detail__address {
   font-style: normal;
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.65;
   color: var(--ink);
 }
@@ -234,7 +234,7 @@
   box-shadow: 0 18px 44px -20px rgb(var(--ground-deep-rgb) / 0.55);
 }
 .contact-map__name { font-family: var(--font-display); font-weight: 600; font-size: 17px; }
-.contact-map__addr { margin-top: 6px; font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
+.contact-map__addr { margin-top: 6px; font-size: var(--text-note); line-height: 1.5; color: var(--ink-muted); }
 /* On narrow screens an overlay card would sit straight on top of the pin, so
    drop it out of the map and onto the navy band beneath it. */
 @media (max-width: 700px) {
@@ -264,7 +264,7 @@
   margin-top: var(--space-4);
   max-width: 58ch;
   color: var(--on-dark-muted);
-  font-size: clamp(19px, 1.5vw, 20px);
+  font-size: var(--text-lead);
   line-height: 1.6;
 }
 .contact-thanks__lead a { color: var(--on-dark); text-decoration: underline; text-underline-offset: 3px; }
@@ -309,13 +309,13 @@
 .contact-sent .rule { margin-top: clamp(22px, 2.6vw, 32px); }
 .contact-sent__lead {
   margin-top: clamp(24px, 3vw, 34px);
-  font-size: clamp(17px, 1.3vw, 20px);
+  font-size: var(--text-lead);
   line-height: 1.55;
   color: var(--ink-muted);
 }
 .contact-sent__note {
   margin-top: clamp(14px, 1.6vw, 18px);
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.55;
   color: var(--ink-muted);
 }
@@ -332,7 +332,7 @@
   padding: 16px 18px;
   border: 1px solid var(--line-light);
   border-left: 3px solid var(--ground);
-  font-size: 15px;
+  font-size: var(--text-note);
   line-height: 1.55;
   color: var(--ink);
   max-width: 56ch;

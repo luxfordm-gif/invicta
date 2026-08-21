@@ -20,7 +20,7 @@
   margin-top: var(--space-2);
   max-width: 54ch;
   color: var(--fg-muted);
-  font-size: clamp(19px, 1.4vw, 20px);
+  font-size: var(--text-lead);
   line-height: 1.6;
 }
 
@@ -126,7 +126,7 @@
 .bento__blurb {
   margin-top: 10px;
   max-width: 54ch;
-  font-size: clamp(16px, 1.15vw, 17px);
+  font-size: var(--text-card);
   line-height: 1.55;
   color: var(--fg-muted);
 }
@@ -157,7 +157,7 @@
 .bento__more {
   margin-top: 0.9em;
   max-width: 54ch;
-  font-size: clamp(16px, 1.15vw, 17px);
+  font-size: var(--text-card);
   line-height: 1.55;
   color: var(--fg-muted);
 }

@@ -63,6 +63,15 @@
 
 .stat__media { margin-top: auto; padding-top: clamp(28px, 4vw, 56px); }
 .stat__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+/* These photographs are already 16:10, exactly the frame's ratio, so object-fit
+   crops nothing and object-position has nothing to act on: the only thing
+   moving the framing is the parallax. Its subjects all sit low (the van is
+   three-quarters of the way down its frame), and 8% of drift each way was
+   swinging them lower still as you scrolled — a van sinking towards the bottom
+   edge rather than sitting in the picture. Lift the crop and calm the drift, so
+   the subject holds its place instead of drifting out of the composition.
+   Offset + travel stays inside the 10% headroom that scale 1.2 provides. */
+.stat__media .parallax > img { --parallax-travel: 3%; --parallax-offset: -6%; }
 
 /* On a dark section the figure has to come off the navy, not off cream. */
 .stats-band:not(.section--paper):not(.section--light) .stat__figure { color: var(--on-dark); }
