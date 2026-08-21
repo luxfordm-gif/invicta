@@ -9,7 +9,7 @@
 
 .enquiry__backdrop {
   position: absolute; inset: 0;
-  background: rgba(4, 10, 22, 0.62);          /* darkened, but light enough for the blur to read */
+  background: rgb(var(--scrim-rgb) / 0.62);          /* darkened, but light enough for the blur to read */
   -webkit-backdrop-filter: blur(7px);
   backdrop-filter: blur(7px);
   opacity: 0;
@@ -96,7 +96,7 @@
   transition: background-color 0.22s ease, color 0.22s ease;
 }
 .enquiry__tab:hover { color: var(--on-dark); }
-.enquiry__tab.is-active { background: var(--lime); color: var(--ground); }
+.enquiry__tab.is-active { background: var(--blue); color: var(--on-dark); }
 
 .enquiry__group + .enquiry__group { margin-top: clamp(32px, 4vw, 52px); }
 .enquiry__legend {
@@ -167,8 +167,8 @@
   letter-spacing: -0.01em;
   color: var(--on-dark);
 }
-.ecard:has(input:checked) { border-color: var(--lime); background: rgba(184, 200, 212, 0.07); }
-.ecard:has(input:checked) .ecard__check { background: var(--lime); color: var(--ground); }
+.ecard:has(input:checked) { border-color: var(--blue-bright); background: rgb(79 163 245 / 0.10); }
+.ecard:has(input:checked) .ecard__check { background: var(--blue-bright); color: var(--ground-deep); }
 .ecard:has(input:focus-visible) { outline: 2px solid var(--on-dark); outline-offset: 2px; }
 
 /* --- Footer: consent + submit --- */

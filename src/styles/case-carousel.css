@@ -160,7 +160,7 @@
   height: clamp(48px, 4.6vw, 68px);
   background: var(--paper);
   border-color: var(--line-light);
-  box-shadow: 0 10px 30px -14px rgba(8, 24, 46, 0.45);
+  box-shadow: 0 10px 30px -14px rgb(var(--ground-deep-rgb) / 0.45);
 }
 :is(.case-cc--split, .case-cc--mirror) .case-cc__arrow svg { width: 26px; height: 26px; }
 :is(.case-cc--split, .case-cc--mirror) .case-cc__arrow:disabled:hover {

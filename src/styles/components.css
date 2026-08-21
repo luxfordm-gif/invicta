@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 60;               /* above the nav, which sticks below it */
-  background: rgba(8, 24, 46, 0.82);
+  background: rgb(var(--ground-deep-rgb) / 0.82);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   color: var(--on-dark);
@@ -33,7 +33,7 @@
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
-.ubar__tel:hover { color: var(--lime); border-bottom-color: currentColor; }
+.ubar__tel:hover { color: var(--blue-bright); border-bottom-color: currentColor; }
 @media (max-width: 599.98px) {
   .ubar__msg--full { display: none; }
   .ubar__msg--short { display: inline; }
@@ -44,7 +44,7 @@
   position: sticky;
   top: var(--ubar-h);
   z-index: 50;
-  background: rgba(11, 31, 58, 0.70);      /* translucent over the hero at the very top */
+  background: rgb(var(--ground-rgb) / 0.70);      /* translucent over the hero at the very top */
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
@@ -105,7 +105,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 1px;
-  background: var(--lime);
+  background: var(--blue-bright);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -135,7 +135,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   transform: translateX(-50%) translateY(8px);
   min-width: 300px;
   padding: 8px;
-  background: rgba(15, 31, 58, 0.985);     /* effectively opaque so bright content behind can't bleed through */
+  background: rgb(var(--ground-rgb) / 0.985);     /* effectively opaque so bright content behind can't bleed through */
   -webkit-backdrop-filter: blur(30px) saturate(1.4);
   backdrop-filter: blur(30px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -232,7 +232,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   .emergency-cta:active { transform: scale(0.99); }
   /* Over a LIGHT band the pill flips to deep navy so its contrast holds. */
   html.dock-on-light .emergency-cta {
-    background: rgba(11, 31, 58, 0.80);
+    background: rgb(var(--ground-rgb) / 0.80);
     color: var(--on-dark);
     border-color: rgba(255, 255, 255, 0.14);
   }
@@ -268,7 +268,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   /* A backdrop-filter on the bar would make it the containing block for the
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
      so drop the blur on mobile and lean on a near-solid navy instead. */
-  .nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(11, 31, 58, 0.88); }
+  .nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgb(var(--ground-rgb) / 0.88); }
   /* Once scrolled the header is permanently in view, so make it fully solid — a
      translucent bar would let page text ghost through behind the brand. */
   .nav.is-scrolled { background: var(--ground); }
@@ -431,7 +431,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .band__media img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 .band::after {
   content: ""; position: absolute; inset: 0;
-  background: rgba(6, 18, 42, 0.44);
+  background: rgb(var(--scrim-rgb) / 0.44);
 }
 .band__bar {
   position: relative;

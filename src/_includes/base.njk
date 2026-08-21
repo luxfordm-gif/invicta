@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>document.documentElement.classList.add('js');</script><!-- enables reveal-on-scroll without a flash of hidden content -->
+  <script>/* build-time palette A/B; applied pre-paint so the toggle survives a page change. Remove with the prefs panel. */
+    try { var p = localStorage.getItem('iwt-palette'); if (p === 'deep') document.documentElement.dataset.palette = p; } catch (e) {}
+  </script>
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
@@ -23,7 +26,7 @@
 
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#0B1F3A">
+  <meta name="theme-color" content="#0D3159">
 
   <!-- Fonts: Figtree (sans) + Playfair Display italic (emotional accent) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

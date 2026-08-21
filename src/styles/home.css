@@ -25,8 +25,8 @@
   content: "";
   position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(to top, rgba(8, 24, 46, 0.92) 0%, rgba(8, 24, 46, 0.55) 42%, rgba(8, 24, 46, 0.30) 100%),
-    rgba(8, 24, 46, 0.18);
+    linear-gradient(to top, rgb(var(--ground-deep-rgb) / 0.92) 0%, rgb(var(--ground-deep-rgb) / 0.55) 42%, rgb(var(--ground-deep-rgb) / 0.30) 100%),
+    rgb(var(--ground-deep-rgb) / 0.18);
 }
 .home-hero__inner { position: relative; }
 .home-hero__eyebrow { color: var(--lime); }
@@ -70,8 +70,8 @@
   content: "";
   width: 3px; height: 3px;
   border-radius: 50%;
-  background: var(--lime);
-  opacity: 0.75;
+  background: var(--blue-bright);
+  opacity: 0.9;
 }
 /* On a phone the first screen is already carrying the headline, the lead, two
    CTAs and the floating emergency dock. The rail is the one thing here that is
@@ -205,7 +205,7 @@
 .svc-card:focus-visible {
   transform: translateY(-6px);
   border-color: var(--ground);
-  box-shadow: 0 22px 44px -26px rgba(8, 24, 46, 0.5);
+  box-shadow: 0 22px 44px -26px rgb(var(--ground-deep-rgb) / 0.5);
 }
 .svc-card:hover .svc-card__arrow,
 .svc-card:focus-visible .svc-card__arrow { transform: translateX(6px); }

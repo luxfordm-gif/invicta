@@ -70,9 +70,9 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(to top,
-    rgba(4, 12, 30, 0.55) 0%,
-    rgba(4, 12, 30, 0.30) 45%,
-    rgba(4, 12, 30, 0.10) 100%);
+    rgb(var(--scrim-rgb) / 0.55) 0%,
+    rgb(var(--scrim-rgb) / 0.30) 45%,
+    rgb(var(--scrim-rgb) / 0.10) 100%);
   opacity: 0;
 }
 .bento__ph {
@@ -90,10 +90,10 @@
   content: "";
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(to top,
-    rgba(6, 18, 42, 0.94) 0%,
-    rgba(6, 18, 42, 0.72) 34%,
-    rgba(6, 18, 42, 0.18) 68%,
-    rgba(6, 18, 42, 0.06) 100%);
+    rgb(var(--scrim-rgb) / 0.94) 0%,
+    rgb(var(--scrim-rgb) / 0.72) 34%,
+    rgb(var(--scrim-rgb) / 0.18) 68%,
+    rgb(var(--scrim-rgb) / 0.06) 100%);
 }
 
 /* Anchored to the base of the card, so revealing the outcome line grows the
@@ -278,9 +278,9 @@
     inset: 0 0 auto 0;
     height: var(--bento-media-h);
     background: linear-gradient(to top,
-      rgba(6, 18, 42, 0.9) 0%,
-      rgba(6, 18, 42, 0.5) 46%,
-      rgba(6, 18, 42, 0) 100%);
+      rgb(var(--scrim-rgb) / 0.9) 0%,
+      rgb(var(--scrim-rgb) / 0.5) 46%,
+      rgb(var(--scrim-rgb) / 0) 100%);
   }
 
   .bento__copy { position: static; padding: 0; }

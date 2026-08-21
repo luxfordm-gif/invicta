@@ -4,20 +4,34 @@
    shifted from an earlier Kolenda green glow. The H1 is quiet WHITE; the chalky
    blue is a DETAIL accent only. Zero fluff — confidence in what's absent.
    Token names kept from v3 for parity; only values + colour ROLES change.
+
+   The navy is pitched off the van livery: lifted a step out of near-black and
+   swung bluer, so the page reads as Invicta blue rather than generic dark. The
+   livery blue itself lives in --blue, used in small deliberate hits.
    ========================================================================== */
 :root {
   /* --- Grounds (architectural navy) --- */
-  --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
-  --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
-  --ground-raise: #14294A;        /* raised navy surface */
+  --ground: #0D3159;              /* dominant navy — hero, dark sections, emergency bar */
+  --ground-deep: #09233F;        /* deeper — footer base, deepest bands */
+  --ground-raise: #16406E;        /* raised navy surface */
   --paper: #FFFFFF;              /* pure white — the base light surface */
   --light: #F7F7F5;              /* cool near-white — the CREAM step, a panel colour */
   --light-warm: #EFEBDF;         /* warmer cream alt */
 
+  /* Same three grounds as bare channels, for the scrims and washes that need an
+     alpha. Keep these in step with the hexes above — they ARE those colours. */
+  --ground-rgb: 13 49 89;
+  --ground-deep-rgb: 9 35 63;
+  --scrim-rgb: 6 24 45;          /* deeper than the ground: photo washes + shadows */
+
+  /* --- Brand blue (the van livery) --- */
+  --blue: #1A6EC4;               /* solid livery blue — emergency chip, accents on light */
+  --blue-bright: #4FA3F5;        /* luminous tint of it — rules, hovers, accents on navy */
+
   /* --- Chalky detail accent (NOT a hero colour; used small) --- */
-  --lime: #B8C8D4;               /* chalky pale blue-grey — eyebrows, hairlines, italics, underlines */
-  --steel: #5B76A0;              /* light-blue heading + eyebrow accent on light (cool) sections */
-  --accent-emergency: #2C4A73;   /* ONLY the emergency phone number chip — nowhere else */
+  --lime: #AFC6DB;               /* chalky pale blue-grey — eyebrows, hairlines, italics, underlines */
+  --steel: var(--blue);          /* heading + eyebrow accent on light (cool) sections */
+  --accent-emergency: var(--blue); /* ONLY the emergency phone number chip — nowhere else */
 
   /* --- Text on dark ground --- */
   --on-dark: #FFFFFF;
@@ -87,6 +101,28 @@
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
   --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this) */
+}
+
+/* ==========================================================================
+   PALETTE A/B — build-time only, driven by the preview panel's Blue row.
+   The default :root above is the lifted, livery-blue palette. Setting
+   data-palette="deep" on <html> restores the original deeper navy with its
+   chalky grey-blue accent and no livery blue anywhere, so the two directions
+   can be compared on the live page. Delete this block (and the prefs row)
+   once the direction is signed off.
+   ========================================================================== */
+:root[data-palette="deep"] {
+  --ground: #0B1F3A;
+  --ground-deep: #08182E;
+  --ground-raise: #14294A;
+  --ground-rgb: 11 31 58;
+  --ground-deep-rgb: 8 24 46;
+  --scrim-rgb: 6 18 42;
+  --blue: #5B76A0;             /* the old steel: the accents fall back to it */
+  --blue-bright: #B8C8D4;      /* ...and the bright hits fall back to chalk */
+  --lime: #B8C8D4;
+  --steel: #5B76A0;
+  --accent-emergency: #2C4A73;
 }
 
 /* ==========================================================================

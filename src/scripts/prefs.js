@@ -51,8 +51,24 @@
     }
   }
 
+  // Palette A/B: "deep" is the original navy, "bright" the lifted livery blue.
+  // Stored so it holds across page changes and inside the mobile-preview iframe.
+  function setPalette(p) {
+    if (p === "deep") document.documentElement.dataset.palette = "deep";
+    else delete document.documentElement.dataset.palette;
+    try { localStorage.setItem("iwt-palette", p); } catch (e) {}
+    panel.querySelectorAll("[data-palette]").forEach(function (b) {
+      b.classList.toggle("is-active", b.getAttribute("data-palette") === p);
+    });
+    if (phone) phone.querySelector("iframe").contentWindow.location.reload();
+  }
+
+  setPalette(document.documentElement.dataset.palette === "deep" ? "deep" : "bright");
+
   panel.addEventListener("click", function (e) {
     var b = e.target.closest("[data-view]");
     if (b) setView(b.getAttribute("data-view"));
+    var p = e.target.closest("[data-palette]");
+    if (p) setPalette(p.getAttribute("data-palette"));
   });
 })();
