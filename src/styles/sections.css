@@ -506,9 +506,13 @@
   border-radius: 50%;
   border: 1px solid var(--line-light);
   color: var(--ground);
-  font-size: 15px;
   transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
+/* A drawn chevron rather than the "→" character: at this size the glyph's own
+   side bearings threw it off the circle's centre, and in the body face its bar
+   is so light on a phone that it stopped reading as an arrow at all. An SVG
+   centres on its own box and keeps its weight at any size. */
+.services-explore__arrow svg { width: 15px; height: 15px; display: block; }
 .services-explore__link:hover .services-explore__name { color: var(--steel); }
 .services-explore__link:hover .services-explore__arrow,
 .services-explore__link:focus-visible .services-explore__arrow {

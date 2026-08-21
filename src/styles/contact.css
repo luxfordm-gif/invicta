@@ -39,15 +39,25 @@
 /* --- Form --- */
 .contact-form { margin-top: clamp(32px, 4vw, 52px); }
 .contact-form__hp { position: absolute; left: -9999px; }
-.contact-form__group + .contact-form__group { margin-top: clamp(32px, 4vw, 52px); }
+/* The steps were reading as one long form: 16px between fields, 24px under a
+   legend and only 32px between whole sections is not a hierarchy, so section 3
+   looked like the tail of section 2. Put a rule and real air ABOVE each step,
+   and bind the legend tightly to the fields BELOW it. */
+.contact-form__group + .contact-form__group {
+  margin-top: clamp(40px, 4vw, 52px);
+  padding-top: clamp(28px, 3vw, 36px);
+  border-top: 1px solid var(--line-light);
+}
 .contact-form__legend {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  /* Was 13px — the same size as the field labels under it, so a step heading
+     and a field label carried identical weight. A step up separates them. */
+  font-size: 15px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .contact-form__fields { display: grid; gap: 16px; }

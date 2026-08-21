@@ -248,6 +248,7 @@
      long scroll. Falls back to a plain swipeable list with no JS: the dots are
      built by carousel.js and simply are not there without it. */
   .bento {
+    --bento-peek: clamp(30px, 9vw, 56px);
     display: flex;
     grid-template-columns: none;
     gap: clamp(12px, 3vw, 18px);
@@ -255,11 +256,20 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;                 /* Firefox */
+    /* Run the track to the screen edges so a card can be half off it, then put
+       the container's gutter back as padding — the first card still lines up
+       with everything above it, and scroll-padding keeps it there when snapped. */
+    margin-inline: calc(-1 * var(--container-pad));
+    padding-inline: var(--container-pad);
+    scroll-padding-inline-start: var(--container-pad);
+    /* overflow-x:auto forces overflow-y to auto too, so the card's shadow was
+       being cut off flush with the card. This is the room it needs to show. */
+    padding-block: 14px 30px;
   }
   .bento::-webkit-scrollbar { display: none; }
-  /* flex row + stretch: every card takes the height of the tallest, so the
-     dots below never move as you swipe. */
-  .bento__cell { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+  /* Narrower than the track so the next card shows at the edge: a carousel that
+     looks like one card is a carousel nobody swipes. */
+  .bento__cell { flex: 0 0 calc(100% - var(--bento-peek)); min-width: 0; scroll-snap-align: start; }
 
   /* A LIGHT card on a phone. The card carries .theme-dark for the desktop
      layout, where the copy is set over the photograph and has to be white; on a
@@ -281,7 +291,8 @@
     --bento-media-h: clamp(240px, 58vw, 330px);
     display: block;
     background: var(--paper);
-    box-shadow: 0 1px 2px rgb(15 15 15 / 0.05), 0 10px 28px rgb(15 15 15 / 0.09);
+    /* Kept within the track's padding above, so none of it is clipped. */
+    box-shadow: 0 2px 4px rgb(15 15 15 / 0.05), 0 8px 20px rgb(15 15 15 / 0.09);
   }
   /* picture in flow at the top, at a fixed height */
   .bento__media {
@@ -320,7 +331,7 @@
     justify-content: center;
     align-items: center;
     gap: 0;
-    margin-top: var(--space-2);
+    margin-top: 0;              /* the track already carries 30px below the cards */
   }
   /* iOS-style page control: the dots are circles and the CURRENT one stretches
      into a capsule about two dots wide, rather than only changing tone. The
