@@ -1,4 +1,4 @@
-/* Mobile nav toggle + a subtle hairline on the sticky nav once scrolled. */
+/* Mobile nav toggle + a subtle hairline on the nav once scrolled. */
 (function () {
   "use strict";
   var toggle = document.querySelector(".nav__toggle");
@@ -49,6 +49,7 @@
     // Keep --nav-h matched to the nav's REAL height so the sticky breadcrumb sits
     // flush beneath it (a hardcoded value drifts when fonts load or type reflows,
     // opening a gap that shows the page behind it).
+    // (On mobile this is also what the full-screen menu's top padding clears.)
     var setNavH = function () {
       root.style.setProperty("--nav-h", nav.offsetHeight + "px");
     };
@@ -57,8 +58,9 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavH);
 
     var reduceNav = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // Smart-hide runs on desktop only. On mobile the utility bar is hidden and
-    // the nav is pinned to the very top, so it stays exactly as-is there.
+    // Smart-hide runs on desktop only. On mobile the nav is not sticky at all —
+    // it simply scrolls away with the page — so there is nothing to hide, and
+    // any breadcrumb below it pins itself to the top in CSS.
     var deskMq = window.matchMedia("(min-width: 900px)");
     var lastY = window.scrollY;
     var ticking = false;

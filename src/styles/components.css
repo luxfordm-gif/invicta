@@ -264,14 +264,21 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 
 @media (max-width: 899.98px) {
   .ubar { display: none; }          /* emergency lives in the floating button on mobile */
-  .nav { top: 0; }                  /* no utility bar above, so stick to the very top */
+  /* NOT sticky on phones. The bar scrolls away with the page and stays gone
+     until you scroll back to the top, which hands a small screen its full
+     height back. Pages that carry a breadcrumb pin that instead, once it
+     reaches the top — see the breadcrumb block in sections.css. */
+  .nav { position: static; }
   /* A backdrop-filter on the bar would make it the containing block for the
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
-     so drop the blur on mobile and lean on a near-solid navy instead. */
-  .nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgb(var(--ground-rgb) / 0.88); }
-  /* Once scrolled the header is permanently in view, so make it fully solid — a
-     translucent bar would let page text ghost through behind the brand. */
-  .nav.is-scrolled { background: var(--ground); }
+     so drop the blur on mobile. It no longer sits over the hero as you scroll,
+     so it can simply be solid navy throughout — nothing to blend with, and no
+     background transition to run. */
+  .nav {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: var(--ground);
+    transition: none;
+  }
   /* Menu open: the top bar + brand + close button invert to sit on the cream menu.
      Pin the bar with position:fixed — while the menu is open <html> is
      overflow:hidden, which strands a position:sticky bar at its in-flow offset
@@ -284,9 +291,15 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      stroke behind the X — the "close + burger at once" glitch. */
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
-  .nav__inner { display: flex; align-items: center; padding-block: 22px; }  /* 8px shorter bar than desktop */
-  /* Full name on mobile too — scaled to fit on one line beside the menu button. */
-  .nav__brand { justify-self: auto; font-size: clamp(17px, 5vw, 24px); }
+  /* Shallower than the 85px it was, without going as tight as the reference
+     sites: the 40px menu button sets the row height, so 15px of padding lands
+     the bar at ~71px — half way between the two. It can afford to lose the
+     height because it is no longer pinned; it scrolls away rather than eating
+     the viewport for the whole page. */
+  .nav__inner { display: flex; align-items: center; padding-block: 15px; }
+  /* Full name on mobile too — scaled to fit on one line beside the menu button,
+     and kept inside the 40px row. */
+  .nav__brand { justify-self: auto; font-size: clamp(17px, 4.8vw, 23px); }
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
   /* Bare two-line mark, no bordered square — just the strokes. */
   .nav__toggle {
@@ -301,7 +314,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     position: fixed; inset: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--light);
-    padding: calc(112px + env(safe-area-inset-top, 0px)) var(--container-pad)
+    /* Clear the (now much shallower) bar by measurement, not a magic number:
+       --nav-h is kept in sync with the nav's real height by nav.js. */
+    padding: calc(var(--nav-h) + 30px + env(safe-area-inset-top, 0px)) var(--container-pad)
              calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
     margin: 0; display: none;
     overflow-y: auto; overscroll-behavior: contain;
@@ -338,7 +353,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     max-height: 0; overflow: hidden;
     transition: max-height 0.35s ease, padding 0.3s ease;
   }
-  .nav__item.is-expanded .nav__menu { max-height: 720px; padding-bottom: var(--space-2); }
+  /* Breathing room under the parent's divider before the sub-pages start, so an
+     expanded accordion reads as its own block rather than crowding the rule. */
+  .nav__item.is-expanded .nav__menu { max-height: 720px; padding-block: var(--space-2); }
   /* neutralise the desktop hover/focus dropdown transform on mobile */
   .nav__item.has-menu:hover .nav__menu,
   .nav__item.has-menu:focus-within .nav__menu { transform: none; }
@@ -555,8 +572,26 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .acc__media { align-self: stretch; }
 .acc__media img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
 .acc__media .img-ph { width: 100%; aspect-ratio: 5 / 4; }
-.acc__copy p { font-size: 18px; line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
+.acc__copy p { font-size: var(--text-body); line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
 .acc__copy .btn-inquiry { margin-top: var(--space-4); }
 @media (max-width: 899.98px) {
   .acc__body { padding-left: 0; }
+  /* On a phone the picture is stacked ABOVE the copy rather than beside it, so
+     a 5:4 frame eats most of the screen before a word of the answer is visible.
+     16:9 keeps the photograph as scenery and puts the copy in reach. */
+  .acc__media img,
+  .acc__media .img-ph { aspect-ratio: 16 / 9; }
+  /* Every source is 1200x961, so a 16:9 window drops ~30% of the height — where
+     that window sits decides whether the subject survives the crop. Keyed off
+     the asset itself so it travels with the picture, not with whichever
+     accordion row happens to use it.
+       survey     the house + greenhouse sit high; the rest is empty lawn
+       treatment  hold the vessel bases, lose ceiling
+       install    boilers down to the tank label; the floor is dead space
+       service    the hand on the valve wheel is the subject
+     step-design is a flat-lay that fills the frame, so it stays centred. */
+  .acc__media img[src$="step-survey.webp"]    { object-position: center 30%; }
+  .acc__media img[src$="step-treatment.webp"] { object-position: center 55%; }
+  .acc__media img[src$="step-install.webp"]   { object-position: center 40%; }
+  .acc__media img[src$="step-service.webp"]   { object-position: center 42%; }
 }

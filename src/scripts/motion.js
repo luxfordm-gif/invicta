@@ -135,7 +135,15 @@
     var cs = getComputedStyle(img);
     var travel = parseFloat(cs.getPropertyValue("--parallax-travel")) || 0;
     var scale = parseFloat(cs.getPropertyValue("--parallax-scale")) || 1;
-    if (!travel) { img.style.transform = ""; return; }
+    var offset = parseFloat(cs.getPropertyValue("--parallax-offset")) || 0;
+    // Travel 0 still needs the offset applied: a picture can be framed without
+    // drifting (that is what the phone sector cards do).
+    if (!travel) {
+      img.style.transform = offset
+        ? "translate3d(0," + offset + "%,0) scale(" + scale + ")"
+        : "";
+      return;
+    }
 
     var r = img.parentNode.getBoundingClientRect();
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
@@ -145,7 +153,7 @@
     p = Math.max(0, Math.min(1, p));
 
     img.style.transform =
-      "translate3d(0," + ((p - 0.5) * 2 * travel).toFixed(2) + "%,0) scale(" + scale + ")";
+      "translate3d(0," + (offset + (p - 0.5) * 2 * travel).toFixed(2) + "%,0) scale(" + scale + ")";
   }
 
   function update() {

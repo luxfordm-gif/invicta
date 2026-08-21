@@ -69,7 +69,7 @@
 .enquiry__inner .rule { margin-top: clamp(24px, 3vw, 40px); }
 .enquiry__lead {
   margin-top: clamp(28px, 3.5vw, 44px);
-  font-size: clamp(17px, 1.5vw, 21px);
+  font-size: var(--text-lead);
   line-height: 1.5;
   color: var(--on-dark-muted);
   max-width: 58ch;
@@ -162,7 +162,7 @@
   margin-top: auto;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(17px, 1.5vw, 20px);
+  font-size: var(--text-lead);
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--on-dark);
@@ -185,7 +185,7 @@
   gap: 12px;
   align-items: flex-start;
   max-width: 46ch;
-  font-size: 15px;
+  font-size: var(--text-note);
   line-height: 1.5;
   color: var(--on-dark-muted);
   cursor: pointer;
@@ -226,7 +226,7 @@
   line-height: 1.1;
 }
 a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
-.enquiry__contact-note { display: block; margin-top: 8px; font-size: 15px; color: var(--on-dark-muted); }
+.enquiry__contact-note { display: block; margin-top: 8px; font-size: var(--text-note); color: var(--on-dark-muted); }
 
 /* --- Sent state -----------------------------------------------------------
    On success the panel stops being an enquiry form and becomes a confirmation.
@@ -260,14 +260,14 @@ a.enquiry__contact-row:hover .enquiry__contact-value { color: var(--lime); }
 .enquiry-sent .rule { margin-top: clamp(24px, 3vw, 40px); }
 .enquiry-sent__lead {
   margin-top: clamp(28px, 3.5vw, 44px);
-  font-size: clamp(17px, 1.5vw, 21px);
+  font-size: var(--text-lead);
   line-height: 1.5;
   color: var(--on-dark-muted);
   max-width: 52ch;
 }
 .enquiry-sent__note {
   margin-top: clamp(16px, 2vw, 22px);
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.55;
   color: var(--on-dark-muted);
   max-width: 52ch;
@@ -294,7 +294,7 @@ html.enquiry-open body { position: fixed; left: 0; right: 0; width: 100%; overfl
   padding: 16px 18px;
   border: 1px solid var(--line-dark);
   border-left: 3px solid var(--lime);
-  font-size: 16px;
+  font-size: var(--text-card);
   line-height: 1.55;
   color: var(--on-dark);
   max-width: 56ch;

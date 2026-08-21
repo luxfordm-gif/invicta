@@ -38,7 +38,7 @@
 .home-hero__lead {
   margin-top: var(--space-4);
   max-width: 56ch;
-  font-size: clamp(17px, 1.5vw, 21px);
+  font-size: var(--text-lead);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.82);
 }
@@ -100,13 +100,16 @@
      hero is tightened up and given foot room to keep both CTAs clear of it. */
   .home-hero { min-height: min(78svh, 720px); padding-block: var(--space-4) 116px; }
   .home-hero__scroll { display: none; }
-  .home-hero__lead { margin-top: var(--space-3); font-size: 16px; line-height: 1.55; }
+  .home-hero__lead { margin-top: var(--space-3); line-height: 1.55; }
   .home-hero__actions { margin-top: var(--space-4); }
   .home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
 }
 
 /* --- About + USPs --------------------------------------------------------- */
-.home-about__grid { display: grid; gap: var(--flow-sm); }
+/* Single column on mobile, so this gap IS the eyebrow -> heading distance —
+   use the shared heading token so it matches every other header on the site
+   (it was --flow-sm, which made this one header 24px instead of 18px). */
+.home-about__grid { display: grid; gap: var(--flow-heading); }
 @media (min-width: 900px) {
   .home-about__grid { grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr); gap: clamp(40px, 5vw, 90px); }
   /* the label rides alongside the copy as it scrolls, as on the reference */
@@ -116,7 +119,7 @@
 .home-about__lead {
   margin-top: var(--space-4);
   max-width: 62ch;
-  font-size: clamp(16px, 1.4vw, 19px);
+  font-size: var(--text-lead);
   line-height: 1.65;
 }
 
@@ -184,7 +187,7 @@
   letter-spacing: -0.02em;
   color: var(--ink);
 }
-.svc-card__desc { margin-top: var(--space-2); font-size: 15.5px; line-height: 1.55; color: var(--ink-muted); }
+.svc-card__desc { margin-top: var(--space-2); font-size: var(--text-card); line-height: 1.55; color: var(--ink-muted); }
 .svc-card__cta {
   margin-top: auto;          /* pin to the card foot so the row of CTAs lines up */
   padding-top: var(--space-4);
@@ -247,7 +250,8 @@
 .stack__copy {
   margin-top: var(--space-3);
   max-width: 46ch;
-  font-size: clamp(15.5px, 1.3vw, 17px);
+  /* Body copy in the open, not in a card: hold the full body size. */
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--on-dark-muted);
 }
@@ -284,7 +288,7 @@
 .review__mark svg { width: 26px; height: 26px; }
 .review__quote {
   margin: var(--space-4) 0 0;
-  font-size: clamp(16px, 1.4vw, 18px);
+  font-size: var(--text-lead);
   line-height: 1.6;
   color: var(--ink);
 }

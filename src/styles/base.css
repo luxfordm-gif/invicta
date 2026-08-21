@@ -9,7 +9,7 @@ html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }   /* reserve 
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--on-dark);
   background: var(--ground);
@@ -30,7 +30,10 @@ h1 {
   letter-spacing: -0.04em;
 }
 h2 {
-  font-size: clamp(34px, 4.8vw, 62px);
+  /* The 38px floor is what a section heading reads at on a phone. 4.8vw only
+     overtakes it around 790px, so the ramp is continuous — no jump at the
+     breakpoint. */
+  font-size: clamp(38px, 4.8vw, 62px);
   line-height: 1.03;
   letter-spacing: -0.03em;
 }
@@ -102,9 +105,15 @@ a[href^="tel:"] { white-space: nowrap; }
 :is(.section--light, .section--paper) .em { color: var(--steel); }        /* accent word picks up the same light blue */
 :is(.section--light, .section--paper) :focus-visible { outline-color: var(--ink); }
 /* Two sections on the SAME surface read as one block — collapse the boundary
-   gap. Cream against white is a deliberate step, so it keeps its full padding. */
+   gap. Cream against white is a deliberate step, so it keeps its full padding.
+
+   flow-root matters here: with padding-top gone and no border, the first child's
+   own margin-top escapes the section (margin collapse), pushing the whole
+   section down and leaving a strip of the navy BODY showing through what is
+   supposed to be one continuous surface — a stray blue line across the page.
+   Establishing a block formatting context keeps that margin inside. */
 .section--light + .section--light,
-.section--paper + .section--paper { padding-top: 0; }
+.section--paper + .section--paper { padding-top: 0; display: flow-root; }
 .section--light:has(+ .section--light),
 .section--paper:has(+ .section--paper) { padding-bottom: var(--section-y-tight); }
 
@@ -154,6 +163,17 @@ a[href^="tel:"] { white-space: nowrap; }
 /* Hairline rule that spans the container, used under eyebrow labels. */
 .rule { height: 1px; background: var(--line-dark); margin-top: var(--space-4); }
 :is(.section--light, .section--paper) .rule { background: var(--line-light); }
+/* On a phone, drop the hairline that sits between an eyebrow and its heading.
+   Only a handful of section headers carry one, and its 32px of clearance pushed
+   the eyebrow-to-heading gap to 51px against the ~18px every other header on
+   the site uses — the same header block measurably further apart depending on
+   which section you were in. Losing the line makes every eyebrow -> heading
+   gap on mobile identical; it keeps its editorial job on desktop, where there
+   is room for it. Deliberately scoped to `.eyebrow + .rule`, so the structural
+   rules (under the footer CTA, under the enquiry title) are untouched. */
+@media (max-width: 899.98px) {
+  .eyebrow + .rule { display: none; }
+}
 
 /* --- Accessibility -------------------------------------------------------- */
 .visually-hidden {
