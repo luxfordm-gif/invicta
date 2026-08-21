@@ -105,9 +105,15 @@ a[href^="tel:"] { white-space: nowrap; }
 :is(.section--light, .section--paper) .em { color: var(--steel); }        /* accent word picks up the same light blue */
 :is(.section--light, .section--paper) :focus-visible { outline-color: var(--ink); }
 /* Two sections on the SAME surface read as one block — collapse the boundary
-   gap. Cream against white is a deliberate step, so it keeps its full padding. */
+   gap. Cream against white is a deliberate step, so it keeps its full padding.
+
+   flow-root matters here: with padding-top gone and no border, the first child's
+   own margin-top escapes the section (margin collapse), pushing the whole
+   section down and leaving a strip of the navy BODY showing through what is
+   supposed to be one continuous surface — a stray blue line across the page.
+   Establishing a block formatting context keeps that margin inside. */
 .section--light + .section--light,
-.section--paper + .section--paper { padding-top: 0; }
+.section--paper + .section--paper { padding-top: 0; display: flow-root; }
 .section--light:has(+ .section--light),
 .section--paper:has(+ .section--paper) { padding-bottom: var(--section-y-tight); }
 

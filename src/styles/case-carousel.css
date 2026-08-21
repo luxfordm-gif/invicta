@@ -115,20 +115,30 @@
   gap: 0;
   margin-top: var(--space-5);
 }
+/* Same iOS-style page control as the bento track and the sectors carousel: the
+   current one stretches into a capsule about two dots wide. The button is the
+   44px tap target, the visible pill is the pseudo-element. */
 .case-cc__dot {
-  width: 7px; height: 7px;
-  box-sizing: content-box;
-  padding: 14px 5px;
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding-inline: 5px;
   border: 0;
-  background: rgba(15, 15, 15, 0.2);
-  background-clip: content-box;
-  border-radius: 50%;
+  background: none;
   cursor: pointer;
-  transition: background-color 0.25s ease;
 }
-.case-cc__dot:hover { background-color: rgba(15, 15, 15, 0.38); }
-.case-cc__dot.is-active { background-color: var(--ground); }
-@media (prefers-reduced-motion: reduce) { .case-cc__dot { transition: none; } }
+.case-cc__dot::before {
+  content: "";
+  display: block;
+  width: 7px; height: 7px;
+  border-radius: 999px;
+  background: rgba(15, 15, 15, 0.2);
+  transition: width 0.34s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease;
+}
+.case-cc__dot:hover::before { background-color: rgba(15, 15, 15, 0.38); }
+.case-cc__dot.is-active::before { width: 17px; background-color: var(--ground); }
+.case-cc__dot:focus-visible { outline: 2px solid var(--ground); outline-offset: 2px; border-radius: 999px; }
+@media (prefers-reduced-motion: reduce) { .case-cc__dot::before { transition: none; } }
 
 
 /* ==========================================================================

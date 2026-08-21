@@ -291,14 +291,15 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      stroke behind the X — the "close + burger at once" glitch. */
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
-  /* A shallow bar, in the manner of the reference sites: the 40px menu button
-     sets the row height, so 8px of padding gives a ~57px header instead of 85.
-     It can afford to be tight because it is no longer pinned — it scrolls
-     away rather than eating the viewport for the whole page. */
-  .nav__inner { display: flex; align-items: center; padding-block: 8px; }
+  /* Shallower than the 85px it was, without going as tight as the reference
+     sites: the 40px menu button sets the row height, so 15px of padding lands
+     the bar at ~71px — half way between the two. It can afford to lose the
+     height because it is no longer pinned; it scrolls away rather than eating
+     the viewport for the whole page. */
+  .nav__inner { display: flex; align-items: center; padding-block: 15px; }
   /* Full name on mobile too — scaled to fit on one line beside the menu button,
      and kept inside the 40px row. */
-  .nav__brand { justify-self: auto; font-size: clamp(17px, 4.6vw, 22px); }
+  .nav__brand { justify-self: auto; font-size: clamp(17px, 4.8vw, 23px); }
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
   /* Bare two-line mark, no bordered square — just the strokes. */
   .nav__toggle {

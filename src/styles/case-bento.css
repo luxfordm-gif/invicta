@@ -261,9 +261,27 @@
      dots below never move as you swipe. */
   .bento__cell { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
 
+  /* A LIGHT card on a phone. The card carries .theme-dark for the desktop
+     layout, where the copy is set over the photograph and has to be white; on a
+     phone the copy sits on the card BELOW the picture, and white-on-navy there
+     was just a blue panel that was hard to read. Re-point the theme roles at
+     the light set (the same block .section--light uses) so every descendant
+     follows without touching the markup, and lift the card off the cream
+     section with a shadow instead of a fill. */
+  .bento__card.theme-dark {
+    --fg: var(--ink);
+    --fg-muted: var(--ink-muted);
+    --fg-subtle: rgba(15, 15, 15, 0.42);
+    --fg-accent: var(--steel);
+    --line: var(--line-light);
+    --surface: var(--paper);
+    --surface-raise: var(--paper);
+  }
   .bento__card {
     --bento-media-h: clamp(240px, 58vw, 330px);
     display: block;
+    background: var(--paper);
+    box-shadow: 0 1px 2px rgb(15 15 15 / 0.05), 0 10px 28px rgb(15 15 15 / 0.09);
   }
   /* picture in flow at the top, at a fixed height */
   .bento__media {
@@ -271,31 +289,20 @@
     z-index: 0;
     height: var(--bento-media-h);
   }
-  /* keep the placeholder label clear of the tags sat on the picture */
-  .bento__ph { align-items: flex-start; padding-top: 16%; }
-  /* scrim over the foot of the PICTURE only, for the name sat on it */
-  .bento__card::after {
-    inset: 0 0 auto 0;
-    height: var(--bento-media-h);
-    background: linear-gradient(to top,
-      rgb(var(--scrim-rgb) / 0.9) 0%,
-      rgb(var(--scrim-rgb) / 0.5) 46%,
-      rgb(var(--scrim-rgb) / 0) 100%);
-  }
+  /* nothing sits on the picture any more, so the placeholder label centres */
+  .bento__ph { align-items: center; padding-top: 0; }
+  /* No scrim: the picture is just a picture now, and the copy has the card. */
+  .bento__card::after { content: none; }
 
-  .bento__copy { position: static; padding: 0; }
-  /* pulled back up over the foot of the picture: translateY(-100%) is relative
-     to the element's own height, so it does not need one hard-coding */
-  .bento__head {
-    position: absolute;
-    top: var(--bento-media-h);
-    left: 0;
-    right: 0;
-    transform: translateY(-100%);
-    padding: clamp(16px, 4vw, 22px);
-  }
-  .bento__text { padding: clamp(16px, 4vw, 22px); }
-  .bento__blurb { margin-top: 0; }
+  /* Tags and name come DOWN off the photograph and join the blurb on the card.
+     Set over a photograph they had to fight whatever was behind them — a scrim
+     dark enough to carry the name also muddied the picture. On the card they
+     are ink on white and simply legible, and the photograph is left alone. */
+  .bento__copy { position: static; padding: clamp(18px, 4.5vw, 24px); }
+  .bento__head { position: static; transform: none; padding: 0; }
+  .bento__text { padding: 0; }
+  .bento__name { margin-top: var(--space-2); }
+  .bento__blurb { margin-top: 12px; }
 
   /* nothing is held back behind a hover that cannot happen */
   .bento__reveal { max-height: none; }
@@ -315,18 +322,31 @@
     gap: 0;
     margin-top: var(--space-2);
   }
+  /* iOS-style page control: the dots are circles and the CURRENT one stretches
+     into a capsule about two dots wide, rather than only changing tone. The
+     button is the 44px-tall tap target; the visible pill is the pseudo-element,
+     so growing it cannot disturb the tap area or the spacing of its neighbours.
+     (The sectors carousel already used this shape — the case tracks match it
+     now instead of each having their own indicator.) */
   .bento__dot {
-    width: 7px; height: 7px;
-    box-sizing: content-box;
-    padding: 14px 5px;
+    display: grid;
+    place-items: center;
+    height: 44px;
+    padding-inline: 5px;
     border: 0;
-    background: currentColor;
-    background-clip: content-box;
-    border-radius: 50%;
-    opacity: 0.28;
+    background: none;
     cursor: pointer;
-    transition: opacity 0.25s ease;
   }
-  .bento__dot.is-active { opacity: 1; }
+  .bento__dot::before {
+    content: "";
+    display: block;
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.26;
+    transition: width 0.34s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  }
+  .bento__dot.is-active::before { width: 17px; opacity: 1; }
+  .bento__dot:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 999px; }
 }
-@media (prefers-reduced-motion: reduce) { .bento__dot { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .bento__dot::before { transition: none; } }

@@ -64,6 +64,10 @@
   margin-top: var(--flow-heading);
   max-width: 22ch;
 }
+/* That margin means "the gap under my eyebrow". A statement that opens its
+   block has no eyebrow to sit below, so it should not carry the gap — it only
+   pushed the heading off the top of its own section. */
+.statement:first-child { margin-top: 0; }
 .services .statement, .positioning .statement { max-width: 30ch; }
 
 /* --- Positioning / sectors (dark) ----------------------------------------- */
