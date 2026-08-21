@@ -35,7 +35,7 @@
   margin-top: var(--space-2);
   max-width: 54ch;
   color: var(--ink-muted);
-  font-size: clamp(16px, 1.4vw, 18px);
+  font-size: clamp(19px, 1.4vw, 20px);
   line-height: 1.6;
 }
 
@@ -91,7 +91,7 @@
 .case-slide__media img { object-fit: cover; display: block; }
 /* leave the placeholder as flex (from .img-ph) so its label stays centred both
    ways; a display:block here would strand the label at the top. */
-.case-slide__body p { font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; }
+.case-slide__body p { font-size: clamp(18px, 1.4vw, 20px); line-height: 1.65; }
 .case-slide__body p + p { margin-top: 1.1em; }
 .case-slide__highlight-wrap { margin-top: var(--flow-md); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
 .case-slide__highlight {
@@ -236,7 +236,7 @@
 /* --- Internal lab page (/lab/case-layouts/) -------------------------------
    Delete along with src/lab-case-layouts.njk once a layout is chosen. */
 .lab-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(32px, 5vw, 64px); }
-.lab-hero__lead { margin-top: var(--space-4); max-width: 62ch; color: var(--on-dark-muted); font-size: 17px; line-height: 1.6; }
+.lab-hero__lead { margin-top: var(--space-4); max-width: 62ch; color: var(--on-dark-muted); font-size: 18px; line-height: 1.6; }
 .lab-label { background: var(--ground-deep); border-block: 1px solid var(--line-dark); padding-block: var(--space-3); }
 .lab-label p { font-size: 14px; color: var(--on-dark-muted); max-width: none; }
 .lab-label strong { color: var(--lime); font-weight: 600; }

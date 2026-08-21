@@ -27,7 +27,9 @@
 .service-intro__body { margin-top: clamp(28px, 3.4vw, 48px); }
 .service-intro__body p {
   max-width: 64ch;
-  font-size: clamp(16px, 1.3vw, 18px);
+  /* The main reading column of a service page, and not inside a card — so it
+     sits at the body size rather than a step under it. */
+  font-size: clamp(18px, 1.3vw, 20px);
   line-height: 1.65;
 }
 /* The first paragraph carries the plain definition of the service, so it is set
@@ -73,11 +75,11 @@
   font-size: clamp(20px, 1.9vw, 27px); letter-spacing: -0.01em; line-height: 1.1; color: var(--on-dark);
 }
 .service-check__desc {
-  display: block; margin-top: 10px; font-size: 16px; line-height: 1.6; color: var(--on-dark-muted); max-width: 60ch;
+  display: block; margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); max-width: 60ch;
 }
 .service-points__footer { margin-top: var(--flow-md); max-width: 62ch; }
-.service-points__lead { font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); }
-.service-points__approach { margin-top: var(--space-3); font-size: 17px; line-height: 1.6; color: var(--on-dark-muted); }
+.service-points__lead { font-size: 18px; line-height: 1.6; color: var(--on-dark-muted); }
+.service-points__approach { margin-top: var(--space-3); font-size: 18px; line-height: 1.6; color: var(--on-dark-muted); }
 .service-points__cta { margin-top: var(--space-5); }
 
 /* Case studies live in case-carousel.css now, shared with the private water

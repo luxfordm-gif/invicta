@@ -20,7 +20,7 @@
   margin-top: var(--space-2);
   max-width: 54ch;
   color: var(--fg-muted);
-  font-size: clamp(16px, 1.4vw, 18px);
+  font-size: clamp(19px, 1.4vw, 20px);
   line-height: 1.6;
 }
 
@@ -126,7 +126,7 @@
 .bento__blurb {
   margin-top: 10px;
   max-width: 54ch;
-  font-size: clamp(14.5px, 1.15vw, 16px);
+  font-size: clamp(16px, 1.15vw, 17px);
   line-height: 1.55;
   color: var(--fg-muted);
 }
@@ -157,7 +157,7 @@
 .bento__more {
   margin-top: 0.9em;
   max-width: 54ch;
-  font-size: clamp(14.5px, 1.15vw, 16px);
+  font-size: clamp(16px, 1.15vw, 17px);
   line-height: 1.55;
   color: var(--fg-muted);
 }
@@ -298,7 +298,7 @@
      Set over a photograph they had to fight whatever was behind them — a scrim
      dark enough to carry the name also muddied the picture. On the card they
      are ink on white and simply legible, and the photograph is left alone. */
-  .bento__copy { position: static; padding: clamp(18px, 4.5vw, 24px); }
+  .bento__copy { position: static; padding: clamp(22px, 4.5vw, 26px); }
   .bento__head { position: static; transform: none; padding: 0; }
   .bento__text { padding: 0; }
   .bento__name { margin-top: var(--space-2); }

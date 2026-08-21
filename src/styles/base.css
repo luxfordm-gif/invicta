@@ -9,7 +9,7 @@ html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }   /* reserve 
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 18px;              /* reading copy: 17px read small for an editorial site */
   line-height: 1.6;
   color: var(--on-dark);
   background: var(--ground);
