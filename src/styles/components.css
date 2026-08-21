@@ -264,14 +264,21 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 
 @media (max-width: 899.98px) {
   .ubar { display: none; }          /* emergency lives in the floating button on mobile */
-  .nav { top: 0; }                  /* no utility bar above, so stick to the very top */
+  /* NOT sticky on phones. The bar scrolls away with the page and stays gone
+     until you scroll back to the top, which hands a small screen its full
+     height back. Pages that carry a breadcrumb pin that instead, once it
+     reaches the top — see the breadcrumb block in sections.css. */
+  .nav { position: static; }
   /* A backdrop-filter on the bar would make it the containing block for the
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
-     so drop the blur on mobile and lean on a near-solid navy instead. */
-  .nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgb(var(--ground-rgb) / 0.88); }
-  /* Once scrolled the header is permanently in view, so make it fully solid — a
-     translucent bar would let page text ghost through behind the brand. */
-  .nav.is-scrolled { background: var(--ground); }
+     so drop the blur on mobile. It no longer sits over the hero as you scroll,
+     so it can simply be solid navy throughout — nothing to blend with, and no
+     background transition to run. */
+  .nav {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: var(--ground);
+    transition: none;
+  }
   /* Menu open: the top bar + brand + close button invert to sit on the cream menu.
      Pin the bar with position:fixed — while the menu is open <html> is
      overflow:hidden, which strands a position:sticky bar at its in-flow offset
@@ -284,9 +291,14 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      stroke behind the X — the "close + burger at once" glitch. */
   html.nav-open .nav__toggle span::before,
   html.nav-open .nav__toggle span::after { background: var(--ink); }
-  .nav__inner { display: flex; align-items: center; padding-block: 22px; }  /* 8px shorter bar than desktop */
-  /* Full name on mobile too — scaled to fit on one line beside the menu button. */
-  .nav__brand { justify-self: auto; font-size: clamp(17px, 5vw, 24px); }
+  /* A shallow bar, in the manner of the reference sites: the 40px menu button
+     sets the row height, so 8px of padding gives a ~57px header instead of 85.
+     It can afford to be tight because it is no longer pinned — it scrolls
+     away rather than eating the viewport for the whole page. */
+  .nav__inner { display: flex; align-items: center; padding-block: 8px; }
+  /* Full name on mobile too — scaled to fit on one line beside the menu button,
+     and kept inside the 40px row. */
+  .nav__brand { justify-self: auto; font-size: clamp(17px, 4.6vw, 22px); }
   .btn-inquiry.nav__cta { display: none; }            /* no Send Enquiry in the top bar on mobile */
   /* Bare two-line mark, no bordered square — just the strokes. */
   .nav__toggle {
@@ -301,7 +313,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     position: fixed; inset: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--light);
-    padding: calc(112px + env(safe-area-inset-top, 0px)) var(--container-pad)
+    /* Clear the (now much shallower) bar by measurement, not a magic number:
+       --nav-h is kept in sync with the nav's real height by nav.js. */
+    padding: calc(var(--nav-h) + 30px + env(safe-area-inset-top, 0px)) var(--container-pad)
              calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
     margin: 0; display: none;
     overflow-y: auto; overscroll-behavior: contain;
@@ -338,7 +352,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     max-height: 0; overflow: hidden;
     transition: max-height 0.35s ease, padding 0.3s ease;
   }
-  .nav__item.is-expanded .nav__menu { max-height: 720px; padding-bottom: var(--space-2); }
+  /* Breathing room under the parent's divider before the sub-pages start, so an
+     expanded accordion reads as its own block rather than crowding the rule. */
+  .nav__item.is-expanded .nav__menu { max-height: 720px; padding-block: var(--space-2); }
   /* neutralise the desktop hover/focus dropdown transform on mobile */
   .nav__item.has-menu:hover .nav__menu,
   .nav__item.has-menu:focus-within .nav__menu { transform: none; }

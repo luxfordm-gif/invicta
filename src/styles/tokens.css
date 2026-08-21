@@ -35,7 +35,8 @@
 
   /* --- Text on dark ground --- */
   --on-dark: #FFFFFF;
-  --on-dark-muted: rgba(255, 255, 255, 0.60);
+  --on-dark-soft: rgba(255, 255, 255, 0.82);   /* secondary body copy on navy — quieter than white, still ~9:1 */
+  --on-dark-muted: rgba(255, 255, 255, 0.60);  /* labels, crumbs, captions — short strings only */
   --line-dark: rgba(255, 255, 255, 0.16);
 
   /* --- Text on light ground --- */

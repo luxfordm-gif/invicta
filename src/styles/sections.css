@@ -43,12 +43,20 @@
   color: var(--on-dark);
   max-width: none;
 }
+/* The second, quieter half of the hero copy. It is secondary to the large lead
+   above it, but it is still a full paragraph of body copy on a navy ground —
+   at 60% white it greyed out and became genuinely hard to read on a phone. Use
+   the soft tone (still clearly subordinate to the white lead, but ~9:1 against
+   the navy) and give it real body size and leading. */
 .hero__lead-sm {
   margin-top: var(--space-4);
-  font-size: clamp(16px, 1.4vw, 20px);
-  line-height: 1.5;
-  color: var(--on-dark-muted);
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.6;
+  color: var(--on-dark-soft);
   max-width: none;
+}
+@media (max-width: 899.98px) {
+  .hero__lead-sm { font-size: 18px; }
 }
 
 /* --- Statement (shared big H2 for services / positioning / clients) ------- */
@@ -573,6 +581,19 @@
   /* Nav + breadcrumb slide the SAME distance so they never separate mid-animation. */
   html.header-up .nav,
   html.header-up .breadcrumb { transform: translateY(calc(-1 * (var(--ubar-h) + var(--nav-h) + 160px))); }
+}
+/* Phones: the nav itself is not sticky (it scrolls away with the page), so on
+   the pages that have one the breadcrumb becomes the pinned bar — it travels up
+   with the content and then holds at the very top, keeping the page's position
+   in the site visible without a header parked there the whole way down.
+   z-index sits below the nav's 50 so the full-screen menu still covers it. */
+@media (max-width: 899.98px) {
+  .breadcrumb {
+    position: sticky;
+    top: 0;
+    z-index: 45;
+    padding-block: 13px;
+  }
 }
 .breadcrumb + .hero { padding-top: clamp(40px, 6vw, 96px); }
 .breadcrumb__list {
