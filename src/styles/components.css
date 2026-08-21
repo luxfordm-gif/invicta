@@ -575,4 +575,22 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .acc__copy .btn-inquiry { margin-top: var(--space-4); }
 @media (max-width: 899.98px) {
   .acc__body { padding-left: 0; }
+  /* On a phone the picture is stacked ABOVE the copy rather than beside it, so
+     a 5:4 frame eats most of the screen before a word of the answer is visible.
+     16:9 keeps the photograph as scenery and puts the copy in reach. */
+  .acc__media img,
+  .acc__media .img-ph { aspect-ratio: 16 / 9; }
+  /* Every source is 1200x961, so a 16:9 window drops ~30% of the height — where
+     that window sits decides whether the subject survives the crop. Keyed off
+     the asset itself so it travels with the picture, not with whichever
+     accordion row happens to use it.
+       survey     the house + greenhouse sit high; the rest is empty lawn
+       treatment  hold the vessel bases, lose ceiling
+       install    boilers down to the tank label; the floor is dead space
+       service    the hand on the valve wheel is the subject
+     step-design is a flat-lay that fills the frame, so it stays centred. */
+  .acc__media img[src$="step-survey.webp"]    { object-position: center 30%; }
+  .acc__media img[src$="step-treatment.webp"] { object-position: center 55%; }
+  .acc__media img[src$="step-install.webp"]   { object-position: center 40%; }
+  .acc__media img[src$="step-service.webp"]   { object-position: center 42%; }
 }

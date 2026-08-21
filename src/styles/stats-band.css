@@ -38,6 +38,13 @@
 }
 
 .stat__label { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; max-width: 14ch; }
+/* Stacked on a phone each label has the full container width, so the 14ch cap
+   is what was breaking "Emergency response" over two lines rather than any lack
+   of room. Drop the cap here and let the longest label ("Years in the water
+   industry") set a size that fits on one line down to a 360px screen. */
+@media (max-width: 799.98px) {
+  .stat__label { max-width: none; font-size: clamp(19px, 5.2vw, 24px); }
+}
 /* Reserve 2 lines so every figure starts at the same baseline. Only worth doing
    once the three sit side by side; stacked, it just strands a blank line under
    the one-line labels. */

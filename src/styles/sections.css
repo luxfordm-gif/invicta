@@ -266,18 +266,22 @@
 /* --- Footer / CTA (dark) -------------------------------------------------- */
 .footer { background: var(--ground); padding-top: clamp(72px, 9vw, 150px); overflow: hidden; }
 .footer__cta { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); }
-.footer__cta-text { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); max-width: 760px; }
+/* One flex gap used to set BOTH eyebrow -> heading and heading -> body, which
+   forced the eyebrow gap to 24px (the body's spacing) rather than the ~18px
+   every other header uses. Space the two joints explicitly instead. */
+.footer__cta-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0; max-width: 760px; }
 .footer__cta .eyebrow { display: block; }
 .footer__cta-line {
+  margin-top: var(--flow-heading);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(34px, 4.6vw, 60px);
+  font-size: clamp(38px, 4.6vw, 60px);   /* matches the h2 floor */
   line-height: 1.03;
   letter-spacing: -0.03em;
   color: var(--on-dark);
   max-width: 20ch;
 }
-.footer__cta-body { font-size: 18px; line-height: 1.55; color: var(--on-dark-muted); max-width: 54ch; }
+.footer__cta-body { margin-top: var(--space-3); font-size: 18px; line-height: 1.55; color: var(--on-dark-muted); max-width: 54ch; }
 .footer__cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 /* Buttons move to the right and baseline with the paragraph on wider screens. */
 @media (min-width: 800px) {

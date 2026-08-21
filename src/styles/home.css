@@ -106,7 +106,10 @@
 }
 
 /* --- About + USPs --------------------------------------------------------- */
-.home-about__grid { display: grid; gap: var(--flow-sm); }
+/* Single column on mobile, so this gap IS the eyebrow -> heading distance —
+   use the shared heading token so it matches every other header on the site
+   (it was --flow-sm, which made this one header 24px instead of 18px). */
+.home-about__grid { display: grid; gap: var(--flow-heading); }
 @media (min-width: 900px) {
   .home-about__grid { grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr); gap: clamp(40px, 5vw, 90px); }
   /* the label rides alongside the copy as it scrolls, as on the reference */

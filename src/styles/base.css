@@ -30,7 +30,10 @@ h1 {
   letter-spacing: -0.04em;
 }
 h2 {
-  font-size: clamp(34px, 4.8vw, 62px);
+  /* The 38px floor is what a section heading reads at on a phone. 4.8vw only
+     overtakes it around 790px, so the ramp is continuous — no jump at the
+     breakpoint. */
+  font-size: clamp(38px, 4.8vw, 62px);
   line-height: 1.03;
   letter-spacing: -0.03em;
 }
@@ -154,6 +157,17 @@ a[href^="tel:"] { white-space: nowrap; }
 /* Hairline rule that spans the container, used under eyebrow labels. */
 .rule { height: 1px; background: var(--line-dark); margin-top: var(--space-4); }
 :is(.section--light, .section--paper) .rule { background: var(--line-light); }
+/* On a phone, drop the hairline that sits between an eyebrow and its heading.
+   Only a handful of section headers carry one, and its 32px of clearance pushed
+   the eyebrow-to-heading gap to 51px against the ~18px every other header on
+   the site uses — the same header block measurably further apart depending on
+   which section you were in. Losing the line makes every eyebrow -> heading
+   gap on mobile identical; it keeps its editorial job on desktop, where there
+   is room for it. Deliberately scoped to `.eyebrow + .rule`, so the structural
+   rules (under the footer CTA, under the enquiry title) are untouched. */
+@media (max-width: 899.98px) {
+  .eyebrow + .rule { display: none; }
+}
 
 /* --- Accessibility -------------------------------------------------------- */
 .visually-hidden {
