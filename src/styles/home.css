@@ -6,44 +6,43 @@
    way down; cream is used where a block should sit slightly apart from it.
    ========================================================================== */
 
-/* --- Hero: a pinned photograph the page climbs over ------------------------
-   The same move as a service page's project band (see `.reveal` in
-   components.css, which explains why the hero and the section covering it have
-   to share a wrapper). The picture holds a full screen, pins itself there, and
-   the white About section rides up over it.
+/* --- Hero: a pinned photograph the copy leaves and the page climbs over ----
+   Same move as a service page's project band (see `.reveal` in components.css,
+   which explains why everything here and the section covering it share a
+   wrapper). What pins is ONLY the photograph. The copy is a separate element
+   laid over the first screen of it, in normal flow, so it scrolls away like
+   any other page content while the picture holds — which is the same order of
+   events as a service page: read the words, then the photograph gets the
+   screen to itself, then the page comes up over it. Pinning the copy too made
+   the headline hang around being sliced in half by the section rising past it.
 
-   The copy sits ON the photograph. An earlier version put the picture in a band
-   UNDER a cream field of type, which read as calm but left the first screen as
-   two unrelated halves: a page of type, then a photograph. Over the picture they
-   are one composition, and the pin gives the photograph its own moment as the
-   page leaves it.
+   The overlay is done with margins rather than absolute positioning, so the
+   two still contribute one screen of scrollable height between them: the
+   picture lays down 100svh, the copy takes it straight back with -100svh and
+   then re-adds its own.
 
    The nav goes back to its translucent navy here. It only needed to be forced
-   solid while the hero behind it was cream, which turned the 70% bar to a muddy
-   slate; over a dark photograph the frosted bar is what it was designed for.
+   solid while the hero behind it was cream; over a dark photograph the frosted
+   bar is what it was designed for.
 
    No parallax on the media: the pin already is the motion, and drift measured
    against a pinned frame has nothing left to measure.
    --- */
-.home-hero {
+.home-hero__media {
   position: sticky;
   top: 0;
-  /* Pulled up UNDER the header so the hero fills the screen at rest, not just
-     the space left below it. Without this the box is a full 100svh but starts
-     one header down, so it hangs off the bottom of the screen and its centre —
-     and therefore the copy — sits a whole header height low. Once pinned the
-     two agree anyway; this is what makes the first paint agree too. The bars
-     are translucent and were always meant to sit over the hero, so the
-     photograph simply carries on behind them. */
-  margin-top: calc(-1 * (var(--ubar-h) + var(--nav-h)));
   /* svh, not vh: a phone's collapsing toolbars make vh taller than the screen,
-     which would push the scroll cue and the foot of the picture out of sight. */
+     which would push the foot of the picture out of sight. */
   height: 100svh;
-  display: flex;
-  align-items: center;
-  isolation: isolate;
+  /* Pulled up UNDER the header so the picture fills the screen at rest, not
+     just the space left below it. Without this the box is a full 100svh but
+     starts one header down, so it hangs off the bottom and everything centred
+     on it sits a header height low. The bars are translucent and were always
+     meant to sit over the hero, so the photograph carries on behind them. */
+  margin-top: calc(-1 * (var(--ubar-h) + var(--nav-h)));
   overflow: clip;                  /* clip, not hidden: see motion.css */
   background: var(--ground-deep);
+  z-index: 0;
 }
 /* The frame is a whole screen, so it is TALLER than the photograph's own 16:9
    at every size that matters — which means cover crops the sides and shows the
@@ -52,7 +51,6 @@
    So oversize the picture past the frame and pin it to the BOTTOM: the frame
    crops the sky off the top, the horizon lands high, and the misty parkland
    fills the screen behind the copy. Same trick as the phone sector card. */
-.home-hero__media { position: absolute; inset: 0; z-index: -2; overflow: clip; }
 .home-hero__media img {
   position: absolute;
   inset: auto 0 0 0;
@@ -64,9 +62,10 @@
    vertical gradient heaviest where the copy actually sits. Centred copy needs
    the middle protected, not just the foot, so this is far more even than the
    bottom-weighted scrim a bottom-ranged hero would want. */
-.home-hero::before {
+.home-hero__media::after {
   content: "";
-  position: absolute; inset: 0; z-index: -1;
+  position: absolute;
+  inset: 0;
   background:
     linear-gradient(to bottom,
       rgb(var(--ground-deep-rgb) / 0.62) 0%,
@@ -75,6 +74,15 @@
       rgb(var(--ground-deep-rgb) / 0.80) 100%),
     rgb(var(--ground-deep-rgb) / 0.20);
 }
+
+.home-hero {
+  position: relative;
+  z-index: 1;                      /* over the picture, under the section that covers both */
+  height: 100svh;
+  margin-top: -100svh;             /* laid over the screen the picture just laid down */
+  display: flex;
+  align-items: center;
+}
 .home-hero__inner {
   position: relative;
   display: flex;
@@ -82,10 +90,8 @@
   align-items: center;
   text-align: center;
   max-width: 1080px;
-  /* No optical nudge here. It used to carry a header's worth of top padding,
-     which was compensating for the offset the negative margin above now
-     removes properly — and on a phone it was compensating for a utility bar
-     that is not even shown. Centred means centred. */
+  /* No optical nudge: the negative margin on the media is what makes the box
+     agree with the screen, so centred here means centred. */
 }
 .home-hero__eyebrow {
   max-width: none;
@@ -100,20 +106,19 @@
   font-size: clamp(40px, 6vw, 72px);
   color: var(--on-dark);
 }
+/* Both buttons hug their labels. They were stretched to a shared full width on
+   a phone, which made "Send enquiry" a 340px slab for two words — the widest,
+   heaviest thing on the screen, and louder than the headline above it. Hugging
+   puts the emphasis back on the words each one carries. They wrap to their own
+   lines when they no longer fit side by side, and each row stays centred. */
 .home-hero__actions {
   margin-top: clamp(30px, 3.6vw, 46px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-2);
-  width: 100%;
-  max-width: 460px;               /* stacked full-width pills on a phone */
 }
-.home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
-@media (min-width: 600px) {
-  .home-hero__actions { max-width: none; width: auto; }
-  .home-hero__actions > * { flex: 0 0 auto; }
-}
+.home-hero__actions > * { flex: 0 0 auto; }
 
 /* The cue for the whole trick: there is a screen of photograph here, and the
    page comes up over it. */
@@ -133,18 +138,36 @@
   0%, 100% { transform: translateY(0); opacity: 0.55; }
   50%      { transform: translateY(7px); opacity: 1; }
 }
+
+/* On a phone the second action drops its stroke and reads as a plain link.
+   Two outlined pills stacked one above the other gave equal weight to two
+   things that are not equal: one is the enquiry, the other is a page you might
+   go and read. Without the box the pair reads as a button and a link, which is
+   what they are. Scoped to the hero — the outlined pill is right everywhere
+   else it appears. */
+@media (max-width: 599.98px) {
+  .home-hero__actions { gap: var(--space-1); }
+  .home-hero__actions .btn-line,
+  .home-hero__actions .btn-line:hover {
+    border-color: transparent;
+    background: transparent;
+  }
+}
+
 /* Below 900px the utility bar is not rendered at all, so there is only the nav
    to pull up under. And the floating emergency pill sits over the foot of the
    first screen, exactly where the scroll cue would be. */
 @media (max-width: 899.98px) {
-  .home-hero { margin-top: calc(-1 * var(--nav-h)); }
+  .home-hero__media { margin-top: calc(-1 * var(--nav-h)); }
   .home-hero__scroll { display: none; }
 }
 
-/* No scroll to travel, no reveal: on a short window hold the hero at a plain
-   height rather than pinning something that can never move. Matches the band. */
+/* No scroll to travel, no reveal: on a short window hold the picture at a plain
+   height rather than pinning something that can never move. The copy keeps its
+   overlay so the composition survives; only the pin goes. */
 @media (max-height: 520px) {
-  .home-hero { position: static; height: auto; min-height: 460px; margin-top: 0; padding-block: var(--space-6); }
+  .home-hero__media { position: static; margin-top: 0; height: 440px; }
+  .home-hero { height: 440px; margin-top: -440px; }
 }
 
 /* --- About + USPs --------------------------------------------------------- */

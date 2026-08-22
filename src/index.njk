@@ -27,10 +27,12 @@ extraStyles: ["home"]
       things you can do.
     -->
     <div class="reveal">
+    <!-- The photograph is its OWN element, and a sibling of the copy, because
+         only it pins. The copy below scrolls away with the page. -->
+    <div class="home-hero__media" aria-hidden="true">
+      <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
     <section class="home-hero">
-      <div class="home-hero__media" aria-hidden="true">
-        <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
-      </div>
       <div class="container home-hero__inner">
         <p class="eyebrow home-hero__eyebrow">Private water supplies<br>Surrey &amp; Sussex</p>
         <h1 class="home-hero__title">
