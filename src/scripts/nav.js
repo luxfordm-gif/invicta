@@ -154,62 +154,74 @@
   sampleDock();
 })();
 
-/* --- Sectors carousel: build pagination dots + keep them in sync -------------
-   On phones .sectors is a horizontal scroll-snap track. Add a row of dots
-   beneath it: tap a dot to jump to that card, and the active dot follows the
-   card currently snapped into view. The dots are hidden by CSS above phone
-   width, so building them everywhere is harmless. --------------------------- */
+/* --- Swipe carousels: build pagination dots + keep them in sync -------------
+   On phones certain grids become horizontal scroll-snap tracks. Add a row of
+   dots beneath one: tap a dot to jump to that card, and the active dot follows
+   whichever card is snapped into view. The dots are hidden by CSS above phone
+   width, so building them everywhere is harmless.
+
+   Written once for a list of tracks rather than once per track: the sectors
+   band did this first, the home page's three USPs now do the same thing, and a
+   second copy of the same forty lines is how the two drift apart. --------- */
 (function () {
   "use strict";
-  var track = document.querySelector(".sectors");
-  if (!track) return;
-  var cards = [].slice.call(track.querySelectorAll(".sector"));
-  if (cards.length < 2) return;
 
-  var dots = document.createElement("div");
-  dots.className = "sectors__dots";
-  dots.setAttribute("role", "tablist");
-  dots.setAttribute("aria-label", "Sector slides");
+  var TRACKS = [
+    { track: ".sectors", card: ".sector", label: "Sector slides" },
+    { track: ".usps", card: ".usp", label: "Why Invicta slides" }
+  ];
 
-  var buttons = cards.map(function (card, i) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "sectors__dot";
-    b.setAttribute("aria-label", "Go to slide " + (i + 1));
-    b.addEventListener("click", function () {
-      // inline:start aligns the card to the track's start; block:nearest keeps
-      // the page from jumping vertically.
-      card.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        inline: "start",
-        block: "nearest"
+  TRACKS.forEach(function (cfg) {
+    var track = document.querySelector(cfg.track);
+    if (!track) return;
+    var cards = [].slice.call(track.querySelectorAll(cfg.card));
+    if (cards.length < 2) return;
+
+    var dots = document.createElement("div");
+    dots.className = "dots";
+    dots.setAttribute("role", "tablist");
+    dots.setAttribute("aria-label", cfg.label);
+
+    var buttons = cards.map(function (card, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "dots__dot";
+      b.setAttribute("aria-label", "Go to slide " + (i + 1));
+      b.addEventListener("click", function () {
+        // inline:start aligns the card to the track's start; block:nearest keeps
+        // the page from jumping vertically.
+        card.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          inline: "start",
+          block: "nearest"
+        });
       });
+      dots.appendChild(b);
+      return b;
     });
-    dots.appendChild(b);
-    return b;
+
+    track.parentNode.insertBefore(dots, track.nextSibling);
+
+    function setActive(i) {
+      buttons.forEach(function (b, j) {
+        var on = j === i;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+    setActive(0);
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.6) {
+            setActive(cards.indexOf(e.target));
+          }
+        });
+      }, { root: track, threshold: [0.6] });
+      cards.forEach(function (c) { io.observe(c); });
+    }
   });
-
-  track.parentNode.insertBefore(dots, track.nextSibling);
-
-  function setActive(i) {
-    buttons.forEach(function (b, j) {
-      var on = j === i;
-      b.classList.toggle("is-active", on);
-      b.setAttribute("aria-selected", on ? "true" : "false");
-    });
-  }
-  setActive(0);
-
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && e.intersectionRatio >= 0.6) {
-          setActive(cards.indexOf(e.target));
-        }
-      });
-    }, { root: track, threshold: [0.6] });
-    cards.forEach(function (c) { io.observe(c); });
-  }
 })();
 
 /* --- Smoothly animate the services <details> accordion via grid-template-rows.

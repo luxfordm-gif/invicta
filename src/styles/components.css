@@ -476,6 +476,32 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   :is(.btn-inquiry, .btn-line, .nav__cta):active { transform: none; opacity: 0.8; }
 }
 
+/* --- Carousel pagination dots ---------------------------------------------
+   Built by nav.js under any grid that turns into a swipe track on a phone, and
+   hidden by CSS at every width where that grid is a plain grid again.
+
+   Drawn in --fg rather than a fixed white, because the two tracks that use
+   these sit on opposite surfaces: the sectors band on navy, the USP row on
+   white. The theme roles resolve each one correctly with no second rule.
+   --- */
+.dots { display: none; }
+@media (max-width: 599.98px) {
+  .dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px;
+    margin-top: var(--space-4);
+  }
+  .dots__dot {
+    width: 7px; height: 7px; padding: 0;
+    border: 0; border-radius: 999px;
+    background: color-mix(in srgb, var(--fg) 24%, transparent);
+    cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+  }
+  .dots__dot.is-active { width: 22px; background: var(--fg); }
+  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+}
+
 /* --- Full-bleed project band --------------------------------------------- */
 .band {
   position: relative;

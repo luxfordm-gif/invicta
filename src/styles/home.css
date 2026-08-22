@@ -175,6 +175,13 @@
    sticky "ABOUT INVICTA" label; with the label gone the rail is an empty indent,
    so the section runs full width and the USP row gets the whole measure. */
 .home-about__grid { display: grid; }
+/* A grid item defaults to min-width:auto, which refuses to shrink below its
+   content's minimum — and the USP row inside is a horizontal scroll track whose
+   content is three cards wide. Left alone the item stretched to 530px inside a
+   390px screen and took the page with it, and the cards' 76% basis measured
+   against that instead of the screen. Both are the same fix. */
+.home-about__grid,
+.home-about__body { min-width: 0; }
 .home-about__title { margin-top: 0; max-width: 24ch; }
 .home-about__lead {
   margin-top: var(--space-4);
@@ -190,6 +197,44 @@
   gap: clamp(12px, 1.6vw, 20px);
 }
 @media (min-width: 800px) { .usps { grid-template-columns: repeat(3, 1fr); } }
+
+/* --- The three of them as one swipe on a phone -----------------------------
+   Stacked, these are three tall cards carrying one number each — most of a
+   screen of scrolling to say three short things. Side by side in a scroll-snap
+   track they cost one card's height instead of three, and a sliver of the next
+   one peeks at the edge to say there is more.
+
+   Same track mechanics as the sectors band (see sections.css), and the dots
+   under it come from the same builder. --- */
+@media (max-width: 599.98px) {
+  .usps {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--space-2);
+    /* bleed the track to the viewport edges, then pad it back to the content
+       margin so the first card lines up and the last has trailing space */
+    margin-inline: calc(-1 * var(--container-pad));
+    padding-inline: var(--container-pad);
+    /* overflow-x:auto forces overflow-y to auto too, which would shave the
+       cards' borders flush against the track edge; this gives the strokes room */
+    padding-block: 4px 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-pad);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .usps::-webkit-scrollbar { display: none; }
+  .usp {
+    flex: 0 0 76%;              /* ~24% of the next card peeks at the edge */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  /* Standing in a row rather than stacked, the figure no longer needs a screen
+     of air above it to separate it from the card before. */
+  .usp .usp__figure { margin-top: var(--space-5); }
+}
 .usp {
   background: var(--light);
   border: 1px solid var(--line-light);

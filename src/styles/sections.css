@@ -197,24 +197,8 @@
   === */
 }
 
-/* Carousel pagination dots (built by nav.js; only meaningful in carousel mode). */
-.sectors__dots { display: none; }
-@media (max-width: 599.98px) {
-  .sectors__dots {
-    display: flex; justify-content: center; align-items: center;
-    gap: 8px;
-    margin-top: var(--space-4);
-  }
-  .sectors__dot {
-    width: 7px; height: 7px; padding: 0;
-    border: 0; border-radius: 999px;
-    background: rgba(255, 255, 255, 0.24);
-    cursor: pointer;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
-  }
-  .sectors__dot.is-active { width: 22px; background: var(--on-dark); }
-  .sectors__dot:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
-}
+/* Carousel pagination dots now live in components.css as .dots — shared by
+   the sectors band and the home page USPs. */
 
 /* --- Clients / trust (dark) ----------------------------------------------- */
 .clients__grid {
