@@ -455,63 +455,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   content: ""; position: absolute; inset: 0;
   background: rgb(var(--scrim-rgb) / 0.44);
 }
-.band__bar {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding-top: var(--space-4);
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--on-dark);
-}
-.band__title { text-align: center; }
-.band__year { text-align: right; color: var(--on-dark-muted); }
-/* On phones the three-across row crowds and wraps awkwardly over the image —
-   stack the label lines vertically, all left-aligned, so it reads cleanly. */
-@media (max-width: 599.98px) {
-  .band__bar {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding-top: var(--space-3);
-  }
-  .band__label,
-  .band__title,
-  .band__year { text-align: left; }
-  /* Pages without a project year still render the cell, so the three-across
-     desktop grid keeps its centre. Stacked, an empty one would just be a gap. */
-  .band__bar > :empty { display: none; }
-}
-
-/* --- Big numeral ----------------------------------------------------------
-   The index in front of a numbered point, set as a display figure rather than a
-   14px label. It is the thing you see first in the block; the point's own title
-   and its line of copy sit UNDER it, both a step quieter than they would be on
-   their own. That order is the whole idea: the list reads as 01, 02, 03 at a
-   glance, and only then as four sentences.
-
-   Set in --fg so it resolves off whichever surface it lands on, and in tabular
-   figures so a column of them lines up on the same stem. Wherever it is used
-   the numeral is decorative — the list's own order carries the meaning — so it
-   is hidden from screen readers at the markup, not read out twice.
-   --- */
-.numeral {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(52px, 6.2vw, 96px);
-  line-height: 0.8;
-  letter-spacing: -0.045em;
-  font-variant-numeric: tabular-nums lining-nums;
-  color: var(--fg);
-}
-/* A quieter step, for a numeral that shares its block with a photograph or a
-   heading that has to stay dominant. */
-.numeral--sm { font-size: clamp(40px, 4.4vw, 64px); }
-
 /* --- The reveal: the band holds the screen, the page climbs over it -------
    The photographic beat between a service hero and the first light section is
    no longer something you scroll past. The band pins itself to the top of the
@@ -549,15 +492,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
    band, where the copy immediately below needed the photograph pushed back. */
 .band--reveal .band__media img { opacity: 0.88; }
 .band--reveal::after { background: rgb(var(--scrim-rgb) / 0.24); }
-/* Pinned at the top of the screen, a caption row at the band's TOP sits under
-   the utility bar. Anchor it to the foot of the frame instead, where it reads
-   as a caption to the picture and stays clear of the section climbing over it. */
-.band--reveal .band__bar {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding-top: 0;
-  padding-bottom: clamp(28px, 4vw, 56px);
-}
 .reveal > .section {
   position: relative;
   z-index: 1;
@@ -566,7 +500,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
    window gets a plain band rather than one that pins and never moves. */
 @media (max-height: 520px) {
   .band--reveal { position: static; height: clamp(400px, 58vw, 720px); }
-  .band--reveal .band__bar { position: relative; inset: auto; padding-top: var(--space-4); padding-bottom: 0; }
 }
 
 /* --- Placeholder media blocks (imagery TBD) ------------------------------- */

@@ -5,10 +5,15 @@
   wherever you land.
 
   Driven from page front matter. `bandImage` and `bandAlt` are what it needs to
-  render at all; `bandLabel`, `bandTitle` and `bandYear` are the optional caption
-  row, reading left, centre and right. `bandFocus` takes an `object-position`
-  value for photographs whose subject sits off-centre, since the band is a far
-  wider crop than any of the pictures it holds.
+  render at all. `bandFocus` takes an `object-position` value for photographs
+  whose subject sits off-centre, since the band is a far wider crop than any of
+  the pictures it holds.
+
+  NO CAPTION. There was an optional label / project / year row that could sit
+  over the picture; no page ever set it, and now that the band is a full screen
+  the decision is that it stays that way. The photograph carries the moment on
+  its own, and text over it would be the one thing asking to be read while the
+  section below is already climbing up to be read.
 
   Not a link: projects live in the case-study section further down, not on a
   page of their own.
@@ -26,12 +31,5 @@
       <div class="band__media parallax">
         <img src="{{ bandImage }}" alt="{{ bandAlt }}"{% if bandFocus %} style="object-position: {{ bandFocus }}"{% endif %} loading="lazy">
       </div>
-      {% if bandLabel or bandTitle or bandYear %}
-      <figcaption class="container band__bar">
-        <span class="band__label">{{ bandLabel }}</span>
-        <span class="band__title">{{ bandTitle }}</span>
-        <span class="band__year">{{ bandYear }}</span>
-      </figcaption>
-      {% endif %}
     </figure>
 {% endif %}
