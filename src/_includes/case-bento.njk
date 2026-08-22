@@ -76,7 +76,6 @@
 <section class="section {{ bentoSurface }} case-bento case-bento--{{ studies.length }}" aria-labelledby="bento-title-{{ carouselId or 'x' }}">
   <div class="container">
     <div class="case-bento__head">
-      <p class="eyebrow">{{ carouselEyebrow or "Selected work" }}</p>
       <h2 id="bento-title-{{ carouselId or 'x' }}" class="statement case-bento__title">{{ carouselTitle | safe or "Projects like this, <span class='em'>across the South East.</span>" }}</h2>
       {% if carouselLead %}<p class="case-bento__lead">{{ carouselLead | safe }}</p>{% endif %}
     </div>

@@ -62,6 +62,10 @@
 @media (min-width: 800px) { .stat__figure { margin-top: var(--space-4); } }
 
 .stat__media { margin-top: auto; padding-top: clamp(28px, 4vw, 56px); }
+/* The radius belongs on the frame that clips, not on the picture: the picture
+   is scaled up inside it for the parallax, so rounding the img itself would be
+   cropped straight back off by the square frame around it. */
+.stat__media .parallax { border-radius: var(--radius-lg); }
 .stat__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
 /* These photographs are already 16:10, exactly the frame's ratio, so object-fit
    crops nothing and object-position has nothing to act on: the only thing

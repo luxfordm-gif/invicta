@@ -12,9 +12,17 @@
 
   Not a link: projects live in the case-study section further down, not on a
   page of their own.
+
+  REVEAL is the default. The figure holds a full screen and pins itself there
+  while the section below climbs up over it on its own rounded top edge, so the
+  photograph is uncovered rather than scrolled past. It needs the band and the
+  section that follows it to share a `.reveal` wrapper: that wrapper is what
+  releases the pin at the right moment. Without one the picture would stay stuck
+  behind the whole page, and every section with no background of its own would
+  show it through. Pass `bandReveal: false` for the old fixed-height band.
 #}
 {% if bandImage %}
-    <figure class="band">
+    <figure class="band{% if bandReveal != false %} band--reveal{% endif %}">
       <div class="band__media parallax">
         <img src="{{ bandImage }}" alt="{{ bandAlt }}"{% if bandFocus %} style="object-position: {{ bandFocus }}"{% endif %} loading="lazy">
       </div>

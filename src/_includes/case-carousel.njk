@@ -52,7 +52,6 @@
   <div class="container">
     <div class="case-cc__head">
       <div class="case-cc__heading">
-        <p class="eyebrow">{{ carouselEyebrow or "Selected work" }}</p>
         <h2 id="cc-title-{{ carouselId or 'x' }}" class="statement case-cc__title">{{ carouselTitle | safe or "Projects like this, <span class='em'>across the South East.</span>" }}</h2>
       </div>
       {% if carouselLead %}<p class="case-cc__lead">{{ carouselLead | safe }}</p>{% endif %}

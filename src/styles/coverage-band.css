@@ -131,7 +131,6 @@
 }
 
 .coverage-band__title {
-  margin-top: var(--flow-heading);
   margin-inline: auto;
   max-width: 20ch;
   font-family: var(--font-display);

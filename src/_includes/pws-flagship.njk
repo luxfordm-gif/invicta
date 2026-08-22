@@ -27,14 +27,16 @@
       </div>
     </section>
 
-    <!-- ================ FULL-BLEED PROJECT BAND ================ -->
+    <!-- ============ PROJECT BAND + SERVICES (the reveal pair) ============
+      Same pairing as every other service page: the band pins inside the wrapper
+      and the light section climbs over it. See service-band.njk.
+    -->
+    <div class="reveal">
 {% include "service-band.njk" %}
 
     <!-- ===================== SERVICES (light) ===================== -->
     <section class="section section--paper services" aria-labelledby="services-title">
       <div class="container">
-        <p class="eyebrow">A tailored water supply, end to end</p>
-        <div class="rule"></div>
 
         <h2 id="services-title" class="statement">
           From first survey to final commissioning,
@@ -152,12 +154,11 @@
         </div>
       </div>
     </section>
+    </div><!-- /.reveal -->
 
     <!-- ===================== POSITIONING / SECTORS (dark) ===================== -->
     <section class="section positioning" aria-labelledby="positioning-title">
       <div class="container">
-        <p class="eyebrow">Built for estates &amp; premium properties</p>
-        <div class="rule"></div>
 
         <h2 id="positioning-title" class="statement">
           We only work on bespoke systems,
@@ -236,7 +237,6 @@
     {% for cs in caseStudies %}{% if "private-water-supplies" in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = "pws" %}
     {% set bentoSurface = "section--light" %}
-    {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Private supplies we've <span class='em'>designed and delivered.</span>" %}
     {% set carouselLead = "From failed boreholes to multi-source estate systems." %}
     {% include "case-bento.njk" %}
@@ -245,7 +245,6 @@
     <section class="section faq" aria-labelledby="faq-title">
       <div class="container faq__grid">
         <aside class="faq__aside">
-          <span class="eyebrow">Common questions</span>
           <h2 id="faq-title" class="faq__title">Frequently asked.</h2>
           <p class="faq__intro">The questions we hear most often from clients thinking about a private
             supply. If yours isn't answered here, get in touch, we'll answer plainly.</p>

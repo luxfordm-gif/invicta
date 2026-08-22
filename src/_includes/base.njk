@@ -6,6 +6,7 @@
   <script>document.documentElement.classList.add('js');</script><!-- enables reveal-on-scroll without a flash of hidden content -->
   <script>/* build-time palette A/B; applied pre-paint so the toggle survives a page change. Remove with the prefs panel. */
     try { var p = localStorage.getItem('iwt-palette'); if (p === 'deep') document.documentElement.dataset.palette = p; } catch (e) {}
+    try { var h = localStorage.getItem('iwt-hero'); if (h === 'photo') document.documentElement.dataset.hero = h; } catch (e) {}
   </script>
 
   <title>{{ title }}</title>

@@ -7,7 +7,42 @@ permalink: "/"
 current: "home"
 extraStyles: ["home"]
 ---
-    <!-- ===================== HERO (full-bleed image) ===================== -->
+    <!-- ===================== HERO A: LIGHT (default) =====================
+      The ReoGreen arrangement: a calm cream field carrying only the eyebrow,
+      the headline and two buttons, and the photograph sitting underneath it
+      full width, cropped so its subject lands low in the frame. The first
+      screen is nearly all air, which is the point — nothing competes with the
+      headline, and the picture arrives as a reveal rather than as a backdrop.
+
+      Four things, and no paragraph. The lead that used to sit here ("bespoke
+      borehole and spring systems...") is said properly in the section below,
+      and the "who we work for" rail is said again in full in the sectors band:
+      both were a second and third read competing with the one line that
+      matters. What is left is the positioning line, the headline, and the two
+      things you can do.
+
+      A/B with the photo hero below it, on the preview panel's Hero row. Both
+      are in the page and CSS shows one; delete the losing block, the panel row
+      and the .home-hero--ab rules in home.css once the direction is settled.
+    -->
+    <section class="light-hero section--light">
+      <div class="container light-hero__inner">
+        <p class="eyebrow light-hero__eyebrow">Private water supplies<br>Surrey &amp; Sussex</p>
+        <h1 class="light-hero__title">
+          Independent water,<br>
+          <span class="em">designed around your source.</span>
+        </h1>
+        <div class="light-hero__actions">
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn-line btn-line--lg" href="/services/private-water-supplies/">Private water supplies</a>
+        </div>
+      </div>
+      <div class="light-hero__media">
+        <img src="/assets/estate-dawn.webp" alt="A country estate at dawn, mist settling across the parkland below the house." fetchpriority="high" decoding="async">
+      </div>
+    </section>
+
+    <!-- ===================== HERO B: PHOTO (the current one) ============== -->
     <section class="home-hero">
       <div class="home-hero__media parallax" aria-hidden="true">
         <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
@@ -45,8 +80,6 @@ extraStyles: ["home"]
     <!-- ===================== ABOUT + USPs (white) ===================== -->
     <section class="section section--paper home-about" aria-labelledby="home-about-title">
       <div class="container home-about__grid">
-        <p class="eyebrow home-about__label">About Invicta</p>
-
         <div class="home-about__body">
           <h2 id="home-about-title" class="statement home-about__title">
             Twenty years of private supplies,
@@ -89,7 +122,6 @@ extraStyles: ["home"]
     <!-- ===================== SERVICES AS CARDS (cream) ===================== -->
     <section class="section section--light home-services" aria-labelledby="home-services-title">
       <div class="container">
-        <p class="eyebrow">What we do</p>
         <h2 id="home-services-title" class="statement home-services__title">
           Four services, <span class="em">one team behind all of them.</span>
         </h2>
@@ -142,7 +174,6 @@ extraStyles: ["home"]
     ] %}
     <section class="section home-process" aria-labelledby="home-process-title">
       <div class="container">
-        <p class="eyebrow">How we work</p>
         <h2 id="home-process-title" class="statement home-process__title">
           From first survey <span class="em">to final commissioning.</span>
         </h2>
@@ -151,7 +182,7 @@ extraStyles: ["home"]
           {% for st in steps %}
           <article class="stack__card" style="--i: {{ loop.index0 }}">
             <div class="stack__text">
-              <span class="stack__index">({{ "0" + loop.index }})</span>
+              <span class="numeral numeral--sm stack__index" aria-hidden="true">{{ "0" + loop.index }}</span>
               <h3 class="stack__title">{{ st.title }}</h3>
               <p class="stack__copy">{{ st.copy }}</p>
               <a class="btn-line stack__cta" href="/enquiry/">Send enquiry</a>
@@ -175,7 +206,6 @@ extraStyles: ["home"]
     {% for id in homePicks %}{% for cs in caseStudies %}{% if cs.id == id %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}{% endfor %}
     {% set carouselId = "home" %}
     {% set carouselSurface = "section--paper" %}
-    {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Supplies we've designed, <span class='em'>installed and looked after.</span>" %}
     {% set carouselLead = "A National Trust restoration, a multi-source estate system, and a membrane plant we built ourselves. Step through to see the work." %}
     {% include "case-carousel.njk" %}
@@ -183,7 +213,6 @@ extraStyles: ["home"]
     <!-- ===================== TRUSTED BY (cream) ===================== -->
     <section class="section section--light clients home-clients" aria-labelledby="home-clients-title">
       <div class="container">
-        <p class="eyebrow">Trusted by</p>
         <h2 id="home-clients-title" class="statement">
           Chosen by clients who <span class="em">expect it done properly.</span>
         </h2>
@@ -200,7 +229,6 @@ extraStyles: ["home"]
     <!-- ===================== REVIEWS (white) ===================== -->
     <section class="section section--paper home-reviews" aria-labelledby="home-reviews-title">
       <div class="container">
-        <p class="eyebrow">In their words</p>
         <h2 id="home-reviews-title" class="statement home-reviews__title">
           What clients say <span class="em">once the water is running.</span>
         </h2>
@@ -252,7 +280,6 @@ extraStyles: ["home"]
     <section class="section faq" aria-labelledby="home-faq-title">
       <div class="container faq__grid">
         <aside class="faq__aside">
-          <span class="eyebrow">Common questions</span>
           <h2 id="home-faq-title" class="faq__title">Frequently asked.</h2>
           <p class="faq__intro">The questions we hear most often from clients thinking about a private supply. If yours isn't answered here, get in touch, we'll answer plainly.</p>
         </aside>

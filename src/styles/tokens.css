@@ -96,6 +96,23 @@
   --container-max: 1600px;
   --container-pad: 40px;
 
+  /* --- CORNER RADIUS ---------------------------------------------------------
+     One scale, used everywhere a corner is rounded, so the page reads as a set
+     of related surfaces rather than a dozen different roundings. Before this
+     the site carried nine hand-picked values between 4px and 18px, which is
+     what made the media look incidental: a photograph at 4px is a square photo
+     with the corner shaved off, not a considered frame.
+
+     The two media steps are fluid, because a radius that flatters a 1200px-wide
+     photograph looks like a bubble on a 320px card. Everything below --radius-md
+     is fixed: small UI shapes should not grow with the viewport.
+     --------------------------------------------------------------------------- */
+  --radius-xs: 6px;                        /* focus rings, hairline chips */
+  --radius-sm: 10px;                       /* menu rows, small controls */
+  --radius-md: 16px;                       /* cards, fields, panels */
+  --radius-lg: clamp(16px, 1.5vw, 22px);   /* photographs and card media */
+  --radius-xl: clamp(20px, 2.2vw, 32px);   /* big editorial media, sections that ride over another */
+
   /* Buttons — fully rounded pills */
   --btn-radius: 999px;           /* fully-rounded pill buttons */
 

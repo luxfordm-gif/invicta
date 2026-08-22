@@ -55,7 +55,7 @@
   flex: 1;
   display: block;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background: var(--surface-raise);
 }
