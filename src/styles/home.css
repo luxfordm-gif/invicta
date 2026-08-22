@@ -428,6 +428,24 @@
 }
 .review__by span { display: block; font-weight: 400; font-size: 14px; color: var(--ink-muted); }
 
+/* Written-sample state. Deliberately visible rather than a code comment: these
+   cards read as genuine testimonials, and the only thing standing between a
+   sample and a published lie is somebody remembering. So the card says so. */
+.review--sample { border-style: dashed; }
+.review__flag {
+  margin: var(--space-4) 0 0;
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: var(--btn-radius);
+  background: rgb(var(--ground-rgb) / 0.07);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.review--sample .review__quote { margin-top: var(--space-3); }
+
 /* Placeholder state — same treatment as the "photo to follow" blocks. */
 .review--empty { min-height: 200px; }
 .review__placeholder {
