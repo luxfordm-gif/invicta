@@ -65,32 +65,10 @@
 
   setPalette(document.documentElement.dataset.palette === "deep" ? "deep" : "bright");
 
-  // Home hero A/B: "light" is the cream field with the picture underneath,
-  // "photo" the full-bleed photograph with the copy over it. Stored the same
-  // way as the palette so it survives a page change and the mobile preview.
-  function setHero(h) {
-    if (h === "photo") document.documentElement.dataset.hero = "photo";
-    else delete document.documentElement.dataset.hero;
-    try { localStorage.setItem("iwt-hero", h); } catch (e) {}
-    panel.querySelectorAll("[data-hero]").forEach(function (b) {
-      b.classList.toggle("is-active", b.getAttribute("data-hero") === h);
-    });
-    if (phone) phone.querySelector("iframe").contentWindow.location.reload();
-  }
-
-  setHero(document.documentElement.dataset.hero === "photo" ? "photo" : "light");
-
-  // The row only means anything on the home page, which is the only page with
-  // both heroes in it.
-  var heroRow = panel.querySelector("[data-prefs-home]");
-  if (heroRow && !document.querySelector(".light-hero")) heroRow.remove();
-
   panel.addEventListener("click", function (e) {
     var b = e.target.closest("[data-view]");
     if (b) setView(b.getAttribute("data-view"));
     var p = e.target.closest("[data-palette]");
     if (p) setPalette(p.getAttribute("data-palette"));
-    var h = e.target.closest("[data-hero]");
-    if (h) setHero(h.getAttribute("data-hero"));
   });
 })();

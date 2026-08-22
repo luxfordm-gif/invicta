@@ -6,7 +6,7 @@
    way down; cream is used where a block should sit slightly apart from it.
    ========================================================================== */
 
-/* --- Hero A: light ---------------------------------------------------------
+/* --- Hero ------------------------------------------------------------------
    Cream field, centred copy, photograph underneath. The whole composition rests
    on one decision: the picture is NOT behind the words. Copy over a photograph
    always costs something — a scrim, a darker crop, a heavier weight to hold
@@ -20,7 +20,7 @@
    drops the skyline out and lands the house high in a band of parkland, so the
    picture reads from its subject downwards.
    --- */
-.light-hero {
+.home-hero {
   /* The band is the section's own colour: no .section, because the padding here
      is asymmetric (hero gap above the copy, nothing under the picture). Its own
      top gap, not --hero-y-top: that token is tuned for a hero whose copy is the
@@ -29,7 +29,7 @@
   padding-top: clamp(28px, 4vw + 2vh, 80px);
   overflow: clip;                  /* clip, not hidden: see motion.css */
 }
-.light-hero__inner {
+.home-hero__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@
 }
 /* Tracked wider and set on two lines, as the reference does: at 13px on one
    line it read as a caption over the headline rather than as a label above it. */
-.light-hero__eyebrow {
+.home-hero__eyebrow {
   max-width: none;
   font-size: clamp(13px, 1.15vw, 15px);
   letter-spacing: 0.08em;
@@ -52,14 +52,14 @@
    a 390px screen and pushed both buttons — and the photograph — off the first
    screen entirely. At this size it lands in three, and the picture gets back
    the bottom of the screen, which is the whole composition. */
-.light-hero__title {
+.home-hero__title {
   margin-top: var(--flow-heading);
   /* No ch cap: the line breaks are written into the markup, and a cap tight
      enough to matter here would only fight them. The inner measure holds it. */
   max-width: none;
   font-size: clamp(40px, 6vw, 72px);
 }
-.light-hero__actions {
+.home-hero__actions {
   margin-top: clamp(30px, 3.6vw, 46px);
   display: flex;
   flex-wrap: wrap;
@@ -68,30 +68,30 @@
   width: 100%;
   max-width: 460px;               /* the reference stacks two full-width pills */
 }
-.light-hero__actions > * { flex: 1 1 100%; justify-content: center; }
+.home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
 @media (min-width: 600px) {
-  .light-hero__actions { max-width: none; width: auto; }
-  .light-hero__actions > * { flex: 0 0 auto; }
+  .home-hero__actions { max-width: none; width: auto; }
+  .home-hero__actions > * { flex: 0 0 auto; }
 }
 
 /* Everything on a phone is a step tighter, for the same reason as the headline:
    the first screen has to end on the photograph, not above it. */
 @media (max-width: 599.98px) {
-  .light-hero { padding-top: clamp(24px, 6vh, 44px); }
-  .light-hero__actions { margin-top: var(--space-5); gap: 10px; }
+  .home-hero { padding-top: clamp(24px, 6vh, 44px); }
+  .home-hero__actions { margin-top: var(--space-5); gap: 10px; }
 }
 
 /* svh so a phone's collapsing toolbars can't stretch the frame past the screen.
    Tall enough to read as a landscape, short enough that the copy above it still
    owns the first screen. No parallax here on purpose: this picture is the base
    of the composition, and it should sit still while the copy leaves over it. */
-.light-hero__media {
+.home-hero__media {
   position: relative;
   margin-top: clamp(40px, 5.5vw, 84px);
   overflow: clip;
   height: clamp(300px, 46svh, 620px);
 }
-.light-hero__media img {
+.home-hero__media img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -106,123 +106,17 @@
    pin it to the BOTTOM, so the frame crops the sky off the top and the band
    starts at the treeline with the house in it. */
 @media (max-width: 799.98px) {
-  .light-hero__media { height: clamp(280px, 40svh, 460px); }
-  .light-hero__media img { inset: auto 0 0 0; height: 165%; }
+  .home-hero__media { height: clamp(280px, 40svh, 460px); }
+  .home-hero__media img { inset: auto 0 0 0; height: 165%; }
 }
 
-/* At the very top of a light hero the nav's 70% navy sits over cream and turns
-   to a muddy slate. It is already solid once scrolled, so make it solid from the
+/* At the very top of the hero the nav's 70% navy sits over cream and turns to a
+   muddy slate. It is already solid once scrolled, so make it solid from the
    start here and let the bar read as a deliberate navy header instead. */
-:root:not([data-hero="photo"]):has(.light-hero) .nav {
+:root:has(.home-hero) .nav {
   background: var(--ground);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-}
-
-/* --- Hero A/B (BUILD-TIME) -------------------------------------------------
-   Light is the default; the preview panel's Hero row sets data-hero="photo" on
-   <html> to swap. Delete this block, the losing hero and the panel row once the
-   direction is signed off. --- */
-:root[data-hero="photo"] .light-hero { display: none; }
-:root:not([data-hero="photo"]) .home-hero { display: none; }
-
-/* --- Hero B: full-bleed photograph ---------------------------------------- */
-.home-hero {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  align-items: flex-end;
-  min-height: min(88svh, 900px);
-  padding-block: var(--hero-y-top) clamp(56px, 8vw, 120px);
-  background: var(--ground-deep);
-  overflow: clip;         /* clip, not hidden: see the parallax note in motion.css */
-}
-.home-hero__media { position: absolute; inset: 0; z-index: -2; }
-.home-hero__media img { width: 100%; height: 100%; object-fit: cover; }
-/* Two washes: a flat one to sit the whole picture back, and a bottom-weighted
-   gradient so the copy has contrast wherever the photograph is light. */
-.home-hero::before {
-  content: "";
-  position: absolute; inset: 0; z-index: -1;
-  background:
-    linear-gradient(to top, rgb(var(--ground-deep-rgb) / 0.92) 0%, rgb(var(--ground-deep-rgb) / 0.55) 42%, rgb(var(--ground-deep-rgb) / 0.30) 100%),
-    rgb(var(--ground-deep-rgb) / 0.18);
-}
-.home-hero__inner { position: relative; }
-.home-hero__eyebrow { color: var(--lime); }
-.home-hero__title {
-  margin-top: var(--flow-heading);
-  max-width: 16ch;
-  color: var(--on-dark);
-}
-.home-hero__lead {
-  margin-top: var(--space-4);
-  max-width: 56ch;
-  font-size: var(--text-lead);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.82);
-}
-.home-hero__actions {
-  margin-top: var(--space-5);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-/* Who we work for, as a rail across the foot of the hero. The reference runs a
-   display-size marquee of room names here; at Invicta's register that would
-   shout, so it sits at index scale on a hairline instead, which also matches
-   the (01) numbering used across the site. */
-.home-hero__rail {
-  margin-top: clamp(32px, 4vw, 56px);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--line-dark);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px clamp(20px, 3vw, 44px);
-  font-size: clamp(13px, 1.1vw, 15px);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.72);
-}
-.home-hero__rail li { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
-/* A chalky dot between items, drawn after each but the last. */
-.home-hero__rail li:not(:last-child)::after {
-  content: "";
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--blue-bright);
-  opacity: 0.9;
-}
-/* On a phone the first screen is already carrying the headline, the lead, two
-   CTAs and the floating emergency dock. The rail is the one thing here that is
-   said again in full further down the site, so it steps aside rather than
-   pushing the CTAs under the dock. */
-@media (max-width: 599.98px) {
-  .home-hero__rail { display: none; }
-}
-
-.home-hero__scroll {
-  position: absolute;
-  right: var(--container-pad);
-  bottom: clamp(56px, 8vw, 120px);
-  color: rgba(255, 255, 255, 0.7);
-}
-.home-hero__scroll svg { width: 26px; height: 26px; }
-@media (prefers-reduced-motion: no-preference) {
-  .home-hero__scroll svg { animation: home-hero-nudge 2.4s ease-in-out infinite; }
-}
-@keyframes home-hero-nudge {
-  0%, 100% { transform: translateY(0); opacity: 0.55; }
-  50%      { transform: translateY(7px); opacity: 1; }
-}
-@media (max-width: 799.98px) {
-  /* The floating emergency dock sits over the foot of the first screen, so the
-     hero is tightened up and given foot room to keep both CTAs clear of it. */
-  .home-hero { min-height: min(78svh, 720px); padding-block: var(--space-4) 116px; }
-  .home-hero__scroll { display: none; }
-  .home-hero__lead { margin-top: var(--space-3); line-height: 1.55; }
-  .home-hero__actions { margin-top: var(--space-4); }
-  .home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
 }
 
 /* --- About + USPs --------------------------------------------------------- */
