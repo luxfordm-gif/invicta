@@ -163,6 +163,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   font-size: 11px;
   gap: 7px;
 }
+/* The arrow comes down with the rest of the button: this one is deliberately
+   the least chunky button on the site and a 14px icon would undo that. */
+.btn-inquiry.nav__cta .btn-inquiry__arrow svg { width: 12px; height: 12px; }
 
 .nav__toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; }
 /* Modern asymmetric menu mark: two staggered strokes, the lower one shorter and
@@ -374,7 +377,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     transition: background-color 0.2s ease;
   }
   .nav__mobile-extra .nav__menu-cta:hover { background: var(--ground-raise); }
-  .nav__mobile-extra .nav__menu-cta .btn-inquiry__arrow { font-size: 14px; }
   .nav__mobile-extra .nav__menu-tel {
     display: flex; flex-direction: column; align-items: center; gap: 3px;
     margin-top: var(--space-4); text-align: center;
@@ -405,8 +407,16 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   white-space: nowrap;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.btn-inquiry__arrow { font-size: 14px; transition: transform 0.25s ease; }
-.btn-inquiry:hover .btn-inquiry__arrow { transform: translate(2px, -2px); }
+/* A DRAWN arrow, not the "→" character — the same lesson the explore rows
+   already recorded: in the body face that glyph's bar is so light on a phone
+   that it stops reading as an arrow, and its side bearings throw it off centre.
+   An SVG holds its weight and centres on its own box at any size.
+   The nudge is horizontal now too. It used to travel up-and-right, which suited
+   a glyph that sits high in its line box; a drawn arrow on the baseline just
+   wants to move the way it points. */
+.btn-inquiry__arrow { display: inline-flex; transition: transform 0.25s ease; }
+.btn-inquiry__arrow svg { display: block; width: 14px; height: 14px; }
+.btn-inquiry:hover .btn-inquiry__arrow { transform: translateX(3px); }
 /* Hover: the chalky pill brightens to white — nothing else. */
 .btn-inquiry:hover { background: #F5F0E8; }   /* slight cream */
 .btn-inquiry--lg { font-size: 13px; padding: 18px 30px; }
@@ -434,6 +444,14 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 }
 .btn-line:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.09); }
 .btn-line--lg { font-size: 13px; padding: 18px 30px; }
+/* A chevron rather than the filled pill's arrow, and the difference is the
+   point: the filled button DOES something (sends the enquiry), the outlined one
+   TAKES YOU somewhere. Same drawn-not-glyph reasoning as above. It matters most
+   where the stroke is dropped — on the home hero's phone layout the label was
+   left as bare text with nothing to say it was a control at all. */
+.btn-line__arrow { display: inline-flex; transition: transform 0.25s ease; }
+.btn-line__arrow svg { display: block; width: 13px; height: 13px; }
+.btn-line:hover .btn-line__arrow { transform: translateX(3px); }
 /* The stroke is white, so on a cream or white section the button disappeared —
    the same gap the filled pill already covers just above. Match it: ink type on
    the field stroke, and the hover fills a hair of ink rather than of white. */
