@@ -538,7 +538,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   /* svh, not vh: on a phone the mobile browser's collapsing toolbars make vh
      taller than the screen, which would crop the foot of the picture. */
   height: 100svh;
-  max-height: 1000px;
 }
 /* The picture is the point here, so it carries far less wash than the old fixed
    band, where the copy immediately below needed the photograph pushed back. */

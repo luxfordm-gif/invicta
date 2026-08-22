@@ -10,7 +10,6 @@
   color: var(--lime); text-align: center;
 }
 .hero__title {
-  margin-top: var(--flow-heading);
   text-align: center;
   color: var(--on-dark);          /* quiet white — the chalky blue is only on the italic accent */
 }
