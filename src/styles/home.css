@@ -28,6 +28,14 @@
 .home-hero {
   position: sticky;
   top: 0;
+  /* Pulled up UNDER the header so the hero fills the screen at rest, not just
+     the space left below it. Without this the box is a full 100svh but starts
+     one header down, so it hangs off the bottom of the screen and its centre —
+     and therefore the copy — sits a whole header height low. Once pinned the
+     two agree anyway; this is what makes the first paint agree too. The bars
+     are translucent and were always meant to sit over the hero, so the
+     photograph simply carries on behind them. */
+  margin-top: calc(-1 * (var(--ubar-h) + var(--nav-h)));
   /* svh, not vh: a phone's collapsing toolbars make vh taller than the screen,
      which would push the scroll cue and the foot of the picture out of sight. */
   height: 100svh;
@@ -74,9 +82,10 @@
   align-items: center;
   text-align: center;
   max-width: 1080px;
-  /* The sticky header sits over the top of the screen, so true vertical centring
-     reads high. Push the block down by roughly the header it has to clear. */
-  padding-top: calc(var(--ubar-h) + var(--space-4));
+  /* No optical nudge here. It used to carry a header's worth of top padding,
+     which was compensating for the offset the negative margin above now
+     removes properly — and on a phone it was compensating for a utility bar
+     that is not even shown. Centred means centred. */
 }
 .home-hero__eyebrow {
   max-width: none;
@@ -124,16 +133,18 @@
   0%, 100% { transform: translateY(0); opacity: 0.55; }
   50%      { transform: translateY(7px); opacity: 1; }
 }
-/* The floating emergency pill sits over the foot of the first screen on a
-   phone, exactly where the cue would be. */
+/* Below 900px the utility bar is not rendered at all, so there is only the nav
+   to pull up under. And the floating emergency pill sits over the foot of the
+   first screen, exactly where the scroll cue would be. */
 @media (max-width: 899.98px) {
+  .home-hero { margin-top: calc(-1 * var(--nav-h)); }
   .home-hero__scroll { display: none; }
 }
 
 /* No scroll to travel, no reveal: on a short window hold the hero at a plain
    height rather than pinning something that can never move. Matches the band. */
 @media (max-height: 520px) {
-  .home-hero { position: static; height: auto; min-height: 460px; padding-block: var(--space-6); }
+  .home-hero { position: static; height: auto; min-height: 460px; margin-top: 0; padding-block: var(--space-6); }
 }
 
 /* --- About + USPs --------------------------------------------------------- */
