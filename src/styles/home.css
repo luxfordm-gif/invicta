@@ -6,58 +6,90 @@
    way down; cream is used where a block should sit slightly apart from it.
    ========================================================================== */
 
-/* --- Hero ------------------------------------------------------------------
-   Cream field, centred copy, photograph underneath. The whole composition rests
-   on one decision: the picture is NOT behind the words. Copy over a photograph
-   always costs something — a scrim, a darker crop, a heavier weight to hold
-   contrast — and the first screen here is asked to do the opposite, to be quiet.
-   So the type sits on flat cream at full strength, and the photograph gets the
-   bottom of the screen to itself, uncompromised.
+/* --- Hero: a pinned photograph the page climbs over ------------------------
+   The same move as a service page's project band (see `.reveal` in
+   components.css, which explains why the hero and the section covering it have
+   to share a wrapper). The picture holds a full screen, pins itself there, and
+   the white About section rides up over it.
 
-   The crop is the other half of it. estate-dawn is a wide dawn landscape with
-   the house about halfway up and meadow below; a top-weighted crop would open on
-   an empty navy sky butting straight into the cream. Holding the frame at 58%
-   drops the skyline out and lands the house high in a band of parkland, so the
-   picture reads from its subject downwards.
+   The copy sits ON the photograph. An earlier version put the picture in a band
+   UNDER a cream field of type, which read as calm but left the first screen as
+   two unrelated halves: a page of type, then a photograph. Over the picture they
+   are one composition, and the pin gives the photograph its own moment as the
+   page leaves it.
+
+   The nav goes back to its translucent navy here. It only needed to be forced
+   solid while the hero behind it was cream, which turned the 70% bar to a muddy
+   slate; over a dark photograph the frosted bar is what it was designed for.
+
+   No parallax on the media: the pin already is the motion, and drift measured
+   against a pinned frame has nothing left to measure.
    --- */
 .home-hero {
-  /* The band is the section's own colour: no .section, because the padding here
-     is asymmetric (hero gap above the copy, nothing under the picture). Its own
-     top gap, not --hero-y-top: that token is tuned for a hero whose copy is the
-     whole screen, and here everything above the photograph has to fit in the
-     top half of it. */
-  padding-top: clamp(28px, 4vw + 2vh, 80px);
+  position: sticky;
+  top: 0;
+  /* svh, not vh: a phone's collapsing toolbars make vh taller than the screen,
+     which would push the scroll cue and the foot of the picture out of sight. */
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
   overflow: clip;                  /* clip, not hidden: see motion.css */
+  background: var(--ground-deep);
+}
+/* The frame is a whole screen, so it is TALLER than the photograph's own 16:9
+   at every size that matters — which means cover crops the sides and shows the
+   full height, and object-position has nothing left to move. Left alone, the
+   empty dawn sky takes the top third of the screen and the house is a speck.
+   So oversize the picture past the frame and pin it to the BOTTOM: the frame
+   crops the sky off the top, the horizon lands high, and the misty parkland
+   fills the screen behind the copy. Same trick as the phone sector card. */
+.home-hero__media { position: absolute; inset: 0; z-index: -2; overflow: clip; }
+.home-hero__media img {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 135%;
+  object-fit: cover;
+}
+/* Two washes: a flat one to sit the whole picture back off the type, and a
+   vertical gradient heaviest where the copy actually sits. Centred copy needs
+   the middle protected, not just the foot, so this is far more even than the
+   bottom-weighted scrim a bottom-ranged hero would want. */
+.home-hero::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to bottom,
+      rgb(var(--ground-deep-rgb) / 0.62) 0%,
+      rgb(var(--ground-deep-rgb) / 0.50) 42%,
+      rgb(var(--ground-deep-rgb) / 0.58) 78%,
+      rgb(var(--ground-deep-rgb) / 0.80) 100%),
+    rgb(var(--ground-deep-rgb) / 0.20);
 }
 .home-hero__inner {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  /* Well inside the 1600px container: centred copy needs a measure, and at full
-     container width the headline sprawled across three lines on a laptop and
-     pushed the photograph off the screen. */
   max-width: 1080px;
+  /* The sticky header sits over the top of the screen, so true vertical centring
+     reads high. Push the block down by roughly the header it has to clear. */
+  padding-top: calc(var(--ubar-h) + var(--space-4));
 }
-/* Tracked wider and set on two lines, as the reference does: at 13px on one
-   line it read as a caption over the headline rather than as a label above it. */
 .home-hero__eyebrow {
   max-width: none;
   font-size: clamp(13px, 1.15vw, 15px);
   letter-spacing: 0.08em;
   line-height: 1.5;
+  color: var(--lime);
 }
-/* A step under the global h1 floor. The site's headline is a good deal longer
-   than the reference's three words, and at the 52px floor it took five lines on
-   a 390px screen and pushed both buttons — and the photograph — off the first
-   screen entirely. At this size it lands in three, and the picture gets back
-   the bottom of the screen, which is the whole composition. */
 .home-hero__title {
   margin-top: var(--flow-heading);
-  /* No ch cap: the line breaks are written into the markup, and a cap tight
-     enough to matter here would only fight them. The inner measure holds it. */
   max-width: none;
   font-size: clamp(40px, 6vw, 72px);
+  color: var(--on-dark);
 }
 .home-hero__actions {
   margin-top: clamp(30px, 3.6vw, 46px);
@@ -66,7 +98,7 @@
   justify-content: center;
   gap: var(--space-2);
   width: 100%;
-  max-width: 460px;               /* the reference stacks two full-width pills */
+  max-width: 460px;               /* stacked full-width pills on a phone */
 }
 .home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
 @media (min-width: 600px) {
@@ -74,49 +106,34 @@
   .home-hero__actions > * { flex: 0 0 auto; }
 }
 
-/* Everything on a phone is a step tighter, for the same reason as the headline:
-   the first screen has to end on the photograph, not above it. */
-@media (max-width: 599.98px) {
-  .home-hero { padding-top: clamp(24px, 6vh, 44px); }
-  .home-hero__actions { margin-top: var(--space-5); gap: 10px; }
-}
-
-/* svh so a phone's collapsing toolbars can't stretch the frame past the screen.
-   Tall enough to read as a landscape, short enough that the copy above it still
-   owns the first screen. No parallax here on purpose: this picture is the base
-   of the composition, and it should sit still while the copy leaves over it. */
-.home-hero__media {
-  position: relative;
-  margin-top: clamp(40px, 5.5vw, 84px);
-  overflow: clip;
-  height: clamp(300px, 46svh, 620px);
-}
-.home-hero__media img {
+/* The cue for the whole trick: there is a screen of photograph here, and the
+   page comes up over it. */
+.home-hero__scroll {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 58%;
+  left: 0; right: 0;
+  bottom: clamp(28px, 4vw, 52px);
+  display: flex;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
 }
-/* On a phone the frame is NARROWER than the photograph's own 16:9, so cover
-   crops the sides and shows the full height — object-position has nothing left
-   to move, and the frame opens on the dark dawn sky butting into the cream.
-   Same fix as the phone sector card: blow the picture up past the frame and
-   pin it to the BOTTOM, so the frame crops the sky off the top and the band
-   starts at the treeline with the house in it. */
-@media (max-width: 799.98px) {
-  .home-hero__media { height: clamp(280px, 40svh, 460px); }
-  .home-hero__media img { inset: auto 0 0 0; height: 165%; }
+.home-hero__scroll svg { width: 26px; height: 26px; }
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero__scroll svg { animation: home-hero-nudge 2.4s ease-in-out infinite; }
+}
+@keyframes home-hero-nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(7px); opacity: 1; }
+}
+/* The floating emergency pill sits over the foot of the first screen on a
+   phone, exactly where the cue would be. */
+@media (max-width: 899.98px) {
+  .home-hero__scroll { display: none; }
 }
 
-/* At the very top of the hero the nav's 70% navy sits over cream and turns to a
-   muddy slate. It is already solid once scrolled, so make it solid from the
-   start here and let the bar read as a deliberate navy header instead. */
-:root:has(.home-hero) .nav {
-  background: var(--ground);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+/* No scroll to travel, no reveal: on a short window hold the hero at a plain
+   height rather than pinning something that can never move. Matches the band. */
+@media (max-height: 520px) {
+  .home-hero { position: static; height: auto; min-height: 460px; padding-block: var(--space-6); }
 }
 
 /* --- About + USPs --------------------------------------------------------- */
