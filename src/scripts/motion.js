@@ -10,9 +10,8 @@
 
   var sel = [
     ".hero__eyebrow", ".hero__title", ".hero__scroll", ".hero__lead",
-    ".band__bar",
     ".section .eyebrow", ".statement",
-    ".coverage-band__eyebrow", ".coverage-band__title",
+    ".coverage-band__title",
     ".services-explore__card", ".services-explore__media",
     ".acc",
     ".positioning__intro > *", ".sector",

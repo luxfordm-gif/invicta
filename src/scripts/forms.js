@@ -227,7 +227,11 @@
         var close = document.createElement("button");
         close.type = "button";
         close.className = "btn-inquiry btn-inquiry--lg";
-        close.innerHTML = 'Close <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span>';
+        // Same drawn arrow the templates use, so the one button this file
+        // builds does not end up the only glyph arrow left on the site.
+        close.innerHTML = 'Close <span class="btn-inquiry__arrow" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
         // enquiry.js bound its close handlers at load, so route through the
         // existing control rather than duplicating close and scroll-unlock here.
         close.addEventListener("click", function () {

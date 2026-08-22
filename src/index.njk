@@ -7,33 +7,42 @@ permalink: "/"
 current: "home"
 extraStyles: ["home"]
 ---
-    <!-- ===================== HERO (full-bleed image) ===================== -->
+    <!-- ============ HERO + ABOUT (the reveal pair) ============
+      Same move as the service pages: the photograph holds a full screen and
+      pins itself there while the white section climbs up over it. The wrapper
+      is load-bearing, not decoration — see the note on `.reveal` in
+      components.css for why the pair has to share it.
+
+      The copy sits ON the photograph rather than above it. An earlier version
+      put the picture underneath a cream field, which read as calm but left the
+      first screen as two unrelated halves: a page of type, then a photograph.
+      Over the picture the two are one composition, and the pin is what gives
+      the photograph its own moment as the page leaves it.
+
+      Four things, and no paragraph. The lead that used to sit here ("bespoke
+      borehole and spring systems...") is said properly in the section below,
+      and the "who we work for" rail is said again in full in the sectors band:
+      both were a second and third read competing with the one line that
+      matters. What is left is the positioning line, the headline, and the two
+      things you can do.
+    -->
+    <div class="reveal">
+    <!-- The photograph is its OWN element, and a sibling of the copy, because
+         only it pins. The copy below scrolls away with the page. -->
+    <div class="home-hero__media" aria-hidden="true">
+      <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
     <section class="home-hero">
-      <div class="home-hero__media parallax" aria-hidden="true">
-        <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
-      </div>
       <div class="container home-hero__inner">
-        <p class="eyebrow home-hero__eyebrow">Private water supplies, Surrey &amp; Sussex</p>
+        <p class="eyebrow home-hero__eyebrow">Private water supplies<br>Surrey &amp; Sussex</p>
         <h1 class="home-hero__title">
           Independent water,<br>
           <span class="em">designed around your source.</span>
         </h1>
-        <p class="home-hero__lead">
-          Bespoke borehole and spring systems for estates and premium properties, designed around
-          your own water, installed by our own engineers, and looked after for as long as you need us.
-        </p>
         <div class="home-hero__actions">
-          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="btn-line btn-line--lg" href="/services/private-water-supplies/">Private water supplies</a>
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="/services/private-water-supplies/">Private water supplies <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
         </div>
-
-        <!-- Who we work for, as a quiet rail across the foot of the hero. -->
-        <ul class="home-hero__rail" role="list">
-          <li>Landed estates</li>
-          <li>Country houses</li>
-          <li>Institutions</li>
-          <li>New-build developments</li>
-        </ul>
       </div>
       <div class="home-hero__scroll" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -45,8 +54,6 @@ extraStyles: ["home"]
     <!-- ===================== ABOUT + USPs (white) ===================== -->
     <section class="section section--paper home-about" aria-labelledby="home-about-title">
       <div class="container home-about__grid">
-        <p class="eyebrow home-about__label">About Invicta</p>
-
         <div class="home-about__body">
           <h2 id="home-about-title" class="statement home-about__title">
             Twenty years of private supplies,
@@ -85,11 +92,11 @@ extraStyles: ["home"]
         </div>
       </div>
     </section>
+    </div><!-- /.reveal -->
 
     <!-- ===================== SERVICES AS CARDS (cream) ===================== -->
     <section class="section section--light home-services" aria-labelledby="home-services-title">
       <div class="container">
-        <p class="eyebrow">What we do</p>
         <h2 id="home-services-title" class="statement home-services__title">
           Four services, <span class="em">one team behind all of them.</span>
         </h2>
@@ -142,7 +149,6 @@ extraStyles: ["home"]
     ] %}
     <section class="section home-process" aria-labelledby="home-process-title">
       <div class="container">
-        <p class="eyebrow">How we work</p>
         <h2 id="home-process-title" class="statement home-process__title">
           From first survey <span class="em">to final commissioning.</span>
         </h2>
@@ -151,10 +157,10 @@ extraStyles: ["home"]
           {% for st in steps %}
           <article class="stack__card" style="--i: {{ loop.index0 }}">
             <div class="stack__text">
-              <span class="stack__index">({{ "0" + loop.index }})</span>
+              <span class="numeral numeral--sm stack__index" aria-hidden="true">{{ "0" + loop.index }}</span>
               <h3 class="stack__title">{{ st.title }}</h3>
               <p class="stack__copy">{{ st.copy }}</p>
-              <a class="btn-line stack__cta" href="/enquiry/">Send enquiry</a>
+              <a class="btn-line stack__cta" href="/enquiry/">Send enquiry <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
             </div>
             <div class="stack__media">
               <img src="{{ st.img }}" alt="{{ st.alt }}" loading="lazy">
@@ -175,7 +181,6 @@ extraStyles: ["home"]
     {% for id in homePicks %}{% for cs in caseStudies %}{% if cs.id == id %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}{% endfor %}
     {% set carouselId = "home" %}
     {% set carouselSurface = "section--paper" %}
-    {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Supplies we've designed, <span class='em'>installed and looked after.</span>" %}
     {% set carouselLead = "A National Trust restoration, a multi-source estate system, and a membrane plant we built ourselves. Step through to see the work." %}
     {% include "case-carousel.njk" %}
@@ -183,7 +188,6 @@ extraStyles: ["home"]
     <!-- ===================== TRUSTED BY (cream) ===================== -->
     <section class="section section--light clients home-clients" aria-labelledby="home-clients-title">
       <div class="container">
-        <p class="eyebrow">Trusted by</p>
         <h2 id="home-clients-title" class="statement">
           Chosen by clients who <span class="em">expect it done properly.</span>
         </h2>
@@ -200,7 +204,6 @@ extraStyles: ["home"]
     <!-- ===================== REVIEWS (white) ===================== -->
     <section class="section section--paper home-reviews" aria-labelledby="home-reviews-title">
       <div class="container">
-        <p class="eyebrow">In their words</p>
         <h2 id="home-reviews-title" class="statement home-reviews__title">
           What clients say <span class="em">once the water is running.</span>
         </h2>
@@ -208,10 +211,15 @@ extraStyles: ["home"]
         <ul class="reviews" role="list">
           {% if testimonials and testimonials.length %}
           {% for t in testimonials %}
-          <li class="review">
+          <li class="review{% if t.placeholder %} review--sample{% endif %}">
             <span class="review__mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 5C6.5 6.6 4.8 9.3 4.8 12.5V19h6.4v-6.4H8c0-2 .9-3.6 2.8-4.8L9.5 5zm9 0c-3 1.6-4.7 4.3-4.7 7.5V19h6.4v-6.4H17c0-2 .9-3.6 2.8-4.8L18.5 5z"/></svg>
             </span>
+            {# The chip is the safety catch on written samples: it ships with the
+               words, so invented praise cannot pass as a real client by anyone
+               forgetting about _data/testimonials.js. Drop `placeholder: true`
+               from a review when the real one replaces it. #}
+            {% if t.placeholder %}<p class="review__flag">Sample copy, not a real client</p>{% endif %}
             <blockquote class="review__quote">{{ t.quote }}</blockquote>
             <p class="review__by">{{ t.name }}<span>{{ t.role }}</span></p>
           </li>
@@ -252,7 +260,6 @@ extraStyles: ["home"]
     <section class="section faq" aria-labelledby="home-faq-title">
       <div class="container faq__grid">
         <aside class="faq__aside">
-          <span class="eyebrow">Common questions</span>
           <h2 id="home-faq-title" class="faq__title">Frequently asked.</h2>
           <p class="faq__intro">The questions we hear most often from clients thinking about a private supply. If yours isn't answered here, get in touch, we'll answer plainly.</p>
         </aside>

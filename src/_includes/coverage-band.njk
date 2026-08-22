@@ -49,7 +49,6 @@
   <div class="coverage-band__scrim" aria-hidden="true"></div>
 
   <div class="container coverage-band__overlay">
-    <p class="eyebrow coverage-band__eyebrow">{{ coverageBandEyebrow or "Where we work" }}</p>
     <h2 id="coverage-band-title" class="coverage-band__title">
       {# `x | safe or "default"` does NOT fall through — the filter runs first and
          yields an empty SafeString. Default inside the parens, filter outside. #}

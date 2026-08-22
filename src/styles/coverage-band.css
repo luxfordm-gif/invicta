@@ -124,14 +124,8 @@
   text-align: center;
 }
 
-.coverage-band__eyebrow {
-  display: block;
-  max-width: none;               /* override the base p{max-width:68ch} so the centred label isn't offset */
-  color: var(--steel);           /* light-section accent: this band reads as a light surface */
-}
 
 .coverage-band__title {
-  margin-top: var(--flow-heading);
   margin-inline: auto;
   max-width: 20ch;
   font-family: var(--font-display);

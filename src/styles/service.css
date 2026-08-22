@@ -62,20 +62,42 @@
   .service-points__grid { grid-template-columns: 4fr 6fr; gap: clamp(48px, 6vw, 120px); align-items: start; }
   .service-points__aside { position: sticky; top: calc(var(--ubar-h) + var(--nav-h) + 56px); }
 }
+/* Each point is led by its number at display size (see .numeral in
+   components.css). The number was a 14px label in the left gutter, which made
+   the four points read as a form, not as a sequence: nothing on the page said
+   "there are four of these, and this is the second". At this size the count IS
+   the first thing you read, so the title and its copy both step down to sit
+   under it rather than compete. */
 .service-checklist { display: grid; }
 .service-check {
-  display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 3vw, 44px);
-  padding-block: clamp(20px, 2.6vw, 34px);
+  display: grid;
+  /* Stacked by default: the numeral leads, the point sits beneath it. A phone
+     has no room for a 52px figure AND a line of copy side by side. */
+  gap: clamp(14px, 2vw, 20px);
+  padding-block: clamp(26px, 3.2vw, 40px);
   border-top: 1px solid var(--line-dark);
 }
 .service-check:last-child { border-bottom: 1px solid var(--line-dark); }
-.service-check__index { font-weight: 500; font-size: 14px; color: var(--lime); letter-spacing: 0.02em; padding-top: 0.55em; }
+/* Wide enough for the figure and a real measure beside it: the numeral moves
+   into its own column and the copy runs alongside. The column is fixed rather
+   than auto so every title starts on the same line, whatever the figure. */
+@media (min-width: 700px) {
+  .service-check {
+    grid-template-columns: clamp(96px, 9vw, 150px) minmax(0, 1fr);
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+  }
+}
+/* Optically the figure sits a touch low against a cap-height title, because its
+   line-box is cropped tight to 0.8. Nudge the text down instead of the figure
+   up, so the numeral keeps its alignment with the rule above it. */
+.service-check__text { padding-top: 0.35em; }
 .service-check__title {
-  display: block; font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(20px, 1.9vw, 27px); letter-spacing: -0.01em; line-height: 1.1; color: var(--on-dark);
+  display: block; font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(19px, 1.5vw, 22px); letter-spacing: -0.01em; line-height: 1.2; color: var(--on-dark);
 }
 .service-check__desc {
-  display: block; margin-top: 10px; font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); max-width: 60ch;
+  display: block; margin-top: 10px; font-size: var(--text-card); line-height: 1.6; color: var(--on-dark-muted); max-width: 56ch;
 }
 .service-points__footer { margin-top: var(--flow-md); max-width: 62ch; }
 .service-points__lead { font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); }

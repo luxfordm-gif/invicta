@@ -87,7 +87,7 @@
 }
 .case-slide__media { margin: 0; }
 .case-slide__media img,
-.case-slide__media .img-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
+.case-slide__media .img-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); }
 .case-slide__media img { object-fit: cover; display: block; }
 /* leave the placeholder as flex (from .img-ph) so its label stays centred both
    ways; a display:block here would strand the label at the top. */

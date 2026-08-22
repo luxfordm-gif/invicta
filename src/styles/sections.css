@@ -93,7 +93,10 @@
    bottom-aligns every placeholder even when descriptions run to different lengths. */
 .sector p { font-size: var(--text-body); line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
 .sector__media { margin-top: var(--space-4); }
-.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: 12px; }
+/* Same rule as the stats band: the frame clips, so it carries the radius. The
+   picture keeps one too, for the case where the media is not a parallax frame. */
+.sector__media { border-radius: var(--radius-lg); overflow: clip; }
+.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: var(--radius-lg); }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
    bright grey block that reads as a broken image. */
 .sector__media .img-ph {
@@ -101,7 +104,7 @@
   background: var(--ground-raise);
   color: var(--on-dark-muted);
   border: 1px solid var(--line-dark);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 /* --- Sectors as a swipeable carousel on phones -----------------------------
@@ -140,13 +143,13 @@
     scroll-snap-stop: always;
     border-top: 0;
     border: 1px solid var(--line-dark);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     padding: 0;
     aspect-ratio: 5 / 8;           /* tall image tile */
     background: var(--ground-raise);
   }
-  .sector__media { position: absolute; inset: 0; order: -1; margin: 0; z-index: 0; }
+  .sector__media { position: absolute; inset: 0; order: -1; margin: 0; z-index: 0; border-radius: 0; }
   .sector__media img,
   .sector__media .img-ph {
     position: absolute; inset: 0;
@@ -166,7 +169,7 @@
     -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
     -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-    border-radius: 17px 17px 0 0;
+    border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
     z-index: 1; pointer-events: none;
   }
   .sector h3 {
@@ -238,8 +241,7 @@
   .faq__grid { grid-template-columns: 4fr 6fr; gap: clamp(48px, 6vw, 120px); }
   .faq__aside { position: sticky; top: calc(var(--ubar-h) + 88px); align-self: start; }
 }
-.faq__aside .eyebrow { display: block; }
-.faq__title { margin-top: var(--flow-heading); color: var(--on-dark); }
+.faq__title { color: var(--on-dark); }
 .faq__intro { margin-top: var(--space-4); font-size: var(--text-body); line-height: 1.55; color: var(--on-dark-muted); max-width: 40ch; }
 
 .faq__item { border-top: 1px solid var(--line-dark); }
@@ -273,7 +275,6 @@
 .footer__cta-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0; max-width: 760px; }
 .footer__cta .eyebrow { display: block; }
 .footer__cta-line {
-  margin-top: var(--flow-heading);
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(38px, 4.6vw, 60px);   /* matches the h2 floor */
@@ -450,7 +451,7 @@
 .services-explore__card {
   margin-top: clamp(28px, 3.5vw, 48px);
   background: var(--paper);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   /* 14px of inset put the copy almost against the card's edge on a phone — too
      tight for a 16px radius. 22px gives it a proper margin, and matches the
      inset the case cards use, so the two white cards on these pages agree. */
@@ -518,7 +519,7 @@
   color: var(--on-dark);
   transform: translateX(3px);
 }
-.services-explore__link:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: 10px; }
+.services-explore__link:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: var(--radius-sm); }
 
 /* Mobile: the index column costs width the copy needs more than the numbering
    does. A three-item list reads as ordered without it, so drop the numbers and
@@ -532,7 +533,7 @@
 .services-explore__media {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: var(--ground);
   aspect-ratio: 4 / 3;
 }

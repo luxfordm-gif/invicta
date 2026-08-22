@@ -3,6 +3,10 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero__inner">
+        {# Kept where the label cull took the others out. The H1s on these pages
+           are evocative rather than descriptive ("The right system, designed
+           around the problem"), so this line is the only place in the page's own
+           copy that names the service. #}
         <p class="hero__eyebrow">{{ heroEyebrow }}</p>
         <h1 class="hero__title">{{ heroTitle | safe }}</h1>
         <div class="hero__scroll" aria-hidden="true">
@@ -15,7 +19,12 @@
       </div>
     </section>
 
-    <!-- ================ FULL-BLEED PROJECT BAND ================ -->
+    <!-- ============ PROJECT BAND + INTRO (the reveal pair) ============
+      The wrapper is load-bearing, not decoration: the band pins itself inside
+      it and the intro rides up over the picture, and the wrapper ending is what
+      unpins the band again. See service-band.njk.
+    -->
+    <div class="reveal">
 {% include "service-band.njk" %}
 
     <!-- ===================== INTRO (light) ===================== -->
@@ -23,8 +32,6 @@
     <section class="section section--paper service-intro" aria-labelledby="intro-title">
       <div class="container">
         <div class="service-intro__inner">
-          <p class="eyebrow">{{ introEyebrow or "Overview" }}</p>
-          <div class="rule"></div>
           <h2 id="intro-title" class="statement">{{ introTitle | safe }}</h2>
           {% if introBody %}
           <div class="service-intro__body">
@@ -36,20 +43,20 @@
       </div>
     </section>
     {% endif %}
+    </div><!-- /.reveal -->
 
     <!-- ===================== WHAT'S INVOLVED (dark) ===================== -->
     {% if points %}
     <section class="section service-points" aria-labelledby="points-title">
       <div class="container service-points__grid">
         <aside class="service-points__aside">
-          <p class="eyebrow">{{ pointsEyebrow or "What's involved" }}</p>
           <h2 id="points-title" class="statement">{{ pointsTitle | safe }}</h2>
         </aside>
         <div class="service-points__main">
           <ul class="service-checklist">
             {% for pt in points %}
             <li class="service-check">
-              <span class="service-check__index" aria-hidden="true">{{ "0" ~ loop.index }}</span>
+              <span class="numeral service-check__index" aria-hidden="true">{{ "0" ~ loop.index }}</span>
               <div class="service-check__text"><span class="service-check__title">{{ pt.title }}</span>{% if pt.desc %}<span class="service-check__desc">{{ pt.desc | safe }}</span>{% endif %}</div>
             </li>
             {% endfor %}
@@ -57,7 +64,7 @@
           <div class="service-points__footer">
             {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
             {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
-            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           </div>
         </div>
       </div>
@@ -75,7 +82,6 @@
     {% for cs in caseStudies %}{% if serviceSlug in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = serviceSlug %}
     {% set bentoSurface = "section--light" %}
-    {% set carouselEyebrow = "Selected work" %}
     {% set carouselTitle = "Projects like this, <span class='em'>across the South East.</span>" %}
     {% if studies.length > 1 %}
     {% set carouselLead = "A few of the supplies we've designed, installed and looked after." %}
@@ -89,7 +95,6 @@
     <section class="section faq" aria-labelledby="faq-title">
       <div class="container faq__grid">
         <aside class="faq__aside">
-          <span class="eyebrow">Common questions</span>
           <h2 id="faq-title" class="faq__title">{{ faqTitle or "Frequently asked." }}</h2>
           {% if faqIntro %}<p class="faq__intro">{{ faqIntro }}</p>{% endif %}
         </aside>

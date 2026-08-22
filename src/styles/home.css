@@ -6,85 +6,128 @@
    way down; cream is used where a block should sit slightly apart from it.
    ========================================================================== */
 
-/* --- Hero: full-bleed photograph ------------------------------------------ */
-.home-hero {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  align-items: flex-end;
-  min-height: min(88svh, 900px);
-  padding-block: var(--hero-y-top) clamp(56px, 8vw, 120px);
+/* --- Hero: a pinned photograph the copy leaves and the page climbs over ----
+   Same move as a service page's project band (see `.reveal` in components.css,
+   which explains why everything here and the section covering it share a
+   wrapper). What pins is ONLY the photograph. The copy is a separate element
+   laid over the first screen of it, in normal flow, so it scrolls away like
+   any other page content while the picture holds — which is the same order of
+   events as a service page: read the words, then the photograph gets the
+   screen to itself, then the page comes up over it. Pinning the copy too made
+   the headline hang around being sliced in half by the section rising past it.
+
+   The overlay is done with margins rather than absolute positioning, so the
+   two still contribute one screen of scrollable height between them: the
+   picture lays down 100svh, the copy takes it straight back with -100svh and
+   then re-adds its own.
+
+   The nav goes back to its translucent navy here. It only needed to be forced
+   solid while the hero behind it was cream; over a dark photograph the frosted
+   bar is what it was designed for.
+
+   No parallax on the media: the pin already is the motion, and drift measured
+   against a pinned frame has nothing left to measure.
+   --- */
+.home-hero__media {
+  position: sticky;
+  top: 0;
+  /* svh, not vh: a phone's collapsing toolbars make vh taller than the screen,
+     which would push the foot of the picture out of sight. */
+  height: 100svh;
+  /* Pulled up UNDER the header so the picture fills the screen at rest, not
+     just the space left below it. Without this the box is a full 100svh but
+     starts one header down, so it hangs off the bottom and everything centred
+     on it sits a header height low. The bars are translucent and were always
+     meant to sit over the hero, so the photograph carries on behind them. */
+  margin-top: calc(-1 * (var(--ubar-h) + var(--nav-h)));
+  overflow: clip;                  /* clip, not hidden: see motion.css */
   background: var(--ground-deep);
-  overflow: clip;         /* clip, not hidden: see the parallax note in motion.css */
+  z-index: 0;
 }
-.home-hero__media { position: absolute; inset: 0; z-index: -2; }
-.home-hero__media img { width: 100%; height: 100%; object-fit: cover; }
-/* Two washes: a flat one to sit the whole picture back, and a bottom-weighted
-   gradient so the copy has contrast wherever the photograph is light. */
-.home-hero::before {
+/* The frame is a whole screen, so it is TALLER than the photograph's own 16:9
+   at every size that matters — which means cover crops the sides and shows the
+   full height, and object-position has nothing left to move. Left alone, the
+   empty dawn sky takes the top third of the screen and the house is a speck.
+   So oversize the picture past the frame and pin it to the BOTTOM: the frame
+   crops the sky off the top, the horizon lands high, and the misty parkland
+   fills the screen behind the copy. Same trick as the phone sector card. */
+.home-hero__media img {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 135%;
+  object-fit: cover;
+}
+/* Two washes: a flat one to sit the whole picture back off the type, and a
+   vertical gradient heaviest where the copy actually sits. Centred copy needs
+   the middle protected, not just the foot, so this is far more even than the
+   bottom-weighted scrim a bottom-ranged hero would want. */
+.home-hero__media::after {
   content: "";
-  position: absolute; inset: 0; z-index: -1;
+  position: absolute;
+  inset: 0;
   background:
-    linear-gradient(to top, rgb(var(--ground-deep-rgb) / 0.92) 0%, rgb(var(--ground-deep-rgb) / 0.55) 42%, rgb(var(--ground-deep-rgb) / 0.30) 100%),
-    rgb(var(--ground-deep-rgb) / 0.18);
-}
-.home-hero__inner { position: relative; }
-.home-hero__eyebrow { color: var(--lime); }
-.home-hero__title {
-  margin-top: var(--flow-heading);
-  max-width: 16ch;
-  color: var(--on-dark);
-}
-.home-hero__lead {
-  margin-top: var(--space-4);
-  max-width: 56ch;
-  font-size: var(--text-lead);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.82);
-}
-.home-hero__actions {
-  margin-top: var(--space-5);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-/* Who we work for, as a rail across the foot of the hero. The reference runs a
-   display-size marquee of room names here; at Invicta's register that would
-   shout, so it sits at index scale on a hairline instead, which also matches
-   the (01) numbering used across the site. */
-.home-hero__rail {
-  margin-top: clamp(32px, 4vw, 56px);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--line-dark);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px clamp(20px, 3vw, 44px);
-  font-size: clamp(13px, 1.1vw, 15px);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.72);
-}
-.home-hero__rail li { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
-/* A chalky dot between items, drawn after each but the last. */
-.home-hero__rail li:not(:last-child)::after {
-  content: "";
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--blue-bright);
-  opacity: 0.9;
-}
-/* On a phone the first screen is already carrying the headline, the lead, two
-   CTAs and the floating emergency dock. The rail is the one thing here that is
-   said again in full further down the site, so it steps aside rather than
-   pushing the CTAs under the dock. */
-@media (max-width: 599.98px) {
-  .home-hero__rail { display: none; }
+    linear-gradient(to bottom,
+      rgb(var(--ground-deep-rgb) / 0.62) 0%,
+      rgb(var(--ground-deep-rgb) / 0.50) 42%,
+      rgb(var(--ground-deep-rgb) / 0.58) 78%,
+      rgb(var(--ground-deep-rgb) / 0.80) 100%),
+    rgb(var(--ground-deep-rgb) / 0.20);
 }
 
+.home-hero {
+  position: relative;
+  z-index: 1;                      /* over the picture, under the section that covers both */
+  height: 100svh;
+  margin-top: -100svh;             /* laid over the screen the picture just laid down */
+  display: flex;
+  align-items: center;
+}
+.home-hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 1080px;
+  /* No optical nudge: the negative margin on the media is what makes the box
+     agree with the screen, so centred here means centred. */
+}
+.home-hero__eyebrow {
+  max-width: none;
+  font-size: clamp(13px, 1.15vw, 15px);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  color: var(--lime);
+}
+.home-hero__title {
+  margin-top: var(--flow-heading);
+  max-width: none;
+  font-size: clamp(40px, 6vw, 72px);
+  color: var(--on-dark);
+}
+/* Both buttons hug their labels. They were stretched to a shared full width on
+   a phone, which made "Send enquiry" a 340px slab for two words — the widest,
+   heaviest thing on the screen, and louder than the headline above it. Hugging
+   puts the emphasis back on the words each one carries. They wrap to their own
+   lines when they no longer fit side by side, and each row stays centred. */
+.home-hero__actions {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.home-hero__actions > * { flex: 0 0 auto; }
+
+/* The cue for the whole trick: there is a screen of photograph here, and the
+   page comes up over it. */
 .home-hero__scroll {
   position: absolute;
-  right: var(--container-pad);
-  bottom: clamp(56px, 8vw, 120px);
+  left: 0; right: 0;
+  bottom: clamp(28px, 4vw, 52px);
+  display: flex;
+  justify-content: center;
   color: rgba(255, 255, 255, 0.7);
 }
 .home-hero__scroll svg { width: 26px; height: 26px; }
@@ -95,26 +138,43 @@
   0%, 100% { transform: translateY(0); opacity: 0.55; }
   50%      { transform: translateY(7px); opacity: 1; }
 }
-@media (max-width: 799.98px) {
-  /* The floating emergency dock sits over the foot of the first screen, so the
-     hero is tightened up and given foot room to keep both CTAs clear of it. */
-  .home-hero { min-height: min(78svh, 720px); padding-block: var(--space-4) 116px; }
+
+/* On a phone the second action drops its stroke and reads as a plain link.
+   Two outlined pills stacked one above the other gave equal weight to two
+   things that are not equal: one is the enquiry, the other is a page you might
+   go and read. Without the box the pair reads as a button and a link, which is
+   what they are. Scoped to the hero — the outlined pill is right everywhere
+   else it appears. */
+@media (max-width: 599.98px) {
+  .home-hero__actions { gap: var(--space-1); }
+  .home-hero__actions .btn-line,
+  .home-hero__actions .btn-line:hover {
+    border-color: transparent;
+    background: transparent;
+  }
+}
+
+/* Below 900px the utility bar is not rendered at all, so there is only the nav
+   to pull up under. And the floating emergency pill sits over the foot of the
+   first screen, exactly where the scroll cue would be. */
+@media (max-width: 899.98px) {
+  .home-hero__media { margin-top: calc(-1 * var(--nav-h)); }
   .home-hero__scroll { display: none; }
-  .home-hero__lead { margin-top: var(--space-3); line-height: 1.55; }
-  .home-hero__actions { margin-top: var(--space-4); }
-  .home-hero__actions > * { flex: 1 1 100%; justify-content: center; }
+}
+
+/* No scroll to travel, no reveal: on a short window hold the picture at a plain
+   height rather than pinning something that can never move. The copy keeps its
+   overlay so the composition survives; only the pin goes. */
+@media (max-height: 520px) {
+  .home-hero__media { position: static; margin-top: 0; height: 440px; }
+  .home-hero { height: 440px; margin-top: -440px; }
 }
 
 /* --- About + USPs --------------------------------------------------------- */
-/* Single column on mobile, so this gap IS the eyebrow -> heading distance —
-   use the shared heading token so it matches every other header on the site
-   (it was --flow-sm, which made this one header 24px instead of 18px). */
-.home-about__grid { display: grid; gap: var(--flow-heading); }
-@media (min-width: 900px) {
-  .home-about__grid { grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr); gap: clamp(40px, 5vw, 90px); }
-  /* the label rides alongside the copy as it scrolls, as on the reference */
-  .home-about__label { position: sticky; top: calc(var(--ubar-h) + var(--nav-h) + 32px); align-self: start; }
-}
+/* One column. This was a two-column grid whose left rail carried nothing but a
+   sticky "ABOUT INVICTA" label; with the label gone the rail is an empty indent,
+   so the section runs full width and the USP row gets the whole measure. */
+.home-about__grid { display: grid; }
 .home-about__title { margin-top: 0; max-width: 24ch; }
 .home-about__lead {
   margin-top: var(--space-4);
@@ -133,28 +193,34 @@
 .usp {
   background: var(--light);
   border: 1px solid var(--line-light);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   padding: clamp(22px, 2.2vw, 32px);
 }
 .usp__icon { display: block; color: var(--ink); }
 .usp__icon svg { width: 26px; height: 26px; }
+/* The figure is the card. It sits at the same display scale as the numerals on
+   the service pages and the stat band, so "20+" here and "01" there read as one
+   family, and the line under it stays deliberately small: the claim is the
+   number, the words only say what it counts. */
 .usp .usp__figure {
   margin-top: clamp(32px, 4vw, 56px);
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(38px, 4.2vw, 58px);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: clamp(50px, 5.6vw, 82px);
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums lining-nums;
   color: var(--ink);
 }
 .usp__label {
-  margin-top: var(--space-2);
+  margin-top: clamp(14px, 1.4vw, 18px);
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0;
   color: var(--ink-muted);
+  max-width: 22ch;
 }
 
 /* --- Services as cards ---------------------------------------------------- */
@@ -173,7 +239,7 @@
   flex-direction: column;
   background: var(--paper);
   border: 1px solid var(--line-light);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   padding: clamp(24px, 2.4vw, 34px);
   transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
 }
@@ -232,14 +298,19 @@
   padding: clamp(24px, 3vw, 48px);
   background: var(--ground-raise);
   border: 1px solid var(--line-dark);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
 }
 @media (min-width: 800px) {
   .stack__card { grid-template-columns: 1fr 1fr; }
 }
-.stack__index { font-size: 13px; font-weight: 600; color: var(--lime); }
+/* The step number at display size (see .numeral in components.css). These cards
+   are a numbered sequence that stacks as you scroll, so the count is worth
+   seeing: the figure now leads the card and the title sits under it. Kept a step
+   smaller than the service-page numerals, because each card also carries a
+   photograph beside it and a 96px figure would take the card over. */
+.stack__index { color: var(--on-dark); }
 .stack__title {
-  margin-top: var(--space-3);
+  margin-top: clamp(16px, 1.8vw, 22px);
   font-family: var(--font-display);
   font-size: clamp(24px, 2.4vw, 34px);
   font-weight: 400;
@@ -256,7 +327,7 @@
   color: var(--on-dark-muted);
 }
 .stack__cta { margin-top: var(--space-4); }
-.stack__media { border-radius: 6px; overflow: hidden; }
+.stack__media { border-radius: var(--radius-lg); overflow: clip; }
 .stack__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 
 /* A card taller than the viewport can never come to rest, and the stack turns
@@ -281,7 +352,7 @@
   flex-direction: column;
   background: var(--paper);
   border: 1px solid var(--line-light);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   padding: clamp(24px, 2.4vw, 34px);
 }
 .review__mark { color: var(--steel); }
@@ -301,6 +372,24 @@
   color: var(--ink);
 }
 .review__by span { display: block; font-weight: 400; font-size: 14px; color: var(--ink-muted); }
+
+/* Written-sample state. Deliberately visible rather than a code comment: these
+   cards read as genuine testimonials, and the only thing standing between a
+   sample and a published lie is somebody remembering. So the card says so. */
+.review--sample { border-style: dashed; }
+.review__flag {
+  margin: var(--space-4) 0 0;
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: var(--btn-radius);
+  background: rgb(var(--ground-rgb) / 0.07);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.review--sample .review__quote { margin-top: var(--space-3); }
 
 /* Placeholder state — same treatment as the "photo to follow" blocks. */
 .review--empty { min-height: 200px; }
