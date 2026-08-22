@@ -530,6 +530,12 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
        stacking context. Saying it beats a later change that does.
      · an opaque covering section. It is the only thing hiding the pinned
        picture, so the surface classes are what stop the two overlapping.
+
+   The covering edge is SQUARE. A rounded lip riding up over a photograph is a
+   card-on-card idiom that reads as dated, and it disagreed with the rest of the
+   page: everything else here rounds a thing you could pick up, a card or a
+   framed picture, never a full-bleed band. A hard horizontal edge crossing the
+   photograph is the cleaner move and leaves the picture to do the work.
    --- */
 .reveal { position: relative; }
 .band--reveal {
@@ -555,7 +561,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .reveal > .section {
   position: relative;
   z-index: 1;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 /* No scroll to travel, no reveal: hold the picture at a fixed height so a short
    window gets a plain band rather than one that pins and never moves. */
