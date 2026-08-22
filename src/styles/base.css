@@ -21,6 +21,25 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 ul { list-style: none; padding: 0; }
 
+/* --- Touch ----------------------------------------------------------------
+   Mobile browsers paint a translucent blue rectangle over whatever you tap,
+   sized to the element's BOX — so a fully rounded pill flashes a hard-cornered
+   blue slab, a nav link flashes a bar, and every considered corner on the site
+   is briefly squared off by the browser. The floating call pill already turned
+   it off for itself; this is the same fix for everything else you can tap.
+
+   `touch-action: manipulation` comes with it: it drops the 300ms wait mobile
+   browsers keep in case your tap turns into a double-tap zoom, so controls
+   respond immediately.
+
+   Turning the highlight off removes the ONLY confirmation a tap registered, so
+   it is replaced rather than deleted — see the :active states in
+   components.css. --- */
+:where(a, button, summary, label, input, select, textarea, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(a, button, summary, [role="button"]) { touch-action: manipulation; }
+
 /* --- Display typography (Figtree, large + tight) -------------------------- */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
 

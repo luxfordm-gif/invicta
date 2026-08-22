@@ -405,7 +405,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   padding: 14px 24px;
   border-radius: var(--btn-radius);
   white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
 }
 /* A DRAWN arrow, not the "→" character — the same lesson the explore rows
    already recorded: in the body face that glyph's bar is so light on a phone
@@ -440,7 +440,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   padding: 14px 24px;
   border-radius: var(--btn-radius);
   white-space: nowrap;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
 }
 .btn-line:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.09); }
 .btn-line--lg { font-size: 13px; padding: 18px 30px; }
@@ -457,6 +457,50 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
    the field stroke, and the hover fills a hair of ink rather than of white. */
 :is(.section--light, .section--paper) .btn-line { color: var(--ink); border-color: var(--line-field); }
 :is(.section--light, .section--paper) .btn-line:hover { border-color: var(--ink); background: rgba(15, 15, 15, 0.05); }
+
+/* --- Pressed state (touch) ------------------------------------------------
+   The browser's blue tap highlight is off (see base.css), and it was the only
+   thing telling you a tap had landed. Put that back in the site's own terms:
+   controls press in a little, links dim. Scoped to `hover: none` because a
+   pointer already has hover to do this job, and a mouse click is too brief for
+   a press to read anyway.
+   --- */
+@media (hover: none) {
+  :is(.btn-inquiry, .btn-line, .nav__cta):active { transform: scale(0.97); }
+  a:not(.btn-inquiry):not(.btn-line):active,
+  button:not(.btn-inquiry):not(.btn-line):active { opacity: 0.68; }
+}
+/* Someone who asked for less motion still gets the confirmation, just without
+   the movement. Same call the floating pill already makes. */
+@media (hover: none) and (prefers-reduced-motion: reduce) {
+  :is(.btn-inquiry, .btn-line, .nav__cta):active { transform: none; opacity: 0.8; }
+}
+
+/* --- Carousel pagination dots ---------------------------------------------
+   Built by nav.js under any grid that turns into a swipe track on a phone, and
+   hidden by CSS at every width where that grid is a plain grid again.
+
+   Drawn in --fg rather than a fixed white, because the two tracks that use
+   these sit on opposite surfaces: the sectors band on navy, the USP row on
+   white. The theme roles resolve each one correctly with no second rule.
+   --- */
+.dots { display: none; }
+@media (max-width: 599.98px) {
+  .dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px;
+    margin-top: var(--space-4);
+  }
+  .dots__dot {
+    width: 7px; height: 7px; padding: 0;
+    border: 0; border-radius: 999px;
+    background: color-mix(in srgb, var(--fg) 24%, transparent);
+    cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+  }
+  .dots__dot.is-active { width: 22px; background: var(--fg); }
+  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+}
 
 /* --- Full-bleed project band --------------------------------------------- */
 .band {
