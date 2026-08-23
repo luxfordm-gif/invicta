@@ -62,45 +62,67 @@
   .service-points__grid { grid-template-columns: 4fr 6fr; gap: clamp(48px, 6vw, 120px); align-items: start; }
   .service-points__aside { position: sticky; top: calc(var(--ubar-h) + var(--nav-h) + 56px); }
 }
-/* Each point is a number, a title and a line of copy. Stacking all three put
-   the same three steps of depth into every item, which on a phone read as a
-   much longer section than four short points deserve. The number now sits
-   BESIDE the title it counts, on one line, and only the copy steps down under
-   it — two levels instead of three, and the same shape at every width. */
+/* Each point is led by its number at display size (see .numeral in
+   components.css). The number was a 14px label in the left gutter, which made
+   the four points read as a form, not as a sequence: nothing on the page said
+   "there are four of these, and this is the second". At this size the count IS
+   the first thing you read, so the title and its copy both step down to sit
+   under it rather than compete. */
 .service-checklist { display: grid; }
 .service-check {
   display: grid;
-  /* The figure takes only the width it needs on a phone; the title and its copy
-     share the rest of the row. */
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: clamp(14px, 4vw, 24px);
-  align-items: start;
+  /* Stacked by default: the numeral leads, the point sits beneath it. A phone
+     has no room for a 52px figure AND a line of copy side by side. */
+  gap: clamp(14px, 2vw, 20px);
   padding-block: clamp(26px, 3.2vw, 40px);
   border-top: 1px solid var(--line-dark);
 }
 .service-check:last-child { border-bottom: 1px solid var(--line-dark); }
-/* Wide enough for a real gutter: the figures move onto a fixed column so every
-   title starts on the same line, whatever the figure. */
+/* Wide enough for the figure and a real measure beside it: the numeral moves
+   into its own column and the copy runs alongside. The column is fixed rather
+   than auto so every title starts on the same line, whatever the figure. */
 @media (min-width: 700px) {
   .service-check {
     grid-template-columns: clamp(96px, 9vw, 150px) minmax(0, 1fr);
-    column-gap: clamp(24px, 3vw, 48px);
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
   }
 }
-/* The number is set to the title's own size and line-height so the two share a
-   baseline, and held back in muted white so the title still leads the row.
-   Tabular figures keep 01-04 the same width, so the titles line up. */
-.service-check__index {
-  font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(19px, 1.5vw, 22px); letter-spacing: -0.01em; line-height: 1.2;
-  font-variant-numeric: tabular-nums; color: var(--on-dark-muted);
-}
+/* Optically the figure sits a touch low against a cap-height title, because its
+   line-box is cropped tight to 0.8. Nudge the text down instead of the figure
+   up, so the numeral keeps its alignment with the rule above it. */
+.service-check__text { padding-top: 0.35em; }
 .service-check__title {
   display: block; font-family: var(--font-display); font-weight: 500;
   font-size: clamp(19px, 1.5vw, 22px); letter-spacing: -0.01em; line-height: 1.2; color: var(--on-dark);
 }
 .service-check__desc {
   display: block; margin-top: 10px; font-size: var(--text-card); line-height: 1.6; color: var(--on-dark-muted); max-width: 56ch;
+}
+/* PHONE ONLY. Stacking the number, the title AND the copy put three steps of
+   depth into every point, so four or five short items read as a much longer
+   section than they are. Below the 700px breakpoint the figure drops to the
+   title's own size and sits BESIDE it, with only the copy stepping down
+   underneath — two levels instead of three. Above 700px nothing changes: there
+   the figure has the room to lead at display size. */
+@media (max-width: 699.98px) {
+  .service-check {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(14px, 4vw, 24px);
+    align-items: start;
+  }
+  /* Matched to the title's size and line-height so the two share a baseline,
+     held back in muted white so the title still leads the row, and tabular so
+     01-05 are all one width. The .numeral class the markup asks for is not
+     defined anywhere, so the figure is sized here. */
+  .service-check__index {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(19px, 1.5vw, 22px); letter-spacing: -0.01em; line-height: 1.2;
+    font-variant-numeric: tabular-nums; color: var(--on-dark-muted);
+  }
+  /* The nudge above aligns copy under a display figure; alongside one, it only
+     knocks the title off the number's baseline. */
+  .service-check__text { padding-top: 0; }
 }
 .service-points__footer { margin-top: var(--flow-md); max-width: 62ch; }
 .service-points__lead { font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); }
