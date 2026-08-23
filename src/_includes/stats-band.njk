@@ -21,7 +21,9 @@
 
   A stat with no `image` simply has no picture; the figure and label still line
   up with the others, because the media sits at the foot of an equal-height
-  column rather than setting the column's height.
+  column rather than setting the column's height. Such a stat is marked
+  `stat--plain`, because on a phone the card is the photograph with the figure
+  laid over it, and one without a picture needs the plain treatment back.
 #}
 {% set statsItems = statsItems or site.stats %}
 {% if statsItems and statsItems.length %}
@@ -30,9 +32,11 @@
   <h2 id="stats-band-title-{{ statsId or 'x' }}" class="visually-hidden">{{ statsHeading or "Invicta by the numbers" }}</h2>
   <div class="container stats-band__grid">
     {% for s in statsItems %}
-    <article class="stat">
-      <h3 class="stat__label">{{ s.label }}</h3>
-      <p class="stat__figure">{{ s.figure }}</p>
+    <article class="stat{% if not s.image %} stat--plain{% endif %}">
+      <div class="stat__text">
+        <h3 class="stat__label">{{ s.label }}</h3>
+        <p class="stat__figure">{{ s.figure }}</p>
+      </div>
       {% if s.image %}
       <div class="stat__media">
         {# The frame that clips has to hug the picture, and .stat__media carries

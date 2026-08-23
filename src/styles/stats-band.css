@@ -50,7 +50,11 @@
    the one-line labels. */
 @media (min-width: 800px) { .stat__label { min-height: 2.3em; } }
 
-.stat__figure {
+/* The figure is a <p>, and `:is(.section--light, .section--paper) p` sets
+   --ink-muted at (0,1,1) — which beat a bare `.stat__figure` at (0,1,0) and
+   was quietly rendering every number on the site at 58% black. One extra class
+   is all it takes to say what this always meant to say. */
+.stats-band .stat__figure {
   margin-top: var(--space-2);
   font-family: var(--font-display);
   font-weight: 400;
@@ -59,7 +63,7 @@
   letter-spacing: -0.04em;
   color: var(--ink);
 }
-@media (min-width: 800px) { .stat__figure { margin-top: var(--space-4); } }
+@media (min-width: 800px) { .stats-band .stat__figure { margin-top: var(--space-4); } }
 
 .stat__media { margin-top: auto; padding-top: clamp(28px, 4vw, 56px); }
 /* The radius belongs on the frame that clips, not on the picture: the picture
@@ -79,3 +83,146 @@
 
 /* On a dark section the figure has to come off the navy, not off cream. */
 .stats-band:not(.section--paper):not(.section--light) .stat__figure { color: var(--on-dark); }
+
+/* ==========================================================================
+   BELOW 800px: the photograph IS the card.
+
+   Stacked, each stat was a label, a display numeral and a 16:10 photograph
+   under it. Three of them ran to some 1,200px on a phone — four screens of
+   scrolling to say three short things — and the numbers we most want read were
+   the very thing pushing the next one off the screen.
+
+   So the picture stops being an illustration below the figure and becomes the
+   card: figure and label sit over the foot of it, white on a scrim. That one
+   treatment is then arranged two ways — three across on a small tablet, and on
+   a phone a scroll-snap track with a sliver of the next card peeking, the same
+   mechanics the sectors band and the home page USPs already use, with dots
+   from the shared builder in nav.js.
+
+   Phone: ~380px for the band instead of ~1,200, and the numeral is now the
+   biggest thing on the screen rather than a grey line above a photo.
+   ========================================================================== */
+@media (max-width: 799.98px) {
+  .stat {
+    position: relative;
+    padding: 0;
+    justify-content: flex-end;     /* the text rides the foot of the picture */
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--ground-deep);
+  }
+
+  /* The media fills the card instead of sitting at the foot of a column, so
+     everything the column layout gives it — the auto top margin, the padding
+     above it, its own radius — comes back off. */
+  .stat__media { position: absolute; inset: 0; margin: 0; padding: 0; z-index: 0; }
+  .stat__media .parallax { position: absolute; inset: 0; border-radius: 0; }
+  .stat__media img { width: 100%; height: 100%; aspect-ratio: auto; }
+  /* A 16:10 photograph cropped to a portrait card has lost its sides already;
+     drifting it up and down inside that crop as well would swing the subject
+     out of what is left. Sit the parallax out here, exactly as the phone
+     sector cards do, and frame with object-position instead. */
+  .stat__media .parallax > img {
+    --parallax-travel: 0%;
+    --parallax-scale: 1;
+    --parallax-offset: 0%;
+    object-position: center 40%;   /* the subjects all sit low in these frames */
+  }
+
+  /* Scrim: clear at the top so the picture is a picture, heavy at the foot
+     where the numeral and its line actually sit. It has to carry white type
+     over a white van and a white plant-room wall, hence how far it goes. */
+  .stat:not(.stat--plain)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom,
+      rgb(var(--scrim-rgb) / 0) 20%,
+      rgb(var(--scrim-rgb) / 0.20) 42%,
+      rgb(var(--scrim-rgb) / 0.62) 66%,
+      rgb(var(--scrim-rgb) / 0.86) 88%,
+      rgb(var(--scrim-rgb) / 0.90) 100%);
+  }
+
+  /* Reversed, so the figure reads first and the label explains it underneath —
+     the numeral is the claim. The DOM keeps label-then-figure, which is the
+     right reading order for a screen reader. */
+  .stat__text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: var(--space-3);
+  }
+  .stat:not(.stat--plain) .stat__label { color: rgba(255, 255, 255, 0.92); }
+  .stats-band .stat:not(.stat--plain) .stat__figure { color: var(--on-dark); }
+
+  .stats-band .stat__figure {
+    margin-top: 0;
+    font-size: clamp(58px, 17vw, 86px);
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  /* In a column-reverse box the label's top margin is the gap between it and
+     the figure above it. Dropped to a caption: the number is the claim, the
+     words only say what it counts — the same relationship the USP cards use. */
+  .stat__label {
+    margin-top: 10px;
+    max-width: 26ch;
+    font-family: var(--font-body);
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  /* A stat with no photograph has no card to be laid over, so it goes back to
+     type on a quiet panel and takes its height from the ones that do. The panel
+     is mixed from --fg rather than named, so it comes out as a faint grey on
+     cream and a faint lift on navy — the figure's own colour rules already
+     handle both surfaces, and this one must not fight them. */
+  .stat--plain {
+    aspect-ratio: auto;
+    background: color-mix(in srgb, var(--fg) 5%, transparent);
+    border: 1px solid var(--line);
+    padding: var(--space-3);
+  }
+  .stat--plain .stat__text { padding: 0; margin-top: auto; }
+}
+
+/* Small tablet: three across, because at this width they fit — and the band
+   goes from ~1,850px of stacked column to about 300. */
+@media (min-width: 600px) and (max-width: 799.98px) {
+  .stats-band__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+  .stats-band .stat__figure { font-size: clamp(40px, 7.2vw, 60px); }
+  .stat__label { font-size: clamp(14px, 1.9vw, 16px); }
+  .stat__text { padding: var(--space-2); }
+}
+
+/* Phone: the three of them as one swipe. */
+@media (max-width: 599.98px) {
+  .stats-band__grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--space-2);
+    /* No bleed to undo here: unlike the other two tracks on the site, THIS
+       element is itself the .container, so its own padding is already the
+       content margin. The track runs edge to edge, the first card lines up
+       with the page, and the last one keeps trailing space. */
+    padding-block: 2px 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-pad);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .stats-band__grid::-webkit-scrollbar { display: none; }
+  .stat {
+    flex: 0 0 78%;                 /* ~22% of the next card peeks at the edge */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}

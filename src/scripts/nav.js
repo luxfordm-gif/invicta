@@ -168,12 +168,17 @@
 
   var TRACKS = [
     { track: ".sectors", card: ".sector", label: "Sector slides" },
-    { track: ".usps", card: ".usp", label: "Why Invicta slides" }
+    { track: ".usps", card: ".usp", label: "Why Invicta slides" },
+    { track: ".stats-band__grid", card: ".stat", label: "Invicta by the numbers" }
   ];
 
+  // querySelectorAll, not querySelector: the stats band is a component that a
+  // page may include more than once, and only the first would have got dots.
   TRACKS.forEach(function (cfg) {
-    var track = document.querySelector(cfg.track);
-    if (!track) return;
+    [].slice.call(document.querySelectorAll(cfg.track)).forEach(build.bind(null, cfg));
+  });
+
+  function build(cfg, track) {
     var cards = [].slice.call(track.querySelectorAll(cfg.card));
     if (cards.length < 2) return;
 
@@ -221,7 +226,7 @@
       }, { root: track, threshold: [0.6] });
       cards.forEach(function (c) { io.observe(c); });
     }
-  });
+  }
 })();
 
 /* --- Smoothly animate the services <details> accordion via grid-template-rows.
