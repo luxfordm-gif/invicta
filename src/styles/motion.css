@@ -15,6 +15,7 @@
     .services-explore__card, .services-explore__media,
     .acc,
     .positioning__intro > *, .sector,
+    .why-card,
     .stat,
     .client,
     .footer__cta, .footer__grid > *, .footer__meta
@@ -32,8 +33,8 @@
   .hero__title  { --reveal-delay: 90ms; }
   .hero__scroll { --reveal-delay: 180ms; }
   .hero__lead   { --reveal-delay: 250ms; }
-  .sector:nth-child(2), .stat:nth-child(2), .client:nth-child(2) { --reveal-delay: 90ms; }
-  .sector:nth-child(3), .stat:nth-child(3), .client:nth-child(3) { --reveal-delay: 180ms; }
+  .sector:nth-child(2), .stat:nth-child(2), .client:nth-child(2), .why-card:nth-child(2) { --reveal-delay: 90ms; }
+  .sector:nth-child(3), .stat:nth-child(3), .client:nth-child(3), .why-card:nth-child(3) { --reveal-delay: 180ms; }
   .sector:nth-child(4), .client:nth-child(4) { --reveal-delay: 270ms; }
 
   /* --- Footer wordmark: a larger, deliberate slide-up as you reach the bottom.

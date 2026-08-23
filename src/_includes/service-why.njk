@@ -1,0 +1,75 @@
+{#
+  ============================ WHY IT MATTERS ============================
+  The storytelling beat that sits directly under a service hero, before the
+  photographic band. Every service page has always said what the service IS
+  and what is INVOLVED; none of them said why you would want it, and that is
+  the question a visitor arrives with. This is the section that answers it.
+
+  Three cards, in a deliberate order, and the order is the argument:
+    1. what the thing is, in plain words
+    2. why it matters — the cost, risk or annoyance of not doing it
+    3. what you actually get from us
+
+  It stays on the navy, with no padding above it, so it reads as the second
+  half of the hero rather than a new page: the rhythm of every service page is
+  still "deep blue, centred copy, then a wide photograph", the blue passage
+  just has an argument in it now.
+
+  Driven from page front matter, and skipped entirely on a page that sets no
+  `why` list, so a page can opt out without a change here:
+
+    whyTitle:  heading, may carry <span class="em">
+    whyLead:   optional supporting line under it
+    why:       [ { icon, q, a } ]  — icon is a key from the set below
+
+  Copy is written to be READ: a question you would actually ask, then an answer
+  short enough that all three fit one screen on a laptop.
+#}
+
+{# The icon set. Deliberately small and stroked to the same weight as the USP
+   icons on the home page, so a service page and the home page look drawn by
+   the same hand. Anything not listed falls through to the droplet. #}
+{% macro whyIcon(name) %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {%- if name == "flask" -%}
+    <path d="M9.5 3h5M10.5 3v6.1l-4.8 8.2A2 2 0 0 0 7.4 20.4h9.2a2 2 0 0 0 1.7-3.1l-4.8-8.2V3"/><path d="M8.2 15h7.6"/>
+  {%- elif name == "gauge" -%}
+    <path d="M3.5 18a8.5 8.5 0 1 1 17 0"/><path d="M12 18l4.4-5.6"/><path d="M3.5 18h17"/>
+  {%- elif name == "shield" -%}
+    <path d="M12 3l7 2.8v5.6c0 4.3-2.9 8-7 9.4-4.1-1.4-7-5.1-7-9.4V5.8L12 3Z"/><path d="M9 11.8l2 2 4-4.2"/>
+  {%- elif name == "clock" -%}
+    <circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.4 2"/>
+  {%- elif name == "calendar" -%}
+    <rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10.5h17M9 3v4M15 3v4"/>
+  {%- elif name == "document" -%}
+    <path d="M15 4.5h2.2A1.8 1.8 0 0 1 19 6.3v13.4a1.8 1.8 0 0 1-1.8 1.8H6.8A1.8 1.8 0 0 1 5 19.7V6.3a1.8 1.8 0 0 1 1.8-1.8H9"/><rect x="9" y="2.6" width="6" height="3.8" rx="1"/><path d="M8.6 12h6.8M8.6 16h4.4"/>
+  {%- elif name == "alert" -%}
+    <path d="M12 3.6l8.7 15.3a1 1 0 0 1-.9 1.5H4.2a1 1 0 0 1-.9-1.5L12 3.6Z"/><path d="M12 9.6v4.2M12 17.2v.01"/>
+  {%- elif name == "spanner" -%}
+    <path d="M20 4.4a5 5 0 0 1-6.3 6.3L5.2 19.2a2 2 0 0 1-2.8-2.8l8.5-8.5A5 5 0 0 1 17.2 1.6l-2.9 2.9 2.2 2.2L20 4.4Z"/>
+  {%- elif name == "cycle" -%}
+    <path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.4 2.8v3.8h-3.8M6.6 21.2v-3.8h3.8"/>
+  {%- else -%}
+    <path d="M12 3.2s6.4 6.6 6.4 10.5a6.4 6.4 0 0 1-12.8 0C5.6 9.8 12 3.2 12 3.2Z"/><path d="M9.2 14.2a2.9 2.9 0 0 0 2.9 2.9"/>
+  {%- endif -%}
+</svg>
+{% endmacro %}
+
+{% if why %}
+    <section class="section service-why" aria-labelledby="why-title">
+      <div class="container">
+        <h2 id="why-title" class="statement service-why__title">{{ whyTitle | safe }}</h2>
+        {% if whyLead %}<p class="service-why__lead">{{ whyLead | safe }}</p>{% endif %}
+
+        <ul class="why-cards" role="list">
+          {% for w in why %}
+          <li class="why-card">
+            <span class="why-card__icon">{{ whyIcon(w.icon) }}</span>
+            <h3 class="why-card__q">{{ w.q }}</h3>
+            <p class="why-card__a">{{ w.a | safe }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+{% endif %}
