@@ -67,6 +67,86 @@
 .statement:first-child { margin-top: 0; }
 .services .statement, .positioning .statement { max-width: 30ch; }
 
+/* --- Why it matters (dark): the storytelling beat under a service hero -----
+   Three cards answering, in order, "what is it", "why does it matter" and
+   "what do I get" — see service-why.njk for why that order is the argument.
+
+   It carries NO top padding on purpose. The hero above it is navy too, so a
+   full section step would open a band of empty blue between a headline and the
+   answer to the question that headline raises; the hero's own bottom padding
+   is the whole gap, and the two read as one passage.
+   --- */
+.service-why { padding-top: 0; }
+.service-why__title { max-width: 26ch; }
+.service-why__lead {
+  margin-top: var(--space-4);
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--on-dark-muted);
+  max-width: 56ch;
+  text-wrap: pretty;   /* two lines on a phone, and neither of them an orphan */
+}
+.why-cards {
+  margin-top: var(--flow-md);
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+/* Three abreast only at the wide breakpoint. A third of a tablet is not a
+   measure: at 900px each card came out around 26 characters wide and the copy
+   fell down the card in eleven ragged lines. Stacked, the card runs the full
+   container and the paragraph keeps its own 46ch cap, which is a better read
+   than three narrow columns.
+
+   Stacked, NOT a swipe track: unlike the USP tiles on the home page, these
+   cards carry the argument, and an argument you have to swipe for is one most
+   people will not read. */
+@media (min-width: 1100px) { .why-cards { grid-template-columns: repeat(3, 1fr); } }
+.why-card {
+  display: flex;
+  flex-direction: column;
+  /* A raised navy surface, washed back down to the ground at the far corner,
+     so the card lifts off the section without turning into a bright panel. */
+  background: linear-gradient(158deg, var(--ground-raise), var(--ground) 78%);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-md);
+  padding: clamp(24px, 2.4vw, 38px);
+}
+.why-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(46px, 4.4vw, 56px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 1px solid var(--line-dark);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--lime);
+  flex: none;
+}
+.why-card__icon svg { width: 24px; height: 24px; display: block; }
+/* The question is the card. It sits a step under a section heading and a step
+   over the copy, so the three questions are what you read scanning the row. */
+.why-card__q {
+  margin-top: clamp(26px, 3vw, 44px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(21px, 1.8vw, 26px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--on-dark);
+  text-wrap: balance;
+}
+.why-card__a {
+  margin-top: var(--space-2);
+  font-size: var(--text-card);
+  line-height: 1.6;
+  /* Soft, not muted. Everywhere else on a navy section this size of copy is a
+     caption or a supporting note; here it carries the argument the page is
+     making, so it is set at reading strength. */
+  color: var(--on-dark-soft);
+  max-width: 46ch;
+}
+
 /* --- Positioning / sectors (dark) ----------------------------------------- */
 .positioning__intro {
   display: grid;

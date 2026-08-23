@@ -15,6 +15,7 @@
     ".services-explore__card", ".services-explore__media",
     ".acc",
     ".positioning__intro > *", ".sector",
+    ".why-card",
     ".stat",
     ".client",
     ".footer__cta", ".footer__grid > *", ".footer__meta",
