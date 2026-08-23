@@ -99,6 +99,31 @@
 .service-check__desc {
   display: block; margin-top: 10px; font-size: var(--text-card); line-height: 1.6; color: var(--on-dark-muted); max-width: 56ch;
 }
+/* PHONE ONLY. Stacking the number, the title AND the copy put three steps of
+   depth into every point, so four or five short items read as a much longer
+   section than they are. Below the 700px breakpoint the figure drops to the
+   title's own size and sits BESIDE it, with only the copy stepping down
+   underneath — two levels instead of three. Above 700px nothing changes: there
+   the figure has the room to lead at display size. */
+@media (max-width: 699.98px) {
+  .service-check {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(14px, 4vw, 24px);
+    align-items: start;
+  }
+  /* Matched to the title's size and line-height so the two share a baseline,
+     held back in muted white so the title still leads the row, and tabular so
+     01-05 are all one width. The .numeral class the markup asks for is not
+     defined anywhere, so the figure is sized here. */
+  .service-check__index {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(19px, 1.5vw, 22px); letter-spacing: -0.01em; line-height: 1.2;
+    font-variant-numeric: tabular-nums; color: var(--on-dark-muted);
+  }
+  /* The nudge above aligns copy under a display figure; alongside one, it only
+     knocks the title off the number's baseline. */
+  .service-check__text { padding-top: 0; }
+}
 .service-points__footer { margin-top: var(--flow-md); max-width: 62ch; }
 .service-points__lead { font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); }
 .service-points__approach { margin-top: var(--space-3); font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); }
