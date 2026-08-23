@@ -91,16 +91,28 @@
   display: grid;
   gap: clamp(12px, 1.6vw, 20px);
 }
-/* Three abreast only at the wide breakpoint. A third of a tablet is not a
-   measure: at 900px each card came out around 26 characters wide and the copy
-   fell down the card in eleven ragged lines. Stacked, the card runs the full
-   container and the paragraph keeps its own 46ch cap, which is a better read
-   than three narrow columns.
+/* Three abreast from the desktop breakpoint — the same one where the nav
+   switches, so "desktop" means one thing on this page and the next. It sat at
+   1100px first, on the argument that a third of a tablet is not a measure, but
+   that left a real gap: a phone asking for the desktop site renders around
+   980px, lands in the stacked range, and gets three tall cards where the whole
+   point is seeing the three questions at once.
+
+   Between 900 and 1100 the column is genuinely tight, so the card gives the
+   copy everything it can spare there — less padding, a smaller gap, and the
+   in-card size one step down. Below 900 it stacks, and the paragraph's own
+   46ch cap does the work instead.
 
    Stacked, NOT a swipe track: unlike the USP tiles on the home page, these
    cards carry the argument, and an argument you have to swipe for is one most
    people will not read. */
-@media (min-width: 1100px) { .why-cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .why-cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) and (max-width: 1099.98px) {
+  .why-cards { gap: 12px; }
+  .why-card { padding: 22px 20px 26px; }
+  .why-card__q { margin-top: 24px; font-size: 20px; }
+  .why-card__a { font-size: var(--text-note); }
+}
 .why-card {
   display: flex;
   flex-direction: column;
@@ -145,6 +157,34 @@
      making, so it is set at reading strength. */
   color: var(--on-dark-soft);
   max-width: 46ch;
+}
+
+/* Line the three cards up ROW BY ROW, not just edge to edge. A question that
+   wraps to two lines ("What is a private water supply?") otherwise pushes its
+   own paragraph a line below the other two, and a row of cards that nearly
+   aligns reads worse than one that plainly does not. Subgrid hands the icon,
+   the question and the copy a shared set of tracks, so each lines up on the
+   tallest of its kind with no hardcoded height anywhere.
+
+   It has to come AFTER .why-card, not inside the columns query above it: same
+   specificity, so the flex declaration up there would otherwise win on order
+   and quietly leave `grid-template-rows: subgrid` sitting inert on a flex box.
+
+   Behind @supports because the fallback is that flex column — the previous
+   behaviour, and perfectly fine, just unaligned. */
+@media (min-width: 900px) {
+  @supports (grid-template-rows: subgrid) {
+    /* row-gap 0: the track gap was set for the space BETWEEN cards, and with
+       the cards now sharing rows it would open that same gap inside every one
+       of them, under the icon and under the question. The columns keep it. */
+    .why-cards { grid-template-rows: auto auto auto; row-gap: 0; }
+    .why-card { display: grid; grid-row: span 3; grid-template-rows: subgrid; }
+    /* Where a shorter question leaves slack in the shared row, the slack goes
+       ABOVE the question, not below it: a heading belongs to the paragraph it
+       introduces, so it should sit tight to its own copy and let the gap open
+       under the icon instead. */
+    .why-card__q { align-self: end; }
+  }
 }
 
 /* --- Positioning / sectors (dark) ----------------------------------------- */
