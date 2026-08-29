@@ -216,27 +216,22 @@
       </div>
     </section>
 
-    <!-- ===================== STATS (light, with imagery) ===================== -->
+    <!-- ============ TRUST: LOGOS, RULE, THEN THE FIGURES ============
+      One block making one argument, in the order a sceptic reads it: who
+      trusts us, then how much of it we have done. The logos come first because
+      a name is recognised instantly and a number has to be read, and the
+      hairline holds the two apart without starting a new section. Both sit on
+      white, so the rule is doing the dividing rather than a colour change.
+    -->
+    {% set clientsId = "pws-clients" %}
+    {% set clientsClass = "clients--airy clients--ruled" %}
+    {% set clientsSurface = "section--paper" %}
+    {% include "clients.njk" %}
+
     {# The shared band, so this page quotes the same figures as every other. It
        used to carry its own numbered, picture-less variant with a different
        year count on it. #}
     {% include "stats-band.njk" %}
-
-    <!-- ===================== CLIENTS / TRUST (light) ===================== -->
-    <section class="section section--paper clients" aria-labelledby="clients-title">
-      <div class="container">
-        <h2 id="clients-title" class="statement">
-          Chosen by clients who <span class="em">expect it done properly.</span>
-        </h2>
-
-        <ul class="clients__grid">
-          <li class="client"><span>Chelsea FC</span></li>
-          <li class="client"><span>GSK</span></li>
-          <li class="client"><span>Amgen</span></li>
-          <li class="client"><span>Cowdray Estate</span></li>
-        </ul>
-      </div>
-    </section>
 
     <!-- ============ CASE STUDIES (one per screen, light) ============ -->
     {% set studies = [] %}

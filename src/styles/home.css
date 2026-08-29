@@ -381,9 +381,6 @@
   .stack__card { position: static; }
 }
 
-/* --- Trusted by ----------------------------------------------------------- */
-.home-clients .clients__grid { margin-top: var(--flow-md); }
-
 /* --- Reviews -------------------------------------------------------------- */
 .home-reviews__title { max-width: 22ch; }
 .reviews {
