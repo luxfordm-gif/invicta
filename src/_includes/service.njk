@@ -20,7 +20,7 @@
     </section>
 
     <!-- ============ WHY IT MATTERS (dark) ============
-      Rides straight off the hero, on the same navy, so the page answers
+      Rides off the hero on the same navy, under a divider, so the page answers
       "why would I want this" before it shows a photograph. See service-why.njk.
     -->
 {% include "service-why.njk" %}
@@ -44,7 +44,13 @@
             {% for p in introBody %}<p{% if loop.first %} class="service-intro__lead"{% endif %}>{{ p | safe }}</p>{% endfor %}
           </div>
           {% endif %}
-          {% if introNote %}<p class="service-intro__note">{{ introNote | safe }}</p>{% endif %}
+          {# The italic pull-line that used to close this block is gone. It was a
+             restatement of the paragraph above it in a bigger face, at the exact
+             point in the page where a reader who is convinced wants somewhere to
+             go. A button is the more useful thing to put in front of them. #}
+          <div class="service-intro__cta">
+            <a class="btn-inquiry" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          </div>
         </div>
       </div>
     </section>

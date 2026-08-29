@@ -71,23 +71,33 @@
    Three cards answering, in order, "what is it", "why does it matter" and
    "what do I get" — see service-why.njk for why that order is the argument.
 
-   It carries NO top padding on purpose. The hero above it is navy too, so a
-   full section step would open a band of empty blue between a headline and the
-   answer to the question that headline raises; the hero's own bottom padding
-   is the whole gap, and the two read as one passage.
+   A HAIRLINE OPENS IT, and that is what buys the section its own top padding.
+   The hero above is navy too, so with nothing between them the two passages ran
+   together and there was no gap you could open that read as a section break
+   rather than a long hero. The rule draws the break; the padding above it is
+   then legible as separation instead of drift. The line sits nearer the heading
+   it introduces than the hero it closes, because it belongs to what follows.
    --- */
+/* No top padding: the hero's own bottom padding is the gap above the rule, and
+   adding a section step on top of it opened a screenful of empty navy between
+   the last line of the hero and the line meant to close it. Below the rule the
+   three gaps are ONE value, so the block reads as evenly set rather than as a
+   heading stranded between a distant line and its own cards. */
 .service-why { padding-top: 0; }
-.service-why__title { max-width: 26ch; }
-.service-why__lead {
-  margin-top: var(--space-4);
-  font-size: var(--text-lead);
-  line-height: 1.55;
-  color: var(--on-dark-muted);
-  max-width: 56ch;
-  text-wrap: pretty;   /* two lines on a phone, and neither of them an orphan */
+.service-why__rule { margin-top: 0; margin-bottom: var(--flow-sm); }
+/* A SUBHEADING, not a statement. This block is the second half of the intro,
+   not a new argument, and at statement size (62px) it read as a second page
+   heading a screen below the first — two things competing to be the title. One
+   step above the card headings is enough to lead them. */
+.service-why__title {
+  margin-top: 0;
+  max-width: 34ch;
+  font-size: clamp(24px, 2.6vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 .why-cards {
-  margin-top: var(--flow-md);
+  margin-top: var(--flow-sm);
   display: grid;
   gap: clamp(12px, 1.6vw, 20px);
 }
@@ -103,9 +113,12 @@
    in-card size one step down. Below 900 it stacks, and the paragraph's own
    46ch cap does the work instead.
 
-   Stacked, NOT a swipe track: unlike the USP tiles on the home page, these
-   cards carry the argument, and an argument you have to swipe for is one most
-   people will not read. */
+   Below 600 it IS a swipe track, like the USP tiles and the sectors band. It
+   was deliberately stacked once, on the argument that copy carrying the case for
+   the service should not need swiping for — but that was written when each card
+   ran to 240 characters and three of them were four screens of scrolling. At
+   140 they fit a card you can take in at a glance, and one swipe beats a long
+   scroll past three of them. */
 @media (min-width: 900px) { .why-cards { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 900px) and (max-width: 1099.98px) {
   .why-cards { gap: 12px; }
@@ -159,6 +172,42 @@
   max-width: 46ch;
 }
 
+/* --- Phone: the three cards as one swipe -----------------------------------
+   The same track mechanics as the sectors band and the stats band, and the dots
+   underneath come from the shared builder in nav.js — see its TRACKS list. */
+@media (max-width: 599.98px) {
+  .why-cards {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--space-2);
+    /* Bleed to the screen edges, then pad back to the content margin, so the
+       first card lines up with the page and the last keeps trailing space. */
+    margin-inline: calc(-1 * var(--container-pad));
+    padding-inline: var(--container-pad);
+    /* overflow-x forces overflow-y to auto too, which would shave the cards'
+       top and bottom borders flush against the track edge. */
+    padding-block: 3px 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-pad);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .why-cards::-webkit-scrollbar { display: none; }
+  .why-card {
+    flex: 0 0 82%;                 /* ~18% of the next card peeks at the edge */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  /* Smaller on a phone. The icon is a marker for which of the three you are on,
+     not an illustration, and at 46px with 26px under it, it was taking the top
+     third of a card whose job is the sentence below it. */
+  .why-card__icon { width: 38px; }
+  .why-card__icon svg { width: 19px; height: 19px; }
+  .why-card__q { margin-top: 18px; }
+}
+
 /* Line the three cards up ROW BY ROW, not just edge to edge. A question that
    wraps to two lines ("What is a private water supply?") otherwise pushes its
    own paragraph a line below the other two, and a row of cards that nearly
@@ -191,7 +240,7 @@
 .positioning__intro {
   display: grid;
   gap: var(--space-5);
-  margin-top: var(--flow-md);
+  margin-top: var(--flow-lead);
 }
 @media (min-width: 900px) {
   .positioning__intro { grid-template-columns: 1fr 1fr; gap: clamp(48px, 6vw, 120px); }
@@ -207,11 +256,21 @@
 @media (min-width: 600px) { .sectors { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .sectors { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); } }
 .sector { display: flex; flex-direction: column; border-top: 1px solid var(--line-dark); padding-top: var(--space-3); }
-.sector h3 { font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.02em; }
+/* The card-heading step, the same one .why-card__q uses: this is a heading over
+   a short paragraph inside a card, which is that role exactly. At 32px it was
+   the largest card heading on the site, set in the narrowest column on it — four
+   abreast at 1100px — so it out-shouted the section heading above it. */
+.sector h3 { font-size: clamp(21px, 1.8vw, 26px); letter-spacing: -0.02em; }
 /* flex:1 lets the description fill the leftover height so the media sits at the
    card's foot — with the grid row stretching all cards to equal height, that
    bottom-aligns every placeholder even when descriptions run to different lengths. */
-.sector p { font-size: var(--text-body); line-height: 1.5; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
+/* One step down the scale, from --text-body to --text-card. The token's own
+   description is "secondary copy inside a card", which is this paragraph's job
+   exactly: --text-body is the size for reading copy in the open, and at a
+   quarter of the page width it was setting three lines of 20px type in a 316px
+   column. Line-height goes to 1.6 with it, matching .why-card__a, because 1.5
+   was set for the larger size and comes out tight at this one. */
+.sector p { font-size: var(--text-card); line-height: 1.6; color: var(--on-dark-muted); margin-top: var(--space-3); flex: 1; }
 .sector__media { margin-top: var(--space-4); }
 /* Same rule as the stats band: the frame clips, so it carries the radius. The
    picture keeps one too, for the case where the media is not a parallax frame. */
@@ -412,8 +471,21 @@
 @media (min-width: 800px) { .footer__nav { text-align: right; } }
 .footer__nav a { font-size: 18px; color: var(--on-dark); }
 .footer__nav a:hover { color: var(--blue-bright); }
-/* Services collapses into a click-to-open accordion of its child pages, using
-   the same +/− toggle idiom as the nav dropdowns and the page accordions. */
+/* Services collapses into a click-to-open accordion of its child pages.
+
+   THE MARKER SITS ON THE OPPOSITE SIDE TO THE ALIGNMENT. This list is
+   right-aligned on desktop, and a marker after the word was the only thing
+   standing between "Services" and the right edge — so "Home" and "About" landed
+   flush and "Services" hung some 20px short of them, which is all you saw.
+   row-reverse puts the marker on the left and the word back on the margin with
+   its neighbours. Left-aligned on a phone, the same logic keeps it after the
+   word, so the words still start together.
+
+   A small filled triangle, not the +/− used elsewhere. A plus promises another
+   panel of content; this is three links, and a caret that turns over is the
+   plainer, quieter promise. Border triangle rather than a glyph or an SVG: it
+   stays crisp at 8px, takes currentColor with the rest of the row, and needs no
+   optical centring inside a box bigger than itself. */
 .footer__acc summary { list-style: none; cursor: pointer; }
 .footer__acc summary::-webkit-details-marker { display: none; }
 .footer__acc-summary {
@@ -424,20 +496,22 @@
   color: var(--on-dark);
   transition: color 0.2s ease;
 }
+@media (min-width: 800px) { .footer__acc-summary { flex-direction: row-reverse; } }
 .footer__acc-summary:hover { color: var(--blue-bright); }
 .footer__acc-summary:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 2px; }
-.footer__acc-icon { position: relative; width: 15px; height: 15px; flex: none; }
-.footer__acc-icon::before,
-.footer__acc-icon::after {
-  content: "";
-  position: absolute; top: 50%; left: 50%;
-  width: 11px; height: 1.5px;
-  background: currentColor;
-  transform: translate(-50%, -50%);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.footer__acc-icon {
+  width: 0;
+  height: 0;
+  flex: none;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  /* Seats the caret on the lowercase middle rather than the line box centre,
+     which sits it a shade high next to an 18px word. */
+  margin-top: 2px;
+  transition: transform 0.3s ease;
 }
-.footer__acc-icon::after { transform: translate(-50%, -50%) rotate(90deg); }        /* vertical stroke → "+" */
-.footer__acc[open] .footer__acc-icon::after { transform: translate(-50%, -50%) rotate(90deg) scaleX(0); opacity: 0; }  /* retracts → "−" */
+.footer__acc[open] .footer__acc-icon { transform: rotate(180deg); }
 .footer__sublist { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 .footer__sublist a { font-size: 15px; color: var(--on-dark-muted); }
 .footer__sublist a:hover { color: var(--blue-bright); }
@@ -543,7 +617,7 @@
 
 .services-explore__title { max-width: 15ch; }
 .services-explore__lead {
-  margin-top: var(--space-3);
+  margin-top: var(--flow-lead);
   max-width: 46ch;
   font-size: var(--text-lead);
   line-height: 1.6;
@@ -556,29 +630,23 @@
   margin-top: clamp(28px, 3.5vw, 48px);
   background: var(--paper);
   border-radius: var(--radius-md);
-  /* 14px of inset put the copy almost against the card's edge on a phone — too
-     tight for a 16px radius. 22px gives it a proper margin, and matches the
-     inset the case cards use, so the two white cards on these pages agree. */
-  padding: 8px clamp(22px, 1.6vw, 24px);
+  /* Inset generously on the wide end. 24px against a card that runs most of a
+     half-page put the rows almost edge to edge and made the card read as a
+     panel rather than an object; the floor stays low because a phone has no
+     width to give away. */
+  padding: 8px clamp(22px, 3.4vw, 48px);
   box-shadow: 0 22px 50px -32px rgb(var(--ground-deep-rgb) / 0.5);
 }
 .services-explore__row + .services-explore__row { border-top: 1px solid var(--line-light); }
 
 .services-explore__link {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: clamp(14px, 1.6vw, 22px);
+  gap: var(--numeral-gap);
   padding-block: clamp(18px, 2vw, 26px);
   color: var(--ink);
   text-decoration: none;
-}
-.services-explore__index {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--steel);
-  font-variant-numeric: tabular-nums;
 }
 .services-explore__name {
   display: block;
@@ -625,14 +693,6 @@
 }
 .services-explore__link:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: var(--radius-sm); }
 
-/* Mobile: the index column costs width the copy needs more than the numbering
-   does. A three-item list reads as ordered without it, so drop the numbers and
-   give the row back to the name and its line of description. */
-@media (max-width: 599.98px) {
-  .services-explore__index { display: none; }
-  .services-explore__link { grid-template-columns: minmax(0, 1fr) auto; }
-}
-
 /* --- The photograph ------------------------------------------------------- */
 .services-explore__media {
   position: relative;
@@ -674,9 +734,17 @@
 }
 
 /* Touch: there is no hover to drive the crossfade, so the picture is one fixed
-   image above the card. Keep it shallow, it is scenery, not content. */
-@media (max-width: 899.98px) {
+   image. Keep it shallow between 600 and 900, it is scenery, not content. */
+@media (min-width: 600px) and (max-width: 899.98px) {
   .services-explore__media { aspect-ratio: 16 / 10; }
+}
+/* Phone: no picture at all. Its whole job is to follow the pointer down the
+   list, and there is no pointer here — so what is left is one arbitrary shot of
+   the first service sitting under the card, a screen of scrolling between the
+   last link and the footer. Dropping it also saves the download, since a lazy
+   image inside a display:none box is never fetched. */
+@media (max-width: 599.98px) {
+  .services-explore__media { display: none; }
 }
 
 /* ===================== BREADCRUMB ===================== */
@@ -736,7 +804,11 @@
 }
 .img-ph__label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; }
 
-/* Stats and Clients are both light, which normally collapses the gap between
-   them. Keep them clearly separated with full padding and a hairline. */
-.stats:has(+ .clients) { padding-bottom: var(--section-y); }
-.stats + .clients { padding-top: var(--section-y); border-top: 1px solid var(--line-light); }
+/* There was a pair of rules here holding Stats and Clients apart with full
+   padding and a hairline. They were written for a `.stats` section that no
+   longer exists — the block is `.stats-band` now — so neither had matched
+   anything for some time, and the two sections had quietly been sitting on the
+   collapsed same-surface gap instead. The join itself is the right mechanism;
+   it was the value that was wrong, and that is fixed at the token (see
+   --section-y-join in tokens.css) for every pair on the site, not just this one.
+*/

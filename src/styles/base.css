@@ -134,7 +134,7 @@ a[href^="tel:"] { white-space: nowrap; }
 .section--light + .section--light,
 .section--paper + .section--paper { padding-top: 0; display: flow-root; }
 .section--light:has(+ .section--light),
-.section--paper:has(+ .section--paper) { padding-bottom: var(--section-y-tight); }
+.section--paper:has(+ .section--paper) { padding-bottom: var(--section-y-join); }
 
 /* --- Themes ---------------------------------------------------------------
    .theme-dark / .theme-light flip the semantic roles for a subtree, so a
@@ -178,6 +178,19 @@ a[href^="tel:"] { white-space: nowrap; }
 
 /* On dark, the emotional accent glows in lime. */
 .em { color: var(--lime); }
+
+/* IN A SECTION HEADING, THE ITALIC CLAUSE ALWAYS STARTS ITS OWN LINE. Whether
+   it fell to the next line was previously down to how long the roman half
+   happened to be at that width, so the same two-part heading read as a clean
+   two-line pair on one page and a single long line on the next, and the accent
+   stopped being a separate beat.
+
+   `display: block` rather than a <br> in the markup: the break belongs to the
+   accent's role inside a heading, so it holds at every width and no page has to
+   remember to type it. Scoped to section headings on purpose — hero titles set
+   their own break with a <br>, and a block element after one of those would
+   open an empty line above the accent. */
+:is(.statement, .service-why__title, .footer__cta-line, .coverage-band__title) .em { display: block; }
 
 /* Hairline rule that spans the container, used under eyebrow labels. */
 .rule { height: 1px; background: var(--line-dark); margin-top: var(--space-4); }

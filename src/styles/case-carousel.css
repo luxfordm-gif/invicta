@@ -32,7 +32,7 @@
 .case-cc__title { margin-top: var(--flow-heading); max-width: 20ch; }
 :is(.case-cc--split, .case-cc--mirror) .case-cc__lead { margin-top: 0; padding-bottom: 6px; }
 .case-cc__lead {
-  margin-top: var(--space-2);
+  margin-top: var(--flow-lead);
   max-width: 54ch;
   color: var(--ink-muted);
   font-size: var(--text-lead);

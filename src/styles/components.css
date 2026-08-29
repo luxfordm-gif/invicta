@@ -4,13 +4,17 @@
    ========================================================================== */
 
 /* --- Utility bar (STICKY, frosted — centred emergency call-out + number) -- */
+/* SOLID, not translucent. At 0.82 over a blur the photograph behind the hero
+   came through it, so the bar changed colour as you scrolled and read as a
+   panel floating on the page rather than the top edge of it. The emergency
+   number is the one line on the site that has to be legible at a glance from
+   any page, on any photograph. Deep navy at full opacity, which also makes the
+   blur redundant and saves the compositing layer it cost. */
 .ubar {
   position: sticky;
   top: 0;
   z-index: 60;               /* above the nav, which sticks below it */
-  background: rgb(var(--ground-deep-rgb) / 0.82);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: var(--ground-deep);
   color: var(--on-dark);
   font-size: 13px;
 }
@@ -37,6 +41,25 @@
 @media (max-width: 599.98px) {
   .ubar__msg--full { display: none; }
   .ubar__msg--short { display: inline; }
+}
+
+/* --- The numeral that leads a numbered row -------------------------------
+   Shared by the dark service checklist and the light Explore list. The markup
+   has carried `class="numeral"` since the checklist was built; this is the rule
+   it was always meant to pick up. Accent-coloured through --fg-accent, so it
+   comes out pale blue on navy and livery blue on a light section: the same
+   element in two themes rather than two different-looking lists. */
+.numeral {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--numeral);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--fg-accent);
+  /* Seats the figure's cap height on the title's. A shared box top will not do
+     it: the title carries half-leading the figure does not. */
+  margin-top: 0.05em;
 }
 
 /* --- Sticky nav (full-width bar, below the utility bar) ------------------- */
@@ -105,7 +128,11 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 1px;
-  background: var(--blue-bright);
+  /* White, not the livery blue. The nav sits on navy on every page, so the
+     underline is a mark on a dark bar rather than an accent on a light one, and
+     white is the only colour that reads the same under the "deep" palette as
+     under the bright one. */
+  background: var(--on-dark);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -159,7 +186,10 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 /* compound selector so it beats the later .btn-inquiry base rule */
 .btn-inquiry.nav__cta {
   justify-self: end;
-  padding: 8px 18px;                       /* smaller / less chunky */
+  /* Taller than it is wide-set: 12/16 gives the pill a bit more presence in the
+     bar without turning it into a full-size button. It is now the tallest thing
+     in the nav, so it sets the nav's height — see --nav-h in tokens.css. */
+  padding: 12px 16px;
   font-size: 11px;
   gap: 7px;
 }

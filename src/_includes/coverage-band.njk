@@ -52,7 +52,7 @@
     <h2 id="coverage-band-title" class="coverage-band__title">
       {# `x | safe or "default"` does NOT fall through — the filter runs first and
          yields an empty SafeString. Default inside the parens, filter outside. #}
-      {{ (coverageBandTitle or "Covering Surrey, Sussex, Kent, Hampshire, Berkshire and <span class='em'>Greater London.</span>") | safe }}
+      {{ (coverageBandTitle or "Covering Surrey, Sussex, Kent <span class='em'>and the South East.</span>") | safe }}
     </h2>
   </div>
 
