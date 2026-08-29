@@ -5,31 +5,48 @@
    blue is a DETAIL accent only. Zero fluff — confidence in what's absent.
    Token names kept from v3 for parity; only values + colour ROLES change.
 
-   The navy is pitched off the van livery: lifted a step out of near-black and
-   swung bluer, so the page reads as Invicta blue rather than generic dark. The
-   livery blue itself lives in --blue, used in small deliberate hits.
+   THE GROUND IS DEEP AND THE ACCENT IS BRIGHT. Those are two separate decisions
+   and they used to be welded together: the palette either had the lifted navy
+   AND the livery blue, or the deep navy AND no livery blue at all, so choosing
+   the darker ground meant losing the colour off the vans. It is the ground that
+   should be quiet, not the brand. So the ground sits deep, near-black and swung
+   blue, and the livery blue is what lands on top of it — the eyebrows, the
+   italic accents, the icons, the marks. Deep page, bright Invicta.
    ========================================================================== */
 :root {
-  /* --- Grounds (architectural navy) --- */
-  --ground: #0D3159;              /* dominant navy — hero, dark sections, emergency bar */
-  --ground-deep: #09233F;        /* deeper — footer base, deepest bands */
-  --ground-raise: #16406E;        /* raised navy surface */
+  /* --- Grounds (architectural navy, the DEEP set) --- */
+  --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
+  --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
+  --ground-raise: #14294A;        /* raised navy surface */
   --paper: #FFFFFF;              /* pure white — the base light surface */
   --light: #F7F7F5;              /* cool near-white — the CREAM step, a panel colour */
   --light-warm: #EFEBDF;         /* warmer cream alt */
 
   /* Same three grounds as bare channels, for the scrims and washes that need an
      alpha. Keep these in step with the hexes above — they ARE those colours. */
-  --ground-rgb: 13 49 89;
-  --ground-deep-rgb: 9 35 63;
-  --scrim-rgb: 6 24 45;          /* deeper than the ground: photo washes + shadows */
+  --ground-rgb: 11 31 58;
+  --ground-deep-rgb: 8 24 46;
+  --scrim-rgb: 6 18 42;          /* deeper than the ground: photo washes + shadows */
 
   /* --- Brand blue (the van livery) --- */
   --blue: #1A6EC4;               /* solid livery blue — emergency chip, accents on light */
   --blue-bright: #4FA3F5;        /* luminous tint of it — rules, hovers, accents on navy */
 
-  /* --- Chalky detail accent (NOT a hero colour; used small) --- */
-  --lime: #AFC6DB;               /* chalky pale blue-grey — eyebrows, hairlines, italics, underlines */
+  /* --- The accent on dark ---------------------------------------------------
+     THE VAN BLUE, not a chalky grey. This token carries every accent that lands
+     on navy: eyebrows, the italic clause in a heading, the card icons, the
+     numerals, focus rings, link hovers. It was a pale blue-grey, which on the
+     lifted ground read as a tasteful nothing and on the deep ground read as
+     grey. The luminous tint of the livery blue holds 6.2:1 on the ground, so it
+     is bright because it is the brand, not at the cost of reading it.
+
+     The name is a leftover from the green direction the site started in; it is
+     kept because 24 rules reach for it, and it has never meant lime. */
+  --lime: #4FA3F5;
+  /* Soft blue-grey, for LARGE decorative surfaces rather than accents — the
+     giant About wordmark, which scrubs to full opacity and would be a 760px
+     shout in the accent blue. Split out of --lime when that token went bright. */
+  --chalk: #AFC6DB;
   --steel: var(--blue);          /* heading + eyebrow accent on light (cool) sections */
   --accent-emergency: var(--blue); /* ONLY the emergency phone number chip — nowhere else */
 
@@ -170,23 +187,38 @@
 }
 
 /* ==========================================================================
-   PALETTE A/B — build-time only, driven by the preview panel's Blue row.
-   The default :root above is the lifted, livery-blue palette. Setting
-   data-palette="deep" on <html> restores the original deeper navy with its
-   chalky grey-blue accent and no livery blue anywhere, so the two directions
-   can be compared on the live page. Delete this block (and the prefs row)
-   once the direction is signed off.
+   PALETTE A/B/C — build-time only, driven by the preview panel's Blue row.
+   The default :root above is the one to compare against: DEEP ground, LIVERY
+   accent. The two below are the directions it came from, kept so all three can
+   be seen on the live page. Delete this block (and the prefs row) once the
+   direction is signed off.
+
+     (default)  Livery  deep ground   + van blue      <- the current direction
+     lifted     Lifted  lighter ground + van blue     <- the previous default
+     muted      Muted   deep ground   + no van blue   <- the previous "deep"
+
+   Each variant overrides ONLY what it changes, so the default is the single
+   place any shared value is edited.
    ========================================================================== */
-:root[data-palette="deep"] {
-  --ground: #0B1F3A;
-  --ground-deep: #08182E;
-  --ground-raise: #14294A;
-  --ground-rgb: 11 31 58;
-  --ground-deep-rgb: 8 24 46;
-  --scrim-rgb: 6 18 42;
-  --blue: #5B76A0;             /* the old steel: the accents fall back to it */
-  --blue-bright: #B8C8D4;      /* ...and the bright hits fall back to chalk */
+
+/* The previous default: the same livery accent, on a ground a step lighter. */
+:root[data-palette="lifted"] {
+  --ground: #0D3159;
+  --ground-deep: #09233F;
+  --ground-raise: #16406E;
+  --ground-rgb: 13 49 89;
+  --ground-deep-rgb: 9 35 63;
+  --scrim-rgb: 6 24 45;
+  --lime: #AFC6DB;             /* the chalky accent that went with it */
+}
+
+/* The previous "deep": this ground, but with the livery blue taken back out —
+   every accent falls to steel and chalk. */
+:root[data-palette="muted"] {
+  --blue: #5B76A0;
+  --blue-bright: #B8C8D4;
   --lime: #B8C8D4;
+  --chalk: #B8C8D4;
   --steel: #5B76A0;
   --accent-emergency: #2C4A73;
 }
