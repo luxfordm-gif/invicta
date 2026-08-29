@@ -84,18 +84,24 @@
    three gaps are ONE value, so the block reads as evenly set rather than as a
    heading stranded between a distant line and its own cards. */
 .service-why { padding-top: 0; }
-/* The rule BELONGS TO THE HEADING, so it sits tight under the hairline and the
-   big gap is the one above it. --flow-heading is the site's eyebrow-to-heading
-   step and this is that relationship exactly: a mark that introduces a heading.
-   At --flow-sm the line floated between the passage it closed and the heading
-   it opened, reading as neither. */
-.service-why__rule { margin-top: 0; margin-bottom: var(--flow-heading); }
+/* The rule BELONGS TO THE HEADING: the big gap is the one above it, and this is
+   the small one. But "small" here has to be measured against the heading, not
+   against the page — an eyebrow is 13px and this heading is 44px, so the
+   eyebrow-to-heading step came out cramped under it, and --flow-sm before that
+   left the line floating between the passage it closed and the heading it
+   opened, reading as neither.
+
+   So the gap is carried on the HEADING in `em`: it scales with the type it
+   introduces, which is the actual relationship, and it needs no fourth spacing
+   token to sit between the three we have. The rule's own margin goes to zero so
+   there is one number here, not two collapsing into each other. */
+.service-why__rule { margin-top: 0; margin-bottom: 0; }
 /* A SUBHEADING, not a statement. This block is the second half of the intro,
    not a new argument, and at statement size (62px) it read as a second page
    heading a screen below the first — two things competing to be the title. One
    step above the card headings is enough to lead them. */
 .service-why__title {
-  margin-top: 0;
+  margin-top: 0.8em;
   max-width: 34ch;
   /* THE h3 STEP, exactly — same clamp, leading and tracking as the scale in
      base.css, not a fourth bespoke size sitting between two real ones. One step
