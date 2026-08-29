@@ -1,17 +1,14 @@
 /* --- Scroll-snap tracks -----------------------------------------------------
-   Progressive enhancement for the two horizontal tracks on the site. Both work
-   with no JS as a plain swipeable list; this adds:
-     • prev/next arrows (data-cc-prev / data-cc-next), where the block has them
-     • a row of pagination dots that track the card in view
-     • left/right keyboard control when the track is focusable
-   Each block is wired independently, so several can live on one page.
+   Progressive enhancement for .case-bento, which becomes a one-card-per-screen
+   swipeable track below 900px. It works with no JS as a plain scrollable list;
+   this adds a row of pagination dots that track the card in view. Each block is
+   wired independently, so several can live on one page.
 
-   Two shapes use it:
-     .case-cc     the full-width case-study carousel, arrows + dots, all widths
-     .case-bento  the bento grid, which becomes a one-card-per-screen track
-                  below 900px. Dots only, and no tabindex: on a desktop grid
-                  there is nothing to scroll, so a focus stop there would be a
-                  tab stop that does nothing. --- */
+   The generic wire() below still supports prev/next arrows (data-cc-prev /
+   data-cc-next) and keyboard control. Nothing uses them today: they were for
+   the full-width .case-cc carousel, which lost the layout A/B to the bento and
+   was deleted with the lab page. Kept because the next track that needs arrows
+   should not have to rebuild them. --- */
 (function () {
   "use strict";
 
@@ -95,16 +92,6 @@
       track.addEventListener("scroll", function () { setActive(currentIndex()); }, { passive: true });
     }
   }
-
-  document.querySelectorAll(".case-cc").forEach(function (root) {
-    wire(root, {
-      track: ".case-cc__track",
-      item: ".case-cc__item",
-      dots: ".case-cc__dots",
-      dotClass: "case-cc__dot",
-      keyboard: true
-    });
-  });
 
   document.querySelectorAll(".case-bento").forEach(function (root) {
     wire(root, {

@@ -40,10 +40,6 @@
    and the floating dock keeps it a thumb away on a phone. The band said a fifth
    time, at 88px, what nothing on the page lets you miss.
 
-   This file replaces home.css, which is now unreferenced. It was left on disk
-   rather than deleted because the rebuild was scoped to the page and its two
-   new component files; it is safe to remove in a follow-up.
-
    ON THE SPECIFIED PADDING. The brief gives fixed section padding (160 / 120 /
    96 / 48px). Those are the DESKTOP ends of the clamps below: a fixed 160px
    band is a third of a phone screen spent on nothing, and the rest of the site

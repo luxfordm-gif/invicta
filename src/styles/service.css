@@ -128,5 +128,6 @@
 .service-points__approach { margin-top: var(--space-3); font-size: var(--text-body); line-height: 1.6; color: var(--on-dark-muted); }
 .service-points__cta { margin-top: var(--space-5); }
 
-/* Case studies live in case-carousel.css now, shared with the private water
-   supplies page: the same image-plus-story layout, one study per screen. */
+/* Case studies live in case-bento.css now, shared with the private water
+   supplies page: a grid of studies that becomes a one-card-per-screen
+   swipeable track below 900px. */
