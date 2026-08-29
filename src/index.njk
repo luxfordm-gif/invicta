@@ -1,279 +1,429 @@
 ---
 layout: base.njk
-title: "Private Water Supplies | Bespoke Borehole Systems | Invicta Water Treatment"
-description: "Design, install and servicing of bespoke private water supplies for landed estates and premium properties across Surrey, Sussex and the South East. UKAS-accredited testing, 24hr callout."
+title: "Water Treatment, Boreholes & Legionella Control | Invicta Water Treatment"
+description: "Bespoke water treatment, chlorination and hygiene compliance across Surrey, Sussex and the South East. CHAS accredited, UKAS testing, 24-hour callout. Twenty years' experience."
 canonical: "https://www.invictawatertreatment.co.uk/"
 permalink: "/"
 current: "home"
-extraStyles: ["home"]
+extraStyles: ["homepage", "filmstrip", "coverage-band", "components/tooltip"]
+hideFooterCta: true
 ---
-    <!-- ============ HERO + ABOUT (the reveal pair) ============
-      Same move as the service pages: the photograph holds a full screen and
-      pins itself there while the white section climbs up over it. The wrapper
-      is load-bearing, not decoration — see the note on `.reveal` in
-      components.css for why the pair has to share it.
+    {#
+      ======================================================================
+      HOME PAGE
 
-      The copy sits ON the photograph rather than above it. An earlier version
-      put the picture underneath a cream field, which read as calm but left the
-      first screen as two unrelated halves: a page of type, then a photograph.
-      Over the picture the two are one composition, and the pin is what gives
-      the photograph its own moment as the page leaves it.
+      NINE SECTIONS, AND NO TWO OF THEM ARE BUILT THE SAME WAY. The page this
+      replaces was five variations on "eyebrow, big heading, grid of cards",
+      which made every screen read like the one before it. Each section here
+      has one job, and a structure only it uses. The reasoning for each is in
+      homepage.css, next to the rules that draw it, along with the argument for
+      the running order.
 
-      Four things, and no paragraph. The lead that used to sit here ("bespoke
-      borehole and spring systems...") is said properly in the section below,
-      and the "who we work for" rail is said again in full in the sectors band:
-      both were a second and third read competing with the one line that
-      matters. What is left is the positioning line, the headline, and the two
-      things you can do.
-    -->
-    <div class="reveal">
-    <!-- The photograph is its OWN element, and a sibling of the copy, because
-         only it pins. The copy below scrolls away with the page. -->
-    <div class="home-hero__media" aria-hidden="true">
-      <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
-    </div>
-    <section class="home-hero">
-      <div class="container home-hero__inner">
-        <p class="eyebrow home-hero__eyebrow">Private water supplies<br>Surrey &amp; Sussex</p>
-        <h1 class="home-hero__title">
-          Independent water,<br>
-          <span class="em">designed around your source.</span>
-        </h1>
-        <div class="home-hero__actions">
-          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-          <a class="btn-line btn-line--lg" href="/services/private-water-supplies/">Private water supplies <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-        </div>
+      NO SECTORS SECTION, AND FOUR SERVICE ROUTES RATHER THAN FIVE. Both are
+      the client's own instruction of 11/08/26: "Remove Sectors completely" and
+      "Services, remove Flush & Precomm". Those pages 301 in src/_redirects, so
+      a card offering pre-commission cleaning would have sent the one visitor
+      who wanted it to a page about boreholes. The coverage map now stands
+      where the sectors list did, answering "do you come to me" directly.
+
+      ROUTING SITS THIRD, one screen from the fold, because on a page selling
+      systems that cost seven figures the visitor almost always arrives already
+      knowing something has to be sorted. The positioning statement reads
+      better after the five questions than in front of them: by then it is
+      answering "why does this have to be done properly" rather than opening
+      with it.
+
+      THREE OF THE NINE ARE THE SITE'S OWN COMPONENTS, unchanged and included
+      rather than reimplemented: the coverage map that closes /about/ and every
+      service page, the filmstrip from /about/, and the enquiry drawer the
+      whole site shares. A homepage that drew its own map or its own photo band
+      would be a second answer to a question the site already answers once.
+
+      THERE IS NO DEDICATED EMERGENCY SECTION, and that is deliberate. The
+      number is already persistent on every screen: the sticky bar carries it
+      above 900px, the floating dock carries it below, the hero states it in
+      full, and the footer repeats it. An 88px billboard of it in the middle of
+      the page was the one block here saying a fifth time what nothing on the
+      page lets you miss.
+
+      THE FOOTER CTA IS TURNED OFF ON THIS PAGE (hideFooterCta above), and
+      that is not an oversight: section 9 IS that call to action, word for
+      word, and with both on the page the same heading and the same paragraph
+      appeared twice within one screen of each other. The footer itself is
+      untouched.
+
+      THE TOOLTIP COMPONENT is new and site-wide capable, but adopted HERE
+      ONLY for now: /styles/components/tooltip.css and /scripts/tooltip.js.
+      Other pages pick it up as their copy is revisited, one page at a time.
+      Its usage rules (never in a heading, two terms per paragraph maximum,
+      first occurrence on the page only) are applied throughout below.
+      ======================================================================
+    #}
+
+    {#
+      Organization + LocalBusiness, IN THE BODY RATHER THAN THE HEAD, because
+      base.njk owns <head> and is shared by every page. JSON-LD is valid and
+      indexed anywhere in the document, so the placement costs nothing.
+
+      FOLLOW-UP: base.njk already emits a minimal LocalBusiness on every page.
+      Both nodes describe the same business, so give that one the same @id as
+      the node below and the two merge into one instead of reading as two
+      businesses at one address. That edit belongs to a shared-layout task,
+      not to this page.
+    #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "{{ site.url }}/#organization",
+          "name": "{{ site.name }}",
+          "legalName": "{{ site.legalName }}",
+          "url": "{{ site.url }}/",
+          "telephone": "{{ site.tel }}",
+          "email": "{{ site.email }}",
+          "description": "Bespoke water treatment, private water supplies, chlorination and water hygiene compliance for estates, plant and commercial facilities across Surrey, Sussex and the South East.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site.address.street }}",
+            "addressLocality": "{{ site.address.locality }}",
+            "addressRegion": "{{ site.address.region }}",
+            "postalCode": "{{ site.address.postcode }}",
+            "addressCountry": "GB"
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "{{ site.url }}/#localbusiness",
+          "parentOrganization": { "@id": "{{ site.url }}/#organization" },
+          "name": "{{ site.name }}",
+          "url": "{{ site.url }}/",
+          "telephone": "{{ site.tel }}",
+          "email": "{{ site.email }}",
+          "priceRange": "££",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site.address.street }}",
+            "addressLocality": "{{ site.address.locality }}",
+            "addressRegion": "{{ site.address.region }}",
+            "postalCode": "{{ site.address.postcode }}",
+            "addressCountry": "GB"
+          },
+          "areaServed": [{% for c in maps.counties %}{ "@type": "AdministrativeArea", "name": "{{ c }}" }{% if not loop.last %}, {% endif %}{% endfor %}]
+        }
+      ]
+    }
+    </script>
+
+    {# ===================== 1 — HERO =====================
+      Full screen, left-aligned, and only two things to do: book the survey, or
+      call the emergency line. The photograph is the site's existing hero image
+      held right back under two washes, so the first screen is TYPE with a
+      place behind it rather than a picture with type on it.
+
+      The sticky emergency bar and nav above are untouched, so the number stays
+      in view for the whole page; the outlined button here is the same number
+      said once at full size, for someone who has landed mid-crisis.
+    #}
+    <section class="section hp-hero" id="hero" aria-labelledby="hp-hero-title">
+      <div class="hp-hero__media" aria-hidden="true">
+        <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
       </div>
-      <div class="home-hero__scroll" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 4v15M6 13l6 6 6-6"/>
-        </svg>
+      <div class="container">
+        <p class="eyebrow">Two decades of water treatment</p>
+        <h1 class="hp-hero__title" id="hp-hero-title">Water systems your estate, plant or facility can <span class="em">depend</span> on.</h1>
+        <p class="hp-hero__lead">Bespoke water treatment, chlorination and hygiene for clients where getting it right is a legal requirement, not just a preference. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
+        <div class="hp-hero__actions">
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
+        </div>
       </div>
     </section>
 
-    <!-- ===================== ABOUT + USPs (white) ===================== -->
-    <section class="section section--paper home-about" aria-labelledby="home-about-title">
-      <div class="container home-about__grid">
-        <div class="home-about__body">
-          <h2 id="home-about-title" class="statement home-about__title">
-            Twenty years of supplies,
-            <span class="em">designed for the property.</span>
-          </h2>
-          <p class="home-about__lead">
-            Every source is different, and doing it properly is not a job for generalists. We survey
-            the water before anything is specified, design the treatment around what we find, and
-            install it with our own engineers rather than subcontractors. The same people who built
-            your system are the ones who come back to service it.
-          </p>
+    {# ===================== 2 — TRUST STRIP =====================
+      A BAND, NOT A SECTION: 48px of height, a label, and the marks. It is
+      evidence in passing, placed immediately under the claim it supports, and
+      it is deliberately the shortest thing on the page.
 
-          <ul class="usps" role="list">
-            <li class="usp">
-              <span class="usp__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 10c0 3.9 3.1 7 7 7s7-3.1 7-7"/><path d="M8 6l4-3 4 3"/></svg>
-              </span>
-              <p class="usp__figure">20+</p>
-              <h3 class="usp__label">Years serving the South East</h3>
-            </li>
-            <li class="usp">
-              <span class="usp__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-              </span>
-              <p class="usp__figure">24h</p>
-              <h3 class="usp__label">Emergency response, no call centre</h3>
-            </li>
-            <li class="usp">
-              <span class="usp__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5 11-11"/></svg>
-              </span>
-              <p class="usp__figure">UKAS</p>
-              <h3 class="usp__label">Accredited testing, to source</h3>
-            </li>
+      LOGO FILES TO COME FROM MATT. The four client names below are the ones
+      already named on the live site, held as placeholder slots; drop the real
+      file into each slot as:
+
+          <li class="hp-trust__logo"><img src="/assets/logo-chelsea-fc.svg" alt="Chelsea FC" width="120" height="34"></li>
+
+      and delete the --ph class and the text. The grayscale + opacity
+      treatment lives on .hp-trust__logo, so it carries over to the real files
+      with no further change.
+
+      Alpha, Carel, DIS, IAC and SE Water are NOT slotted below. They were
+      listed "if licensed", and a client mark goes up when we know we may use
+      it, not before. Add a slot each once that is confirmed.
+
+      Accreditation marks (CHAS, UKAS, and any others) are the second row, and
+      are also awaiting files from Matt.
+    #}
+    <section class="section section--light hp-trust" id="trusted-by" aria-label="Clients and accreditations">
+      <div class="container">
+        <div class="hp-trust__row">
+          <p class="eyebrow hp-trust__label">Trusted by</p>
+          <ul class="hp-trust__logos" role="list">
+            <li class="hp-trust__logo hp-trust__logo--ph">Chelsea FC</li>
+            <li class="hp-trust__logo hp-trust__logo--ph">GSK</li>
+            <li class="hp-trust__logo hp-trust__logo--ph">Amgen</li>
+            <li class="hp-trust__logo hp-trust__logo--ph">Cowdray Estate</li>
+          </ul>
+        </div>
+        <div class="hp-trust__row">
+          <p class="eyebrow hp-trust__label">Accredited by</p>
+          <ul class="hp-trust__logos" role="list">
+            <li class="hp-trust__logo hp-trust__logo--ph">CHAS</li>
+            <li class="hp-trust__logo hp-trust__logo--ph">UKAS</li>
           </ul>
         </div>
       </div>
     </section>
-    </div><!-- /.reveal -->
 
-    <!-- ===================== SERVICES AS CARDS (cream) ===================== -->
-    <section class="section section--light home-services" aria-labelledby="home-services-title">
+    {# ===================== 3 — SERVICES =====================
+      ROUTED BY PROBLEM, NOT LISTED BY SERVICE. Every heading here is the
+      question the visitor arrived with, because someone who has just been
+      served a notice does not search for "water hygiene", they search for what
+      has gone wrong. The service name is on the page they land on.
+
+      Set as an asymmetric ruled spread rather than a card grid: five equal
+      tiles would say these are five equivalent choices, and they are not.
+    #}
+    <section class="section hp-services" id="services" aria-labelledby="hp-services-title">
       <div class="container">
-        <h2 id="home-services-title" class="statement home-services__title">
-          Four services, <span class="em">one team behind them.</span>
-        </h2>
+        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">01</span>Services</p>
+        <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
 
-        <ul class="svc-cards" role="list">
-          {% for s in site.services %}
-          <li class="svc-cards__item">
-            <a class="svc-card" href="{{ s.href }}">
-              <span class="svc-card__index">({{ "0" + loop.index }})</span>
-              <h3 class="svc-card__title">{{ s.title }}</h3>
-              <p class="svc-card__desc">{{ s.desc }}</p>
-              <span class="svc-card__cta">
-                Explore
-                <span class="svc-card__arrow" aria-hidden="true">&rarr;</span>
-              </span>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
+        <div class="hp-services__grid">
+          {# THE FLAGSHIP CARRIES THE PHOTOGRAPH, and the four beside it do not.
+             Five pictures in a routing grid is five things to look at before
+             you can read a single question, and the questions are the point.
+             One picture on the cell that already spans two rows is what makes
+             the spread read as a magazine page with a lead image rather than
+             as a tile grid, and it says which of the five is the flagship
+             without a word of copy. Same frame as every other photograph on
+             the site: rounded, clipped, drifting on scroll. #}
+          <a class="hp-svc" href="/services/private-water-supplies/">
+            <span class="hp-svc__media parallax">
+              <img src="/assets/step-survey.webp" alt="A country house and garden buildings across a lawn on a private estate, the kind of property surveyed before a supply is specified." width="1200" height="961" loading="lazy" decoding="async">
+            </span>
+            <h3 class="hp-svc__title">Off the mains, or wish you were?</h3>
+            <p class="hp-svc__desc">Private water supplies designed around your source, built to run for decades.</p>
+            <span class="hp-svc__go">Private water supplies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="hp-svc" href="/services/design-install/">
+            <h3 class="hp-svc__title">Building a new system?</h3>
+            <p class="hp-svc__desc">Full design and install by our own engineers, specified to comply from day one.</p>
+            <span class="hp-svc__go">Design and install <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          {# "Legionella" appears in this card's HEADING first, and tooltips
+             never go in a heading, so the term is marked up on its first
+             occurrence in body copy instead. #}
+          <a class="hp-svc" href="/services/water-hygiene/">
+            <h3 class="hp-svc__title">Legionella and hygiene to keep on top of?</h3>
+            <p class="hp-svc__desc">Legal compliance is not negotiable. We handle water hygiene, sampling, temperature monitoring and <span class="term" data-tooltip="A bacterium that causes Legionnaires' disease. Water systems above 20&deg;C and below 45&deg;C are at risk without proper control.">Legionella</span> control across your estate or portfolio.</p>
+            <span class="hp-svc__go">Water hygiene <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="hp-svc" href="/services/servicing/">
+            <h3 class="hp-svc__title">System already installed?</h3>
+            <p class="hp-svc__desc">Scheduled servicing, <span class="term" data-tooltip="Testing conducted through a lab accredited by the UK Accreditation Service, the national accreditation body.">UKAS-accredited</span> re-testing, and 24-hour callout for existing clients.</p>
+            <span class="hp-svc__go">Servicing and maintenance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- ===================== HOW WE WORK (dark, stacking cards) =====================
-      The cards are position:sticky at the same offset, so each one comes to rest
-      under the header and the next slides over the top of it. Offsetting the rest
-      position by index leaves a sliver of the card beneath showing, which is what
-      makes it read as a stack rather than a single swap.
-    -->
-    {% set steps = [
-      { title: "Site survey & water analysis",
-        copy: "Every supply starts with a survey and a UKAS-accredited analysis. Nothing is specified before we know the flow rate, the depth and the full chemistry of what is coming out of the ground.",
-        img: "/assets/service-water-hygiene.webp",
+    {# ===================== 4 — POSITIONING =====================
+      One line, centred, with nothing to click. This is the only section on the
+      page with no next step in it, which is the point: it is the argument, and
+      an argument that ends in a button reads as a pitch.
+    #}
+    <section class="section section--paper hp-position" id="positioning" aria-labelledby="hp-position-line">
+      <div class="container">
+        <div class="hp-position__inner">
+          <h2 class="statement hp-position__line" id="hp-position-line">Water treatment isn't optional. <span class="em">Neither is doing it properly.</span></h2>
+          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Chelsea FC, GSK, Amgen, Cowdray Estate. The standard we work to is the standard your inspector expects.</p>
+        </div>
+      </div>
+    </section>
+
+    {# ===================== 5 — COVERAGE =====================
+      WHERE WE WORK, SAID AS A MAP RATHER THAN AS A SENTENCE. This replaces the
+      typographic sectors list that used to sit here: the client asked for
+      sectors removed from the site completely (11/08/26), and the honest
+      answer to "do you come to me" was always the geography, not a list of
+      industries.
+
+      The site's own component, the same one that closes /about/ and every
+      service page, so the coverage claim is made in one place and one way.
+      Without GOOGLE_MAPS_API_KEY it falls back to the keyless embed and still
+      draws the South East; the key only buys the shaded counties.
+    #}
+    {% include "coverage-band.njk" %}
+
+    {# ===================== 6 — SELECTED WORK =====================
+      ONE case study at full size, not three at card size. A grid of three
+      teases three jobs and proves none of them; one told properly, with the
+      scope and the years on it, is the only section on the page that is
+      evidence rather than claim.
+    #}
+    <section class="section section--paper hp-work" id="selected-work" aria-labelledby="hp-work-title">
+      <div class="container">
+        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
+        <h2 class="statement hp-work__title" id="hp-work-title">Cowdray Estate, <span class="em">a private supply serving multiple properties.</span></h2>
+
+        {# TEMP: /assets/case-placeholder.webp is the site's established stand-in
+           for case-study photography (see _data/caseStudies.js, where all seven
+           studies use it). Swap in the real Cowdray shot when it arrives:
+           <img src="/assets/case-cowdray.webp" alt="..." width="1600" height="900" loading="lazy" decoding="async"> #}
+        <figure class="hp-work__media parallax">
+          <img src="/assets/case-placeholder.webp" alt="Placeholder photograph standing in for the Cowdray Estate treatment plant." width="1600" height="900" loading="lazy" decoding="async">
+        </figure>
+
+        <dl class="hp-work__meta">
+          <div>
+            <dt>Client</dt>
+            <dd>Cowdray Estate</dd>
+          </div>
+          <div>
+            <dt>Scope</dt>
+            <dd>Private water supply, design and install, ongoing servicing</dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd>2023 to present</dd>
+          </div>
+        </dl>
+
+        {# Three Tier 2 terms wanted marking up here and the rule is two per
+           paragraph, so pH correction is spelled out inline instead. #}
+        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around <span class="term" data-tooltip="Filtration process to remove naturally occurring iron and manganese from source water, which otherwise causes staining, taste and pipe damage.">iron and manganese reduction</span>, pH correction to stop the water corroding pipework, and <span class="term" data-tooltip="Water treatment method using ultraviolet light to kill bacteria, viruses and other pathogens without chemicals.">UV sterilisation</span>. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
+
+        {# Pointed at the private water supplies page, not at /case-studies/.
+           The standalone index was retired and 301s here anyway, so linking to
+           it only bought a redirect hop; and this IS where the work is, since
+           case studies now live as carousels on the service pages. Cowdray is
+           a private supply, so the reader lands among its neighbours. #}
+        <p class="hp-work__link">
+          <a class="btn-line" href="/services/private-water-supplies/">See more of our work <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+        </p>
+      </div>
+    </section>
+
+    {# ===================== 7 — CREDENTIALS =====================
+      THE QUALIFYING MOMENT. Everything above is what we do; this is the answer
+      to "can you actually be put on our approved list". The question stays
+      stuck to the top of the screen while the six answers scroll past it,
+      because they are a list you scan rather than read.
+
+      A description list, not headings: these are terms and their definitions,
+      and keeping them out of the heading outline leaves the page with one H1
+      and one H2 per section, which is what it should have.
+    #}
+    <section class="section hp-creds" id="credentials" aria-labelledby="hp-creds-title">
+      <div class="container hp-creds__grid">
+        <div class="hp-creds__aside">
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>Credentials</p>
+          <h2 class="statement hp-creds__title" id="hp-creds-title">The paperwork clients ask about.</h2>
+        </div>
+
+        <dl class="hp-creds__list">
+          <div class="hp-cred">
+            <dt class="hp-cred__term"><span class="term" data-tooltip="Contractors Health and Safety Assessment Scheme, a common contractor pre-qualification standard.">CHAS</span> accredited</dt>
+            <dd class="hp-cred__desc">For contractors and facilities managers who need us on their approved list.</dd>
+          </div>
+          <div class="hp-cred">
+            <dt class="hp-cred__term">UKAS-accredited laboratory testing</dt>
+            <dd class="hp-cred__desc">All water analysis goes through a UKAS-accredited lab, so your compliance evidence is current and defensible.</dd>
+          </div>
+          {# DWI, HSE and Environment Agency all qualify for a tooltip and the
+             rule is two per paragraph. The two acronyms get them; Environment
+             Agency reads plainly in English and is left unmarked. #}
+          <div class="hp-cred">
+            <dt class="hp-cred__term">Twenty years of legislation experience</dt>
+            <dd class="hp-cred__desc"><span class="term" data-tooltip="Drinking Water Inspectorate, the regulator for public and private drinking water supplies in England and Wales.">DWI</span>, <span class="term" data-tooltip="Health and Safety Executive, the UK regulator for workplace health and safety.">HSE</span>, Environment Agency, Legionella regulations. We know the rules that will catch you out if you get it wrong.</dd>
+          </div>
+          <div class="hp-cred">
+            <dt class="hp-cred__term"><span class="term" data-tooltip="Enforcement notice served by a local authority when a private water supply fails wholesomeness standards.">Section 80 notice</span>? Speak to us first.</dt>
+            <dd class="hp-cred__desc">We deal with private supply notices regularly. Full water analysis, remedial plan and liaison, so you meet the requirements without over-specifying.</dd>
+          </div>
+          <div class="hp-cred">
+            <dt class="hp-cred__term">Fully insured</dt>
+            <dd class="hp-cred__desc">Public liability and professional indemnity to a level suitable for large commercial and estate work.</dd>
+          </div>
+          <div class="hp-cred">
+            <dt class="hp-cred__term">Direct engineer access</dt>
+            <dd class="hp-cred__desc">Same phone number, same team. No call centre between you and the person who knows your system.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    {# ===================== 8 — FILMSTRIP =====================
+      THE EXHALE BEFORE THE ASK. Everything above it is being read; this is only
+      looked at. It also does a job no paragraph on the page can: it shows that
+      the plant rooms, the boreholes and the vans are ours, photographed on real
+      jobs, which is the difference between a firm that installs seven-figure
+      systems and a firm that has a website about them.
+
+      The site's own component, carrying straight on from the navy above it, the
+      same way it does on /about/. Drag or swipe; it works as a snapping scroller
+      with no JavaScript at all.
+
+      THE DEDICATED EMERGENCY BAND THAT USED TO SIT HERE IS GONE. The number is
+      already persistent: the sticky bar carries it on every screen of every
+      page, the hero states it in full, the footer repeats it, and on a phone the
+      floating dock keeps it a thumb away. An 88px billboard of a number you
+      cannot scroll away from anyway was the one section on this page that said
+      something already said four times.
+    #}
+    {% set strip = [
+      { image: "/assets/step-survey.webp",
+        alt: "A country house and garden buildings across a lawn on a private estate, the kind of property surveyed before a supply is specified." },
+      { image: "/assets/service-water-hygiene.webp",
         alt: "Labelled sample bottles from a day's testing lined up on a laboratory bench beside the results sheet." },
-      { title: "Bespoke system design",
-        copy: "Filtration, storage and pumping designed to match your source and your property's demand. Everything specified is chosen for reliability and long service life.",
-        img: "/assets/step-design.webp",
+      { image: "/assets/step-design.webp",
         alt: "Architectural floor-plan and elevation drawings with a pen and brass ruler." },
-      { title: "Filtration & treatment",
-        copy: "Treatment built around your water's chemistry: iron and manganese reduction, pH correction, and UV sterilisation where it is needed. Treated to a standard mains water rarely matches.",
-        img: "/assets/step-treatment.webp",
-        alt: "A plant room with a treatment vessel and copper pipework manifold." },
-      { title: "Installation",
-        copy: "Our own engineers install every system, never subcontracted. The plant is set out cleanly, commissioned properly, and left in a state we would be happy to return to in ten years.",
-        img: "/assets/step-install.webp",
-        alt: "An estate plant room in a stone outbuilding, with cylinder and copper pipework." },
-      { title: "Servicing & maintenance",
-        copy: "Planned visits keep the system at spec, with annual UKAS re-testing. Service clients reach our engineers directly on the 24-hour line: same number, same team, no call centre.",
-        img: "/assets/service-servicing.webp",
+      { image: "/assets/step-treatment.webp",
+        alt: "A garage plant room with a brine tank, pressure filter vessels and a UV steriliser installed against the wall." },
+      { image: "/assets/step-install.webp",
+        alt: "An installed plant room with a storage tank, booster pumps, cylinder and a control panel wired and commissioned." },
+      { image: "/assets/step-service.webp",
+        alt: "An engineer's hand turning a brass gate valve on copper pipework, with a pressure gauge behind." },
+      { image: "/assets/service-servicing.webp",
         alt: "An Invicta van on the drive of a period property, with the borehole chamber open and the pump and rising main lifted out." }
     ] %}
-    <section class="section home-process" aria-labelledby="home-process-title">
-      <div class="container">
-        <h2 id="home-process-title" class="statement home-process__title">
-          From first survey <span class="em">to final commissioning.</span>
-        </h2>
+    {% include "filmstrip.njk" %}
 
-        <div class="stack">
-          {% for st in steps %}
-          <article class="stack__card" style="--i: {{ loop.index0 }}">
-            <div class="stack__text">
-              <span class="numeral numeral--sm stack__index" aria-hidden="true">{{ "0" + loop.index }}</span>
-              <h3 class="stack__title">{{ st.title }}</h3>
-              <p class="stack__copy">{{ st.copy }}</p>
-              <a class="btn-line stack__cta" href="/enquiry/">Send enquiry <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-            </div>
-            <div class="stack__media">
-              <img src="{{ st.img }}" alt="{{ st.alt }}" loading="lazy">
-            </div>
-          </article>
-          {% endfor %}
+    {# ===================== 9 — ENQUIRY =====================
+      The exit door, and deliberately the quietest section on the page. The
+      footer's own CTA is switched off in the front matter above so this is
+      said once. "Send an enquiry" opens the site's enquiry drawer (enquiry.js
+      intercepts a[href="/enquiry/"]); without JavaScript it redirects to the
+      contact page, which carries the same form.
+    #}
+    <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
+      <div class="container">
+        <div class="hp-enquiry__inner">
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Get in touch</p>
+          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
+          <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
+          <div class="hp-enquiry__actions">
+            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send an enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== SELECTED WORK (white) =====================
-      Hand-picked for the home page rather than filtered by service: the
-      flagship, the National Trust name, and the one that best shows what we
-      build ourselves. Same component as the service pages.
-    -->
-    {% set homePicks = ["lk-effingham", "uppark-sussex", "u-farm-kent"] %}
-    {% set studies = [] %}
-    {% for id in homePicks %}{% for cs in caseStudies %}{% if cs.id == id %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}{% endfor %}
-    {% set carouselId = "home" %}
-    {% set carouselSurface = "section--paper" %}
-    {% set carouselTitle = "Supplies we've designed <span class='em'>and looked after.</span>" %}
-    {% set carouselLead = "A National Trust restoration, a multi-source estate system, and a membrane plant we built ourselves. Step through to see the work." %}
-    {% include "case-carousel.njk" %}
-
-    <!-- ===================== TRUSTED BY (cream) ===================== -->
-    <section class="section section--light clients home-clients" aria-labelledby="home-clients-title">
-      <div class="container">
-        <h2 id="home-clients-title" class="statement">
-          Chosen by clients who <span class="em">expect it done properly.</span>
-        </h2>
-
-        <ul class="clients__grid">
-          <li class="client"><span>Chelsea FC</span></li>
-          <li class="client"><span>GSK</span></li>
-          <li class="client"><span>Amgen</span></li>
-          <li class="client"><span>Cowdray Estate</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===================== REVIEWS (white) ===================== -->
-    <section class="section section--paper home-reviews" aria-labelledby="home-reviews-title">
-      <div class="container">
-        <h2 id="home-reviews-title" class="statement home-reviews__title">
-          What clients say <span class="em">once the water is running.</span>
-        </h2>
-
-        <ul class="reviews" role="list">
-          {% if testimonials and testimonials.length %}
-          {% for t in testimonials %}
-          <li class="review{% if t.placeholder %} review--sample{% endif %}">
-            <span class="review__mark" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 5C6.5 6.6 4.8 9.3 4.8 12.5V19h6.4v-6.4H8c0-2 .9-3.6 2.8-4.8L9.5 5zm9 0c-3 1.6-4.7 4.3-4.7 7.5V19h6.4v-6.4H17c0-2 .9-3.6 2.8-4.8L18.5 5z"/></svg>
-            </span>
-            {# The chip is the safety catch on written samples: it ships with the
-               words, so invented praise cannot pass as a real client by anyone
-               forgetting about _data/testimonials.js. Drop `placeholder: true`
-               from a review when the real one replaces it. #}
-            {% if t.placeholder %}<p class="review__flag">Sample copy, not a real client</p>{% endif %}
-            <blockquote class="review__quote">{{ t.quote }}</blockquote>
-            <p class="review__by">{{ t.name }}<span>{{ t.role }}</span></p>
-          </li>
-          {% endfor %}
-          {% else %}
-          {# No invented praise: real quotes only. Placeholders hold the layout
-             until Stefan supplies them, in the same house style as the
-             "photo to follow" blocks. See _data/testimonials.js. #}
-          {% for i in [1, 2, 3, 4] %}
-          <li class="review review--empty">
-            <span class="review__mark" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 5C6.5 6.6 4.8 9.3 4.8 12.5V19h6.4v-6.4H8c0-2 .9-3.6 2.8-4.8L9.5 5zm9 0c-3 1.6-4.7 4.3-4.7 7.5V19h6.4v-6.4H17c0-2 .9-3.6 2.8-4.8L18.5 5z"/></svg>
-            </span>
-            <p class="review__placeholder">Client quote to follow</p>
-          </li>
-          {% endfor %}
-          {% endif %}
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===================== FAQ (dark) =====================
-      The five questions we are asked before anything else. Answers are the same
-      ones given in full on the private water supplies page, not new claims.
-    -->
-    {% set homeFaqs = [
-      { q: "Do I need permission to install a borehole?",
-        a: "In most cases, no formal planning permission is required, though water abstraction over 20 cubic metres per day requires a licence from the Environment Agency. We handle the paperwork and liaison as part of any install where it's needed." },
-      { q: "How long does a borehole and treatment system last?",
-        a: "A properly designed and installed system will run for 25 to 40 years with routine maintenance. Filtration media and UV lamps are consumables replaced on a service schedule. The borehole itself, the pump housing and the treatment vessels are all long-life." },
-      { q: "Can you take over a system installed by someone else?",
-        a: "Yes, provided the system is safe to work on and we can access the plant. We start with a full inspection and water analysis, then propose any remedial work needed before taking on the ongoing service contract." },
-      { q: "What happens if something goes wrong outside working hours?",
-        a: "Existing service clients have direct access to our engineers on a 24-hour emergency line. In most cases we can get to site within four hours of the call." },
-      { q: "What does a typical install cost?",
-        a: "Every install is bespoke, so there is no typical figure. Costs depend on source depth, water chemistry, storage requirements and property demand. We provide a fixed-price quote after a site survey." }
-    ] %}
-    <section class="section faq" aria-labelledby="home-faq-title">
-      <div class="container faq__grid">
-        <aside class="faq__aside">
-          <h2 id="home-faq-title" class="faq__title">Frequently asked.</h2>
-          <p class="faq__intro">The questions we hear most often from clients thinking about a private supply. If yours isn't answered here, get in touch, we'll answer plainly.</p>
-        </aside>
-
-        <div class="faq__list">
-          {% for f in homeFaqs %}
-          <details class="faq__item">
-            <summary class="faq__q">
-              {{ f.q }}
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">{{ f.a }}</p>
-          </details>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
+    {# base.njk owns the shared script block and is not touched by this task,
+       so the new component loads from the page that adopts it. Cache-busted by
+       content with the same `v` filter every other asset on the site uses. #}
+    <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>
