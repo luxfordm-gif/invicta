@@ -1,0 +1,106 @@
+/* ==========================================================================
+   tooltip.css — the plain-English gloss on a term of art
+
+   SITE-WIDE COMPONENT, CURRENTLY ADOPTED ON THE HOME PAGE ONLY. It is written
+   to be dropped onto any page as that page's copy is revisited: it depends on
+   nothing but the tokens, carries no page-specific selectors, and the panel is
+   appended to <body> rather than to whatever section the term sits in.
+
+   The problem it solves: this site's audience splits in two. A facilities
+   manager knows what HSG274 is and does not want it explained; an estate owner
+   taking on a borehole for the first time does not, and a page that spells out
+   every acronym inline reads as a glossary rather than as a company that knows
+   its trade. A tooltip lets one sentence do both jobs, so the copy can stay
+   written for the person who already knows.
+
+   Which is why the resting state is nearly nothing: a dotted underline and a
+   cursor. No icon, no question mark, no bubble. The reader who does not need
+   the definition should be able to read straight past it.
+
+   THE PANEL IS A SIBLING OF <body>, NOT OF THE TERM. Positioned by tooltip.js
+   in viewport coordinates. Anything else and a term inside a section with
+   `overflow: clip` (the parallax frames, the carousels) has its own tooltip
+   cropped, and a term inside a sticky column inherits the column's stacking
+   context and slides under the next section.
+   ========================================================================== */
+
+/* --- The term -------------------------------------------------------------
+   SCOPED TO html.js, because the affordance is a promise. A dotted underline
+   and a `help` cursor say "there is more here if you ask for it", and with
+   JavaScript off there is not: the panel is placed by script. Without the
+   class the term is simply a word in the sentence, which is how the copy is
+   written to read anyway. `js` is set by the inline script in base.njk before
+   first paint, so there is no flash of unstyled terms. --- */
+html.js .term {
+  /* A DOTTED underline, not a solid one: a solid rule under an inline word is
+     what a link looks like, and this is not somewhere to go. Drawn with
+     text-decoration rather than a border so it follows the word across a line
+     break instead of boxing the whole run. */
+  text-decoration: underline dotted;
+  text-decoration-color: var(--fg-muted, var(--on-dark-muted));
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  cursor: help;
+  transition: text-decoration-color 0.18s ease, color 0.18s ease;
+}
+html.js .term:hover,
+html.js .term:focus-visible,
+html.js .term[aria-expanded="true"] {
+  text-decoration-color: var(--fg-accent, var(--lime));
+  color: var(--fg, inherit);
+}
+/* The term is reachable by keyboard (tooltip.js gives it tabindex), so it needs
+   the site's focus ring like any other control. */
+html.js .term:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 3px; border-radius: 2px; }
+
+/* --- The panel ------------------------------------------------------------
+   Always the dark surface, on every section, because it is a thing that has
+   come forward over the page rather than a part of the page. Giving it the
+   surface it sits on would make it disappear on the navy sections, and giving
+   it a theme would make the same component look like two components.
+   --- */
+.tooltip-panel {
+  position: fixed;              /* viewport coordinates; see the note at the top */
+  z-index: 70;                  /* above the sticky ubar (60) and nav (50) */
+  top: 0; left: 0;              /* transform does the placing, so there is no layout thrash */
+  max-width: 300px;
+  padding: 12px;
+  border: 1px solid var(--line-dark);
+  border-radius: 4px;
+  background: var(--ground-deep);
+  color: var(--on-dark);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  /* The panel can be summoned from inside an eyebrow or a button one day; reset
+     the inherited display styling so it always reads as body copy. */
+  font-style: normal;
+  box-shadow: 0 12px 32px rgb(var(--scrim-rgb) / 0.42);
+  pointer-events: none;         /* never eat a click meant for the page beneath */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+}
+.tooltip-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.15s ease, visibility 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-panel { transition: none; }
+}
+
+/* The screen-reader description. It carries the same text as the visible panel
+   and is what `aria-describedby` on the term actually points at, so the
+   definition is announced whether or not the panel is showing, and whether or
+   not the reader can hover anything. Kept in this file rather than reusing
+   .visually-hidden so the component stays self-contained. */
+.tooltip-a11y {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

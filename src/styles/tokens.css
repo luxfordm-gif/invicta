@@ -29,7 +29,10 @@
   --scrim-rgb: 6 18 42;          /* deeper than the ground: photo washes + shadows */
 
   /* --- Brand blue (the van livery) --- */
-  --blue: #1A6EC4;               /* solid livery blue — emergency chip, accents on light */
+  --blue: #1766B5;               /* solid livery blue, hsl(210 77% 40%) — emergency chip, accents on light.
+                                    Taken a step darker than the #1A6EC4 it was: same hue, four points off
+                                    the lightness, which holds the van colour but stops it reading as a
+                                    hyperlink blue on white. Contrast on paper goes 5.1:1 -> 5.8:1. */
   --blue-bright: #4FA3F5;        /* luminous tint of it — rules, hovers, accents on navy */
 
   /* --- The accent on dark ---------------------------------------------------
