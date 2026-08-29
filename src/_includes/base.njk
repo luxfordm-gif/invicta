@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>document.documentElement.classList.add('js');</script><!-- enables reveal-on-scroll without a flash of hidden content -->
-  <script>/* build-time palette A/B; applied pre-paint so the toggle survives a page change. Remove with the prefs panel. */
-    try { var p = localStorage.getItem('iwt-palette'); if (p === 'lifted' || p === 'muted') document.documentElement.dataset.palette = p; } catch (e) {}
-  </script>
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
@@ -38,7 +35,6 @@
   <link rel="stylesheet" href="{{ '/styles/base.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/components.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/sections.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/case-carousel.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/case-bento.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/stats-band.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/clients.css' | v }}">

@@ -10,7 +10,7 @@
    studies are shared out across the four service pages rather than the same
    handful appearing everywhere. Three per service is the ceiling, counting the
    hand-written `caseStudy` in a page's front matter, which leads; the
-   case-carousel template enforces it.
+   case-bento template enforces it.
 
    Locations are deliberately AGNOSTIC: named clients are anonymised to
    initials (as the client supplied them) and locations are given at town or

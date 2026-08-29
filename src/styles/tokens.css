@@ -5,13 +5,13 @@
    blue is a DETAIL accent only. Zero fluff — confidence in what's absent.
    Token names kept from v3 for parity; only values + colour ROLES change.
 
-   THE GROUND IS DEEP AND THE ACCENT IS BRIGHT. Those are two separate decisions
-   and they used to be welded together: the palette either had the lifted navy
-   AND the livery blue, or the deep navy AND no livery blue at all, so choosing
-   the darker ground meant losing the colour off the vans. It is the ground that
-   should be quiet, not the brand. So the ground sits deep, near-black and swung
-   blue, and the livery blue is what lands on top of it — the eyebrows, the
-   italic accents, the icons, the marks. Deep page, bright Invicta.
+   THE GROUND IS DEEP AND THE ACCENT IS QUIET. Three directions ran side by side
+   behind a build-time toggle: the lifted navy with the livery blue on it, the
+   deep navy with the livery blue on it, and the deep navy with that blue taken
+   back out. The last is the one that was kept. So the ground sits deep,
+   near-black and swung blue, and what lands on top of it — the eyebrows, the
+   italic accents, the icons, the marks — is a slate blue-grey rather than the
+   colour off the vans. The ground carries the weight; nothing on it competes.
    ========================================================================== */
 :root {
   /* --- Grounds (architectural navy, the DEEP set) --- */
@@ -28,36 +28,29 @@
   --ground-deep-rgb: 8 24 46;
   --scrim-rgb: 6 18 42;          /* deeper than the ground: photo washes + shadows */
 
-  /* --- Brand blue (the van livery) --- */
-  --blue: #1766B5;               /* solid livery blue, hsl(210 77% 40%) — emergency chip, accents on light.
-                                    Taken a step darker than the #1A6EC4 it was: same hue, four points off
-                                    the lightness, which holds the van colour but stops it reading as a
-                                    hyperlink blue on white. Contrast on paper goes 5.1:1 -> 5.8:1. */
-  --blue-bright: #4FA3F5;        /* luminous tint of it — rules, hovers, accents on navy */
+  /* --- Brand blue (muted) --- */
+  --blue: #5B76A0;               /* the accent on light surfaces — eyebrows, rules, links, icons.
+                                    A slate blue rather than the van's own #1766B5. Both were on the
+                                    page behind the preview toggle and this is the one that was kept:
+                                    it sits back on white instead of reading as a hyperlink blue. */
+  --blue-bright: #B8C8D4;        /* paler tint of it — rules, hovers, accents on navy */
 
   /* --- The accent on dark ---------------------------------------------------
-     THE VAN BLUE, not a chalky grey. This token carries every accent that lands
-     on navy: eyebrows, the italic clause in a heading, the card icons, the
-     numerals, focus rings, link hovers. It was a pale blue-grey, which on the
-     lifted ground read as a tasteful nothing and on the deep ground read as
-     grey. This is the livery blue with the electricity taken out of it: same
-     hue, saturation down from 89% to 65%, which reads as the van rather than as
-     a hyperlink. It holds 6.4:1 on the ground, so it is coloured because it is
-     the brand, not at the cost of reading it.
-
-     Three weights of one hue, and the order matters: this is the RESTING
-     accent, --blue-bright above is the brighter tint a hover lifts to, and
-     --blue is the solid the light sections use. A hover has somewhere to go.
+     This token carries every accent that lands on navy: eyebrows, the italic
+     clause in a heading, the card icons, the numerals, focus rings, link
+     hovers. A pale blue-grey, quiet enough that the ground stays the loudest
+     thing on the page, and comfortably past 7:1 on it.
 
      The name is a leftover from the green direction the site started in; it is
      kept because 24 rules reach for it, and it has never meant lime. */
-  --lime: #6CA6E0;
-  /* Soft blue-grey, for LARGE decorative surfaces rather than accents — the
-     giant About wordmark, which scrubs to full opacity and would be a 760px
-     shout in the accent blue. Split out of --lime when that token went bright. */
-  --chalk: #AFC6DB;
+  --lime: #B8C8D4;
+  /* The same blue-grey, kept as its own token for LARGE decorative surfaces
+     rather than accents — the giant About wordmark, which scrubs to full
+     opacity. The two values agree under this palette; the split is kept so that
+     760px of wordmark can be tuned without moving every eyebrow on the site. */
+  --chalk: #B8C8D4;
   --steel: var(--blue);          /* heading + eyebrow accent on light (cool) sections */
-  --accent-emergency: var(--blue); /* ONLY the emergency phone number chip — nowhere else */
+  --accent-emergency: #2C4A73;   /* ONLY the emergency phone number chip — nowhere else */
 
   /* --- Text on dark ground --- */
   --on-dark: #FFFFFF;
@@ -193,43 +186,6 @@
                                    Pre-JS fallback only: nav.js overwrites it with the nav's real
                                    height on load, resize and after fonts settle. Kept accurate so
                                    the sticky breadcrumb does not sit 8px high before JS runs. */
-}
-
-/* ==========================================================================
-   PALETTE A/B/C — build-time only, driven by the preview panel's Blue row.
-   The default :root above is the one to compare against: DEEP ground, LIVERY
-   accent. The two below are the directions it came from, kept so all three can
-   be seen on the live page. Delete this block (and the prefs row) once the
-   direction is signed off.
-
-     (default)  Livery  deep ground   + van blue      <- the current direction
-     lifted     Lifted  lighter ground + van blue     <- the previous default
-     muted      Muted   deep ground   + no van blue   <- the previous "deep"
-
-   Each variant overrides ONLY what it changes, so the default is the single
-   place any shared value is edited.
-   ========================================================================== */
-
-/* The previous default: the same livery accent, on a ground a step lighter. */
-:root[data-palette="lifted"] {
-  --ground: #0D3159;
-  --ground-deep: #09233F;
-  --ground-raise: #16406E;
-  --ground-rgb: 13 49 89;
-  --ground-deep-rgb: 9 35 63;
-  --scrim-rgb: 6 24 45;
-  --lime: #AFC6DB;             /* the chalky accent that went with it */
-}
-
-/* The previous "deep": this ground, but with the livery blue taken back out —
-   every accent falls to steel and chalk. */
-:root[data-palette="muted"] {
-  --blue: #5B76A0;
-  --blue-bright: #B8C8D4;
-  --lime: #B8C8D4;
-  --chalk: #B8C8D4;
-  --steel: #5B76A0;
-  --accent-emergency: #2C4A73;
 }
 
 /* ==========================================================================

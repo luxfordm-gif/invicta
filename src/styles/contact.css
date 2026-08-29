@@ -123,7 +123,14 @@
   cursor: pointer;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
-.ccard:hover { border-color: rgba(15, 15, 15, 0.28); }
+/* A one-step darker border was too faint to read as "this is clickable" against
+   the resting state. The hover darkens further AND doubles the stroke, but as a
+   1px ring OUTSIDE the 1px border rather than a wider border, so the card does
+   not reflow its contents on hover. Mid-grey, deliberately short of black. */
+.ccard:hover {
+  border-color: rgba(15, 15, 15, 0.42);
+  box-shadow: 0 0 0 1px rgba(15, 15, 15, 0.42);
+}
 .ccard input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .ccard__check {
   display: grid;
@@ -194,7 +201,14 @@
   text-decoration: none;
   line-height: 1.1;
 }
-.contact-detail__value:hover { color: var(--ground); }
+/* Colour alone was too quiet a signal that these are links, so the hover also
+   underlines. Offset a shade wider than the site's usual 3px because this type
+   is display-sized and the rule would otherwise sit on the descenders. */
+.contact-detail__value:hover {
+  color: var(--ground);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 .contact-detail__value--email { font-size: clamp(18px, 2vw, 22px); word-break: break-word; }
 .contact-detail__note {
   margin-top: var(--space-2);
@@ -235,6 +249,20 @@
 }
 .contact-map__name { font-family: var(--font-display); font-weight: 600; font-size: 17px; }
 .contact-map__addr { margin-top: 6px; font-size: var(--text-note); line-height: 1.5; color: var(--ink-muted); }
+/* The source is 16:10, so cover-crops a little off the top and bottom to reach
+   16:9. Centred is right: the van and the open borehole both sit mid-frame. */
+.contact-map__photo {
+  display: block;
+  width: 100%;
+  /* height:auto is load-bearing: the width/height attributes on the tag (there
+     to reserve the box before the file lands) otherwise resolve as a fixed
+     625px and aspect-ratio is ignored, both dimensions already being set. */
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 16px;
+}
 /* On narrow screens an overlay card would sit straight on top of the pin, so
    drop it out of the map and onto the navy band beneath it. */
 @media (max-width: 700px) {
@@ -255,6 +283,11 @@
   text-decoration: none;
 }
 .contact-map__dir:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* The footer opens on --section-y, which is right when a padded section sits
+   above it. The map band is full-bleed and pays no bottom padding, so on this
+   page that full step read as a hole. One step down the same fluid scale. */
+.contact-map + .footer { padding-top: var(--flow-lg); }
 
 /* --- Thank-you page --- */
 .contact-thanks { padding-top: var(--hero-y-top); }
