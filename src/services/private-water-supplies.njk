@@ -6,6 +6,7 @@ canonical: "https://www.invictawatertreatment.co.uk/services/private-water-suppl
 permalink: "/services/private-water-supplies/"
 current: "services"
 currentService: "/services/private-water-supplies/"
+extraStyles: ["coverage-band"]
 bandImage: "/assets/estate-dawn.webp"
 bandAlt: "A country estate at dawn, with mist settling over the parkland."
 whyTitle: "Why properties go private, <span class=\"em\">and what it takes.</span>"
@@ -26,3 +27,10 @@ breadcrumb:
 {% include "breadcrumb.njk" %}
 {% include "pws-flagship.njk" %}
 {% include "services-explore.njk" %}
+
+<!-- ===================== COVERAGE BAND (full-bleed grayscale map) =====================
+  Closes every service page the way it closes /about/: after the Explore list and
+  before the footer CTA, so the last thing before "start with a conversation" is
+  where we can come to. See coverage-band.njk.
+-->
+{% include "coverage-band.njk" %}

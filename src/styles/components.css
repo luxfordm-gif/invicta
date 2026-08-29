@@ -46,9 +46,12 @@
 /* --- The numeral that leads a numbered row -------------------------------
    Shared by the dark service checklist and the light Explore list. The markup
    has carried `class="numeral"` since the checklist was built; this is the rule
-   it was always meant to pick up. Accent-coloured through --fg-accent, so it
-   comes out pale blue on navy and livery blue on a light section: the same
-   element in two themes rather than two different-looking lists. */
+   it was always meant to pick up.
+
+   FULL FOREGROUND, not the accent. The figure and the title beside it are one
+   line of the same list, and colouring the number blue split the row in two —
+   the count read as decoration rather than as part of what it was numbering.
+   --fg, so it comes out white on navy and near-black on a light surface. */
 .numeral {
   font-family: var(--font-display);
   font-weight: 400;
@@ -56,7 +59,7 @@
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums lining-nums;
-  color: var(--fg-accent);
+  color: var(--fg);
   /* Seats the figure's cap height on the title's. A shared box top will not do
      it: the title carries half-leading the figure does not. */
   margin-top: 0.05em;
