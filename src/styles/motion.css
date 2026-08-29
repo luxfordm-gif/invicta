@@ -33,9 +33,19 @@
   .hero__title  { --reveal-delay: 90ms; }
   .hero__scroll { --reveal-delay: 180ms; }
   .hero__lead   { --reveal-delay: 250ms; }
-  .sector:nth-child(2), .stat:nth-child(2), .why-card:nth-child(2) { --reveal-delay: 90ms; }
-  .sector:nth-child(3), .stat:nth-child(3), .why-card:nth-child(3) { --reveal-delay: 180ms; }
+  .sector:nth-child(2), .stat:nth-child(2) { --reveal-delay: 90ms; }
+  .sector:nth-child(3), .stat:nth-child(3) { --reveal-delay: 180ms; }
   .sector:nth-child(4) { --reveal-delay: 270ms; }
+
+  /* The why cards come in ONE BY ONE, left to right, and the stagger is longer
+     than the one above it on purpose. At 90ms against a 0.9s fade the three
+     cards overlapped so heavily they read as a single block arriving, which is
+     the opposite of the point: the order of these three IS the argument the
+     section makes, so you should see it dealt out. 160ms apart puts a visible
+     beat between them while the last still lands inside half a second of the
+     first, so the row never feels like it is waiting on itself. */
+  .why-card:nth-child(2) { --reveal-delay: 160ms; }
+  .why-card:nth-child(3) { --reveal-delay: 320ms; }
 
   /* --- Footer wordmark: a larger, deliberate slide-up as you reach the bottom.
      Handled separately (not in the generic list) so it RISES rather than just

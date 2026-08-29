@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="{{ '/styles/clients.css' | v }}">
   {% for s in extraStyles %}<link rel="stylesheet" href="{{ ('/styles/' + s + '.css') | v }}">
   {% endfor %}<link rel="stylesheet" href="{{ '/styles/enquiry.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/components/tooltip.css' | v }}"><!-- site-wide: the gloss filter can put a term on any page -->
   <link rel="stylesheet" href="{{ '/styles/motion.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/prefs.css' | v }}"><!-- build-time preview panel; remove before launch -->
 
@@ -71,7 +72,7 @@
   {% include "nav.njk" %}
 
   <main id="main">
-{{ content | safe }}
+{{ content | gloss | safe }}
 
 {% include "footer.njk" %}
   </main>
@@ -86,6 +87,7 @@
   <script src="{{ '/scripts/enquiry.js' | v }}" defer></script>
   <script src="{{ '/scripts/forms.js' | v }}" defer></script>
   <script src="{{ '/scripts/coverage-band.js' | v }}" defer></script>
+  <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>
   <script src="{{ '/scripts/motion.js' | v }}" defer></script>
   <script src="{{ '/scripts/prefs.js' | v }}" defer></script><!-- build-time preview panel; remove before launch -->
 </body>

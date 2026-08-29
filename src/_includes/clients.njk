@@ -47,7 +47,9 @@
     </h2>
   </div>
 
-  <div class="clients__viewport">
+  {# data-no-gloss: the track scrolls, so a term glossed in a logo label would
+     be a tooltip that walks away from the pointer. See the gloss filter. #}
+  <div class="clients__viewport" data-no-gloss>
     <ul class="clients__track" role="list">
       {% for c in clients %}
       <li class="clients__logo" style="--s: {{ c.scale }}">

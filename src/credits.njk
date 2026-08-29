@@ -1,0 +1,56 @@
+---
+layout: base.njk
+title: "Photography Credits | Invicta Water Treatment"
+description: "The photographers and licences behind the stand-in photography on this site."
+canonical: "https://www.invictawatertreatment.co.uk/credits/"
+permalink: "/credits/"
+current: "legal"
+extraStyles: ["legal"]
+hideFooterCta: true
+---
+{#
+  The attribution page for the openly-licensed stand-in photography.
+
+  It EXISTS BECAUSE THE LICENCES REQUIRE IT. Nearly every picture in the
+  case-study grids is CC BY-SA, which obliges us to name the photographer, name
+  the licence and link to it. Cropping and grading them, which we do, counts as
+  adapting them, so the obligation is ours and not the source's.
+
+  Driven entirely from _data/imageCredits.js: delete a row there as each picture
+  is replaced by our own photography, and when the list empties this page stops
+  rendering itself rather than sitting here saying nothing.
+#}
+{% if imageCredits and imageCredits.length %}
+    <!-- ===================== HERO (dark) ===================== -->
+    <section class="section legal-hero">
+      <div class="container">
+        <h1 class="statement legal-hero__title">Photography <span class="em">credits.</span></h1>
+        <p class="legal-hero__meta">Stand-in imagery, pending our own project photography</p>
+      </div>
+    </section>
+
+    <!-- ===================== BODY (light) ===================== -->
+    <section class="section section--light">
+      <div class="container">
+        <div class="legal-prose">
+          <p class="legal-prose__lead">The photographs illustrating our case studies are stand-ins while our own project photography is prepared. They are not photographs of the work described, and where a client is anonymised we have deliberately used landscape rather than any identifiable property. Each one is used under an open licence, with thanks to the photographer.</p>
+
+          <h2>Case study imagery</h2>
+          <ul>
+            {%- for c in imageCredits %}
+            <li>
+              <strong>{{ c.usedFor }}</strong>, standing in.
+              <a href="{{ c.source }}" rel="noopener">{{ c.title }}</a>
+              by {{ c.author }}{% if c.licence %}, {% if c.licenceUrl %}<a href="{{ c.licenceUrl }}" rel="license noopener">{{ c.licence }}</a>{% else %}{{ c.licence }}{% endif %}{% endif %},
+              via Wikimedia Commons. Cropped and colour graded by us; the adaptation is offered under the same licence.
+            </li>
+            {%- endfor %}
+          </ul>
+
+          <h2>Everything else</h2>
+          <p>All other photography, the wordmark and the site design are our own or licensed for our use.</p>
+          <p>If you are one of the photographers above and would like a credit corrected or a picture removed, please email <a href="mailto:{{ site.email }}">{{ site.email }}</a> and we will act on it promptly.</p>
+        </div>
+      </div>
+    </section>
+{% endif %}

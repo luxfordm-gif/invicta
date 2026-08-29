@@ -191,7 +191,11 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      bar without turning it into a full-size button. It is now the tallest thing
      in the nav, so it sets the nav's height — see --nav-h in tokens.css. */
   padding: 12px 16px;
-  font-size: 11px;
+  /* 11px was an UPPERCASE size. Sentence case at 11px reads noticeably smaller
+     than the 11px caps did, because lowercase has no cap-height to fill the
+     line, so it goes up with the rest of the buttons. Still the smallest button
+     on the site, which is the point of this one. */
+  font-size: 14px;
   gap: 7px;
 }
 /* The arrow comes down with the rest of the button: this one is deliberately
@@ -254,8 +258,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     color: var(--ground);
     border: 1px solid rgba(255, 255, 255, 0.45);
     border-radius: 999px;
-    font-family: var(--font-body); font-weight: 600; font-size: clamp(12px, 3.3vw, 13px);
-    text-transform: uppercase; letter-spacing: 0.05em;
+    font-family: var(--font-body); font-weight: 600; font-size: clamp(14px, 3.6vw, 15px);
+    letter-spacing: -0.005em;      /* sentence case, like every other button */
     box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
@@ -404,7 +408,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     display: flex; align-items: center; justify-content: center; gap: 8px;
     width: 100%; padding: 18px 20px; border-radius: 999px;
     background: var(--ground); color: var(--on-dark);   /* navy pill pops on the cream menu */
-    font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
+    font-weight: 600; font-size: 15px; letter-spacing: -0.005em;   /* sentence case */
     transition: background-color 0.2s ease;
   }
   .nav__mobile-extra .nav__menu-cta:hover { background: var(--ground-raise); }
@@ -430,9 +434,13 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   background: var(--on-dark);      /* pure white pill; warms to a slight cream on hover */
   color: var(--ground);
   font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /* SENTENCE CASE, not caps. The labels are sentences ("Book a site survey"),
+     and setting a sentence in caps makes the reader parse it letter by letter.
+     Caps at 12px need 0.08em of tracking to breathe; lowercase at that tracking
+     reads as spaced-out, and lowercase carries less visual weight than caps at
+     the same size, so the size goes up and the tracking comes off together. */
+  font-size: 15px;
+  letter-spacing: -0.005em;
   padding: 14px 24px;
   border-radius: var(--btn-radius);
   white-space: nowrap;
@@ -450,7 +458,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .btn-inquiry:hover .btn-inquiry__arrow { transform: translateX(3px); }
 /* Hover: the chalky pill brightens to white — nothing else. */
 .btn-inquiry:hover { background: #F5F0E8; }   /* slight cream */
-.btn-inquiry--lg { font-size: 13px; padding: 18px 30px; }
+.btn-inquiry--lg { font-size: 16px; padding: 18px 30px; }
 /* On light (cream) sections chalky washes out, so the pill stays a solid navy fill
    and brightens a step on hover. */
 :is(.section--light, .section--paper) .btn-inquiry { background: var(--ground); color: var(--on-dark); }
@@ -465,16 +473,15 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   color: var(--on-dark);
   border: 1px solid rgba(255, 255, 255, 0.4);
   font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 15px;                  /* sentence case, matching .btn-inquiry above */
+  letter-spacing: -0.005em;
   padding: 14px 24px;
   border-radius: var(--btn-radius);
   white-space: nowrap;
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
 }
 .btn-line:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.09); }
-.btn-line--lg { font-size: 13px; padding: 18px 30px; }
+.btn-line--lg { font-size: 16px; padding: 18px 30px; }
 /* A chevron rather than the filled pill's arrow, and the difference is the
    point: the filled button DOES something (sends the enquiry), the outlined one
    TAKES YOU somewhere. Same drawn-not-glyph reasoning as above. It matters most
@@ -692,7 +699,10 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   display: grid;
   gap: var(--space-4);
   padding-bottom: clamp(32px, 4vw, 64px);
-  padding-left: 56px;
+  /* NO left indent. It was 56px, left over from when the head carried a number
+     column for the body to line up under; the numbers went and the indent
+     stayed, so the photograph started 56px inside a title sitting flush with
+     the container and the open panel looked knocked out of true. */
 }
 @media (min-width: 900px) {
   .acc__body { grid-template-columns: 5fr 6fr; gap: clamp(40px, 5vw, 88px); align-items: start; }
@@ -700,28 +710,24 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .acc__media { align-self: stretch; }
 .acc__media img,
 .acc__media .img-ph { border-radius: var(--radius-lg); }
-.acc__media img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
-.acc__media .img-ph { width: 100%; aspect-ratio: 5 / 4; }
+/* 16:9, the same frame the phone panel uses. At 5:4 the picture was half as
+   tall again as the copy beside it, so an open panel was a tall photograph with
+   three lines of text stranded at the top of the column next to it. */
+.acc__media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.acc__media .img-ph { width: 100%; aspect-ratio: 16 / 9; }
 .acc__copy p { font-size: var(--text-body); line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
 .acc__copy .btn-inquiry { margin-top: var(--space-4); }
-@media (max-width: 899.98px) {
-  .acc__body { padding-left: 0; }
-  /* On a phone the picture is stacked ABOVE the copy rather than beside it, so
-     a 5:4 frame eats most of the screen before a word of the answer is visible.
-     16:9 keeps the photograph as scenery and puts the copy in reach. */
-  .acc__media img,
-  .acc__media .img-ph { aspect-ratio: 16 / 9; }
-  /* Every source is 1200x961, so a 16:9 window drops ~30% of the height — where
-     that window sits decides whether the subject survives the crop. Keyed off
-     the asset itself so it travels with the picture, not with whichever
-     accordion row happens to use it.
-       survey     the house + greenhouse sit high; the rest is empty lawn
-       treatment  hold the vessel bases, lose ceiling
-       install    boilers down to the tank label; the floor is dead space
-       service    the hand on the valve wheel is the subject
-     step-design is a flat-lay that fills the frame, so it stays centred. */
-  .acc__media img[src$="step-survey.webp"]    { object-position: center 30%; }
-  .acc__media img[src$="step-treatment.webp"] { object-position: center 55%; }
-  .acc__media img[src$="step-install.webp"]   { object-position: center 40%; }
-  .acc__media img[src$="step-service.webp"]   { object-position: center 42%; }
-}
+/* Every source is 1200x961, so a 16:9 window drops ~30% of the height — where
+   that window sits decides whether the subject survives the crop. Keyed off the
+   asset itself so it travels with the picture, not with whichever accordion row
+   happens to use it. No longer inside the phone query: the panel is 16:9 at
+   every width now, so the crop has to be too.
+     survey     the house + greenhouse sit high; the rest is empty lawn
+     treatment  hold the vessel bases, lose ceiling
+     install    boilers down to the tank label; the floor is dead space
+     service    the hand on the valve wheel is the subject
+   step-design is a flat-lay that fills the frame, so it stays centred. */
+.acc__media img[src$="step-survey.webp"]    { object-position: center 30%; }
+.acc__media img[src$="step-treatment.webp"] { object-position: center 55%; }
+.acc__media img[src$="step-install.webp"]   { object-position: center 40%; }
+.acc__media img[src$="step-service.webp"]   { object-position: center 42%; }

@@ -19,10 +19,15 @@
    No em dashes anywhere in the copy. `image` is the web asset once added (see
    /assets); null renders a tasteful "photo to follow" placeholder.
 
-   TEMPORARY: every study currently points at the SAME stand-in photograph,
-   /assets/case-placeholder.webp, so the card and carousel layouts can be judged
-   with imagery in them. Swap each one for its own project photo as they arrive,
-   or set it back to null to get the "photo to follow" placeholder back.
+   PHOTOGRAPHY IS STAND-IN, AND HONEST ABOUT IT. Every study now carries its own
+   picture rather than seven copies of one barn, but none of them is the actual
+   job: they are openly-licensed photographs from Wikimedia Commons, graded to
+   the site's own look, with the source, author and licence recorded per file in
+   _data/imageCredits.js. Six of the seven clients are anonymised in the copy
+   above, so they are deliberately LANDSCAPES rather than identifiable houses,
+   a photograph of some other family's house captioned as a client's job would
+   be a claim we cannot make. Uppark is the exception and is genuinely Uppark.
+   Swap each one for the real project photograph as it arrives.
 
    `blurb` is the CARD copy: one short sentence, all a bento card shows before
    you hover it. `highlight` is the line that slides up under it. Keep both
@@ -49,8 +54,8 @@ module.exports = [
       "The next task was to find water on site, which we did with our chalk-geology specialist, drilling and carefully developing a new borehole. We like to help where we can.",
     ],
     highlight: "One supply across borehole, rainwater and mains, plus a chlorine-free pool.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-lk-effingham.webp",
+    imageAlt: "Rolling wooded farmland on the North Downs in Surrey, under a soft sky.",
   },
   {
     id: "u-farm-kent",
@@ -67,8 +72,8 @@ module.exports = [
       "The ultrafiltration unit is genuinely impressive: it can be retrofitted to any borehole system and improves water clarity almost instantly.",
     ],
     highlight: "In-house ultrafiltration: clear water from a clay-rich, variable source.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-u-farm-kent.webp",
+    imageAlt: "A Kentish oast house with white cowls, in red brick behind a farm drive.",
   },
   {
     id: "uppark-sussex",
@@ -84,8 +89,8 @@ module.exports = [
       "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site, the kind of adaptation that only shows up once a building is back in real use.",
     ],
     highlight: "A bespoke system for a National Trust restoration.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-uppark-sussex.webp",
+    imageAlt: "Uppark, the National Trust house on the South Downs, seen across its lawn under a wide sky.",
   },
   {
     id: "rf-estate-woking",
@@ -101,8 +106,8 @@ module.exports = [
       "The final water passed the local EHO tests with flying colours. The work led to a second project very close by, where we could install a properly designed system from the start, giving that owner the independence they wanted.",
     ],
     highlight: "Passed the local EHO tests with flying colours.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-rf-estate-woking.webp",
+    imageAlt: "A beech avenue running away through Surrey woodland.",
   },
   {
     id: "b-farm-cotswolds",
@@ -118,8 +123,8 @@ module.exports = [
       "We reconfigured the existing system, adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",
     ],
     highlight: "A redesigned RO that copes with fouling, saline water.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-b-farm-cotswolds.webp",
+    imageAlt: "A Cotswold stone farmhouse behind a post-and-rail paddock, framed by trees.",
   },
   {
     id: "b-stud-berkshire",
@@ -135,8 +140,8 @@ module.exports = [
       "Over the years we have upgraded the pumps and kept the whole site going, including annual cleans and chlorinations, with UKAS-accredited sampling.",
     ],
     highlight: "Years of steady care: annual cleans, chlorination, UKAS sampling.",
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/case-b-stud-berkshire.webp",
+    imageAlt: "Two rugged horses grazing in a railed paddock on open English farmland.",
   },
   {
     id: "roundhurst-haslemere",
@@ -151,7 +156,7 @@ module.exports = [
       "A private supply on the Surrey–Sussex border that we look after near Haslemere.",
     ],
     highlight: null,
-    image: "/assets/case-placeholder.webp",   // TEMP placeholder, see note above
-    imageAlt: "A stone barn conversion under construction at dusk.",
+    image: "/assets/sector-country-houses.webp",
+    imageAlt: "A country house behind clipped formal hedging on a frosty morning.",
   },
 ];

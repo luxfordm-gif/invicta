@@ -5,7 +5,7 @@ description: "Bespoke water treatment, chlorination and hygiene compliance acros
 canonical: "https://www.invictawatertreatment.co.uk/"
 permalink: "/"
 current: "home"
-extraStyles: ["homepage", "filmstrip", "coverage-band", "components/tooltip"]
+extraStyles: ["homepage", "filmstrip", "coverage-band"]
 hideFooterCta: true
 ---
     {#
@@ -52,11 +52,14 @@ hideFooterCta: true
       appeared twice within one screen of each other. The footer itself is
       untouched.
 
-      THE TOOLTIP COMPONENT is new and site-wide capable, but adopted HERE
-      ONLY for now: /styles/components/tooltip.css and /scripts/tooltip.js.
-      Other pages pick it up as their copy is revisited, one page at a time.
-      Its usage rules (never in a heading, two terms per paragraph maximum,
-      first occurrence on the page only) are applied throughout below.
+      THE TOOLTIP COMPONENT is site-wide and NOTHING IS MARKED UP HERE. The
+      eight hand-written `data-tooltip` spans this page used to carry are gone:
+      the `gloss` filter in .eleventy.js now wraps the first occurrence of every
+      term in src/_data/glossary.js, on every page, and enforces the same rules
+      by machine (never in a heading, never inside a link, two per paragraph,
+      once per page). Two of the hand-written ones sat inside a card <a>, which
+      the rules said not to do and only a person could miss. To gloss a new
+      word, add it to the glossary; to change a definition, change it there.
       ======================================================================
     #}
 
@@ -131,9 +134,8 @@ hideFooterCta: true
         <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="container">
-        <p class="eyebrow">Two decades of water treatment</p>
-        <h1 class="hp-hero__title" id="hp-hero-title">Water systems your estate, plant or facility can <span class="em">depend</span> on.</h1>
-        <p class="hp-hero__lead">Bespoke water treatment, chlorination and hygiene for clients where getting it right is a legal requirement, not just a preference. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
+        <h1 class="hp-hero__title" id="hp-hero-title">Water systems you can <span class="em">depend</span> on.</h1>
+        <p class="hp-hero__lead">Bespoke treatment, chlorination and hygiene for properties where getting it right is a legal requirement. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
         <div class="hp-hero__actions">
           <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
@@ -163,23 +165,43 @@ hideFooterCta: true
       Accreditation marks (CHAS, UKAS, and any others) are the second row, and
       are also awaiting files from Matt.
     #}
-    <section class="section section--light hp-trust" id="trusted-by" aria-label="Clients and accreditations">
-      <div class="container">
-        <div class="hp-trust__row">
-          <p class="eyebrow hp-trust__label">Trusted by</p>
-          <ul class="hp-trust__logos" role="list">
-            <li class="hp-trust__logo hp-trust__logo--ph">Chelsea FC</li>
-            <li class="hp-trust__logo hp-trust__logo--ph">GSK</li>
-            <li class="hp-trust__logo hp-trust__logo--ph">Amgen</li>
-            <li class="hp-trust__logo hp-trust__logo--ph">Cowdray Estate</li>
-          </ul>
-        </div>
-        <div class="hp-trust__row">
-          <p class="eyebrow hp-trust__label">Accredited by</p>
-          <ul class="hp-trust__logos" role="list">
-            <li class="hp-trust__logo hp-trust__logo--ph">CHAS</li>
-            <li class="hp-trust__logo hp-trust__logo--ph">UKAS</li>
-          </ul>
+    <section class="section section--light hp-intro" id="about-invicta" aria-labelledby="hp-intro-title">
+      <div class="container hp-intro__inner">
+        {# An h2 wearing the eyebrow style. The section needs an accessible name
+           and this is the only short string in it: the paragraph below runs to
+           two sentences, and a 50-word heading is a heading in name only. #}
+        <h2 class="eyebrow hp-intro__eyebrow" id="hp-intro-title">Who we are</h2>
+
+        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
+
+        <a class="btn-line hp-intro__more" href="/about/">More about Invicta <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
+
+        {# THE PROOF SITS UNDER THE CLAIM, in the same centred column, rather than
+           in a band of its own. It was its own light section directly below this
+           one, which put two light strips back to back with a full section step
+           of empty cream between them and made the logos read as an orphan.
+
+           Alpha, Carel, DIS, IAC and SE Water are NOT slotted below. They were
+           listed "if licensed", and a client mark goes up when we know we may
+           use it, not before. Add a slot each once that is confirmed.
+           Accreditation marks are the second row, also awaiting files. #}
+        <div class="hp-intro__trust">
+          <div class="hp-trust__row hp-trust__row--centred">
+            <p class="eyebrow hp-trust__label">Trusted by</p>
+            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- logo stand-ins, not prose: no tooltips here -->
+              <li class="hp-trust__logo hp-trust__logo--ph">Chelsea FC</li>
+              <li class="hp-trust__logo hp-trust__logo--ph">GSK</li>
+              <li class="hp-trust__logo hp-trust__logo--ph">Amgen</li>
+              <li class="hp-trust__logo hp-trust__logo--ph">Cowdray Estate</li>
+            </ul>
+          </div>
+          <div class="hp-trust__row hp-trust__row--centred">
+            <p class="eyebrow hp-trust__label">Accredited by</p>
+            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- logo stand-ins, not prose: no tooltips here -->
+              <li class="hp-trust__logo hp-trust__logo--ph">CHAS</li>
+              <li class="hp-trust__logo hp-trust__logo--ph">UKAS</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -222,18 +244,15 @@ hideFooterCta: true
             <span class="hp-svc__go">Design and install <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
 
-          {# "Legionella" appears in this card's HEADING first, and tooltips
-             never go in a heading, so the term is marked up on its first
-             occurrence in body copy instead. #}
           <a class="hp-svc" href="/services/water-hygiene/">
             <h3 class="hp-svc__title">Legionella and hygiene to keep on top of?</h3>
-            <p class="hp-svc__desc">Legal compliance is not negotiable. We handle water hygiene, sampling, temperature monitoring and <span class="term" data-tooltip="A bacterium that causes Legionnaires' disease. Water systems above 20&deg;C and below 45&deg;C are at risk without proper control.">Legionella</span> control across your estate or portfolio.</p>
+            <p class="hp-svc__desc">Legal compliance is not negotiable. We handle water hygiene, sampling, temperature monitoring and Legionella control across your estate or portfolio.</p>
             <span class="hp-svc__go">Water hygiene <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
 
           <a class="hp-svc" href="/services/servicing/">
             <h3 class="hp-svc__title">System already installed?</h3>
-            <p class="hp-svc__desc">Scheduled servicing, <span class="term" data-tooltip="Testing conducted through a lab accredited by the UK Accreditation Service, the national accreditation body.">UKAS-accredited</span> re-testing, and 24-hour callout for existing clients.</p>
+            <p class="hp-svc__desc">Scheduled servicing, UKAS-accredited re-testing, and 24-hour callout for existing clients.</p>
             <span class="hp-svc__go">Servicing and maintenance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
         </div>
@@ -279,12 +298,13 @@ hideFooterCta: true
         <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
         <h2 class="statement hp-work__title" id="hp-work-title">Cowdray Estate, <span class="em">a private supply serving multiple properties.</span></h2>
 
-        {# TEMP: /assets/case-placeholder.webp is the site's established stand-in
-           for case-study photography (see _data/caseStudies.js, where all seven
-           studies use it). Swap in the real Cowdray shot when it arrives:
-           <img src="/assets/case-cowdray.webp" alt="..." width="1600" height="900" loading="lazy" decoding="async"> #}
+        {# STAND-IN, and a real photograph of the right place: Cowdray is named in
+           the heading above, so unlike the anonymised studies this one can show
+           the actual estate. It is not our plant, though, so the alt text says
+           what the picture IS rather than claiming it is the installation.
+           Credited on /credits/ (see _data/imageCredits.js). #}
         <figure class="hp-work__media parallax">
-          <img src="/assets/case-placeholder.webp" alt="Placeholder photograph standing in for the Cowdray Estate treatment plant." width="1600" height="900" loading="lazy" decoding="async">
+          <img src="/assets/case-cowdray.webp" alt="The ruins of Cowdray House across the parkland of the Cowdray Estate, West Sussex." width="1600" height="900" loading="lazy" decoding="async">
         </figure>
 
         <dl class="hp-work__meta">
@@ -304,7 +324,7 @@ hideFooterCta: true
 
         {# Three Tier 2 terms wanted marking up here and the rule is two per
            paragraph, so pH correction is spelled out inline instead. #}
-        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around <span class="term" data-tooltip="Filtration process to remove naturally occurring iron and manganese from source water, which otherwise causes staining, taste and pipe damage.">iron and manganese reduction</span>, pH correction to stop the water corroding pipework, and <span class="term" data-tooltip="Water treatment method using ultraviolet light to kill bacteria, viruses and other pathogens without chemicals.">UV sterilisation</span>. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
+        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
 
         {# Pointed at the private water supplies page, not at /case-studies/.
            The standalone index was retired and 301s here anyway, so linking to
@@ -336,22 +356,19 @@ hideFooterCta: true
 
         <dl class="hp-creds__list">
           <div class="hp-cred">
-            <dt class="hp-cred__term"><span class="term" data-tooltip="Contractors Health and Safety Assessment Scheme, a common contractor pre-qualification standard.">CHAS</span> accredited</dt>
+            <dt class="hp-cred__term">CHAS accredited</dt>
             <dd class="hp-cred__desc">For contractors and facilities managers who need us on their approved list.</dd>
           </div>
           <div class="hp-cred">
             <dt class="hp-cred__term">UKAS-accredited laboratory testing</dt>
             <dd class="hp-cred__desc">All water analysis goes through a UKAS-accredited lab, so your compliance evidence is current and defensible.</dd>
           </div>
-          {# DWI, HSE and Environment Agency all qualify for a tooltip and the
-             rule is two per paragraph. The two acronyms get them; Environment
-             Agency reads plainly in English and is left unmarked. #}
           <div class="hp-cred">
             <dt class="hp-cred__term">Twenty years of legislation experience</dt>
-            <dd class="hp-cred__desc"><span class="term" data-tooltip="Drinking Water Inspectorate, the regulator for public and private drinking water supplies in England and Wales.">DWI</span>, <span class="term" data-tooltip="Health and Safety Executive, the UK regulator for workplace health and safety.">HSE</span>, Environment Agency, Legionella regulations. We know the rules that will catch you out if you get it wrong.</dd>
+            <dd class="hp-cred__desc">DWI, HSE, Environment Agency, Legionella regulations. We know the rules that will catch you out if you get it wrong.</dd>
           </div>
           <div class="hp-cred">
-            <dt class="hp-cred__term"><span class="term" data-tooltip="Enforcement notice served by a local authority when a private water supply fails wholesomeness standards.">Section 80 notice</span>? Speak to us first.</dt>
+            <dt class="hp-cred__term">Section 80 notice? Speak to us first.</dt>
             <dd class="hp-cred__desc">We deal with private supply notices regularly. Full water analysis, remedial plan and liaison, so you meet the requirements without over-specifying.</dd>
           </div>
           <div class="hp-cred">
@@ -426,4 +443,3 @@ hideFooterCta: true
     {# base.njk owns the shared script block and is not touched by this task,
        so the new component loads from the page that adopts it. Cache-busted by
        content with the same `v` filter every other asset on the site uses. #}
-    <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>

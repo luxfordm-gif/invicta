@@ -29,6 +29,16 @@
   background: #E6E7E7;
   border-top: 1px solid var(--line-light);
 }
+/* A THIRD MORE BAND ON DESKTOP. At 543px the map was a strip with a sentence on
+   it: enough to place the towns, not enough to read as the territory the claim
+   is about, and it sat between two tall sections that made it look like a
+   caption. The extra height is bought entirely with padding, so the optical
+   centring above still holds and the heading cannot overflow. 292px against the
+   210px cap is the same ~1.3x anywhere the clamp is capped, and the 20.5vw
+   middle keeps the ratio through the tablet range. Phones keep the old band. */
+@media (min-width: 900px) {
+  .coverage-band { --band-pad: clamp(150px, 20.5vw, 292px); }
+}
 
 /* --- The map canvas ------------------------------------------------------- */
 .coverage-band__map {

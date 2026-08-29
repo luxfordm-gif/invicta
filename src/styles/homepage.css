@@ -73,12 +73,19 @@
   isolation: isolate;
   overflow: clip;
   display: flex;
-  align-items: flex-end;              /* the type sits low; the sky is the whitespace */
+  /* CENTRED, not bottom-aligned. Sitting the type on the floor of the frame
+     made the sky read as a hole above it rather than as air around it, and it
+     pushed the whole block far enough down that the eyebrow, the heading, the
+     lead and two buttons arrived in one dense mass at the bottom of the screen.
+     Centred, the same copy has sky above and below and reads as composed. The
+     padding is symmetric for the same reason: with an asymmetric pad, `center`
+     centres the content box, not the picture, and lands visibly low. */
+  align-items: center;
   /* Full viewport, LESS the two sticky bars above it. `100svh` on its own puts
      the bottom of the hero a nav's height below the fold, so the CTAs are cut
      off on exactly the phones where they matter most. */
   min-height: calc(100svh - var(--ubar-h) - var(--nav-h));
-  padding-block: var(--hero-y-top) clamp(48px, 7vh, 104px);
+  padding-block: clamp(48px, 7vh, 104px);
 }
 .hp-hero__media { position: absolute; inset: 0; z-index: -1; }
 .hp-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
@@ -94,8 +101,14 @@
     linear-gradient(to top, rgb(var(--ground-rgb) / 0.9) 0%, rgb(var(--ground-rgb) / 0) 52%);
 }
 .hp-hero__title {
-  margin-top: var(--flow-heading);
-  max-width: 15ch;
+  /* No margin-top: --flow-heading was the gap under the eyebrow, and the eyebrow
+     has gone. Left in, it pushed the whole centred block half a line low. */
+  /* No bespoke size here any more. This started as a home-page-only override
+     when the shared h1 was 118px; the whole desktop scale has since come down
+     to 96px (see base.css), which fixes it everywhere rather than only here.
+     One scale, one place to change it. The measure still widens from 15ch,
+     because smaller type needs more characters to hold the same block. */
+  max-width: 17ch;
   color: var(--on-dark);
 }
 .hp-hero__lead {
@@ -122,7 +135,82 @@
 /* ==========================================================================
    2 — TRUST STRIP. A thin band, not a section: 48px, label left, marks right.
    ========================================================================== */
+/* ==========================================================================
+   2 — WHO WE ARE. The light section that answers "who am I dealing with"
+   before the page starts selling services.
+
+   CENTRED, and that is the whole composition. Every other block on this page is
+   ranged left against the container edge, which is right for a page you scan;
+   this one is a single short passage you are meant to stop and read, and
+   centring it on a light ground is what says stop. It is also the only surface
+   change between the navy hero and the navy services below, so the eye reads
+   it as a held breath rather than as another band of content.
+
+   ONE COLUMN, four things, in the order you would ask for them: what this is
+   (eyebrow), who we are (the passage), where to read more (the link), and who
+   already trusts us (the marks). The marks used to be a section of their own
+   directly below; two light strips back to back put a full section step of
+   empty cream between a claim and its own evidence.
+   ========================================================================== */
+.hp-intro { padding-block: var(--hp-y-md); }
+.hp-intro__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hp-intro__eyebrow { margin: 0; }
+.hp-intro__lead {
+  margin-top: var(--flow-heading);
+  /* Between the section-heading scale and reading size: large enough to be the
+     thing you read on this screen, small enough that 50 words do not become a
+     wall. Measure capped in ch, not px, so it holds four or five lines at any
+     size rather than going to seven on a wide monitor. */
+  font-size: clamp(21px, 2.05vw, 30px);
+  /* 1.3, down from 1.42. Reading copy wants the looser leading, but this is set
+     a step above reading size and centred, and at 1.42 the lines drifted apart
+     far enough that the block stopped reading as one passage. */
+  line-height: 1.3;
+  letter-spacing: -0.014em;
+  /* 44ch, not 38: at 38 the passage set to six lines, which on a centred block
+     reads as a paragraph you have to work through rather than one you take in.
+     44 holds it to four or five at desktop and still breaks well on a phone,
+     where the clamp floor does the work instead. */
+  max-width: 44ch;
+  color: var(--ink);
+  text-wrap: balance;
+}
+/* Stefan's name is the point of the sentence: this section exists to say a
+   person is behind the work. Weight rather than colour, so it lifts without
+   turning into a link. */
+.hp-intro__lead strong { font-weight: 600; }
+.hp-intro__more { margin-top: var(--flow-lead); }
+.hp-intro__trust {
+  /* A full flow step below the link, and a hairline above it: the marks are
+     evidence for the passage, not a continuation of it, and on one flat cream
+     ground a rule is the only thing that can say so. */
+  margin-top: clamp(48px, 6vw, 88px);
+  padding-top: clamp(32px, 4vw, 56px);
+  border-top: 1px solid var(--line-light);
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  gap: var(--space-4);
+}
+
 .hp-trust { padding-block: var(--hp-y-xs); }
+/* The centred variant: the label sits ABOVE its row of marks rather than in a
+   168px column beside it, because a two-column label/logos split cannot be
+   centred, it can only be left-aligned twice. */
+.hp-trust__row--centred {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+@media (min-width: 900px) {
+  .hp-trust__row--centred { grid-template-columns: none; }
+}
 .hp-trust__row { display: grid; gap: var(--space-3); align-items: center; }
 .hp-trust__row + .hp-trust__row { margin-top: var(--space-4); }
 @media (min-width: 900px) {

@@ -20,6 +20,12 @@
   field is guarded, so a missing one leaves nothing out of place rather than an
   empty hole.
 
+  MIRROR — `bentoMirror: true` in a page's front matter flips the three-card
+  layout so the tall lead card sits on the RIGHT. Purely a composition switch;
+  the DOM order, the reading order and the phone carousel are untouched. Set on
+  two of the four service pages so the run of them does not read as one page
+  four times.
+
   SURFACE — `bentoSurface` picks the section behind the grid: omit it for navy,
   or pass "section--light" / "section--paper". The cards carry .theme-dark and
   so stay dark whatever sits behind them, because the copy is set over a
@@ -73,7 +79,7 @@
   {% endif %}
 {% endif %}
 {% if studies and studies.length %}
-<section class="section {{ bentoSurface }} case-bento case-bento--{{ studies.length }}" aria-labelledby="bento-title-{{ carouselId or 'x' }}">
+<section class="section {{ bentoSurface }} case-bento case-bento--{{ studies.length }}{% if bentoMirror %} case-bento--mirror{% endif %}" aria-labelledby="bento-title-{{ carouselId or 'x' }}">
   <div class="container">
     <div class="case-bento__head">
       <h2 id="bento-title-{{ carouselId or 'x' }}" class="statement case-bento__title">{{ carouselTitle | safe or "Projects like this, <span class='em'>across the South East.</span>" }}</h2>

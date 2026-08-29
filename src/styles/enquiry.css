@@ -89,9 +89,8 @@
   border-radius: 999px;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: 14px;                 /* sentence case, like every other button */
+  letter-spacing: -0.005em;
   color: var(--on-dark-muted);
   transition: background-color 0.22s ease, color 0.22s ease;
 }

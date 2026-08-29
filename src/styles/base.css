@@ -43,23 +43,34 @@ ul { list-style: none; padding: 0; }
 /* --- Display typography (Figtree, large + tight) -------------------------- */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
 
+/* THE DESKTOP END OF THE SCALE CAME DOWN A STEP. At 118px a page title filled
+   the full measure and read as a banner rather than as a heading, and next to
+   the competitors this sits beside it was the loudest thing on the page rather
+   than the most confident. The caps drop ~19/13/9%, hardest at the top where the
+   problem was, so the intervals between the three sizes tighten and the whole
+   scale reads calmer without any level losing its rank.
+
+   THE PHONE FLOORS ARE UNTOUCHED (52 / 38 / 26). They were set by measurement in
+   their own pass and none of this was a complaint about phones. The vw slopes
+   came down with the caps so each ramp still overtakes its floor in the low 800s
+   and rises continuously to the new cap, with no jump at any width. */
 h1 {
-  font-size: clamp(52px, 8.2vw, 118px);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-size: clamp(52px, 6.8vw, 96px);
+  line-height: 0.99;
+  letter-spacing: -0.038em;
 }
 h2 {
-  /* The 38px floor is what a section heading reads at on a phone. 4.8vw only
-     overtakes it around 790px, so the ramp is continuous — no jump at the
+  /* The 38px floor is what a section heading reads at on a phone; 4.5vw
+     overtakes it around 845px, so the ramp is continuous — no jump at the
      breakpoint. */
-  font-size: clamp(38px, 4.8vw, 62px);
-  line-height: 1.03;
-  letter-spacing: -0.03em;
+  font-size: clamp(38px, 4.5vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
 }
 h3 {
-  font-size: clamp(26px, 3.4vw, 44px);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
+  font-size: clamp(26px, 3.1vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.024em;
 }
 
 /* Playfair Display italic — the "emotional" accent, used inline in headings
