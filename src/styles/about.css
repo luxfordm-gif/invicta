@@ -38,7 +38,9 @@
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(150px, 42vw, 760px);   /* much larger + wider: spills past the edges */
   line-height: 1; letter-spacing: -0.02em;
-  color: var(--lime);
+  /* --chalk, not --lime: this is a 760px decorative surface that scrubs to full
+     opacity, so the accent blue would make it the loudest thing on the site. */
+  color: var(--chalk);
   white-space: nowrap;
   pointer-events: none;
   opacity: var(--wm-opacity, 0.05);        /* starts VERY faint; scrubs up to 1 on scroll */

@@ -46,9 +46,12 @@
 /* --- The numeral that leads a numbered row -------------------------------
    Shared by the dark service checklist and the light Explore list. The markup
    has carried `class="numeral"` since the checklist was built; this is the rule
-   it was always meant to pick up. Accent-coloured through --fg-accent, so it
-   comes out pale blue on navy and livery blue on a light section: the same
-   element in two themes rather than two different-looking lists. */
+   it was always meant to pick up.
+
+   FULL FOREGROUND, not the accent. The figure and the title beside it are one
+   line of the same list, and colouring the number blue split the row in two —
+   the count read as decoration rather than as part of what it was numbering.
+   --fg, so it comes out white on navy and near-black on a light surface. */
 .numeral {
   font-family: var(--font-display);
   font-weight: 400;
@@ -56,7 +59,7 @@
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums lining-nums;
-  color: var(--fg-accent);
+  color: var(--fg);
   /* Seats the figure's cap height on the title's. A shared box top will not do
      it: the title carries half-leading the figure does not. */
   margin-top: 0.05em;
@@ -579,6 +582,20 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   /* svh, not vh: on a phone the mobile browser's collapsing toolbars make vh
      taller than the screen, which would crop the foot of the picture. */
   height: 100svh;
+}
+/* DESKTOP: 70svh, not the full screen. A full-height band is a long hold on a
+   wide screen, and the reveal still reads at 70 — the section below still rides
+   up over a picture that is still the biggest thing on the page, it just does
+   not ask for the whole of it. The phone keeps 100svh: there the picture is
+   already only a few hundred pixels tall and shortening it leaves a strip of
+   the next section showing rather than a moment.
+
+   Note this is NOT a fix for the softness in these photographs. The band is
+   full-bleed, so once it is shorter than the image's own ratio it is WIDTH that
+   sets the scale, and the sources (1000-1672px) are already being stretched
+   past 2x on a retina screen. Shorter crops more; it does not sharpen. */
+@media (min-width: 900px) {
+  .band--reveal { height: 70svh; }
 }
 /* The picture is the point here, so it carries far less wash than the old fixed
    band, where the copy immediately below needed the photograph pushed back. */

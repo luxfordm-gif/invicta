@@ -7,7 +7,7 @@
   "permalink": "/services/design-install/",
   "current": "services",
   "currentService": "/services/design-install/",
-  "extraStyles": ["service"],
+  "extraStyles": ["service", "coverage-band"],
   "breadcrumb": [
     { "title": "Services" },
     { "title": "Design & Install" }
@@ -68,3 +68,10 @@
 ---
 {% include "service.njk" %}
 {% include "services-explore.njk" %}
+
+<!-- ===================== COVERAGE BAND (full-bleed grayscale map) =====================
+  Closes every service page the way it closes /about/: after the Explore list and
+  before the footer CTA, so the last thing before "start with a conversation" is
+  where we can come to. See coverage-band.njk.
+-->
+{% include "coverage-band.njk" %}

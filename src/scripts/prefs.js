@@ -51,11 +51,13 @@
     }
   }
 
-  // Palette A/B: "deep" is the original navy, "bright" the lifted livery blue.
+  // Palette A/B/C. "livery" is the default direction (deep ground + van blue)
+  // and carries no attribute; "lifted" and "muted" are the two it came from.
   // Stored so it holds across page changes and inside the mobile-preview iframe.
+  var VARIANTS = ["lifted", "muted"];
   function setPalette(p) {
-    if (p === "deep") document.documentElement.dataset.palette = "deep";
-    else delete document.documentElement.dataset.palette;
+    if (VARIANTS.indexOf(p) > -1) document.documentElement.dataset.palette = p;
+    else { p = "livery"; delete document.documentElement.dataset.palette; }
     try { localStorage.setItem("iwt-palette", p); } catch (e) {}
     panel.querySelectorAll("[data-palette]").forEach(function (b) {
       b.classList.toggle("is-active", b.getAttribute("data-palette") === p);
@@ -63,7 +65,9 @@
     if (phone) phone.querySelector("iframe").contentWindow.location.reload();
   }
 
-  setPalette(document.documentElement.dataset.palette === "deep" ? "deep" : "bright");
+  // An unknown stored value (including the retired "deep"/"bright") falls back
+  // to the default rather than leaving no button lit.
+  setPalette(document.documentElement.dataset.palette);
 
   panel.addEventListener("click", function (e) {
     var b = e.target.closest("[data-view]");

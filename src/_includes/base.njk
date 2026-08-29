@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>document.documentElement.classList.add('js');</script><!-- enables reveal-on-scroll without a flash of hidden content -->
   <script>/* build-time palette A/B; applied pre-paint so the toggle survives a page change. Remove with the prefs panel. */
-    try { var p = localStorage.getItem('iwt-palette'); if (p === 'deep') document.documentElement.dataset.palette = p; } catch (e) {}
+    try { var p = localStorage.getItem('iwt-palette'); if (p === 'lifted' || p === 'muted') document.documentElement.dataset.palette = p; } catch (e) {}
   </script>
 
   <title>{{ title }}</title>
@@ -34,17 +34,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/styles/tokens.css">
-  <link rel="stylesheet" href="/styles/base.css">
-  <link rel="stylesheet" href="/styles/components.css">
-  <link rel="stylesheet" href="/styles/sections.css">
-  <link rel="stylesheet" href="/styles/case-carousel.css">
-  <link rel="stylesheet" href="/styles/case-bento.css">
-  <link rel="stylesheet" href="/styles/stats-band.css">
-  {% for s in extraStyles %}<link rel="stylesheet" href="/styles/{{ s }}.css">
-  {% endfor %}<link rel="stylesheet" href="/styles/enquiry.css">
-  <link rel="stylesheet" href="/styles/motion.css">
-  <link rel="stylesheet" href="/styles/prefs.css"><!-- build-time preview panel; remove before launch -->
+  <link rel="stylesheet" href="{{ '/styles/tokens.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/base.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/components.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/sections.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/case-carousel.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/case-bento.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/stats-band.css' | v }}">
+  {% for s in extraStyles %}<link rel="stylesheet" href="{{ ('/styles/' + s + '.css') | v }}">
+  {% endfor %}<link rel="stylesheet" href="{{ '/styles/enquiry.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/motion.css' | v }}">
+  <link rel="stylesheet" href="{{ '/styles/prefs.css' | v }}"><!-- build-time preview panel; remove before launch -->
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -83,13 +83,13 @@
 {% include "enquiry.njk" %}
 {% include "prefs.njk" %}
 
-  <script src="/scripts/nav.js" defer></script>
-  <script src="/scripts/carousel.js" defer></script>
-  <script src="/scripts/filmstrip.js" defer></script>
-  <script src="/scripts/enquiry.js" defer></script>
-  <script src="/scripts/forms.js" defer></script>
-  <script src="/scripts/coverage-band.js" defer></script>
-  <script src="/scripts/motion.js" defer></script>
-  <script src="/scripts/prefs.js" defer></script><!-- build-time preview panel; remove before launch -->
+  <script src="{{ '/scripts/nav.js' | v }}" defer></script>
+  <script src="{{ '/scripts/carousel.js' | v }}" defer></script>
+  <script src="{{ '/scripts/filmstrip.js' | v }}" defer></script>
+  <script src="{{ '/scripts/enquiry.js' | v }}" defer></script>
+  <script src="{{ '/scripts/forms.js' | v }}" defer></script>
+  <script src="{{ '/scripts/coverage-band.js' | v }}" defer></script>
+  <script src="{{ '/scripts/motion.js' | v }}" defer></script>
+  <script src="{{ '/scripts/prefs.js' | v }}" defer></script><!-- build-time preview panel; remove before launch -->
 </body>
 </html>

@@ -7,7 +7,7 @@
   "permalink": "/services/water-hygiene/",
   "current": "services",
   "currentService": "/services/water-hygiene/",
-  "extraStyles": ["service"],
+  "extraStyles": ["service", "coverage-band"],
   "breadcrumb": [
     { "title": "Services" },
     { "title": "Water Hygiene" }
@@ -67,3 +67,10 @@
 ---
 {% include "service.njk" %}
 {% include "services-explore.njk" %}
+
+<!-- ===================== COVERAGE BAND (full-bleed grayscale map) =====================
+  Closes every service page the way it closes /about/: after the Explore list and
+  before the footer CTA, so the last thing before "start with a conversation" is
+  where we can come to. See coverage-band.njk.
+-->
+{% include "coverage-band.njk" %}
