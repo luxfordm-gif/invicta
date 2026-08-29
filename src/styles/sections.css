@@ -396,24 +396,10 @@
 /* Carousel pagination dots now live in components.css as .dots — shared by
    the sectors band and the home page USPs. */
 
-/* --- Clients / trust (dark) ----------------------------------------------- */
-.clients__grid {
-  display: grid;
-  gap: 1px;
-  margin-top: var(--flow-lg);
-  background: var(--line-dark);
-  border: 1px solid var(--line-dark);
-}
-@media (min-width: 600px) { .clients__grid { grid-template-columns: repeat(2, 1fr); } }
-/* Four names read as a single row of proof; a 2 x 2 left big empty cells. */
-@media (min-width: 800px) { .clients__grid { grid-template-columns: repeat(4, 1fr); } }
-.client { display: flex; align-items: center; justify-content: center; background: var(--ground); padding: clamp(40px, 4.4vw, 68px) var(--space-3); }
-.client span { font-family: var(--font-display); font-weight: 400; font-size: clamp(22px, 2.2vw, 34px); letter-spacing: -0.02em; color: var(--on-dark); text-align: center; text-wrap: balance; }
-/* Clients on a light (cream) section: cream tiles, hairline gaps, dark names. */
-:is(.section--light, .section--paper) .clients__grid { background: var(--line-light); border-color: var(--line-light); }
-.section--light .client { background: var(--light); }
-.section--paper .client { background: var(--paper); }
-:is(.section--light, .section--paper) .client span { color: var(--ink); }
+/* --- Clients / trust ------------------------------------------------------
+   The four-name grid that stood here is gone, replaced by the logo marquee in
+   clients.css. Only the section wrapper class survives, and it carries no
+   rules of its own. --- */
 
 /* --- FAQ (dark) ----------------------------------------------------------- */
 .faq__grid { display: grid; gap: var(--space-6); }

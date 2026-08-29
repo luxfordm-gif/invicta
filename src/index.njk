@@ -186,20 +186,9 @@ extraStyles: ["home"]
     {% include "case-carousel.njk" %}
 
     <!-- ===================== TRUSTED BY (cream) ===================== -->
-    <section class="section section--light clients home-clients" aria-labelledby="home-clients-title">
-      <div class="container">
-        <h2 id="home-clients-title" class="statement">
-          Chosen by clients who <span class="em">expect it done properly.</span>
-        </h2>
-
-        <ul class="clients__grid">
-          <li class="client"><span>Chelsea FC</span></li>
-          <li class="client"><span>GSK</span></li>
-          <li class="client"><span>Amgen</span></li>
-          <li class="client"><span>Cowdray Estate</span></li>
-        </ul>
-      </div>
-    </section>
+    {% set clientsId = "home-clients" %}
+    {% set clientsSurface = "section--light" %}
+    {% include "clients.njk" %}
 
     <!-- ===================== REVIEWS (white) ===================== -->
     <section class="section section--paper home-reviews" aria-labelledby="home-reviews-title">

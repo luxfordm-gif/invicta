@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Clients, a slow marquee of real client logos (light grounds)
+
+   Pairs with _includes/clients.njk and _data/clients.js.
+
+   THE BAND IS MONOCHROME ON PURPOSE. Nine logos in their own colours is a
+   fairground: Carel red, GSK orange, DIS red and teal, the Hospice green,
+   Chelsea blue and gold, all in one row, each shouting a different brand at a
+   client who is meant to be reading ours. Greyed, they stop competing and
+   start counting, which is the only thing a trust band is for. It is also
+   what the old site did, and it is what lets the two thin logos (DIS at 132px,
+   IAC at 177px) sit beside true vectors without the difference showing.
+
+   Every mark is transparent PNG or SVG, so the grey is a plain filter and
+   nothing has to be blended away. IAC arrived as a flat RGB screenshot with a
+   white box baked in; rather than hide that box with a blend mode, the file
+   itself was given a real alpha channel, recovered by un-compositing the ink
+   from the white behind it. Fixing the asset beats papering over it in CSS,
+   and it means the band no longer depends on a blend that a stacking context
+   can quietly break.
+
+   The constraint on where this band can go is simply contrast: these are dark
+   marks at 72%, so they need a pale ground. On the navy they would go black on
+   black. Light surfaces only, which is where both call sites already sit.
+   ========================================================================== */
+
+.clients__viewport {
+  /* One multiplier drives the whole band, so a variant can size it up without
+     restating the sizes and without falling out of step on a phone. The cell,
+     the mark and the air inside the cell all scale together, which is the only
+     way the rhythm survives: growing the marks alone would eat the air, and
+     growing the cell alone would just spread them out. */
+  --clients-scale: 1;
+  --clients-h: calc(40px * var(--clients-scale));    /* what a wordmark gets at scale 1 */
+  --clients-cell: calc(clamp(158px, 17vw, 208px) * var(--clients-scale));
+  --clients-maxw: calc(var(--clients-cell) - 58px * var(--clients-scale));
+  --clients-speed: 46s;
+
+  margin-top: var(--flow-md);
+  overflow: hidden;
+  /* Full bleed: the heading stays in the container, the row does not, so the
+     logos run off both edges instead of stopping short of them. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  /* Fade both ends rather than cutting them. Without this the loop reads as a
+     row that happens to be clipped; with it, as a row that carries on. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+/* --- Track ---------------------------------------------------------------
+   Two identical copies of the roster sit side by side, and the animation
+   translates by exactly half the track's width, which lands copy B precisely
+   where copy A started. That is the whole seamless-loop trick, and it only
+   holds if the two halves measure the same: hence margin-right on every item
+   rather than `gap` on the flex row. `gap` would put a space between the items
+   but not after the last one, so half the width would be half an item's gap
+   short, and the loop would jump by that much every cycle. --- */
+.clients__track {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: clients-marquee var(--clients-speed) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+
+  /* Greyed here, on the one element that moves, rather than on each of the
+     eighteen images inside it. Same look, but the browser rasterises a single
+     filtered layer and then just slides it, instead of carrying eighteen
+     filtered children through every frame. */
+  filter: grayscale(1) contrast(1.06);
+  opacity: 0.72;
+}
+
+/* The cream is warmer and slightly darker than the white, so the same ink
+   reads lighter on it. Nudge it back. */
+.section--light .clients__track { opacity: 0.78; }
+
+@keyframes clients-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Let someone stop it and look. Focus-within as well as hover, so a keyboard
+   reaching the row gets the same courtesy as a mouse. */
+.clients__viewport:hover .clients__track,
+.clients__viewport:focus-within .clients__track { animation-play-state: paused; }
+
+/* --- A logo --------------------------------------------------------------
+   EVERY MARK GETS AN IDENTICAL CELL, and is centred in it. This is the whole
+   difference between a logo wall that looks composed and one that looks
+   pasted together. Equal GAPS are the obvious idea and the wrong one: the
+   marks are 61px to 150px wide, so equal gaps put wildly unequal amounts of
+   air around each, and the eye reads the row as drifting. Equal cells fix the
+   rhythm to a constant beat, and the leftover air lands inside the cell where
+   it belongs, as breathing room around a small mark rather than as a hole
+   between two big ones.
+
+   It also makes the loop exact: 18 cells of one width, so -50% is nine cells,
+   which is precisely one copy of the roster. No trailing-gap arithmetic.
+
+   Sized by max-height AND max-width, never a set height. With both caps the
+   smaller one wins and the aspect ratio survives untouched. --- */
+.clients__logo {
+  flex: 0 0 var(--clients-cell);
+  display: grid;
+  place-items: center;
+}
+.clients__logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: calc(var(--clients-h) * var(--s, 1));
+  max-width: var(--clients-maxw);
+
+  /* The greying lives on the track, not here. An earlier pass used
+     mix-blend-mode: multiply to drop IAC's white box, which failed twice over:
+     the animated track is its own stacking context, so the blend never reached
+     the section behind it, and blending is the wrong tool anyway. IAC's PNG now
+     carries a real alpha channel, so there is no box left to hide. */
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* --- The roomy variant, for the service pages ----------------------------
+   A service page has already made its argument in detail by the time the band
+   arrives, so the band can slow down and take the room. The homepage keeps the
+   tighter, quicker version: it is one stop on a longer scroll, and a 64-second
+   loop there would never finish in front of anyone.
+
+   The heading centres here and nowhere else. Centred type suits a band that is
+   itself symmetrical and full-bleed; on the homepage the same heading sits in
+   a left-aligned run of sections and would break the column.
+
+   Speed is not just a bigger number. The track is 10% longer at this scale, so
+   holding 46s would have sped it up by 10%; 64s takes it from roughly 81px per
+   second to 64, which is the change actually being asked for. --- */
+.clients--airy .clients__viewport {
+  --clients-scale: 1.1;
+  --clients-speed: 64s;
+  margin-top: var(--flow-lg);
+}
+/* Deliberately opts out of the same-surface join. base.css zeroes padding-top
+   when two sections of one colour meet, so they read as a single field instead
+   of doubling the gap, and on the PWS page this band lands directly under the
+   white stats band and was inheriting nothing at all. That rule is right for
+   two runs of text, but the band is an object rather than a continuation: it
+   needs air on both sides to read as its own thing. Same specificity as the
+   join, and clients.css loads after base.css, so this wins on order. */
+.section.clients--airy {
+  padding-block: calc(var(--section-y) * 1.4);
+}
+.clients--airy .statement {
+  max-width: 26ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* --- Ruled, when the band is the first half of a pair -------------------
+   Used where the logos are followed by the stats band on the same white: the
+   two are one argument, so a hairline separates them rather than a new
+   section starting.
+
+   The spacing has to be symmetrical or the line looks dropped rather than
+   placed. The section's own bottom padding goes to zero and the gap is made
+   twice over instead, once above the rule and once below it, the second half
+   handed to whatever follows. That sibling would otherwise get padding-top: 0
+   from the same-surface join in base.css and its figures would sit right on
+   the line. Same specificity as that join, later file, so this wins. --- */
+.section.clients--ruled { padding-bottom: 0; }
+.clients__rule { margin-top: calc(var(--section-y) * 0.9); }
+.clients--ruled + .section { padding-top: calc(var(--section-y) * 0.9); }
+
+/* On a phone the cell has to give back most of its padding, or the widest
+   wordmarks pay for it twice. South East Water is 4.5:1: cap its width at 74px
+   and it comes out 16px tall, which is not a logo any more, it is a smudge.
+   A wider cell with a thinner margin keeps the long marks legible, and the
+   square ones simply sit in more air, which costs nothing.
+
+   The airy selector is repeated here on purpose. A media query adds no
+   specificity, so `.clients--airy .clients__viewport` outside this block would
+   otherwise keep beating a bare `.clients__viewport` inside it, and a phone
+   would be left running the desktop cell at a 64-second loop. Matching the
+   specificity and sitting later in the file is what lets the phone win. */
+@media (max-width: 599.98px) {
+  .clients__viewport,
+  .clients--airy .clients__viewport {
+    --clients-h: calc(30px * var(--clients-scale));
+    --clients-cell: calc(146px * var(--clients-scale));
+    --clients-maxw: calc(var(--clients-cell) - 32px * var(--clients-scale));
+    --clients-speed: 32s;   /* shorter row, same apparent pace */
+  }
+  .section.clients--airy { padding-block: calc(var(--section-y) * 1.2); }
+}
+
+/* --- No motion -----------------------------------------------------------
+   Stop the loop and hand the row back as something to push. The duplicate set
+   goes away, since without the animation it is just the roster listed twice.
+   --- */
+@media (prefers-reduced-motion: reduce) {
+  .clients__track {
+    animation: none;
+    width: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-inline: var(--container-pad);
+  }
+  .clients__track::-webkit-scrollbar { display: none; }
+  .clients__logo[aria-hidden="true"] { display: none; }
+  .clients__viewport {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+}
