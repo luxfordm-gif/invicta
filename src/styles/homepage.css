@@ -13,12 +13,19 @@
      2  trust       thin band, label left / marks right  who already trusts us
      3  services    asymmetric spread + lead image       ROUTING, by problem
      4  positioning centred, one line, nothing else      the argument
-     5  sectors     centred flowing type, no links       who we work for
-     6  coverage    full-bleed map (shared component)    where we work
-     7  work        one photograph, meta strip, prose    proof, once
-     8  credentials 40/60 split, sticky aside, dl        the qualifying paperwork
-     9  filmstrip   full-bleed drag band (shared)        the exhale, and the yard
-    10  enquiry     small, centred, two buttons          the exit door
+     5  coverage    full-bleed map (shared component)    where we work
+     6  work        one photograph, meta strip, prose    proof, once
+     7  credentials 40/60 split, sticky aside, dl        the qualifying paperwork
+     8  filmstrip   full-bleed drag band (shared)        the exhale, and the yard
+     9  enquiry     small, centred, two buttons          the exit door
+
+   THERE IS NO SECTORS SECTION, and there are four service routes rather than
+   five. Both are the client's own instruction of 11/08/26: "Remove Sectors
+   completely" and "Services, remove Flush & Precomm". The retired pages 301
+   in src/_redirects, so a card pointing at pre-commission cleaning would have
+   sent the one visitor who wanted it to a page about boreholes. Where the
+   sectors list used to sit, the coverage map now answers "do you come to me",
+   which is the question a list of industries was standing in for.
 
    ROUTING SITS AT NUMBER THREE, and that is the one ordering decision worth
    arguing about. It used to be fourth, behind the positioning statement, and
@@ -251,19 +258,25 @@
      flagship, and an even split would make the spread a two-up grid again. */
   .hp-services__grid { grid-template-columns: 1.15fr 1fr; }
   .hp-svc { padding-inline: clamp(24px, 2.6vw, 44px); }
-  .hp-svc:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+  /* ONE TALL CELL AND THREE STACKED BESIDE IT. With five routes this was a
+     2 + 2 + 1 arrangement; with four it is simply the flagship holding the
+     full height of the column while the other three stack, which is the
+     cleaner shape of the two and needs no odd row out. */
+  .hp-svc:nth-child(1) { grid-column: 1; grid-row: 1 / span 3; }
   .hp-svc:nth-child(2) { grid-column: 2; grid-row: 1; }
   .hp-svc:nth-child(3) { grid-column: 2; grid-row: 2; }
-  .hp-svc:nth-child(4) { grid-column: 1; grid-row: 3; }
-  .hp-svc:nth-child(5) { grid-column: 2; grid-row: 3; }
+  .hp-svc:nth-child(4) { grid-column: 2; grid-row: 3; }
   /* The outer edges keep the container's own margin; only the seam between the
      columns is ruled, so the spread reads as one ruled sheet rather than as
      two bordered boxes side by side. */
-  .hp-svc:nth-child(1), .hp-svc:nth-child(4) { padding-left: 0; }
-  .hp-svc:nth-child(2), .hp-svc:nth-child(3), .hp-svc:nth-child(5) {
+  .hp-svc:nth-child(1) { padding-left: 0; }
+  .hp-svc:nth-child(2), .hp-svc:nth-child(3), .hp-svc:nth-child(4) {
     padding-right: 0;
     border-left: 1px solid var(--line-dark);
   }
+  /* The flagship keeps its own bottom rule. It sits in column ONE and the last
+     stacked cell sits in column TWO, so the two do not overlap: they meet at
+     the same y and draw one continuous line across the foot of the spread. */
   /* The flagship gets the extra size the two-row cell has room for. */
   .hp-svc:nth-child(1) .hp-svc__title { font-size: clamp(30px, 3.3vw, 44px); max-width: 14ch; }
   .hp-svc:nth-child(1) .hp-svc__desc { font-size: var(--text-body); max-width: 34ch; }
@@ -291,63 +304,14 @@
 }
 
 /* ==========================================================================
-   5 — SECTORS. Named, not linked. A wrapping line of type, not a grid.
-
-   Nine tiles here would be the fourth card grid on one page, and would promise
-   nine pages that do not exist. Set as running type with centred bullets it is
-   plainly a LIST OF PLACES, which is all it was ever meant to be.
-   ========================================================================== */
-.hp-sectors { padding-block: var(--hp-y-md); }
-.hp-sectors__intro { max-width: 720px; margin-inline: auto; text-align: center; }
-.hp-sectors__title { max-width: none; }
-.hp-sectors__lead { margin: var(--flow-lead) auto 0; max-width: 640px; }
-.hp-sectors__list {
-  margin: var(--flow-md) auto 0;
-  max-width: 22ch;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(28px, 3vw, 44px);
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-  text-align: center;
-  text-wrap: balance;
-  color: var(--ink);
-}
-/* Inline, so the nine names reflow as one paragraph of type at every width
-   instead of breaking into columns.
-
-   EACH NAME IS ONE OBJECT. Without the nowrap the line breaks wherever the
-   measure runs out, which at tablet width split "Country / houses", "Leisure &
-   / hospitality" and "Facilities / management" across lines, so the list read
-   as eleven or twelve half-sectors instead of nine. Same reasoning as the
-   phone-number rule in base.css: the space inside a name is not a break
-   opportunity. Breaks still happen freely BETWEEN names, which is what makes
-   the block reflow. */
-.hp-sectors__list li { display: inline; white-space: nowrap; }
-.hp-sectors__list li:not(:last-child)::after {
-  content: "\00B7";
-  margin-inline: 0.42em;
-  color: var(--ink-muted);
-}
-.hp-sectors__caption {
-  margin: var(--space-5) auto 0;
-  max-width: 52ch;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--ink-muted);
-}
-@media (min-width: 900px) { .hp-sectors__list { max-width: 26ch; } }
-
-/* ==========================================================================
-   6 — COVERAGE BAND. No rules here on purpose: it is coverage-band.njk and
+   5 — COVERAGE BAND. No rules here on purpose: it is coverage-band.njk and
    coverage-band.css, unchanged, the same component that closes /about/ and
    every service page. A homepage that draws its own map would be a second
    answer to a question the site already answers in one place.
    ========================================================================== */
 
 /* ==========================================================================
-   7 — SELECTED WORK. One case study at full size, not three at card size.
+   6 — SELECTED WORK. One case study at full size, not three at card size.
    ========================================================================== */
 .hp-work { padding-block: var(--hp-y-lg); }
 .hp-work__title { max-width: 24ch; }
@@ -395,7 +359,7 @@
 .hp-work__link { margin-top: var(--space-4); }
 
 /* ==========================================================================
-   8 — CREDENTIALS. The qualifying moment: 40/60, and the question stays put.
+   7 — CREDENTIALS. The qualifying moment: 40/60, and the question stays put.
 
    The aside is sticky because the six answers are a list you scan, and the
    question they answer should still be on screen while you scan them.
@@ -430,13 +394,13 @@
 }
 
 /* ==========================================================================
-   9 — FILMSTRIP. Also no rules here: filmstrip.njk and filmstrip.css, as used
+   8 — FILMSTRIP. Also no rules here: filmstrip.njk and filmstrip.css, as used
    on /about/. It is the page's one purely photographic beat, and it carries
    straight on from the navy of the credentials above it.
    ========================================================================== */
 
 /* ==========================================================================
-  10 — ENQUIRY. The exit door, and the smallest section on the page.
+   9 — ENQUIRY. The exit door, and the smallest section on the page.
    ========================================================================== */
 .hp-enquiry { padding-block: var(--hp-y-sm); }
 .hp-enquiry__inner { max-width: 720px; margin-inline: auto; text-align: center; }

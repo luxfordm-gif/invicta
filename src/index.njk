@@ -12,12 +12,19 @@ hideFooterCta: true
       ======================================================================
       HOME PAGE
 
-      TEN SECTIONS, AND NO TWO OF THEM ARE BUILT THE SAME WAY. The page this
+      NINE SECTIONS, AND NO TWO OF THEM ARE BUILT THE SAME WAY. The page this
       replaces was five variations on "eyebrow, big heading, grid of cards",
       which made every screen read like the one before it. Each section here
       has one job, and a structure only it uses. The reasoning for each is in
       homepage.css, next to the rules that draw it, along with the argument for
       the running order.
+
+      NO SECTORS SECTION, AND FOUR SERVICE ROUTES RATHER THAN FIVE. Both are
+      the client's own instruction of 11/08/26: "Remove Sectors completely" and
+      "Services, remove Flush & Precomm". Those pages 301 in src/_redirects, so
+      a card offering pre-commission cleaning would have sent the one visitor
+      who wanted it to a page about boreholes. The coverage map now stands
+      where the sectors list did, answering "do you come to me" directly.
 
       ROUTING SITS THIRD, one screen from the fold, because on a page selling
       systems that cost seven figures the visitor almost always arrives already
@@ -26,7 +33,7 @@ hideFooterCta: true
       answering "why does this have to be done properly" rather than opening
       with it.
 
-      THREE OF THE TEN ARE THE SITE'S OWN COMPONENTS, unchanged and included
+      THREE OF THE NINE ARE THE SITE'S OWN COMPONENTS, unchanged and included
       rather than reimplemented: the coverage map that closes /about/ and every
       service page, the filmstrip from /about/, and the enquiry drawer the
       whole site shares. A homepage that drew its own map or its own photo band
@@ -215,17 +222,6 @@ hideFooterCta: true
             <span class="hp-svc__go">Design and install <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
 
-          {# /services/flushing-pre-comm/ was retired and now 301s to the
-             private water supplies page (see src/_redirects). The card is here
-             because the brief specifies it; the link works, but it does not
-             land on a page about pre-commission cleaning. Either the page
-             comes back or this card points somewhere that answers it. #}
-          <a class="hp-svc" href="/services/flushing-pre-comm/">
-            <h3 class="hp-svc__title">Handing over a new build?</h3>
-            <p class="hp-svc__desc">Pre-commission flushing and cleaning to <span class="term" data-tooltip="Industry-standard guidelines for pre-commission cleaning of building services pipework.">BSRIA guidelines</span>, ready for sign-off.</p>
-            <span class="hp-svc__go">Flushing and pre-commission <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-
           {# "Legionella" appears in this card's HEADING first, and tooltips
              never go in a heading, so the term is marked up on its first
              occurrence in body copy instead. #}
@@ -258,42 +254,18 @@ hideFooterCta: true
       </div>
     </section>
 
-    {# ===================== 5 — SECTORS =====================
-      MENTIONED, NOT LINKED. Nine tiles here would be the third grid on one
-      page and would promise nine pages that do not exist. As running type it
-      is plainly a list of places, read in a couple of seconds, and the reader
-      finds their own on it without being invited to click anything.
+    {# ===================== 5 — COVERAGE =====================
+      WHERE WE WORK, SAID AS A MAP RATHER THAN AS A SENTENCE. This replaces the
+      typographic sectors list that used to sit here: the client asked for
+      sectors removed from the site completely (11/08/26), and the honest
+      answer to "do you come to me" was always the geography, not a list of
+      industries.
+
+      The site's own component, the same one that closes /about/ and every
+      service page, so the coverage claim is made in one place and one way.
+      Without GOOGLE_MAPS_API_KEY it falls back to the keyless embed and still
+      draws the South East; the key only buys the shaded counties.
     #}
-    <section class="section section--light hp-sectors" id="sectors" aria-labelledby="hp-sectors-title">
-      <div class="container">
-        <div class="hp-sectors__intro">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Sectors</p>
-          <h2 class="statement hp-sectors__title" id="hp-sectors-title">Where we work.</h2>
-          <p class="hp-sectors__lead">The compliance requirements vary. The standard doesn't. We work across sectors where water systems are safety-critical, regulated, or both.</p>
-        </div>
-
-        <ul class="hp-sectors__list" role="list">
-          <li>Landed estates</li>
-          <li>Country houses</li>
-          <li>Pharmaceutical</li>
-          <li>Food &amp; beverage</li>
-          <li>Leisure &amp; hospitality</li>
-          <li>Education</li>
-          <li>Manufacturing</li>
-          <li>Construction</li>
-          <li>Facilities management</li>
-        </ul>
-
-        <p class="hp-sectors__caption">Working across the South East, from private estates to compliance-critical commercial sites.</p>
-      </div>
-    </section>
-
-    {# The sectors above say WHO; this says WHERE, and says it as a map rather
-       than as another sentence. The site's own component, the same one that
-       closes /about/ and every service page, so the claim is made in one place
-       and one way. Without GOOGLE_MAPS_API_KEY it falls back to the keyless
-       embed and still draws the South East; the key only buys the shaded
-       counties. See coverage-band.njk. #}
     {% include "coverage-band.njk" %}
 
     {# ===================== 6 — SELECTED WORK =====================
@@ -304,7 +276,7 @@ hideFooterCta: true
     #}
     <section class="section section--paper hp-work" id="selected-work" aria-labelledby="hp-work-title">
       <div class="container">
-        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>Selected work</p>
+        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
         <h2 class="statement hp-work__title" id="hp-work-title">Cowdray Estate, <span class="em">a private supply serving multiple properties.</span></h2>
 
         {# TEMP: /assets/case-placeholder.webp is the site's established stand-in
@@ -334,11 +306,13 @@ hideFooterCta: true
            paragraph, so pH correction is spelled out inline instead. #}
         <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around <span class="term" data-tooltip="Filtration process to remove naturally occurring iron and manganese from source water, which otherwise causes staining, taste and pipe damage.">iron and manganese reduction</span>, pH correction to stop the water corroding pipework, and <span class="term" data-tooltip="Water treatment method using ultraviolet light to kill bacteria, viruses and other pathogens without chemicals.">UV sterilisation</span>. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
 
-        {# /case-studies/ was retired and now 301s to the private water
-           supplies page, where the case carousels live. The link works; if a
-           standalone index is wanted back, that is its own task. #}
+        {# Pointed at the private water supplies page, not at /case-studies/.
+           The standalone index was retired and 301s here anyway, so linking to
+           it only bought a redirect hop; and this IS where the work is, since
+           case studies now live as carousels on the service pages. Cowdray is
+           a private supply, so the reader lands among its neighbours. #}
         <p class="hp-work__link">
-          <a class="btn-line" href="/case-studies/">See more of our work <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+          <a class="btn-line" href="/services/private-water-supplies/">See more of our work <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
         </p>
       </div>
     </section>
@@ -356,7 +330,7 @@ hideFooterCta: true
     <section class="section hp-creds" id="credentials" aria-labelledby="hp-creds-title">
       <div class="container hp-creds__grid">
         <div class="hp-creds__aside">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Credentials</p>
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>Credentials</p>
           <h2 class="statement hp-creds__title" id="hp-creds-title">The paperwork clients ask about.</h2>
         </div>
 
@@ -438,7 +412,7 @@ hideFooterCta: true
     <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
       <div class="container">
         <div class="hp-enquiry__inner">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">05</span>Get in touch</p>
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Get in touch</p>
           <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
           <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
           <div class="hp-enquiry__actions">
