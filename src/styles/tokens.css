@@ -37,12 +37,18 @@
      on navy: eyebrows, the italic clause in a heading, the card icons, the
      numerals, focus rings, link hovers. It was a pale blue-grey, which on the
      lifted ground read as a tasteful nothing and on the deep ground read as
-     grey. The luminous tint of the livery blue holds 6.2:1 on the ground, so it
-     is bright because it is the brand, not at the cost of reading it.
+     grey. This is the livery blue with the electricity taken out of it: same
+     hue, saturation down from 89% to 65%, which reads as the van rather than as
+     a hyperlink. It holds 6.4:1 on the ground, so it is coloured because it is
+     the brand, not at the cost of reading it.
+
+     Three weights of one hue, and the order matters: this is the RESTING
+     accent, --blue-bright above is the brighter tint a hover lifts to, and
+     --blue is the solid the light sections use. A hover has somewhere to go.
 
      The name is a leftover from the green direction the site started in; it is
      kept because 24 rules reach for it, and it has never meant lime. */
-  --lime: #4FA3F5;
+  --lime: #6CA6E0;
   /* Soft blue-grey, for LARGE decorative surfaces rather than accents — the
      giant About wordmark, which scrubs to full opacity and would be a 760px
      shout in the accent blue. Split out of --lime when that token went bright. */
