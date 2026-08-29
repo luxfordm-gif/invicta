@@ -147,7 +147,12 @@
   cursor: pointer;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
-.ecard:hover { border-color: rgba(255, 255, 255, 0.32); }
+/* Matches .ccard on the contact page: darker (here, brighter) border plus a 1px
+   ring outside it, so the stroke reads as double weight without reflowing. */
+.ecard:hover {
+  border-color: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.52);
+}
 .ecard input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .ecard__check {
   width: 40px; height: 40px;
@@ -167,7 +172,7 @@
   letter-spacing: -0.01em;
   color: var(--on-dark);
 }
-.ecard:has(input:checked) { border-color: var(--blue-bright); background: rgb(79 163 245 / 0.10); }
+.ecard:has(input:checked) { border-color: var(--blue-bright); background: rgb(184 200 212 / 0.12); }
 .ecard:has(input:checked) .ecard__check { background: var(--blue-bright); color: var(--ground-deep); }
 .ecard:has(input:focus-visible) { outline: 2px solid var(--on-dark); outline-offset: 2px; }
 

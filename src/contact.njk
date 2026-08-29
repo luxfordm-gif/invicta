@@ -152,6 +152,8 @@ hideEmergencyCta: true
       <div class="contact-map__card">
         <p class="contact-map__name">{{ site.legalName }}</p>
         <address class="contact-map__addr">{{ site.address.street }}<br>{{ site.address.locality }}, {{ site.address.region }} {{ site.address.postcode }}</address>
+        <img class="contact-map__photo" src="/assets/stat-years.webp" width="1000" height="625" loading="lazy" decoding="async"
+             alt="An Invicta van parked on a stony drive beside an open borehole chamber, with blue pipework coiled out on the gravel.">
         <p class="contact-map__links">
           <a class="contact-map__dir" href="{{ site.mapsPlaceUrl }}" target="_blank" rel="noopener noreferrer">View on Google Maps <span aria-hidden="true">&rarr;</span></a>
           <a class="contact-map__dir" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ placeQuery | urlencode }}" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">&rarr;</span></a>
