@@ -20,7 +20,9 @@
 #}
 
 {# The current page's own service is dropped, so this is three rows, and the
-   rows and the shots share an index by sitting in the same order. #}
+   rows and the shots share an index by sitting in the same order. That order is
+   NOT numbered any more: these are three alternatives, not three steps, and a
+   numeral in front of each one implied a sequence that does not exist. #}
 {% set others = [] %}
 {% for s in site.services %}{% if s.href != currentService %}{% set _ = others.push(s) %}{% endif %}{% endfor %}
 
@@ -37,7 +39,6 @@
           {% for s in others %}
           <li class="services-explore__row">
             <a class="services-explore__link" href="{{ s.href }}">
-              <span class="services-explore__index" aria-hidden="true">{{ "0" ~ loop.index }}</span>
               <span class="services-explore__text">
                 <span class="services-explore__name">{{ s.title }}</span>
                 {% if s.desc %}<span class="services-explore__desc">{{ s.desc }}</span>{% endif %}

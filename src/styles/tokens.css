@@ -77,9 +77,21 @@
 
   /* --- Section rhythm (fluid vertical padding for full-width sections) ------
      Every section uses one of these so the page keeps a single, scalable
-     vertical cadence instead of a different clamp() per section. */
+     vertical cadence instead of a different clamp() per section.
+
+     There are exactly TWO gaps between sections on this site, and they are in a
+     deliberate 2:1 relationship, which is the whole reason the cadence reads:
+
+       colour change   two steps  (both sections keep their own --section-y)
+       same surface    one step   (the second drops its top padding, the first
+                                   pays the join out of its bottom padding)
+
+     --section-y-join used to be a third, unrelated number less than half a
+     step, which put a 72px gap between the stats photographs and the heading
+     under them where a colour change a screen earlier had 300. Two sections on
+     one surface should read as one block; they should not read as crammed. */
   --section-y: clamp(72px, 9vw, 150px);        /* default section block padding */
-  --section-y-tight: clamp(40px, 5vw, 72px);   /* collapsed gap between two light sections */
+  --section-y-join: var(--section-y);          /* same-surface join: ONE step, half a colour change */
 
   /* Hero top gap: the space below the sticky nav to the first hero element.
      Height-AWARE (mixes vw + vh) so it shrinks when the window is short, not
@@ -91,6 +103,23 @@
   --flow-md: clamp(40px, 6vw, 90px);           /* secondary blocks / accordions */
   --flow-sm: clamp(24px, 4vw, 56px);           /* small decorative gaps */
   --flow-heading: clamp(18px, 1.6vw, 24px);    /* eyebrow -> its heading; ONE consistent gap everywhere */
+  /* heading -> the paragraph that supports it. The same pair was set six
+     different ways across the site (16, 24, 32, 40 and 86px), so the same two
+     elements sat a different distance apart depending which section you were
+     in, and the widest of them read as a heading that had come loose from its
+     own copy. One value, the way --flow-heading is one value above it. */
+  --flow-lead: clamp(20px, 2.2vw, 32px);
+
+  /* --- Numbered lists -------------------------------------------------------
+     One list numbers its rows: the dark "what's involved" checklist on a service
+     page, whose steps genuinely run in order. Its figure had no size rule at all
+     (the markup asked for a `.numeral` class that was never written, so it came
+     out at body size) and sat in a 150px column with a 48px gap after it, which
+     put the best part of 200px between "01" and the word it numbered. The
+     Explore list was numbered too and no longer is: three alternatives are not
+     three steps. The gap stays shared, since it also sets the Explore row. */
+  --numeral: clamp(26px, 2.2vw, 32px);         /* the figure that leads a row */
+  --numeral-gap: clamp(18px, 1.8vw, 26px);     /* figure -> the title beside it */
 
   /* --- Container --- */
   --container-max: 1600px;
@@ -134,7 +163,10 @@
 
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
-  --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this) */
+  --nav-h: 95px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this).
+                                   Pre-JS fallback only: nav.js overwrites it with the nav's real
+                                   height on load, resize and after fonts settle. Kept accurate so
+                                   the sticky breadcrumb does not sit 8px high before JS runs. */
 }
 
 /* ==========================================================================

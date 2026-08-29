@@ -56,8 +56,8 @@ extraStyles: ["home"]
       <div class="container home-about__grid">
         <div class="home-about__body">
           <h2 id="home-about-title" class="statement home-about__title">
-            Twenty years of private supplies,
-            <span class="em">designed for the property, not the price list.</span>
+            Twenty years of supplies,
+            <span class="em">designed for the property.</span>
           </h2>
           <p class="home-about__lead">
             Every source is different, and doing it properly is not a job for generalists. We survey
@@ -98,7 +98,7 @@ extraStyles: ["home"]
     <section class="section section--light home-services" aria-labelledby="home-services-title">
       <div class="container">
         <h2 id="home-services-title" class="statement home-services__title">
-          Four services, <span class="em">one team behind all of them.</span>
+          Four services, <span class="em">one team behind them.</span>
         </h2>
 
         <ul class="svc-cards" role="list">
@@ -181,7 +181,7 @@ extraStyles: ["home"]
     {% for id in homePicks %}{% for cs in caseStudies %}{% if cs.id == id %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}{% endfor %}
     {% set carouselId = "home" %}
     {% set carouselSurface = "section--paper" %}
-    {% set carouselTitle = "Supplies we've designed, <span class='em'>installed and looked after.</span>" %}
+    {% set carouselTitle = "Supplies we've designed <span class='em'>and looked after.</span>" %}
     {% set carouselLead = "A National Trust restoration, a multi-source estate system, and a membrane plant we built ourselves. Step through to see the work." %}
     {% include "case-carousel.njk" %}
 

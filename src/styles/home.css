@@ -184,7 +184,7 @@
 .home-about__body { min-width: 0; }
 .home-about__title { margin-top: 0; max-width: 24ch; }
 .home-about__lead {
-  margin-top: var(--space-4);
+  margin-top: var(--flow-lead);
   max-width: 62ch;
   font-size: var(--text-lead);
   line-height: 1.65;

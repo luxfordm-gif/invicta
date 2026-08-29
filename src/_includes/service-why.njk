@@ -10,17 +10,21 @@
     2. why it matters — the cost, risk or annoyance of not doing it
     3. what you actually get from us
 
-  It stays on the navy, with no padding above it, so it reads as the second
-  half of the hero rather than a new page: the rhythm of every service page is
-  still "deep blue, centred copy, then a wide photograph", the blue passage
-  just has an argument in it now.
+  It stays on the navy under the hero, so the page answers "why would I want
+  this" before it shows a photograph, and a HAIRLINE opens it. Without the rule
+  the two navy passages ran together and the hero looked four paragraphs long;
+  the line is what says a new section has started on the same colour, and it
+  earns the extra space above it that a colour change would have given for free.
 
   Driven from page front matter, and skipped entirely on a page that sets no
   `why` list, so a page can opt out without a change here:
 
     whyTitle:  heading, may carry <span class="em">
-    whyLead:   optional supporting line under it
     why:       [ { icon, q, a } ]  — icon is a key from the set below
+
+  No supporting line under the heading. The three questions ARE the summary, and
+  a lead saying "three things worth understanding" only told you what you could
+  already see.
 
   Copy is written to be READ: a question you would actually ask, then an answer
   short enough that all three fit one screen on a laptop.
@@ -58,8 +62,8 @@
 {% if why %}
     <section class="section service-why" aria-labelledby="why-title">
       <div class="container">
-        <h2 id="why-title" class="statement service-why__title">{{ whyTitle | safe }}</h2>
-        {% if whyLead %}<p class="service-why__lead">{{ whyLead | safe }}</p>{% endif %}
+        <div class="rule service-why__rule"></div>
+        <h2 id="why-title" class="service-why__title">{{ whyTitle | safe }}</h2>
 
         <ul class="why-cards" role="list">
           {% for w in why %}

@@ -28,7 +28,7 @@
     </section>
 
     <!-- ============ WHY IT MATTERS (dark) ============
-      Rides straight off the hero, on the same navy, so the page answers
+      Rides off the hero on the same navy, under a divider, so the page answers
       "why would I want this" before it shows a photograph. See service-why.njk.
     -->
 {% include "service-why.njk" %}
@@ -45,8 +45,8 @@
       <div class="container">
 
         <h2 id="services-title" class="statement">
-          From first survey to final commissioning,
-          <span class="em">we deliver complete private water systems.</span>
+          From first survey
+          <span class="em">to final commissioning.</span>
         </h2>
 
         <div class="accordion">
@@ -168,7 +168,7 @@
 
         <h2 id="positioning-title" class="statement">
           We only work on bespoke systems,
-          <span class="em">designed for the property, not the price list.</span>
+          <span class="em">not price lists.</span>
         </h2>
 
         <div class="positioning__intro">
@@ -243,7 +243,7 @@
     {% for cs in caseStudies %}{% if "private-water-supplies" in cs.services %}{% set _ = studies.push(cs) %}{% endif %}{% endfor %}
     {% set carouselId = "pws" %}
     {% set bentoSurface = "section--light" %}
-    {% set carouselTitle = "Private supplies we've <span class='em'>designed and delivered.</span>" %}
+    {% set carouselTitle = "Supplies we've designed <span class='em'>and delivered.</span>" %}
     {% set carouselLead = "From failed boreholes to multi-source estate systems." %}
     {% include "case-bento.njk" %}
 

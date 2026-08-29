@@ -169,7 +169,8 @@
   var TRACKS = [
     { track: ".sectors", card: ".sector", label: "Sector slides" },
     { track: ".usps", card: ".usp", label: "Why Invicta slides" },
-    { track: ".stats-band__grid", card: ".stat", label: "Invicta by the numbers" }
+    { track: ".stats-band__grid", card: ".stat", label: "Invicta by the numbers" },
+    { track: ".why-cards", card: ".why-card", label: "Why it matters slides" }
   ];
 
   // querySelectorAll, not querySelector: the stats band is a component that a
