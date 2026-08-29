@@ -1,0 +1,77 @@
+{#
+  Clients, a slow marquee of real client logos.
+
+  Replaces the four hand-typed names that stood here before. The band runs the
+  full set continuously rather than showing four at a time, because the roster
+  is the argument: a football club, a water utility, two pharmaceutical
+  companies, an estate and a hospice is a wider spread than any static row of
+  four can show.
+
+  Behaviour (progressive enhancement): with no CSS animation, and for anyone
+  who asks for reduced motion, the track stops and becomes a plain horizontal
+  scroll list. Nothing here needs JavaScript, so there is no clients.js.
+
+  The marquee runs on a duplicated set. The second copy is aria-hidden and
+  carries empty alt text, so a screen reader is read the roster once, while the
+  eye sees an unbroken loop. See clients.css for why the translate is exactly
+  -50%.
+
+  NOT lazy-loaded, deliberately. Every other image on the site is, and the same
+  instinct here silently broke the band: lazy loading tests whether an image
+  intersects the viewport, and the cells past the right-hand edge sit outside it
+  inside a clipped, transformed track. The browser never re-tests them as the
+  animation carries them in, so Amgen, IAC, Carel and DIS simply never loaded,
+  and four cells ran empty forever. The whole set is 128KB and the two heavy
+  PNGs have been cut to the size they actually display at, which is a cheaper
+  price than a trust band that loses a third of its logos.
+
+  Expects the `clients` global from _data/clients.js. Optional page overrides:
+    clientsSurface  section modifier, defaults to section--light
+    clientsTitle    the heading, HTML allowed, `em` gives the Playfair italic
+    clientsId       unique id, only needed if two bands share a page
+    clientsClass    extra class on the section. `clients--airy` is the service
+                    page treatment: 10% larger marks, a slower loop, a centred
+                    heading and more room above and below
+
+  Light surfaces only. The marks are dark ink greyed down to 72%, so they need
+  a pale ground to read against; dropped on the navy the row would vanish into
+  it. clients.css has the long version.
+#}
+{% set cid = clientsId or "clients" %}
+{% if clients and clients.length %}
+<section class="section {{ clientsSurface or 'section--light' }} clients{{ ' ' + clientsClass if clientsClass }}"
+         aria-labelledby="{{ cid }}-title">
+  <div class="container">
+    <h2 id="{{ cid }}-title" class="statement">
+      {{ clientsTitle | safe if clientsTitle else "A few of the people <span class='em'>who rely on us.</span>" | safe }}
+    </h2>
+  </div>
+
+  <div class="clients__viewport">
+    <ul class="clients__track" role="list">
+      {% for c in clients %}
+      <li class="clients__logo" style="--s: {{ c.scale }}">
+        <img src="{{ ('/assets/logos/' + c.file) | v }}" alt="{{ c.name }}"
+             width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
+      </li>
+      {% endfor %}
+      {# The loop's second half. Hidden from assistive tech: same logos, and the
+         roster should be announced once, not twice. #}
+      {% for c in clients %}
+      <li class="clients__logo" style="--s: {{ c.scale }}" aria-hidden="true">
+        <img src="{{ ('/assets/logos/' + c.file) | v }}" alt=""
+             width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if 'clients--ruled' in (clientsClass or '') %}
+  {# A closing hairline, for when the band is the first half of a pair and the
+     section below continues the same argument on the same surface. Inside the
+     container, so it lines up with the heading rather than running the full
+     bleed the logos do. #}
+  <div class="container"><div class="rule clients__rule"></div></div>
+  {% endif %}
+</section>
+{% endif %}

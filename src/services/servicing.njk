@@ -70,6 +70,16 @@
 {% include "service.njk" %}
 {% include "services-explore.njk" %}
 
+<!-- ===================== CLIENTS (white) =====================
+  On white, because Explore above it is cream and two pale sections running
+  together would read as one long one. Sits after the service is explained and
+  before the map: the order is what we do, who trusts us with it, where we do it.
+-->
+{% set clientsId = "servicing-clients" %}
+{% set clientsClass = "clients--airy" %}
+{% set clientsSurface = "section--paper" %}
+{% include "clients.njk" %}
+
 <!-- ===================== COVERAGE BAND (full-bleed grayscale map) =====================
   Closes every service page the way it closes /about/: after the Explore list and
   before the footer CTA, so the last thing before "start with a conversation" is

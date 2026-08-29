@@ -17,7 +17,7 @@
     ".positioning__intro > *", ".sector",
     ".why-card",
     ".stat",
-    ".client",
+    ".clients__viewport",
     ".footer__cta", ".footer__grid > *", ".footer__meta",
     ".footer__wordmark", ".footer__mark"
   ].join(", ");
