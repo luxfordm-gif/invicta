@@ -226,6 +226,34 @@ hideFooterCta: true
       </div>
     </section>
 
+    {# ===================== 2b — THE PROBLEM =====================
+      THE BEAT THE PAGE DID NOT HAVE. It ran hero, then who we are, then a list
+      of services, which only lands on a reader who has already decided they
+      have a problem. The H1 names the discomfort in one line and nothing
+      carried it any further; meanwhile the page's actual pain lines were in
+      the CREDENTIALS list at the very bottom ("Section 80 notice? Speak to us
+      first", "the rules that will catch you out if you get it wrong"), doing
+      no work down there.
+
+      This is not a new claim. The servicing page already says a fault goes
+      unnoticed until the water changes or a test fails; this says it where a
+      reader is still deciding whether to care, and covers both audiences at
+      once — the estate whose supply simply stops, and the duty-holder whose
+      building fails an inspection months after the fact.
+
+      Navy, off the back of the light intro above it, so the colour change does
+      the separating. The hairline that would normally open a second navy block
+      belongs to SERVICES below, which is the section it introduces.
+    #}
+    <section class="section hp-problem" aria-labelledby="hp-problem-title">
+      <div class="container">
+        <div class="hp-problem__inner">
+          <h2 class="statement hp-problem__line" id="hp-problem-title">The water only gets your attention <span class="em">when it goes wrong.</span></h2>
+          <p class="hp-problem__body">A private supply fails at the borehole, not at a call centre. A building's water fails a test months after the problem started. Either way, the first you hear of it is a bill, a notice, or a property with no water in it, and by then the cheap fix has passed.</p>
+        </div>
+      </div>
+    </section>
+
     {# ===================== 3 — SERVICES =====================
       ROUTED BY PROBLEM, NOT LISTED BY SERVICE. Every heading here is the
       question the visitor arrived with, because someone who has just been
@@ -237,6 +265,9 @@ hideFooterCta: true
     #}
     <section class="section hp-services" id="services" aria-labelledby="hp-services-title">
       <div class="container">
+        {# Two navy sections in a row now, so the rule is what says a new one
+           has started. Same job it does under the hero on a service page. #}
+        <div class="rule hp-services__rule"></div>
         <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">01</span>Services</p>
         <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
 
@@ -344,7 +375,13 @@ hideFooterCta: true
 
         {# Three Tier 2 terms wanted marking up here and the rule is two per
            paragraph, so pH correction is spelled out inline instead. #}
-        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
+        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation.</p>
+
+        {# The RESULT, pulled out of the tail of the paragraph above. It was the
+           last clause of seventy words, which is the one sentence in this
+           section a sceptic is actually looking for. Problem, solution, then
+           the result stated. #}
+        <p class="hp-work__result">Running continuously since 2023 on scheduled maintenance alone, and passing UKAS-accredited testing every year since.</p>
 
         {# Pointed at the private water supplies page, not at /case-studies/.
            The standalone index was retired and 301s here anyway, so linking to

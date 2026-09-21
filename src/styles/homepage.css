@@ -276,6 +276,32 @@
    others can sit to the right of it and beneath it rather than in a row of
    equal tiles.
    ========================================================================== */
+/* ==========================================================================
+   2b — THE PROBLEM. Centred, on the navy, off the back of the light intro.
+
+   Deliberately SMALLER than .hp-position__line. That block is the page's
+   argument said once at 76px; this one sets the question the services below
+   answer, and two 76px statements three sections apart would be two things
+   claiming to be the point of the page. Statement scale, no eyebrow, no
+   button, and its bottom padding is dropped because the hairline that opens
+   SERVICES is what separates the two navy blocks.
+   ========================================================================== */
+.hp-problem { padding-block: var(--hp-y-lg) 0; background: var(--ground); }
+.hp-problem__inner { max-width: 860px; margin-inline: auto; text-align: center; }
+.hp-problem__line { max-width: none; }
+.hp-problem__body {
+  margin-top: var(--space-3);
+  margin-inline: auto;
+  max-width: min(680px, 64ch);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--on-dark-muted);
+}
+/* Two navy sections in a row, so the line is what says a new one has started.
+   Zeroed top margin: .rule carries one for use mid-section, and here it is the
+   first thing in the container. */
+.hp-services__rule { margin-top: 0; margin-bottom: var(--flow-lg); }
+
 .hp-services { padding-block: var(--hp-y-lg); background: var(--ground); }
 .hp-services__title { max-width: 18ch; }
 .hp-services__grid {
@@ -451,6 +477,23 @@
   max-width: min(720px, 68ch);
   font-size: 18px;
   line-height: 1.6;
+}
+/* The result, lifted out of the tail of .hp-work__body. Set a step up from the
+   body and in full ink rather than at body weight, because it is the sentence
+   the section is FOR: everything above it is what we did, this is what it did.
+   Same measure as the paragraph, so the two read as one block. */
+/* Compound selector on purpose. `:is(.section--light, .section--paper) p` in
+   base.css is (0,1,1) and paints every paragraph on a pale surface muted, so a
+   lone class here loses and the line came out at the body's own grey, one
+   pixel larger — a distinction nobody would see. See the note at base.css:157.
+   Full ink and a real step up in size: this is the sentence the section is for. */
+.hp-work .hp-work__result {
+  margin-top: var(--space-4);
+  max-width: min(720px, 68ch);
+  font-size: clamp(21px, 2.1vw, 27px);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--ink);
 }
 .hp-work__link { margin-top: var(--space-4); }
 
