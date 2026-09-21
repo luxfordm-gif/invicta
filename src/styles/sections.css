@@ -56,6 +56,48 @@
   max-width: none;
 }
 
+/* The hero's call to action. The home hero has carried a pair of buttons since
+   the rebuild (the survey, then the 24-hour number for someone who has landed
+   mid-crisis); the service heroes ended at the copy, so the first pressable
+   thing on the page was inside a closed accordion panel six screens down.
+
+   RANGED LEFT, against the lead, not centred in the column. The eyebrow and
+   the title above are centred, but the two lead paragraphs are a left-aligned
+   block 780px wide, and the buttons are the last thing in that block — centred
+   under ragged-right copy they read as belonging to nothing. So the row takes
+   the SAME box as .hero__lead (width plus the same max-width, which
+   .hero__inner's align-items: center then centres as a whole) and starts its
+   buttons at that box's left edge, flush with the first character above. */
+.hero__actions {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 780px;   /* == .hero__lead */
+}
+.hero__actions > * { flex: 0 0 auto; }
+/* On a phone the two go full width and stack, so the emergency number is a
+   whole tap target rather than half a row.
+
+   grid-template-columns IS LOAD-BEARING. A grid with no template puts both
+   buttons in one AUTO column, and an auto column is max-content wide — so the
+   pair sized to the longer label and left a ragged gap at the right instead of
+   filling the row. It only ever looked full width because the whole block was
+   centred; ranged left the shortfall shows. An explicit 1fr is what actually
+   stretches them. (.hp-hero__actions has the same gap between its comment and
+   its behaviour, and is still centred enough to hide it.) */
+@media (max-width: 599.98px) {
+  .hero__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+  .hero__actions > * { justify-content: center; }
+}
+
 /* --- Statement (shared big H2 for services / positioning / clients) ------- */
 .statement {
   margin-top: var(--flow-heading);
@@ -458,6 +500,18 @@
 }
 .footer__cta-body { margin-top: var(--space-3); font-size: var(--text-lead); line-height: 1.55; color: var(--on-dark-muted); max-width: 54ch; }
 .footer__cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+/* The risk-reversal line under the pair. It has to break to its own row rather
+   than sit as a third item in the flex row, hence the 100% basis: the buttons
+   wrap against each other on a narrow footer and a text item in among them
+   would wrap into the gap between them. Muted and small — it is a reassurance,
+   not a third thing to press. */
+.footer__cta-note {
+  flex: 0 0 100%;
+  margin-top: var(--space-3);
+  font-size: var(--text-card);
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+}
 /* Buttons move to the right and baseline with the paragraph on wider screens. */
 @media (min-width: 800px) {
   .footer__cta {

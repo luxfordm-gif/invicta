@@ -3,8 +3,8 @@
       <div class="container hero__inner">
         <p class="hero__eyebrow">Private Water Supplies</p>
         <h1 class="hero__title">
-          Independent water,<br>
-          <span class="em">designed around your source.</span>
+          Stop paying for water<br>
+          <span class="em">you could own.</span>
         </h1>
         <div class="hero__scroll" aria-hidden="true">
           <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -14,15 +14,24 @@
 
         <div class="hero__lead">
           <p class="hero__lead-lg">
-            A private water supply gives your property genuine independence. Reliable, high-quality
-            water from your own source, free of rising utility charges, unaffected by mains
-            failures, and treated to a standard mains water rarely matches.
+            A private water supply puts your property on its own source. Reliable, high-quality
+            water, free of rising utility charges and unaffected by mains failures.
           </p>
           <p class="hero__lead-sm">
-            The catch: every source is different, and doing it properly is not a job for generalists.
-            We only work on bespoke systems, designed around your specific source water, installed to
-            run quietly and reliably, and personally maintained for as long as you need us.
+            The catch: doing this properly is not a job for generalists. We only work on bespoke
+            systems, designed around your own water chemistry, installed by our own engineers rather
+            than subcontractors, and personally maintained for as long as you need us.
           </p>
+        </div>
+
+        <!-- The pair the home hero has carried since the rebuild, in the same
+             order: the thing you want them to do, then the number for someone
+             who has landed mid-crisis. Until now a service page asked for
+             nothing until the footer, and the first pressable thing on it was
+             inside a closed accordion panel six screens down. -->
+        <div class="hero__actions">
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
         </div>
       </div>
     </section>
@@ -32,6 +41,25 @@
       "why would I want this" before it shows a photograph. See service-why.njk.
     -->
 {% include "service-why.njk" %}
+
+    <!-- ============ TRUST: THE LOGOS, EARLY ============
+      A B2B reader's first question after "what is this" is "who else trusts
+      you", and until now the answer was seven screens down, below the sectors.
+      This is the earliest place it can go. It cannot sit between the hero and
+      the why-cards: those two share the navy deliberately, the hairline at the
+      top of service-why is what separates them, and `.hero:has(+ .service-why)`
+      pays for the gap above that rule — a section spliced between them breaks
+      the adjacency and the spacing with it. The marks also need a pale ground;
+      they are dark ink at 72% and would vanish on the navy.
+
+      So: straight after the why-cards, where the surface changes anyway, and
+      before the photographic band. No closing hairline now that the figures
+      are no longer directly beneath it.
+    -->
+    {% set clientsId = "pws-clients" %}
+    {% set clientsClass = "clients--airy" %}
+    {% set clientsSurface = "section--paper" %}
+    {% include "clients.njk" %}
 
     <!-- ============ PROJECT BAND + SERVICES (the reveal pair) ============
       Same pairing as every other service page: the band pins inside the wrapper
@@ -50,7 +78,10 @@
         </h2>
 
         <div class="accordion">
-          <details class="acc">
+          {# OPEN. Six collapsed panels meant a reader who never clicked saw
+             none of the process, and the panels hold the best copy on the page.
+             The first one open shows what the pattern is and what is in it. #}
+          <details class="acc" open>
             <summary class="acc__head">
               <span class="acc__title">Site Survey &amp; Water Analysis</span>
               <span class="acc__toggle" aria-hidden="true"></span>
@@ -63,7 +94,7 @@
                 <p>Every private supply starts with a site survey and a UKAS-accredited water
                   analysis. No system gets specified before we know exactly what's coming out of the
                   ground, flow rate, depth, and the full chemistry of the source water.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                <a class="btn-inquiry" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -81,7 +112,7 @@
                 <p>We design the filtration, storage and pumping to match your source and your
                   property's demand. Everything specified is chosen for reliability and long service
                   life, a system built to run quietly and reliably.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                <a class="btn-inquiry" href="/enquiry/">Get a system specified <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -99,7 +130,7 @@
                 <p>Treatment is built around your water's chemistry, iron and manganese reduction,
                   pH correction, and UV sterilisation where required. The result is water treated to
                   a standard mains supply rarely matches.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                <a class="btn-inquiry" href="/enquiry/">Get your water analysed <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -117,7 +148,7 @@
                 <p>Our own engineers install every system, never subcontracted. The plant is set out
                   cleanly, commissioned properly, and left in a state we'd be happy to return to in
                   ten years' time.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                <a class="btn-inquiry" href="/enquiry/">Get a fixed-price quote <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -135,7 +166,7 @@
                 <p>The system is tested to specification, documented, and explained to whoever will
                   use it. You're left with current compliance evidence and a clear understanding of
                   how your supply works.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                <a class="btn-inquiry" href="/enquiry/">Talk to an engineer <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -152,8 +183,9 @@
               <div class="acc__copy">
                 <p>Regular maintenance visits keep the system operating at spec, with annual UKAS
                   re-testing. Existing service clients have direct access to our engineers on a
-                  24-hour emergency line, same number, same team, no call centre.</p>
-                <a class="btn-inquiry" href="/enquiry/">Send enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+                  24-hour emergency line, same number, same team, no call centre, and in most cases
+                  we are on site within four hours of the call.</p>
+                <a class="btn-inquiry" href="/enquiry/">Get a servicing quote <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
               </div>
             </div>
           </details>
@@ -162,7 +194,28 @@
     </section>
     </div><!-- /.reveal -->
 
-    <!-- ===================== POSITIONING / SECTORS (dark) ===================== -->
+    <!-- ===================== POSITIONING (dark) =====================
+      NOT the retired "Sectors". The client asked for sectors removed from the
+      site completely (11/08/26) and /index.njk lost its typographic sectors
+      list then, but that was a navigation section standing on its own. These
+      four cards are examples of the property types a private supply suits, on
+      the page about private supplies, and they answer the question a reader
+      actually arrives with: is this for something like mine. They stay.
+      (Removed once on 21/09/26 by reading the 11/08 instruction too widely,
+      and put straight back. Don't do it again.)
+
+      What the section was missing was the middle beat. The heading makes a
+      claim, "we only work bespoke, not to a price list", and the cards below
+      say who we make them for; nothing in between said what bespoke actually
+      BUYS you. It does now, in the lead: a fixed price, after a survey and an
+      analysis of your own water. That fact was true before and was buried in
+      the FAQ, seven screens down.
+
+      It went in .positioning__note first, the second grid column that was
+      styled and had never been filled, and it looked wrong there: quiet grey
+      type marooned at the top of a tall empty column, reading as an aside
+      rather than as the point. One column, one argument.
+    -->
     <section class="section positioning" aria-labelledby="positioning-title">
       <div class="container">
 
@@ -174,8 +227,9 @@
         <div class="positioning__intro">
           <p class="positioning__lead">
             Invicta has looked after private water supplies across Surrey, Sussex and the wider
-            South East for over twenty years, for clients who expect the work done properly the
-            first time.
+            South East for over twenty years. No catalogue systems and no ballpark figures: every
+            quote is fixed-price, after a site survey and a UKAS-accredited analysis of your own
+            water.
           </p>
         </div>
 
@@ -213,21 +267,19 @@
             </div>
           </article>
         </div>
+
       </div>
     </section>
 
-    <!-- ============ TRUST: LOGOS, RULE, THEN THE FIGURES ============
-      One block making one argument, in the order a sceptic reads it: who
-      trusts us, then how much of it we have done. The logos come first because
-      a name is recognised instantly and a number has to be read, and the
-      hairline holds the two apart without starting a new section. Both sit on
-      white, so the rule is doing the dividing rather than a colour change.
+    <!-- ============ THE FIGURES ============
+      This used to be the second half of a LOGOS + RULE + FIGURES pair, on the
+      argument that a sceptic reads "who trusts you" before "how much have you
+      done". The order was right; the position was not. Both halves sat seven
+      screens down, so a reader deciding whether to carry on past the hero had
+      no proof at all. The logos have gone up to sit under the why-cards and
+      the figures stay here, where they back the case studies that follow.
+      The band lost its closing hairline with its partner.
     -->
-    {% set clientsId = "pws-clients" %}
-    {% set clientsClass = "clients--airy clients--ruled" %}
-    {% set clientsSurface = "section--paper" %}
-    {% include "clients.njk" %}
-
     {# The shared band, so this page quotes the same figures as every other. It
        used to carry its own numbered, picture-less variant with a different
        year count on it. #}
@@ -239,7 +291,7 @@
     {% set carouselId = "pws" %}
     {% set bentoSurface = "section--light" %}
     {% set carouselTitle = "Supplies we've designed <span class='em'>and delivered.</span>" %}
-    {% set carouselLead = "From failed boreholes to multi-source estate systems." %}
+    {% set carouselLead = "Two failed boreholes, three sources feeding one house, and an inherited system that finally passed its EHO test." %}
     {% include "case-bento.njk" %}
 
     <!-- ===================== FAQ (dark) ===================== -->
@@ -251,6 +303,12 @@
             supply. If yours isn't answered here, get in touch, we'll answer plainly.</p>
         </aside>
 
+        {# ORDER IS DELIBERATE. Permission first, because it decides whether
+           this is even possible on the site; cost SECOND, because on a
+           five-figure bespoke install it is what everyone wants next, and it
+           used to be answered last, below five questions nobody had asked yet.
+           The answer is a good one and it was doing no work down there: there
+           is no typical figure, and the quote is fixed-price after a survey. #}
         <div class="faq__list">
           <details class="faq__item">
             <summary class="faq__q">
@@ -260,6 +318,16 @@
             <p class="faq__a">In most cases, no formal planning permission is required, though water
               abstraction over 20 cubic metres per day requires a licence from the Environment Agency.
               We handle the paperwork and liaison as part of any install where it's needed.</p>
+          </details>
+
+          <details class="faq__item">
+            <summary class="faq__q">
+              What does a typical install cost?
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </summary>
+            <p class="faq__a">Every install is bespoke, so there is no typical figure. Costs depend on
+              source depth, water chemistry, storage requirements and property demand. We provide a
+              fixed-price quote after a site survey.</p>
           </details>
 
           <details class="faq__item">
@@ -300,16 +368,6 @@
             <p class="faq__a">Yes, provided the system is safe to work on and we can access the plant.
               We start with a full inspection and water analysis, then propose any remedial work needed
               before taking on the ongoing service contract.</p>
-          </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              What does a typical install cost?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">Every install is bespoke, so there is no typical figure. Costs depend on
-              source depth, water chemistry, storage requirements and property demand. We provide a
-              fixed-price quote after a site survey.</p>
           </details>
         </div>
       </div>

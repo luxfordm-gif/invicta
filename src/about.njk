@@ -31,13 +31,32 @@ extraStyles: ["about", "filmstrip", "coverage-band"]
     <!-- ===================== INTRO ===================== -->
     <section class="section about-intro">
       <div class="container">
-        <p class="about-intro__lead">Invicta Water Treatment is run, day to day, by Stefan Massingham, a water chemist who has spent his whole career understanding what comes out of the ground, and what it takes to make it safe.</p>
+        <p class="about-intro__lead">Invicta Water Treatment is run, day to day, by Stefan Massingham MSc, a water chemist who has spent his whole career understanding what comes out of the ground, and what it takes to make it safe.</p>
         <div class="about-intro__body">
           <p>Stefan graduated from the University of Birmingham in 1993 with a degree in chemistry, and has worked in the water industry ever since, across sewage treatment, offshore platforms and private supplies. Every water problem that reaches Invicta is reviewed by him personally.</p>
           <p>Water treatment, and the legislation that surrounds it, can seem highly technical and confusing. Our job is to make it simple: we take care of the science and the compliance, so you are left with a supply you can trust and never have to think about.</p>
         </div>
+
+        <!-- The same reasoning as service-intro__cta: this is the point where a
+             reader who has decided they like the sound of this wants somewhere
+             to go, and until now the page asked for nothing at all until the
+             footer, seven sections later. -->
+        <div class="about-intro__cta">
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
+        </div>
       </div>
     </section>
+
+    <!-- ============ TRUST: LOGOS, THEN THE FIGURES ============
+      The roster belongs on the page about who we are more than anywhere else,
+      and it was the one page without it. Logos first, then the numbers: a name
+      is recognised instantly and a figure has to be read.
+    -->
+    {% set clientsId = "about-clients" %}
+    {% set clientsClass = "clients--airy" %}
+    {% set clientsSurface = "section--paper" %}
+    {% include "clients.njk" %}
 
     <!-- ===================== STATS (light, with imagery) ===================== -->
     {% include "stats-band.njk" %}

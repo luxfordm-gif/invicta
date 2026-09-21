@@ -10,7 +10,7 @@
   "address": { "street": "89 Castle Drive", "locality": "Horley", "region": "Surrey", "postcode": "RH6 9DD" },
   "mapsPlaceUrl": "https://www.google.com/maps/search/?api=1&query=Invicta%20Water%20Treatment%20Ltd%2C%2089%20Castle%20Drive%2C%20Horley%20RH6%209DD",
   "stats": [
-    { "label": "Years in the water industry", "figure": "30+", "image": "/assets/stat-years.webp",
+    { "label": "Years in business", "figure": "20+", "image": "/assets/stat-years.webp",
       "alt": "An Invicta van on the gravel drive of a country house, beside an open borehole chamber with pipework coiled out and a mini-digger working behind." },
     { "label": "Sites under our care", "figure": "200+", "image": "/assets/stat-sites.webp",
       "alt": "A plant room with three blue treatment vessels, a brine tank and a UV steriliser, neatly plumbed against a white block wall." },

@@ -134,7 +134,16 @@ hideFooterCta: true
         <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="container">
-        <h1 class="hp-hero__title" id="hp-hero-title">Water systems you can <span class="em">depend</span> on.</h1>
+        {# The line under this one carries the sharpest phrase on the site,
+           "properties where getting it right is a legal requirement", and the
+           H1 above it was a promise any competitor could make. This states the
+           discomfort instead, which is the beat the page was missing and the
+           one thing both audiences share: an estate off the mains and a
+           facilities manager with an ACOP L8 duty are both answering for water
+           nobody else will. Alternatives, if this reads too blunt:
+             "The water is yours to answer for."
+             "When the water is your responsibility." #}
+        <h1 class="hp-hero__title" id="hp-hero-title">Nobody else is responsible <span class="em">for your water.</span></h1>
         <p class="hp-hero__lead">Bespoke treatment, chlorination and hygiene for properties where getting it right is a legal requirement. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
         <div class="hp-hero__actions">
           <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
@@ -172,7 +181,7 @@ hideFooterCta: true
            two sentences, and a 50-word heading is a heading in name only. #}
         <h2 class="eyebrow hp-intro__eyebrow" id="hp-intro-title">Who we are</h2>
 
-        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
+        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham MSc</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
 
         <a class="btn-line hp-intro__more" href="/about/">More about Invicta <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
 
@@ -188,11 +197,22 @@ hideFooterCta: true
         <div class="hp-intro__trust">
           <div class="hp-trust__row hp-trust__row--centred">
             <p class="eyebrow hp-trust__label">Trusted by</p>
-            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- logo stand-ins, not prose: no tooltips here -->
-              <li class="hp-trust__logo hp-trust__logo--ph">Chelsea FC</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">GSK</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">Amgen</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">Cowdray Estate</li>
+            {# REAL ARTWORK, from _data/clients.js, the same source the marquee
+               on every service page and /about/ reads. These four were typed
+               stand-ins long after the files landed, so the most important
+               page on the site was showing four words where every other page
+               showed the marks themselves. Named rather than sliced off the
+               front of the list, because this row is a deliberate four and the
+               roster is nine. #}
+            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- marks, not prose: no tooltips here -->
+              {% for want in ["Chelsea FC", "GSK", "Amgen", "Cowdray Estate"] %}
+                {% for c in clients %}{% if c.name == want %}
+              <li class="hp-trust__logo" style="--s: {{ c.scale }}">
+                <img src="{{ ('/assets/logos/' + c.file) | v }}" alt="{{ c.name }}"
+                     width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
+              </li>
+                {% endif %}{% endfor %}
+              {% endfor %}
             </ul>
           </div>
           <div class="hp-trust__row hp-trust__row--centred">
@@ -202,6 +222,34 @@ hideFooterCta: true
               <li class="hp-trust__logo hp-trust__logo--ph">UKAS</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    {# ===================== 2b — THE PROBLEM =====================
+      THE BEAT THE PAGE DID NOT HAVE. It ran hero, then who we are, then a list
+      of services, which only lands on a reader who has already decided they
+      have a problem. The H1 names the discomfort in one line and nothing
+      carried it any further; meanwhile the page's actual pain lines were in
+      the CREDENTIALS list at the very bottom ("Section 80 notice? Speak to us
+      first", "the rules that will catch you out if you get it wrong"), doing
+      no work down there.
+
+      This is not a new claim. The servicing page already says a fault goes
+      unnoticed until the water changes or a test fails; this says it where a
+      reader is still deciding whether to care, and covers both audiences at
+      once — the estate whose supply simply stops, and the duty-holder whose
+      building fails an inspection months after the fact.
+
+      Navy, off the back of the light intro above it, so the colour change does
+      the separating. The hairline that would normally open a second navy block
+      belongs to SERVICES below, which is the section it introduces.
+    #}
+    <section class="section hp-problem" aria-labelledby="hp-problem-title">
+      <div class="container">
+        <div class="hp-problem__inner">
+          <h2 class="statement hp-problem__line" id="hp-problem-title">The water only gets your attention <span class="em">when it goes wrong.</span></h2>
+          <p class="hp-problem__body">A private supply fails at the borehole, not at a call centre. A building's water fails a test months after the problem started. Either way, the first you hear of it is a bill, a notice, or a property with no water in it, and by then the cheap fix has passed.</p>
         </div>
       </div>
     </section>
@@ -217,6 +265,9 @@ hideFooterCta: true
     #}
     <section class="section hp-services" id="services" aria-labelledby="hp-services-title">
       <div class="container">
+        {# Two navy sections in a row now, so the rule is what says a new one
+           has started. Same job it does under the hero on a service page. #}
+        <div class="rule hp-services__rule"></div>
         <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">01</span>Services</p>
         <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
 
@@ -268,7 +319,7 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-position__inner">
           <h2 class="statement hp-position__line" id="hp-position-line">Water treatment isn't optional. <span class="em">Neither is doing it properly.</span></h2>
-          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Chelsea FC, GSK, Amgen, Cowdray Estate. The standard we work to is the standard your inspector expects.</p>
+          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Football grounds, pharmaceutical sites, hospices and landed estates. The standard we work to is the standard your inspector expects.</p>
         </div>
       </div>
     </section>
@@ -324,7 +375,13 @@ hideFooterCta: true
 
         {# Three Tier 2 terms wanted marking up here and the rule is two per
            paragraph, so pH correction is spelled out inline instead. #}
-        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
+        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation.</p>
+
+        {# The RESULT, pulled out of the tail of the paragraph above. It was the
+           last clause of seventy words, which is the one sentence in this
+           section a sceptic is actually looking for. Problem, solution, then
+           the result stated. #}
+        <p class="hp-work__result">Running continuously since 2023 on scheduled maintenance alone, and passing UKAS-accredited testing every year since.</p>
 
         {# Pointed at the private water supplies page, not at /case-studies/.
            The standalone index was retired and 301s here anyway, so linking to
@@ -430,10 +487,18 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-enquiry__inner">
           <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Get in touch</p>
-          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
-          <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
+          {# NOT the footer's line. This heading and its paragraph were a
+             word-for-word copy of footer.njk's CTA, which closes every other
+             page on the site, and the same paragraph opened /contact/ as well:
+             three places, one sentence. The footer keeps the generic
+             invitation, because a generic closer is exactly what a footer is
+             for. This one says the thing a footer cannot, which is what
+             actually happens next, and in doing so it carries the reassurance
+             the old .hp-enquiry__note was added to supply. #}
+          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Every job starts <span class="em">the same way.</span></h2>
+          <p class="hp-enquiry__body">A visit, a proper look at your source or your system, and a UKAS-accredited analysis of what is actually in the water. The price comes from that, fixed, and not before it.</p>
           <div class="hp-enquiry__actions">
-            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send an enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
             <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
           </div>
         </div>
