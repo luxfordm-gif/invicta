@@ -1,3 +1,17 @@
+{#
+  CTA LABELS COME FROM FRONT MATTER. Every button on these three pages used to
+  read "Enquire now", which names the act of contacting us rather than the
+  thing the reader gets, and said the same thing whether the next step was a
+  survey, a risk assessment or a service contract. Each page sets its own:
+
+    ctaPrimary   the hero button, and the fallback for the two below
+    introCta     under the intro block, once the argument is made
+    pointsCta    under "what's involved"
+
+  The default is the survey, because that is the first step on most of them.
+#}
+{% set ctaLabel = ctaPrimary or "Book a site survey" %}
+
     {% include "breadcrumb.njk" %}
 
     <!-- ===================== HERO ===================== -->
@@ -16,6 +30,16 @@
           <p class="hero__lead-lg">{{ heroLead | safe }}</p>
           {% if heroLeadSm %}<p class="hero__lead-sm">{{ heroLeadSm | safe }}</p>{% endif %}
         </div>
+
+        {# The pair the home and private-supplies heroes carry, for the same
+           reason: until now a service page asked for nothing above the fold,
+           and the first pressable thing on it was most of a screen further
+           down, under the intro. Ranged left against the lead rather than
+           centred under it - see .hero__actions in sections.css. #}
+        <div class="hero__actions">
+          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
+        </div>
       </div>
     </section>
 
@@ -24,6 +48,25 @@
       "why would I want this" before it shows a photograph. See service-why.njk.
     -->
 {% include "service-why.njk" %}
+
+    <!-- ============ TRUST: THE LOGOS, EARLY ============
+      A reader's question after "what is this" is "who else trusts you", and on
+      two of these three pages there was no answer anywhere: no logos, no
+      figures, nothing but case studies most of a page down. Servicing had the
+      band, at position NINE of ten, below the FAQ and the Explore list, where
+      a reader who needed convincing had already gone.
+
+      Same slot as /private-water-supplies/: straight after the why-cards,
+      before the photographic band. It cannot go between the hero and the
+      why-cards, which share the navy deliberately and whose spacing depends on
+      `.hero:has(+ .service-why)`; the marks are dark ink at 72% and need the
+      pale ground anyway. One clientsId for all three, since a page only ever
+      shows the band once.
+    -->
+    {% set clientsId = "service-clients" %}
+    {% set clientsClass = "clients--airy" %}
+    {% set clientsSurface = "section--paper" %}
+    {% include "clients.njk" %}
 
     <!-- ============ PROJECT BAND + INTRO (the reveal pair) ============
       The wrapper is load-bearing, not decoration: the band pins itself inside
@@ -49,7 +92,7 @@
              point in the page where a reader who is convinced wants somewhere to
              go. A button is the more useful thing to put in front of them. #}
           <div class="service-intro__cta">
-            <a class="btn-inquiry" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ introCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           </div>
         </div>
       </div>
@@ -76,12 +119,19 @@
           <div class="service-points__footer">
             {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
             {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
-            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">Enquire now <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ pointsCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           </div>
         </div>
       </div>
     </section>
     {% endif %}
+
+    {# The shared figures, in the slot /private-water-supplies/ puts them in:
+       after the argument, immediately before the case studies they back. These
+       three pages had no numbers on them at all — the only proof below the
+       fold was the studies themselves. One component, one set of figures, so
+       a change to site.stats carries everywhere. #}
+    {% include "stats-band.njk" %}
 
     <!-- ============ CASE STUDIES (bento, cream) ============
       The page's own hand-written `caseStudy` leads, then the studies tagged to

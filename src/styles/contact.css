@@ -160,6 +160,16 @@
   justify-content: space-between;
   gap: 24px;
 }
+/* The promise under the submit button. A sibling of the submit row rather than
+   a child of it: the row is a flex pair (consent left, button right) that
+   wraps against itself, and a third item in there would land in the gap
+   between them. Muted, because it reassures rather than asks. */
+.contact-form__note {
+  margin-top: var(--space-3);
+  font-size: var(--text-card);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
 .contact-form__consent {
   display: flex;
   align-items: flex-start;

@@ -184,6 +184,16 @@
   gap: clamp(20px, 3vw, 40px);
   margin-top: clamp(32px, 4vw, 52px);
 }
+/* The promise under the submit button. A sibling of the submit row rather than
+   a child of it: the row is a flex pair (consent left, button right) that
+   wraps against itself, and a third item in there would land in the gap
+   between them. Muted, because it reassures rather than asks. */
+.enquiry__note {
+  margin-top: var(--space-3);
+  font-size: var(--text-card);
+  line-height: 1.5;
+  color: var(--on-dark-muted);
+}
 .enquiry__consent {
   display: flex;
   gap: 12px;
