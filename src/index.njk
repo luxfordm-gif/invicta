@@ -487,15 +487,19 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-enquiry__inner">
           <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Get in touch</p>
-          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
-          <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
+          {# NOT the footer's line. This heading and its paragraph were a
+             word-for-word copy of footer.njk's CTA, which closes every other
+             page on the site, and the same paragraph opened /contact/ as well:
+             three places, one sentence. The footer keeps the generic
+             invitation, because a generic closer is exactly what a footer is
+             for. This one says the thing a footer cannot, which is what
+             actually happens next, and in doing so it carries the reassurance
+             the old .hp-enquiry__note was added to supply. #}
+          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Every job starts <span class="em">the same way.</span></h2>
+          <p class="hp-enquiry__body">A visit, a proper look at your source or your system, and a UKAS-accredited analysis of what is actually in the water. The price comes from that, fixed, and not before it.</p>
           <div class="hp-enquiry__actions">
             <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
             <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-            {# This page sets hideFooterCta, so the footer's reassurance never
-               reaches it and this is the last thing a reader sees before
-               deciding. Same line, same job. #}
-            <p class="hp-enquiry__note">We visit first, and every quote is fixed-price.</p>
           </div>
         </div>
       </div>

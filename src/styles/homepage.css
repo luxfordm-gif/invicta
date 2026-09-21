@@ -556,14 +556,4 @@
   .hp-enquiry__actions { display: grid; gap: 12px; }
   .hp-enquiry__actions > * { justify-content: center; }
 }
-/* The reassurance under the page's final CTA. It IS a child of the button row,
-   so it needs a full basis to break to its own line rather than wedge itself
-   between the two buttons when they wrap. Centred with everything else in
-   .hp-enquiry__inner. */
-.hp-enquiry__note {
-  flex: 0 0 100%;
-  margin-top: var(--space-3);
-  font-size: var(--text-card);
-  line-height: 1.5;
-  color: var(--ink-muted);
-}
+
