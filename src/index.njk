@@ -134,7 +134,16 @@ hideFooterCta: true
         <img src="/assets/estate-dawn.webp" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="container">
-        <h1 class="hp-hero__title" id="hp-hero-title">Water systems you can <span class="em">depend</span> on.</h1>
+        {# The line under this one carries the sharpest phrase on the site,
+           "properties where getting it right is a legal requirement", and the
+           H1 above it was a promise any competitor could make. This states the
+           discomfort instead, which is the beat the page was missing and the
+           one thing both audiences share: an estate off the mains and a
+           facilities manager with an ACOP L8 duty are both answering for water
+           nobody else will. Alternatives, if this reads too blunt:
+             "The water is yours to answer for."
+             "When the water is your responsibility." #}
+        <h1 class="hp-hero__title" id="hp-hero-title">Nobody else is responsible <span class="em">for your water.</span></h1>
         <p class="hp-hero__lead">Bespoke treatment, chlorination and hygiene for properties where getting it right is a legal requirement. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
         <div class="hp-hero__actions">
           <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
@@ -172,7 +181,7 @@ hideFooterCta: true
            two sentences, and a 50-word heading is a heading in name only. #}
         <h2 class="eyebrow hp-intro__eyebrow" id="hp-intro-title">Who we are</h2>
 
-        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
+        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham MSc</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
 
         <a class="btn-line hp-intro__more" href="/about/">More about Invicta <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
 
@@ -188,11 +197,22 @@ hideFooterCta: true
         <div class="hp-intro__trust">
           <div class="hp-trust__row hp-trust__row--centred">
             <p class="eyebrow hp-trust__label">Trusted by</p>
-            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- logo stand-ins, not prose: no tooltips here -->
-              <li class="hp-trust__logo hp-trust__logo--ph">Chelsea FC</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">GSK</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">Amgen</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">Cowdray Estate</li>
+            {# REAL ARTWORK, from _data/clients.js, the same source the marquee
+               on every service page and /about/ reads. These four were typed
+               stand-ins long after the files landed, so the most important
+               page on the site was showing four words where every other page
+               showed the marks themselves. Named rather than sliced off the
+               front of the list, because this row is a deliberate four and the
+               roster is nine. #}
+            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- marks, not prose: no tooltips here -->
+              {% for want in ["Chelsea FC", "GSK", "Amgen", "Cowdray Estate"] %}
+                {% for c in clients %}{% if c.name == want %}
+              <li class="hp-trust__logo" style="--s: {{ c.scale }}">
+                <img src="{{ ('/assets/logos/' + c.file) | v }}" alt="{{ c.name }}"
+                     width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
+              </li>
+                {% endif %}{% endfor %}
+              {% endfor %}
             </ul>
           </div>
           <div class="hp-trust__row hp-trust__row--centred">
@@ -268,7 +288,7 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-position__inner">
           <h2 class="statement hp-position__line" id="hp-position-line">Water treatment isn't optional. <span class="em">Neither is doing it properly.</span></h2>
-          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Chelsea FC, GSK, Amgen, Cowdray Estate. The standard we work to is the standard your inspector expects.</p>
+          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Football grounds, pharmaceutical sites, hospices and landed estates. The standard we work to is the standard your inspector expects.</p>
         </div>
       </div>
     </section>
@@ -433,8 +453,12 @@ hideFooterCta: true
           <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
           <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
           <div class="hp-enquiry__actions">
-            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Send an enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
             <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+            {# This page sets hideFooterCta, so the footer's reassurance never
+               reaches it and this is the last thing a reader sees before
+               deciding. Same line, same job. #}
+            <p class="hp-enquiry__note">We visit first, and every quote is fixed-price.</p>
           </div>
         </div>
       </div>

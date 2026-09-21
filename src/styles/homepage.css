@@ -235,7 +235,19 @@
   filter: grayscale(1);
   opacity: 0.62;
 }
-.hp-trust__logo img { max-height: 100%; width: auto; object-fit: contain; }
+/* OPTICAL SCALE, the same mechanism clients.css uses and for the same reason:
+   a logo row that sets every mark to one height is wrong, because a square
+   crest at a wordmark's height reads as half the size — the wordmark spreads
+   its weight over four times the width. Chelsea's crest came in at 34x34 next
+   to GSK at 106x33 and looked like an afterthought. `--s` comes from
+   _data/clients.js, so the two rows on this site scale a mark identically and
+   there is one place to tune it. The slot keeps its 34px height, so the row
+   still sits on one baseline; only the artwork inside it grows. */
+.hp-trust__logo img {
+  max-height: calc(100% * var(--s, 1));
+  width: auto;
+  object-fit: contain;
+}
 /* The placeholder that holds the slot until the files arrive. Set in the label
    style rather than the display face on purpose: it should read as a marker,
    never mistakable for a wordmark we have chosen to set in type. */
@@ -500,4 +512,15 @@
 @media (max-width: 599.98px) {
   .hp-enquiry__actions { display: grid; gap: 12px; }
   .hp-enquiry__actions > * { justify-content: center; }
+}
+/* The reassurance under the page's final CTA. It IS a child of the button row,
+   so it needs a full basis to break to its own line rather than wedge itself
+   between the two buttons when they wrap. Centred with everything else in
+   .hp-enquiry__inner. */
+.hp-enquiry__note {
+  flex: 0 0 100%;
+  margin-top: var(--space-3);
+  font-size: var(--text-card);
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
