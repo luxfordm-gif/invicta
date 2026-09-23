@@ -12,7 +12,7 @@ hideFooterCta: true
       ======================================================================
       HOME PAGE
 
-      NINE SECTIONS, AND NO TWO OF THEM ARE BUILT THE SAME WAY. The page this
+      TEN SECTIONS, AND NO TWO OF THEM ARE BUILT THE SAME WAY. The page this
       replaces was five variations on "eyebrow, big heading, grid of cards",
       which made every screen read like the one before it. Each section here
       has one job, and a structure only it uses. The reasoning for each is in
@@ -33,7 +33,7 @@ hideFooterCta: true
       answering "why does this have to be done properly" rather than opening
       with it.
 
-      THREE OF THE NINE ARE THE SITE'S OWN COMPONENTS, unchanged and included
+      THREE OF THE TEN ARE THE SITE'S OWN COMPONENTS, unchanged and included
       rather than reimplemented: the coverage map that closes /about/ and every
       service page, the filmstrip from /about/, and the enquiry drawer the
       whole site shares. A homepage that drew its own map or its own photo band
@@ -47,7 +47,7 @@ hideFooterCta: true
       page lets you miss.
 
       THE FOOTER CTA IS TURNED OFF ON THIS PAGE (hideFooterCta above), and
-      that is not an oversight: section 9 IS that call to action, word for
+      that is not an oversight: the enquiry section IS that call to action, word for
       word, and with both on the page the same heading and the same paragraph
       appeared twice within one screen of each other. The footer itself is
       untouched.
@@ -288,52 +288,108 @@ hideFooterCta: true
     {% include "coverage-band.njk" %}
 
     {# ===================== 6 — SELECTED WORK =====================
-      ONE case study at full size, not three at card size. A grid of three
-      teases three jobs and proves none of them; one told properly, with the
-      scope and the years on it, is the only section on the page that is
-      evidence rather than claim.
+      A CAROUSEL OF EVERY STUDY, one at a time: photograph left, the account
+      right. It used to be Cowdray alone, on the argument that one job told
+      properly beats three at card size. That still holds per slide; the
+      carousel just lets the other seven be told the same way, without eight
+      screens of page. Cowdray leads, as the one named client.
+
+      Arrows sit out in the page gutters, level with the photograph, and step
+      one study at a time (carousel.js). Below 900px they go and the track is a
+      swipe with dots. With no JavaScript it is a plain snapping scroller.
+
+      Slides carry the first body paragraph only. The full write-ups run to
+      three paragraphs, and a slide that changes height by 200px on every
+      click makes the section below it jump.
     #}
+    {% set serviceNames = {
+      "private-water-supplies": "Private water supplies",
+      "design-install": "Design and install",
+      "water-hygiene": "Water hygiene",
+      "servicing": "Servicing"
+    } %}
+    {% set cowdray = {
+      id: "cowdray",
+      title: "Cowdray Estate, <span class='em'>a private supply serving multiple properties.</span>",
+      location: "Midhurst, West Sussex",
+      services: ["private-water-supplies"],
+      body: ["Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation."],
+      highlight: "Running continuously since 2023, and passing UKAS-accredited testing every year.",
+      image: "/assets/case-cowdray.webp",
+      imageAlt: "The ruins of Cowdray House across the parkland of the Cowdray Estate, West Sussex."
+    } %}
+    {% set slides = [cowdray].concat(caseStudies) %}
     <section class="section section--paper hp-work" id="selected-work" aria-labelledby="hp-work-title">
       <div class="container">
-        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
-        <h2 class="statement hp-work__title" id="hp-work-title">Cowdray Estate, <span class="em">a private supply serving multiple properties.</span></h2>
-
-        {# STAND-IN, and a real photograph of the right place: Cowdray is named in
-           the heading above, so unlike the anonymised studies this one can show
-           the actual estate. It is not our plant, though, so the alt text says
-           what the picture IS rather than claiming it is the installation.
-           Credited on /credits/ (see _data/imageCredits.js). #}
-        <figure class="hp-work__media parallax">
-          <img src="/assets/case-cowdray.webp" alt="The ruins of Cowdray House across the parkland of the Cowdray Estate, West Sussex." width="1600" height="900" loading="lazy" decoding="async">
-        </figure>
-
-        <dl class="hp-work__meta">
+        <div class="hp-work__head">
           <div>
-            <dt>Client</dt>
-            <dd>Cowdray Estate</dd>
+            <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
+            <h2 class="statement hp-work__title" id="hp-work-title">Supplies we’ve designed, <span class="em">installed and looked after.</span></h2>
           </div>
-          <div>
-            <dt>Scope</dt>
-            <dd>Private water supply, design and install, ongoing servicing</dd>
-          </div>
-          <div>
-            <dt>Year</dt>
-            <dd>2023 to present</dd>
-          </div>
-        </dl>
+          <p class="hp-work__count" aria-hidden="true"><span data-cases-current>01</span> / {% if slides.length < 10 %}0{% endif %}{{ slides.length }}</p>
+        </div>
 
-        {# Three Tier 2 terms wanted marking up here and the rule is two per
-           paragraph, so pH correction is spelled out inline instead. #}
-        <p class="hp-work__body">Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation. The system has run continuously since 2023 with only scheduled maintenance, and passes annual UKAS-accredited testing every year.</p>
+        <div class="hp-cases" role="region" aria-roledescription="carousel" aria-label="Case studies">
+          <button type="button" class="hp-cases__arrow hp-cases__arrow--prev" data-cc-prev aria-label="Previous case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button type="button" class="hp-cases__arrow hp-cases__arrow--next" data-cc-next aria-label="Next case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-        {# Pointed at the private water supplies page, not at /case-studies/.
-           The standalone index was retired and 301s here anyway, so linking to
-           it only bought a redirect hop; and this IS where the work is, since
-           case studies now live as carousels on the service pages. Cowdray is
-           a private supply, so the reader lands among its neighbours. #}
-        <p class="hp-work__link">
-          <a class="btn-line" href="/services/private-water-supplies/">See more of our work <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-        </p>
+          <div class="hp-cases__track">
+            {% for c in slides %}
+            {% set svc = c.services[0] %}
+            <article class="hp-case" role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ slides.length }}">
+              <figure class="hp-case__media">
+                <img src="{{ c.image or '/assets/case-placeholder.webp' }}" alt="{{ c.imageAlt }}" width="1600" height="1200" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+              </figure>
+              <div class="hp-case__copy">
+                <p class="hp-case__meta"><span>{{ c.location }}</span><span>{{ serviceNames[svc] }}</span></p>
+                <h3 class="hp-case__title">{{ c.title | safe }}</h3>
+                <p class="hp-case__body">{{ c.body[0] }}</p>
+                {% if c.highlight %}<p class="hp-case__highlight">{{ c.highlight }}</p>{% endif %}
+                <p class="hp-case__link">
+                  <a class="btn-line" href="/services/{{ svc }}/">More on {{ serviceNames[svc] | lower }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+                </p>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+
+          <div class="hp-cases__dots" role="tablist" aria-label="Choose a case study"></div>
+        </div>
+      </div>
+    </section>
+
+    {# ===================== 6b — IN THEIR WORDS =====================
+      Three real clients, anonymised to the place, as Stefan promised them
+      (see _data/testimonials.js). Straight after the one case study, so the
+      page goes from our account of a job to the clients' account of theirs.
+
+      NOT A CAROUSEL ON DESKTOP. Three quotes fit on one screen, and a slider
+      would hide two of them behind a control to show fewer at once. The
+      longest, most specific quote takes the large card; the other two stack
+      beside it, so uneven lengths read as a hierarchy rather than as three
+      boxes with ragged bottoms. On a phone the same three become a swipe row
+      with dots (nav.js TRACKS), which is where a carousel earns its keep.
+    #}
+    <section class="section section--light hp-voices" id="testimonials" aria-labelledby="hp-voices-title">
+      <div class="container">
+        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>In their words</p>
+        <h2 class="statement hp-voices__title" id="hp-voices-title">Don’t just take our word for it.</h2>
+
+        <div class="hp-voices__grid">
+          {% for t in testimonials %}
+          <figure class="voice{% if t.feature %} voice--feature{% endif %}">
+            <svg class="voice__mark" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 24V14.4C0 6.2 4.3 1.4 12.2 0l1.4 3.1C9.2 4.6 7 7.4 6.8 11.2H13V24H0zm19 0V14.4C19 6.2 23.3 1.4 31.2 0l1.4 3.1c-4.4 1.5-6.6 4.3-6.8 8.1H32V24H19z"/></svg>
+            <blockquote class="voice__quote">
+              {% if t.pull %}<p class="voice__pull">{{ t.pull }}</p>{% endif %}
+              {% for para in t.quote %}<p>{{ para }}</p>{% endfor %}
+            </blockquote>
+            <figcaption class="voice__by">
+              <span class="voice__who">Private water supply, near {{ t.place }}</span>
+              <span class="voice__scope">{{ t.scope }}</span>
+            </figcaption>
+          </figure>
+          {% endfor %}
+        </div>
       </div>
     </section>
 
@@ -350,7 +406,7 @@ hideFooterCta: true
     <section class="section hp-creds" id="credentials" aria-labelledby="hp-creds-title">
       <div class="container hp-creds__grid">
         <div class="hp-creds__aside">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>Credentials</p>
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Credentials</p>
           <h2 class="statement hp-creds__title" id="hp-creds-title">The paperwork clients ask about.</h2>
         </div>
 
@@ -429,7 +485,7 @@ hideFooterCta: true
     <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
       <div class="container">
         <div class="hp-enquiry__inner">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Get in touch</p>
+          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">05</span>Get in touch</p>
           <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Start with a conversation <span class="em">about your source.</span></h2>
           <p class="hp-enquiry__body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
           <div class="hp-enquiry__actions">

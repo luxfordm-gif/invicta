@@ -1,14 +1,13 @@
 /* --- Scroll-snap tracks -----------------------------------------------------
    Progressive enhancement for .case-bento, which becomes a one-card-per-screen
-   swipeable track below 900px. It works with no JS as a plain scrollable list;
+   swipeable track below 900px, and for the home page's .hp-cases, which is a
+   one-study-at-a-time carousel at every width, with arrows above 900px. It works with no JS as a plain scrollable list;
    this adds a row of pagination dots that track the card in view. Each block is
    wired independently, so several can live on one page.
 
-   The generic wire() below still supports prev/next arrows (data-cc-prev /
-   data-cc-next) and keyboard control. Nothing uses them today: they were for
-   the full-width .case-cc carousel, which lost the layout A/B to the bento and
-   was deleted with the lab page. Kept because the next track that needs arrows
-   should not have to rebuild them. --- */
+   The generic wire() supports prev/next arrows (data-cc-prev / data-cc-next),
+   keyboard control and an onChange hook. The home page's case studies are the
+   track that uses the arrows. --- */
 (function () {
   "use strict";
 
@@ -49,7 +48,7 @@
         b.type = "button";
         b.className = sel.dotClass;
         b.setAttribute("role", "tab");
-        b.setAttribute("aria-label", "Go to project " + (i + 1));
+        b.setAttribute("aria-label", "Go to case study " + (i + 1));
         b.addEventListener("click", function () { scrollToItem(i); });
         dotsWrap.appendChild(b);
         dots.push(b);
@@ -64,18 +63,31 @@
       });
       if (prev) prev.disabled = i <= 0;
       if (next) next.disabled = i >= items.length - 1;
+      if (sel.onChange) sel.onChange(i);
     }
     setActive(0);
 
-    if (prev) prev.addEventListener("click", function () { scrollToItem(currentIndex() - 1); });
-    if (next) next.addEventListener("click", function () { scrollToItem(currentIndex() + 1); });
+    // Step from where the track is HEADING, not where it is: a second press
+    // mid-scroll would otherwise read the slide still under the viewport and
+    // land on the same one. Cleared when the scroll settles.
+    var target = null, settle;
+    function step(d) {
+      var from = target === null ? currentIndex() : target;
+      target = Math.max(0, Math.min(items.length - 1, from + d));
+      scrollToItem(target);
+      clearTimeout(settle);
+      settle = setTimeout(function () { target = null; }, 900);
+    }
+    track.addEventListener("scrollend", function () { target = null; });
+    if (prev) prev.addEventListener("click", function () { step(-1); });
+    if (next) next.addEventListener("click", function () { step(1); });
 
     // keyboard: make the track focusable and respond to arrows
     if (sel.keyboard) {
       track.setAttribute("tabindex", "0");
       track.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowRight") { e.preventDefault(); scrollToItem(currentIndex() + 1); }
-        else if (e.key === "ArrowLeft") { e.preventDefault(); scrollToItem(currentIndex() - 1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+        else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
       });
     }
 
@@ -100,6 +112,20 @@
       dots: ".bento__dots",
       dotClass: "bento__dot",
       keyboard: false
+    });
+  });
+
+  document.querySelectorAll(".hp-cases").forEach(function (root) {
+    var counter = root.closest("section").querySelector("[data-cases-current]");
+    wire(root, {
+      track: ".hp-cases__track",
+      item: ".hp-case",
+      dots: ".hp-cases__dots",
+      dotClass: "hp-cases__dot",
+      keyboard: true,
+      onChange: function (i) {
+        if (counter) counter.textContent = (i < 9 ? "0" : "") + (i + 1);
+      }
     });
   });
 })();
