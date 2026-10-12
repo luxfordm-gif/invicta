@@ -6,7 +6,10 @@
 /* --- Hero --- */
 .contact-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(48px, 6vw, 90px); }
 /* Left-aligned to the container edge (under the logo), not a centred column. */
-.contact-hero__title { margin-top: var(--flow-heading); max-width: 15ch; }
+/* No margin above the title: --flow-heading is the eyebrow-to-heading gap and
+   this hero no longer has an eyebrow, so it was pushing the first line 24px
+   below where /about/ and /gallery/ start theirs. */
+.contact-hero__title { max-width: 15ch; }
 .contact-hero__lead {
   margin-top: var(--space-4);
   max-width: 62ch;

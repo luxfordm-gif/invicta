@@ -1,13 +1,11 @@
 ---
 layout: base.njk
-title: "Selected work, photographed on site | Invicta Water Treatment"
+title: "Gallery, what doing it properly looks like | Invicta Water Treatment"
 description: "Plant rooms, boreholes, control panels and the houses they serve: photographs from Invicta Water Treatment jobs across Surrey, Sussex, the South East and beyond."
 canonical: "https://www.invictawatertreatment.co.uk/gallery/"
 permalink: "/gallery/"
 current: "gallery"
 extraStyles: ["gallery"]
-breadcrumb:
-  - title: "Gallery"
 ---
 {#
   GALLERY, the work as a sequence of pictures.
@@ -38,16 +36,22 @@ breadcrumb:
   NAMES follow the case-study rule: initials as the client supplied them,
   places at town or county level. See the note in photos.js on U Farm.
 #}
-    {# The breadcrumb is what the service pages carry between the nav and the
-       hero, and the hero's top padding is set against it; without it this page
-       sat 40px higher than every service page. #}
-{% include "breadcrumb.njk" %}
-
     <!-- ===================== HERO (dark) ===================== -->
     <section class="hero gallery-hero">
       <div class="container hero__inner">
         <p class="hero__eyebrow">Gallery</p>
-        <h1 class="hero__title">Selected work,<br><span class="em">as it is on site.</span></h1>
+        {# THE HEADLINE IS THE HOME PAGE'S OWN ARGUMENT, CASHED IN. The positioning
+           line on / says "Water treatment isn't optional. Neither is doing it
+           properly." This page is the evidence for the second sentence, so the
+           headline says so and the pictures deliver it. Written to the
+           copywriting skill the client pointed at: it states the value of the
+           page (see the standard before you commit), it is specific to Invicta
+           (no competitor can borrow a line that quotes our own claim), and it
+           passes the "now you can" check. Long first line over a short italic
+           second, the way every hero on the site is cut: "Selected work, / as
+           it is on site." came out as two lines of equal width and read as a
+           block. Holds two lines down to 1180px wide. #}
+        <h1 class="hero__title">What doing it properly looks like,<br><span class="em">job by job.</span></h1>
         <div class="hero__scroll" aria-hidden="true">
           <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
         </div>
