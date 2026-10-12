@@ -1,0 +1,133 @@
+/* ==========================================================================
+   gallery.css, the photographs, by job.
+
+   Dark hero, then one long light section: a run of jobs, each a short header
+   and a bento of its pictures. Pairs with gallery.njk and _data/photos.js.
+
+   THE GRID IS BUILT ON ONE FACT: every photograph is 3:2. A lead card two
+   columns wide and two rows tall is therefore exactly the height of two single
+   cards stacked with the grid gap between them, so the set closes with no
+   ragged edge and no card ever has to be cropped to a different shape. The
+   cells carry an explicit aspect-ratio rather than trusting the image, so the
+   layout holds before the pictures arrive.
+   ========================================================================== */
+
+/* --- Hero (dark) ------------------------------------------------------- */
+.gallery-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(40px, 5vw, 72px); }
+.gallery-hero__title { margin-top: var(--flow-heading); max-width: 16ch; }
+.gallery-hero__lead {
+  margin-top: var(--space-4);
+  max-width: 52ch;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--on-dark-muted);
+}
+
+/* --- Jobs --------------------------------------------------------------- */
+/* Each job is separated from the next by a hairline and a full flow step, so
+   the page reads as a sequence of jobs rather than as one endless grid. */
+.gallery-job + .gallery-job {
+  margin-top: var(--flow-lg);
+  padding-top: var(--flow-lg);
+  border-top: 1px solid var(--line-light);
+}
+
+.gallery-job__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2) var(--space-5);
+  align-items: end;
+  margin-bottom: var(--space-4);
+}
+@media (min-width: 900px) {
+  .gallery-job__head { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) auto; }
+}
+.gallery-job__head h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(24px, 2.6vw, 34px);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.gallery-job__place {
+  margin-top: var(--space-1);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.gallery-job__note {
+  font-size: var(--text-card);
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 48ch;
+}
+.gallery-job__count {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+@media (max-width: 899.98px) {
+  .gallery-job__count { display: none; }
+}
+
+/* --- Grid --------------------------------------------------------------- */
+.gallery__grid {
+  --g-gap: clamp(12px, 1.4vw, 20px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  grid-auto-flow: dense;
+  gap: var(--g-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gallery__cell { min-width: 0; }
+.gallery__cell--lead { grid-column: span 2; grid-row: span 2; }
+
+/* A job with a single photograph shows it two columns wide, and the third
+   column simply stays empty: the alternative, a full-width 3:2 frame, is a
+   700px picture of one plant room, which is more than one plant room needs. */
+
+.gallery__card {
+  margin: 0;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  background: var(--light-warm);
+}
+.gallery__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Two columns on a tablet: the lead still spans two, so it goes full width
+   and the rest pair up beneath it. */
+@media (max-width: 899.98px) {
+  .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery__cell--lead { grid-row: auto; }
+}
+/* One column on a phone. */
+@media (max-width: 599.98px) {
+  .gallery__grid { grid-template-columns: minmax(0, 1fr); }
+  .gallery__cell--lead { grid-column: auto; }
+}
+
+/* --- Motion -------------------------------------------------------------
+   The cards are in the site-wide reveal list (motion.css / motion.js). A
+   stagger inside each grid so a row deals out left to right rather than
+   landing as a block; it resets per job because the selector counts within
+   the list. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .gallery__cell:nth-child(2) .gallery__card { --reveal-delay: 80ms; }
+  .gallery__cell:nth-child(3) .gallery__card { --reveal-delay: 160ms; }
+  .gallery__cell:nth-child(4) .gallery__card { --reveal-delay: 240ms; }
+  .gallery__cell:nth-child(n + 5) .gallery__card { --reveal-delay: 80ms; }
+}

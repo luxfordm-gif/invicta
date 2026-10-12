@@ -10,17 +10,17 @@
   "address": { "street": "89 Castle Drive", "locality": "Horley", "region": "Surrey", "postcode": "RH6 9DD" },
   "mapsPlaceUrl": "https://www.google.com/maps/search/?api=1&query=Invicta%20Water%20Treatment%20Ltd%2C%2089%20Castle%20Drive%2C%20Horley%20RH6%209DD",
   "stats": [
-    { "label": "Years in the water industry", "figure": "30+", "image": "/assets/stat-years.webp",
-      "alt": "An Invicta van on the gravel drive of a country house, beside an open borehole chamber with pipework coiled out and a mini-digger working behind." },
-    { "label": "Sites under our care", "figure": "200+", "image": "/assets/stat-sites.webp",
-      "alt": "A plant room with three blue treatment vessels, a brine tank and a UV steriliser, neatly plumbed against a white block wall." },
-    { "label": "Emergency response", "figure": "24h", "image": "/assets/stat-response.webp",
-      "alt": "A liveried Invicta Water Treatment van parked on the block-paved driveway of a stone barn at golden hour." }
+    { "label": "Years in the water industry", "figure": "30+", "image": "/assets/w-estate-9241.webp",
+      "alt": "The side of an Invicta van on a hillside drive, with frost and snowdrops on the grass and hills beyond." },
+    { "label": "Sites under our care", "figure": "200+", "image": "/assets/b-estate-2271.webp",
+      "alt": "A plant room with three blue pressure vessels, a black storage tank and a grey steel door." },
+    { "label": "Emergency response", "figure": "24h", "image": "/assets/r-cottage-2762.webp",
+      "alt": "An Invicta van on the gravel drive of a brick and tile-hung cottage, under bare winter trees." }
   ],
   "services": [
-    { "title": "Private Water Supplies", "href": "/services/private-water-supplies/", "desc": "Bespoke borehole systems, end to end.", "image": "/assets/step-survey.webp" },
-    { "title": "Design & Install", "href": "/services/design-install/", "desc": "Treatment specified and installed in-house.", "image": "/assets/step-install.webp" },
-    { "title": "Servicing & Maintenance", "href": "/services/servicing/", "desc": "Scheduled care and 24-hour callout.", "image": "/assets/service-servicing.webp" },
-    { "title": "Water Hygiene", "href": "/services/water-hygiene/", "desc": "Legionella control and compliance.", "image": "/assets/service-water-hygiene.webp" }
+    { "title": "Private Water Supplies", "href": "/services/private-water-supplies/", "desc": "Bespoke borehole systems, end to end.", "image": "/assets/b-estate-7931.webp" },
+    { "title": "Design & Install", "href": "/services/design-install/", "desc": "Treatment specified and installed in-house.", "image": "/assets/b-estate-4927.webp" },
+    { "title": "Servicing & Maintenance", "href": "/services/servicing/", "desc": "Scheduled care and 24-hour callout.", "image": "/assets/l-mill-1848.webp" },
+    { "title": "Water Hygiene", "href": "/services/water-hygiene/", "desc": "Legionella control and compliance.", "image": "/assets/b-estate-0796.webp" }
   ]
 }

@@ -18,6 +18,7 @@
     ".why-card",
     ".stat",
     ".clients__viewport",
+    ".gallery-job__head", ".gallery__card",
     ".footer__cta", ".footer__grid > *", ".footer__meta",
     ".footer__wordmark", ".footer__mark"
   ].join(", ");

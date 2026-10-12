@@ -1,0 +1,97 @@
+---
+layout: base.njk
+title: "Gallery, our work on site | Invicta Water Treatment"
+description: "Plant rooms, boreholes, control panels and the houses they serve: photographs from Invicta Water Treatment jobs across Surrey, Sussex, the South East and beyond."
+canonical: "https://www.invictawatertreatment.co.uk/gallery/"
+permalink: "/gallery/"
+current: "gallery"
+extraStyles: ["gallery", "coverage-band"]
+---
+{#
+  GALLERY, every photograph we have, by job.
+
+  THE ONE PAGE THAT IS ONLY PICTURES. Everywhere else a photograph is cropped
+  to a band, a card or a frame and asked to carry copy; here each one is shown
+  as it was taken, 3:2, with nothing over it. The point of the page is proof:
+  the plant rooms, the kiosks and the vans are ours, on jobs we did, which is
+  the difference between a firm that installs these systems and a firm that has
+  a website about them.
+
+  GROUPED BY JOB rather than by subject, because that is how the client
+  supplied them and because "this house, these rooms, this kiosk in the field"
+  tells the story of a supply the way a wall of blue vessels cannot. Each job
+  gets a short header (name, place, one line on what it was) and then a bento
+  of its photographs: the lead shot two columns wide and two rows tall, the
+  rest at single size beside and below it. Every picture is the same 3:2, so
+  two single cards stack to exactly the height of one lead card and the grid
+  closes without gaps.
+
+  DATA. Everything comes from _data/photos.js: names, places, the one-line
+  notes, the alt text, and which picture leads. Adding a photograph is one row
+  there and nothing here. The grid serves the 960px copies in /assets/gallery/
+  at single size and the full 1536px file on the lead card, which is the only
+  one wide enough to need it.
+
+  NO LIGHTBOX. It was considered and dropped: it is a second component to
+  maintain for a page whose cards already show a 3:2 frame at up to 800px wide,
+  and the first thing a lightbox does is hide the other eleven pictures.
+
+  NAMES follow the case-study rule: initials as the client supplied them,
+  places at town or county level. See the note in photos.js on U Farm.
+#}
+    <!-- ===================== HERO (dark) ===================== -->
+    <section class="section gallery-hero">
+      <div class="container">
+        <p class="eyebrow gallery-hero__eyebrow">Gallery</p>
+        <h1 class="statement gallery-hero__title">The work, <span class="em">as it is on site.</span></h1>
+        <p class="gallery-hero__lead">Plant rooms, boreholes, control panels and the houses they serve. Every photograph here is from one of our own jobs, taken by us.</p>
+      </div>
+    </section>
+
+    <!-- ===================== JOBS (light) ===================== -->
+    <section class="section section--light gallery" aria-label="Photographs by job">
+      <div class="container">
+        {% for job in photos %}
+        {% if job.photos and job.photos.length %}
+        {#- The lead is the photograph flagged `lead`, else the first. It is pulled
+            to the front so the grid's first cell is always the wide one. -#}
+        {% set lead = null %}
+        {% for p in job.photos %}{% if p.lead and not lead %}{% set lead = p %}{% endif %}{% endfor %}
+        {% if not lead %}{% set lead = job.photos[0] %}{% endif %}
+        {% set rest = [] %}
+        {% for p in job.photos %}{% if p.src != lead.src %}{% set _ = rest.push(p) %}{% endif %}{% endfor %}
+        <article class="gallery-job" id="{{ job.id }}" aria-labelledby="gallery-job-{{ job.id }}">
+          <header class="gallery-job__head">
+            <div class="gallery-job__name">
+              <h2 id="gallery-job-{{ job.id }}">{{ job.name }}</h2>
+              {% if job.place %}<p class="gallery-job__place">{{ job.place }}</p>{% endif %}
+            </div>
+            {% if job.note %}<p class="gallery-job__note">{{ job.note }}</p>{% endif %}
+            <p class="gallery-job__count numeral" aria-hidden="true">{{ job.photos.length }} {{ "photograph" if job.photos.length == 1 else "photographs" }}</p>
+          </header>
+
+          <ul class="gallery__grid gallery__grid--{{ job.photos.length }}" role="list">
+            <li class="gallery__cell gallery__cell--lead">
+              <figure class="gallery__card">
+                <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+              </figure>
+            </li>
+            {% for p in rest %}
+            <li class="gallery__cell">
+              <figure class="gallery__card">
+                <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </figure>
+            </li>
+            {% endfor %}
+          </ul>
+        </article>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- ===================== COVERAGE BAND =====================
+      Closes the page the way it closes every service page and /about/: after
+      the pictures of where we have been, where we can come to.
+    -->
+    {% include "coverage-band.njk" %}
