@@ -16,22 +16,8 @@
    the eye goes from picture to picture, the way it does on the reference.
    ========================================================================== */
 
-/* --- Hero: the service hero as it is, with a CTA pair under the lead so the
-   page asks for the survey before the pictures start. Same two buttons as the
-   home hero. A tighter foot was tried so the first frame sat one scroll away;
-   it read as cramped, so the hero keeps its full padding and the buttons get a
-   proper step above them. --- */
-.gallery-hero__actions {
-  margin-top: clamp(40px, 5vw, 64px);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-.gallery-hero__actions > * { flex: 0 0 auto; }
-@media (max-width: 599.98px) {
-  .gallery-hero__actions { display: grid; gap: 12px; }
-  .gallery-hero__actions > * { justify-content: center; }
-}
+/* --- Hero: the service hero, untouched. A CTA pair under the lead was tried
+   and taken out so the first photograph sits higher on the screen. --- */
 
 /* --- Run ---------------------------------------------------------------- */
 .gallery { padding-top: 0; }
