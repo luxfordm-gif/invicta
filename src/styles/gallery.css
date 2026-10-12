@@ -17,8 +17,20 @@
    ========================================================================== */
 
 /* --- Hero: the service hero, with a tighter foot so the first frame is one
-   scroll away. --- */
+   scroll away, and a CTA pair under the lead so the page asks for the survey
+   before the pictures start. Same two buttons as the home hero. --- */
 .gallery-hero { padding-bottom: clamp(32px, 4vw, 56px); }
+.gallery-hero__actions {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.gallery-hero__actions > * { flex: 0 0 auto; }
+@media (max-width: 599.98px) {
+  .gallery-hero__actions { display: grid; gap: 12px; }
+  .gallery-hero__actions > * { justify-content: center; }
+}
 
 /* --- Run ---------------------------------------------------------------- */
 .gallery { padding-top: 0; }
