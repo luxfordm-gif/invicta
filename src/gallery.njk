@@ -60,7 +60,19 @@ extraStyles: ["gallery"]
       </div>
     </section>
 
-    <!-- ===================== THE RUN (dark) ===================== -->
+    <!-- ===================== THE RUN (dark) =====================
+      EVERY ROW IS FULL. A job's photographs are dealt into rows that always
+      close: a pair at two-thirds and one-third (the narrow one cropped to
+      portrait so the pair shares a height), the next pair mirrored, or a row
+      of three. The first pass left a one-third hole whenever a job had one
+      photograph over, and the client asked for no blank space and for rows
+      that are not always 50/50. How a job is dealt, by its count:
+        1  one full frame at 2:1
+        2  the lead at two-thirds, the other beside it at one-third
+        3+ the lead full width at 2:1, then the rest: a row of three first if
+           the rest is an odd number, then pairs, alternating sides
+      The caption (numeral, name, place) sits under the first row.
+    -->
     <section class="section gallery" aria-label="Photographs by job">
       <div class="container">
         {% for job in photos %}
@@ -70,30 +82,77 @@ extraStyles: ["gallery"]
         {% if not lead %}{% set lead = job.photos[0] %}{% endif %}
         {% set rest = [] %}
         {% for p in job.photos %}{% if p.src != lead.src %}{% set _ = rest.push(p) %}{% endif %}{% endfor %}
+        {% set n = job.photos.length %}
         <article class="gallery-job" id="{{ job.id }}" aria-labelledby="gallery-job-{{ job.id }}">
+
+          {% if n == 2 %}
+          {# Two photographs: one row, the lead wide and the other narrow. #}
+          <ul class="gallery__row gallery__row--pair" role="list">
+            <li class="gallery__cell gallery__cell--wide">
+              <figure class="gallery__card">
+                <div class="gallery__frame parallax">
+                  <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+                </div>
+              </figure>
+            </li>
+            <li class="gallery__cell gallery__cell--narrow">
+              <figure class="gallery__card">
+                <div class="gallery__frame">
+                  <img src="{{ rest[0].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[0].alt }}" width="960" height="640" loading="lazy" decoding="async">
+                </div>
+              </figure>
+            </li>
+          </ul>
+          {% else %}
           <figure class="gallery__card gallery__lead">
             <div class="gallery__frame parallax">
               <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
             </div>
-            <figcaption class="gallery__caption">
-              <span class="gallery__index numeral" aria-hidden="true">{{ "0" if loop.index < 10 }}{{ loop.index }}</span>
-              <h2 class="gallery__name" id="gallery-job-{{ job.id }}">{{ job.name }}</h2>
-              {% if job.place %}<span class="gallery__place">{{ job.place }}</span>{% endif %}
-            </figcaption>
           </figure>
+          {% endif %}
 
-          {% if rest.length %}
-          <ul class="gallery__run gallery__run--{{ rest.length }}" role="list">
-            {% for p in rest %}
+          <div class="gallery__caption">
+            <span class="gallery__index numeral" aria-hidden="true">{{ "0" if loop.index < 10 }}{{ loop.index }}</span>
+            <h2 class="gallery__name" id="gallery-job-{{ job.id }}">{{ job.name }}</h2>
+            {% if job.place %}<span class="gallery__place">{{ job.place }}</span>{% endif %}
+          </div>
+
+          {% if n >= 3 %}
+          {#- Deal the rest into full rows: a trio first when the count is odd,
+              then pairs, alternating which side carries the wide picture. -#}
+          {% set r = rest.length %}
+          {% set i = 0 %}
+          {% set k = 0 %}
+          {% if r % 2 == 1 %}
+          <ul class="gallery__row gallery__row--trio" role="list">
+            {% for p in rest.slice(0, 3) %}
             <li class="gallery__cell">
-              <figure class="gallery__card">
-                <div class="gallery__frame">
-                  <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" loading="lazy" decoding="async">
-                </div>
-              </figure>
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
             </li>
             {% endfor %}
           </ul>
+          {% set i = 3 %}
+          {% endif %}
+          {% for step in range(0, 20) %}
+          {% if i < r %}
+          <ul class="gallery__row gallery__row--pair{% if k % 2 == 1 %} gallery__row--mirror{% endif %}" role="list">
+            <li class="gallery__cell gallery__cell--wide">
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ rest[i].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i].alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
+            </li>
+            <li class="gallery__cell gallery__cell--narrow">
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ rest[i + 1].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i + 1].alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
+            </li>
+          </ul>
+          {% set i = i + 2 %}
+          {% set k = k + 1 %}
+          {% endif %}
+          {% endfor %}
           {% endif %}
         </article>
         {% endif %}
