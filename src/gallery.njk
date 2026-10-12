@@ -6,6 +6,8 @@ canonical: "https://www.invictawatertreatment.co.uk/gallery/"
 permalink: "/gallery/"
 current: "gallery"
 extraStyles: ["gallery"]
+breadcrumb:
+  - title: "Gallery"
 ---
 {#
   GALLERY, the work as a sequence of pictures.
@@ -36,6 +38,11 @@ extraStyles: ["gallery"]
   NAMES follow the case-study rule: initials as the client supplied them,
   places at town or county level. See the note in photos.js on U Farm.
 #}
+    {# The breadcrumb is what the service pages carry between the nav and the
+       hero, and the hero's top padding is set against it; without it this page
+       sat 40px higher than every service page. #}
+{% include "breadcrumb.njk" %}
+
     <!-- ===================== HERO (dark) ===================== -->
     <section class="hero gallery-hero">
       <div class="container hero__inner">
