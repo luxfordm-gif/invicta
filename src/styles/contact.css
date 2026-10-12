@@ -249,8 +249,11 @@
 }
 .contact-map__name { font-family: var(--font-display); font-weight: 600; font-size: 17px; }
 .contact-map__addr { margin-top: 6px; font-size: var(--text-note); line-height: 1.5; color: var(--ink-muted); }
-/* The source is 16:10, so cover-crops a little off the top and bottom to reach
-   16:9. Centred is right: the van and the open borehole both sit mid-frame. */
+/* The source is 3:2, cover-cropped to 16:9. It is the 960px gallery copy, not
+   the 1536px original: the card renders this at about 220px wide, and a file
+   three and a half times that size was being downsampled hard enough to look
+   pixelated. The subject also needs to fill the frame at this size, which is
+   why it is the van close to the barn and not a van at the end of a lane. */
 .contact-map__photo {
   display: block;
   width: 100%;
