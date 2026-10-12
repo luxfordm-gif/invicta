@@ -89,8 +89,8 @@ module.exports = [
       "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site, the kind of adaptation that only shows up once a building is back in real use.",
     ],
     highlight: "A bespoke system for a National Trust restoration.",
-    image: "/assets/uppark-0846.webp",
-    imageAlt: "The plant room at Uppark: a cold water storage tank, booster pumps and insulated pipework along the wall.",
+    image: "/assets/uppark-4882.webp",
+    imageAlt: "The control panel at Uppark, beside framed commissioning notices, a water meter and a tank float.",
   },
   {
     id: "rf-estate-woking",
