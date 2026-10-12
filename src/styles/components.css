@@ -713,7 +713,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 /* 16:9, the same frame the phone panel uses. At 5:4 the picture was half as
    tall again as the copy beside it, so an open panel was a tall photograph with
    three lines of text stranded at the top of the column next to it. */
-.acc__media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+/* height:auto is load-bearing: the width/height attributes on the tag map to a
+   presentational height, and aspect-ratio only applies while height is auto. */
+.acc__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .acc__media .img-ph { width: 100%; aspect-ratio: 16 / 9; }
 .acc__copy p { font-size: var(--text-body); line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
 .acc__copy .btn-inquiry { margin-top: var(--space-4); }

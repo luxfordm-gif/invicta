@@ -299,11 +299,14 @@
 /* Same rule as the stats band: the frame clips, so it carries the radius. The
    picture keeps one too, for the case where the media is not a parallax frame. */
 .sector__media { border-radius: var(--radius-lg); overflow: clip; }
-.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: var(--radius-lg); }
+/* Landscape, not the 3:4 portrait tile it used to be. The photographs are now
+   our own 3:2 frames of real houses, and a portrait crop kept a sliver of each
+   one. height:auto is load-bearing for the same reason as .acc__media img. */
+.sector__media img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: var(--radius-lg); }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
    bright grey block that reads as a broken image. */
 .sector__media .img-ph {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   background: var(--ground-raise);
   color: var(--on-dark-muted);
   border: 1px solid var(--line-dark);
