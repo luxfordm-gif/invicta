@@ -299,11 +299,14 @@
 /* Same rule as the stats band: the frame clips, so it carries the radius. The
    picture keeps one too, for the case where the media is not a parallax frame. */
 .sector__media { border-radius: var(--radius-lg); overflow: clip; }
-.sector__media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: brightness(0.86); border-radius: var(--radius-lg); }
+/* Landscape, not the 3:4 portrait tile it used to be. The photographs are now
+   our own 3:2 frames of real houses, and a portrait crop kept a sliver of each
+   one. height:auto is load-bearing for the same reason as .acc__media img. */
+.sector__media img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; filter: brightness(0.86); border-radius: var(--radius-lg); }
 /* On-brand placeholder (photos to follow): a quiet navy panel instead of a
    bright grey block that reads as a broken image. */
 .sector__media .img-ph {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   background: var(--ground-raise);
   color: var(--on-dark-muted);
   border: 1px solid var(--line-dark);
@@ -790,7 +793,17 @@
     padding-block: 13px;
   }
 }
-.breadcrumb + .hero { padding-top: clamp(40px, 6vw, 96px); }
+/* A hero under a breadcrumb gives back the breadcrumb's own height, so its
+   first line (the eyebrow) lands at the same distance below the nav as the
+   first line of /about/, /contact/ and /gallery/, none of which carry one.
+   52px is the breadcrumb: 15px padding each side, one line of 13px type and
+   its border. The floor keeps a sliver of air on very short windows, where
+   --hero-y-top itself is only 44px.
+
+   General sibling (~), not adjacent (+): breadcrumb.njk emits its JSON-LD
+   <script> straight after the nav, so the hero is never the NEXT sibling. The
+   old adjacent rule here had silently never matched. */
+.breadcrumb ~ .hero { padding-top: max(24px, calc(var(--hero-y-top) - 52px)); }
 .breadcrumb__list {
   display: flex;
   flex-wrap: wrap;

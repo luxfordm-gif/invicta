@@ -13,6 +13,7 @@
           {% endfor %}
         </div>
       </li>
+      <li class="nav__item"><a href="/gallery/"{% if current == "gallery" %} aria-current="page"{% endif %}>Gallery</a></li>
       <li class="nav__item"><a href="/about/"{% if current == "about" %} aria-current="page"{% endif %}>About</a></li>
       <li class="nav__item"><a href="/contact/"{% if current == "contact" %} aria-current="page"{% endif %}>Contact Us</a></li>
       <li class="nav__mobile-extra">

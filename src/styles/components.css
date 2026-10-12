@@ -588,19 +588,14 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
      taller than the screen, which would crop the foot of the picture. */
   height: 100svh;
 }
-/* DESKTOP: 70svh, not the full screen. A full-height band is a long hold on a
-   wide screen, and the reveal still reads at 70 — the section below still rides
-   up over a picture that is still the biggest thing on the page, it just does
-   not ask for the whole of it. The phone keeps 100svh: there the picture is
-   already only a few hundred pixels tall and shortening it leaves a strip of
-   the next section showing rather than a moment.
-
-   Note this is NOT a fix for the softness in these photographs. The band is
-   full-bleed, so once it is shorter than the image's own ratio it is WIDTH that
-   sets the scale, and the sources (1000-1672px) are already being stretched
-   past 2x on a retina screen. Shorter crops more; it does not sharpen. */
+/* DESKTOP: 90svh, most of the screen but not all of it. It sat at 70 while the
+   photographs were 1000px stand-ins that went soft at full bleed; the real job
+   photography (1536px, October 2026) holds up, and the client asked for the
+   band to go deeper. A sliver of the next section still shows at the foot, so
+   the page says there is more below before the reveal starts. The phone keeps
+   100svh: there the picture is already only a few hundred pixels tall. */
 @media (min-width: 900px) {
-  .band--reveal { height: 70svh; }
+  .band--reveal { height: 90svh; }
 }
 /* The picture is the point here, so it carries far less wash than the old fixed
    band, where the copy immediately below needed the photograph pushed back. */
@@ -713,7 +708,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 /* 16:9, the same frame the phone panel uses. At 5:4 the picture was half as
    tall again as the copy beside it, so an open panel was a tall photograph with
    three lines of text stranded at the top of the column next to it. */
-.acc__media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+/* height:auto is load-bearing: the width/height attributes on the tag map to a
+   presentational height, and aspect-ratio only applies while height is auto. */
+.acc__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .acc__media .img-ph { width: 100%; aspect-ratio: 16 / 9; }
 .acc__copy p { font-size: var(--text-body); line-height: 1.55; color: var(--ink-muted); max-width: 44ch; }
 .acc__copy .btn-inquiry { margin-top: var(--space-4); }

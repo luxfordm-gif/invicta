@@ -19,15 +19,15 @@
    No em dashes anywhere in the copy. `image` is the web asset once added (see
    /assets); null renders a tasteful "photo to follow" placeholder.
 
-   PHOTOGRAPHY IS STAND-IN, AND HONEST ABOUT IT. Every study now carries its own
-   picture rather than seven copies of one barn, but none of them is the actual
-   job: they are openly-licensed photographs from Wikimedia Commons, graded to
-   the site's own look, with the source, author and licence recorded per file in
-   _data/imageCredits.js. Six of the seven clients are anonymised in the copy
-   above, so they are deliberately LANDSCAPES rather than identifiable houses,
-   a photograph of some other family's house captioned as a client's job would
-   be a claim we cannot make. Uppark is the exception and is genuinely Uppark.
-   Swap each one for the real project photograph as it arrives.
+   PHOTOGRAPHY IS NOW OUR OWN. Every study carries a photograph from an Invicta
+   job, supplied by the client in job folders (see _data/photos.js for the
+   full set and where each file came from). Four studies are illustrated with
+   the client's own choice of stand-in from ANOTHER Invicta job, because no
+   photograph of that site was supplied: B Farm shows a B Estate plant room,
+   B Stud shows a lodge and paddock from an unfiled job, and the alt text in
+   each case describes the picture rather than the study. Nothing here is a
+   third party's photograph any more, so imageCredits.js is empty and the
+   credits page has retired itself.
 
    `blurb` is the CARD copy: one short sentence, all a bento card shows before
    you hover it. `highlight` is the line that slides up under it. Keep both
@@ -54,8 +54,8 @@ module.exports = [
       "The next task was to find water on site, which we did with our chalk-geology specialist, drilling and carefully developing a new borehole. We like to help where we can.",
     ],
     highlight: "One supply across borehole, rainwater and mains, plus a chlorine-free pool.",
-    image: "/assets/case-lk-effingham.webp",
-    imageAlt: "Rolling wooded farmland on the North Downs in Surrey, under a soft sky.",
+    image: "/assets/lk-effingham-8595.webp",
+    imageAlt: "A newly built stone house with an Invicta van on the drive and fresh groundworks, blue pipe coiled on the gravel.",
   },
   {
     id: "u-farm-kent",
@@ -72,8 +72,8 @@ module.exports = [
       "The ultrafiltration unit is genuinely impressive: it can be retrofitted to any borehole system and improves water clarity almost instantly.",
     ],
     highlight: "In-house ultrafiltration: clear water from a clay-rich, variable source.",
-    image: "/assets/case-u-farm-kent.webp",
-    imageAlt: "A Kentish oast house with white cowls, in red brick behind a farm drive.",
+    image: "/assets/u-farm-4670.webp",
+    imageAlt: "A plywood-lined plant room with the ultrafiltration unit, three blue pressure vessels and a chlorination controller.",
   },
   {
     id: "uppark-sussex",
@@ -89,8 +89,8 @@ module.exports = [
       "As the project progressed, we retrofitted a programmable tank control system to meet the varying demands of the site, the kind of adaptation that only shows up once a building is back in real use.",
     ],
     highlight: "A bespoke system for a National Trust restoration.",
-    image: "/assets/case-uppark-sussex.webp",
-    imageAlt: "Uppark, the National Trust house on the South Downs, seen across its lawn under a wide sky.",
+    image: "/assets/uppark-4882.webp",
+    imageAlt: "The control panel at Uppark, beside framed commissioning notices, a water meter and a tank float.",
   },
   {
     id: "rf-estate-woking",
@@ -106,8 +106,8 @@ module.exports = [
       "The final water passed the local EHO tests with flying colours. The work led to a second project very close by, where we could install a properly designed system from the start, giving that owner the independence they wanted.",
     ],
     highlight: "Passed the local EHO tests with flying colours.",
-    image: "/assets/case-rf-estate-woking.webp",
-    imageAlt: "A beech avenue running away through Surrey woodland.",
+    image: "/assets/rf-estate-4334.webp",
+    imageAlt: "A clean white plant room with a black storage tank, a wall-mounted filter and UV unit, and pipework run neatly along the wall.",
   },
   {
     id: "b-farm-cotswolds",
@@ -123,8 +123,8 @@ module.exports = [
       "We reconfigured the existing system, adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",
     ],
     highlight: "A redesigned RO that copes with fouling, saline water.",
-    image: "/assets/case-b-farm-cotswolds.webp",
-    imageAlt: "A Cotswold stone farmhouse behind a post-and-rail paddock, framed by trees.",
+    image: "/assets/b-estate-4916.webp",
+    imageAlt: "Two black settling tanks and a pump set in a plywood-lined plant room.",
   },
   {
     id: "b-stud-berkshire",
@@ -140,8 +140,8 @@ module.exports = [
       "Over the years we have upgraded the pumps and kept the whole site going, including annual cleans and chlorinations, with UKAS-accredited sampling.",
     ],
     highlight: "Years of steady care: annual cleans, chlorination, UKAS sampling.",
-    image: "/assets/case-b-stud-berkshire.webp",
-    imageAlt: "Two rugged horses grazing in a railed paddock on open English farmland.",
+    image: "/assets/img-5193.webp",
+    imageAlt: "A timber lodge with a verandah beside a post-and-rail paddock and a gravel drive.",
   },
   {
     id: "roundhurst-haslemere",
@@ -156,7 +156,7 @@ module.exports = [
       "A private supply on the Surrey–Sussex border that we look after near Haslemere.",
     ],
     highlight: null,
-    image: "/assets/sector-country-houses.webp",
-    imageAlt: "A country house behind clipped formal hedging on a frosty morning.",
+    image: "/assets/roundhurst-4872.webp",
+    imageAlt: "A plant room with two blue pressure vessels, red expansion vessels and insulated copper and steel pipework.",
   },
 ];

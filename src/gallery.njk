@@ -1,0 +1,198 @@
+---
+layout: base.njk
+title: "Gallery, done properly from borehole to tap | Invicta Water Treatment"
+description: "Our own photographs of private water supplies we designed, installed or look after. Plant rooms, boreholes, control panels and the houses they serve, across Surrey, Sussex and the South East."
+canonical: "https://www.invictawatertreatment.co.uk/gallery/"
+permalink: "/gallery/"
+current: "gallery"
+extraStyles: ["gallery"]
+---
+{#
+  GALLERY, the work as a sequence of pictures.
+
+  BUILT ON THE KOLENDA "SELECTED WORK" PAGE, the garden-design site the client
+  set as the reference for this build (bartoszkolenda.com/work). That page is
+  a text-led header with a scroll cue, then one sequential run of large image
+  cards on the dark ground, each captioned with a title and a year, closed by
+  the studio's figures and client logos. Nothing is explained; the pictures
+  are the argument and the captions only say where you are.
+
+  WHAT THAT BECOMES HERE. Every job is one wide, cinematic lead frame on navy
+  with a numbered caption beneath it (01, the name, the place), and then its
+  other photographs run on under it at single size. No job headers, no notes,
+  no bento: the first pass of this page grouped and explained, and the client
+  did not like it. The run ends on the site's own stats band and client marquee,
+  as Kolenda's does, and the footer carries the enquiry.
+
+  DATA comes from _data/photos.js: names, places, alt text, and which picture
+  leads each job. Add a photograph there and nothing changes here. The lead
+  frame takes the full 1536px file; the run beneath takes the 960px copies in
+  /assets/gallery/, which is all a third-width card needs.
+
+  THE LEAD FRAME DRIFTS on scroll in the same `.parallax` frame every other
+  photograph on the site sits in, so the page moves the way the service bands
+  do rather than as a static wall.
+
+  NAMES follow the case-study rule: initials as the client supplied them,
+  places at town or county level. See the note in photos.js on U Farm.
+#}
+    <!-- ===================== HERO (dark) ===================== -->
+    <section class="hero gallery-hero">
+      <div class="container hero__inner">
+        <p class="hero__eyebrow">Gallery</p>
+        {# WRITTEN TO THE COPYWRITING SKILL (coreyhaines31/marketingskills), from
+           the full file this time, with the client's own words as the source.
+
+           CONTEXT the skill asks for first. Page: gallery, proof. One action:
+           book a site survey. Audience: owners of estates and country houses
+           with a private supply, often arriving after a system someone else
+           built has let them down (the Woking testimonial: "continually
+           breaking down"; the U Farm, RF Estate and B Farm case studies all
+           began that way). Their language, from the three real testimonials:
+           "doing a job properly", "from the borehole pump right through to
+           the taps", "complete confidence", "attention to detail".
+
+           HEADLINE. Both halves are the Elstead client's own phrases. "Now you
+           can" test: now you can see a job done properly, borehole to tap, in
+           Invicta's own photographs. Compelling, and true of every frame on
+           the page. Swap test: a competitor running stock photography cannot
+           say "in our own photographs". Long first line, short italic second,
+           the cut every hero on this site uses; the only candidate of seven
+           that held two lines at 1180px with the first the longer.
+
+           SUBHEAD, on the skill's three beats: the discomfort (a system that
+           kept breaking down, in the customer's words), the vision (how we
+           leave a supply), and the path is the first photograph, one scroll
+           down. A CTA pair sat under the lead for a while; the client took it
+           out so the pictures start higher. The nav's "Send enquiry" and the
+           footer carry the ask.
+
+           Self-check run: no contrast reveal, no negation list, no colon or
+           question reveal, no trailing pile-on, no em dash, no exclamation. #}
+        <h1 class="hero__title">Done properly, borehole to tap,<br><span class="em">in our own photographs.</span></h1>
+        <div class="hero__scroll" aria-hidden="true">
+          <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+        </div>
+        {# COPY, per the copywriting skill the client pointed at (coreyhaines31/
+           marketingskills): one claim per sentence, specific over vague, no
+           fragments or triple lists doing the work of a sentence, and a CTA that
+           says what the visitor gets rather than "enquire". The count line that
+           used to sit here ("49 photographs from 15 jobs") is gone at the
+           client's request. #}
+        <div class="hero__lead">
+          <p class="hero__lead-lg">Many of these jobs began as another firm’s system that kept breaking down. Every photograph is from a supply we designed, installed or look after, and this is how we leave them.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== THE RUN (dark) =====================
+      EVERY ROW IS FULL. A job's photographs are dealt into rows that always
+      close: a pair at two-thirds and one-third (the narrow one cropped to
+      portrait so the pair shares a height), the next pair mirrored, or a row
+      of three. The first pass left a one-third hole whenever a job had one
+      photograph over, and the client asked for no blank space and for rows
+      that are not always 50/50. How a job is dealt, by its count:
+        1  one full frame at 2:1
+        2  the lead at two-thirds, the other beside it at one-third
+        3+ the lead full width at 2:1, then the rest: a row of three first if
+           the rest is an odd number, then pairs, alternating sides
+      The caption (numeral, name, place) sits under the first row.
+    -->
+    <section class="section gallery" aria-label="Photographs by job">
+      <div class="container">
+        {% for job in photos %}
+        {% if job.photos and job.photos.length %}
+        {% set lead = null %}
+        {% for p in job.photos %}{% if p.lead and not lead %}{% set lead = p %}{% endif %}{% endfor %}
+        {% if not lead %}{% set lead = job.photos[0] %}{% endif %}
+        {% set rest = [] %}
+        {% for p in job.photos %}{% if p.src != lead.src %}{% set _ = rest.push(p) %}{% endif %}{% endfor %}
+        {% set n = job.photos.length %}
+        <article class="gallery-job" id="{{ job.id }}" aria-labelledby="gallery-job-{{ job.id }}">
+
+          {% if n == 2 %}
+          {# Two photographs: one row, the lead wide and the other narrow. #}
+          <ul class="gallery__row gallery__row--pair" role="list">
+            <li class="gallery__cell gallery__cell--wide">
+              <figure class="gallery__card">
+                <div class="gallery__frame parallax">
+                  <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+                </div>
+              </figure>
+            </li>
+            <li class="gallery__cell gallery__cell--narrow">
+              <figure class="gallery__card">
+                <div class="gallery__frame">
+                  <img src="{{ rest[0].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[0].alt }}" width="960" height="640" loading="lazy" decoding="async">
+                </div>
+              </figure>
+            </li>
+          </ul>
+          {% else %}
+          <figure class="gallery__card gallery__lead">
+            <div class="gallery__frame parallax">
+              <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+            </div>
+          </figure>
+          {% endif %}
+
+          <div class="gallery__caption">
+            <span class="gallery__index numeral" aria-hidden="true">{{ "0" if loop.index < 10 }}{{ loop.index }}</span>
+            <h2 class="gallery__name" id="gallery-job-{{ job.id }}">{{ job.name }}</h2>
+            {% if job.place %}<span class="gallery__place">{{ job.place }}</span>{% endif %}
+          </div>
+
+          {% if n >= 3 %}
+          {#- Deal the rest into full rows: a trio first when the count is odd,
+              then pairs, alternating which side carries the wide picture. -#}
+          {% set r = rest.length %}
+          {% set i = 0 %}
+          {% set k = 0 %}
+          {% if r % 2 == 1 %}
+          <ul class="gallery__row gallery__row--trio" role="list">
+            {% for p in rest.slice(0, 3) %}
+            <li class="gallery__cell">
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
+            </li>
+            {% endfor %}
+          </ul>
+          {% set i = 3 %}
+          {% endif %}
+          {% for step in range(0, 20) %}
+          {% if i < r %}
+          <ul class="gallery__row gallery__row--pair{% if k % 2 == 1 %} gallery__row--mirror{% endif %}" role="list">
+            <li class="gallery__cell gallery__cell--wide">
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ rest[i].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i].alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
+            </li>
+            <li class="gallery__cell gallery__cell--narrow">
+              <figure class="gallery__card"><div class="gallery__frame">
+                <img src="{{ rest[i + 1].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i + 1].alt }}" width="960" height="640" loading="lazy" decoding="async">
+              </div></figure>
+            </li>
+          </ul>
+          {% set i = i + 2 %}
+          {% set k = k + 1 %}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </article>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- ============ THE FIGURES, THEN WHO TRUSTS US ============
+      The same close as Kolenda's work page, in the site's own components: the
+      stats band on paper, then the client marquee on white. The order is the
+      pictures, the numbers behind them, the names that stand behind both.
+    -->
+    {% include "stats-band.njk" %}
+
+    {% set clientsId = "gallery-clients" %}
+    {% set clientsClass = "clients--airy" %}
+    {% set clientsSurface = "section--paper" %}
+    {% include "clients.njk" %}
