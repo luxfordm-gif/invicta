@@ -182,7 +182,7 @@
 
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
-  --nav-h: 95px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this).
+  --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this).
                                    Pre-JS fallback only: nav.js overwrites it with the nav's real
                                    height on load, resize and after fonts settle. Kept accurate so
                                    the sticky breadcrumb does not sit 8px high before JS runs. */
