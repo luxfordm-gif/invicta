@@ -13,6 +13,14 @@
    sentence is lifted out of its closing paragraph rather than printed twice.
    No em dashes.
 
+   CUT, NOT REWRITTEN. The featured quote ran to three paragraphs and towered
+   over the two beside it. Its third ("He is knowledgeable, reliable,
+   responsive and a pleasure to deal with...") was the one paragraph carrying
+   no specifics, and the pull line already says that about him in the client's
+   own words. The two that remain are the ones that earn their space: what was
+   done, and the pump that failed after ten years and came back better. The
+   full text is in Stefan's forwarded email if it is ever wanted back.
+
    `feature: true` marks the one that takes the large card. It is the longest
    and the most specific, so it earns the room; `pull` is a sentence lifted
    verbatim from its own text and set large above the rest. Only one entry
@@ -28,7 +36,6 @@ module.exports = [
     quote: [
       "We have been hugely impressed with Stefan and Invicta Water Treatment. Stefan has completely redesigned and upgraded our water system, from the borehole pump right through to the taps in our home. He also takes care of the ongoing servicing and water quality testing, so we have complete confidence in both the system and the quality of our water.",
       "What really stands out is Stefan’s knowledge, care and responsiveness. When our borehole pump finally failed after 10 years, he was incredibly quick to respond and get us back up and running. Rather than simply replacing the failed pump, he took the opportunity to improve the original design, making the system more robust and significantly reducing the likelihood of the same problem happening again.",
-      "He is knowledgeable, reliable, responsive and a pleasure to deal with. We really couldn’t recommend Stefan and Invicta Water Treatment highly enough.",
     ],
   },
   {
