@@ -42,7 +42,6 @@
   {% endfor %}<link rel="stylesheet" href="{{ '/styles/enquiry.css' | v }}">
   <link rel="stylesheet" href="{{ '/styles/components/tooltip.css' | v }}"><!-- site-wide: the gloss filter can put a term on any page -->
   <link rel="stylesheet" href="{{ '/styles/motion.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/prefs.css' | v }}"><!-- build-time preview panel; remove before launch -->
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -79,7 +78,6 @@
 
 {% if not hideEmergencyCta %}{% include "emergency-cta.njk" %}{% endif %}
 {% include "enquiry.njk" %}
-{% include "prefs.njk" %}
 
   <script src="{{ '/scripts/nav.js' | v }}" defer></script>
   <script src="{{ '/scripts/carousel.js' | v }}" defer></script>
@@ -90,6 +88,5 @@
   <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>
   <script src="{{ '/scripts/hero-media.js' | v }}" defer></script>
   <script src="{{ '/scripts/motion.js' | v }}" defer></script>
-  <script src="{{ '/scripts/prefs.js' | v }}" defer></script><!-- build-time preview panel; remove before launch -->
 </body>
 </html>

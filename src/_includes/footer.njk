@@ -1,60 +1,13 @@
-    <!-- ===================== FOOTER A (standard) ===================== -->
-    <footer class="footer footer--a">
-      <div class="container">
-        {% if not hideFooterCta %}
-        <div class="footer__cta">
-          <div class="footer__cta-text">
-            <h2 class="footer__cta-line">Start with a conversation <span class="em">about your source.</span></h2>
-            <p class="footer__cta-body">Whether you are planning a new supply, taking on a property with an existing one, or need someone to take over a system that has been neglected, we would be glad to visit and advise.</p>
-          </div>
-          <div class="footer__cta-actions">
-            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Arrange a site visit <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-            {# The reassurance that belongs at a final CTA and was missing:
-               the last thing before the decision should answer "what am I
-               committing to". Kept true for every page this footer sits under,
-               which is why it says "a visit" rather than naming a survey. #}
-            <p class="footer__cta-note">We visit first, and every quote is fixed-price.</p>
-          </div>
-        </div>
-        <div class="rule"></div>
-        {% endif %}
+    {# ===================== FOOTER =====================
+      Was "footer B of two". Variant A was the plain one and lived alongside it
+      in the DOM on every page, hidden by a display:none in prefs.css, so that
+      the build-time preview panel could flip between them. The panel has gone
+      and the choice is long settled, so A is deleted rather than left hidden.
 
-        <div class="footer__grid">
-          <div class="footer__contact">
-            <a class="footer__email" href="mailto:{{ site.email }}">{{ site.email }}</a>
-            <p class="footer__tagline">Bespoke private water supplies for estates and premium properties across Surrey, Sussex and the South East. Turnkey quality, personally delivered.</p>
-          </div>
-          <ul class="footer__nav">
-            <li><a href="/">Home</a></li>
-            <li class="footer__nav-group">
-              <details class="footer__acc">
-                <summary class="footer__acc-summary">
-                  <span>Services</span>
-                  <span class="footer__acc-icon" aria-hidden="true"></span>
-                </summary>
-                <ul class="footer__sublist">
-                  {% for s in site.services %}
-                  <li><a href="{{ s.href }}">{{ s.title }}</a></li>
-                  {% endfor %}
-                </ul>
-              </details>
-            </li>
-            <li><a href="/gallery/">Gallery</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/contact/">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div class="footer__meta">
-          <p>© 2026 Invicta Water Treatment</p>
-          <p>Registered in England, 89 Castle Drive, Horley, Surrey RH6 9DD</p>
-        </div>
-      </div>
-      <div class="footer__wordmark" aria-hidden="true">Invicta</div>
-    </footer>
-
-    <!-- ===================== FOOTER B (oversized cut-off wordmark) ===================== -->
+      The footer--b class STAYS. sections.css, motion.css and motion.js all
+      hang the cut-off wordmark behaviour off it, and renaming the class to win
+      a tidier name would mean touching four files for nothing.
+    #}
     <footer class="footer footer--b">
       <div class="container">
         {% if not hideFooterCta %}
