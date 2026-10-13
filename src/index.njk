@@ -130,8 +130,20 @@ hideFooterCta: true
       said once at full size, for someone who has landed mid-crisis.
     #}
     <section class="section hp-hero" id="hero" aria-labelledby="hp-hero-title">
-      <div class="hp-hero__media" aria-hidden="true">
-        <img src="/assets/l-mill-1879.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+      {# THREE FRAMES, CROSSFADING. One still picture behind the one screen
+         everybody sees; three says the range of the work without asking anyone
+         to click. All real jobs: the mill at dusk, a Tudor estate with the main
+         being laid across its lawn, and an Effingham drive with the van, a
+         telehandler and the chamber open.
+         Only the first is fetched eagerly, so the extra two cost nothing on
+         first paint. The fade and the timer live in hero-media.js, and with no
+         JS (or with reduced motion asked for) the first frame simply stays.
+         aria-hidden on the whole stack: it is scenery, and the h1 beside it
+         already says what the page is. #}
+      <div class="hp-hero__media" aria-hidden="true" data-hero-media>
+        <img class="is-active" src="/assets/l-mill-1879.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+        <img src="/assets/b-estate-7931.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+        <img src="/assets/lk-effingham-8595.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
       </div>
       <div class="container">
         {# The line under this one carries the sharpest phrase on the site,
@@ -152,28 +164,6 @@ hideFooterCta: true
       </div>
     </section>
 
-    {# ===================== 2 — TRUST STRIP =====================
-      A BAND, NOT A SECTION: 48px of height, a label, and the marks. It is
-      evidence in passing, placed immediately under the claim it supports, and
-      it is deliberately the shortest thing on the page.
-
-      LOGO FILES TO COME FROM MATT. The four client names below are the ones
-      already named on the live site, held as placeholder slots; drop the real
-      file into each slot as:
-
-          <li class="hp-trust__logo"><img src="/assets/logo-chelsea-fc.svg" alt="Chelsea FC" width="120" height="34"></li>
-
-      and delete the --ph class and the text. The grayscale + opacity
-      treatment lives on .hp-trust__logo, so it carries over to the real files
-      with no further change.
-
-      Alpha, Carel, DIS, IAC and SE Water are NOT slotted below. They were
-      listed "if licensed", and a client mark goes up when we know we may use
-      it, not before. Add a slot each once that is confirmed.
-
-      Accreditation marks (CHAS, UKAS, and any others) are the second row, and
-      are also awaiting files from Matt.
-    #}
     <section class="section section--light hp-intro" id="about-invicta" aria-labelledby="hp-intro-title">
       <div class="container hp-intro__inner">
         {# An h2 wearing the eyebrow style. The section needs an accessible name
@@ -194,37 +184,32 @@ hideFooterCta: true
            listed "if licensed", and a client mark goes up when we know we may
            use it, not before. Add a slot each once that is confirmed.
            Accreditation marks are the second row, also awaiting files. #}
-        <div class="hp-intro__trust">
-          <div class="hp-trust__row hp-trust__row--centred">
-            <p class="eyebrow hp-trust__label">Trusted by</p>
-            {# REAL ARTWORK, from _data/clients.js, the same source the marquee
-               on every service page and /about/ reads. These four were typed
-               stand-ins long after the files landed, so the most important
-               page on the site was showing four words where every other page
-               showed the marks themselves. Named rather than sliced off the
-               front of the list, because this row is a deliberate four and the
-               roster is nine. #}
-            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- marks, not prose: no tooltips here -->
-              {% for want in ["Chelsea FC", "GSK", "Amgen", "Cowdray Estate"] %}
-                {% for c in clients %}{% if c.name == want %}
-              <li class="hp-trust__logo" style="--s: {{ c.scale }}">
-                <img src="{{ ('/assets/logos/' + c.file) | v }}" alt="{{ c.name }}"
-                     width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
-              </li>
-                {% endif %}{% endfor %}
-              {% endfor %}
-            </ul>
-          </div>
-          <div class="hp-trust__row hp-trust__row--centred">
-            <p class="eyebrow hp-trust__label">Accredited by</p>
-            <ul class="hp-trust__logos" role="list" data-no-gloss><!-- logo stand-ins, not prose: no tooltips here -->
-              <li class="hp-trust__logo hp-trust__logo--ph">CHAS</li>
-              <li class="hp-trust__logo hp-trust__logo--ph">UKAS</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
+
+    {# ===================== 2b — TRUSTED BY =====================
+      THE REAL BAND, NOT A HAND-BUILT ROW. What stood here was six typed words
+      in dashed boxes, slots held until artwork arrived. The client artwork
+      arrived in 0cbb6c9 and every other page has shown the marks since; this
+      page, the one that matters most, was the last still showing text. Rather
+      than drop the files into the old row, this is the component the service
+      pages and /gallery/ already use: nine marks, monochrome, moving.
+
+      ON PAPER, not light. .hp-intro above is section--light, and two pale
+      sections running together read as one long one.
+
+      THE "ACCREDITED BY" ROW IS NOT HERE. It was CHAS and UKAS as two more
+      dashed text boxes, and there is still no artwork for either. Both claims
+      are made in words in CREDENTIALS below ("CHAS accredited" and
+      "UKAS-accredited laboratory testing"), so nothing is lost by waiting.
+      When the marks land they want their own small row, not this marquee: an
+      accreditation is not a client.
+    #}
+    {% set clientsId = "home-clients" %}
+    {% set clientsTitle = "Trusted by" %}
+    {% set clientsClass = "clients--compact" %}
+    {% set clientsSurface = "section--light" %}
+    {% include "clients.njk" %}
 
     {# ===================== 2b — THE PROBLEM =====================
       THE BEAT THE PAGE DID NOT HAVE. It ran hero, then who we are, then a list
@@ -268,7 +253,7 @@ hideFooterCta: true
         {# Two navy sections in a row now, so the rule is what says a new one
            has started. Same job it does under the hero on a service page. #}
         <div class="rule hp-services__rule"></div>
-        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">01</span>Services</p>
+        <p class="eyebrow hp-eyebrow">Services</p>
         <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
 
         <div class="hp-services__grid">
@@ -374,7 +359,7 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-work__head">
           <div>
-            <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">02</span>Selected work</p>
+            <p class="eyebrow hp-eyebrow">Selected work</p>
             <h2 class="statement hp-work__title" id="hp-work-title">Supplies we’ve designed, <span class="em">installed and looked after.</span></h2>
           </div>
           <p class="hp-work__count" aria-hidden="true"><span data-cases-current>01</span> / {% if slides.length < 10 %}0{% endif %}{{ slides.length }}</p>
@@ -392,7 +377,14 @@ hideFooterCta: true
                 <img src="{{ c.image or '/assets/img-0428.webp' }}" alt="{{ c.imageAlt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
               </figure>
               <div class="hp-case__copy">
-                <p class="hp-case__meta"><span>{{ c.location }}</span><span>{{ serviceNames[svc] }}</span></p>
+                {# The SERVICE half of this line is gone. It said "Private
+                   water supplies" directly above a button saying "More on
+                   private water supplies", so the eyebrow's second half was
+                   the same words twice, four lines apart. The place stays:
+                   for a regional business "Midhurst, West Sussex" is the one
+                   thing here a reader cannot get from anything else on the
+                   slide, and it is doing real work. #}
+                <p class="hp-case__meta"><span>{{ c.location }}</span></p>
                 <h3 class="hp-case__title">{{ c.title | safe }}</h3>
                 <p class="hp-case__body">{{ c.body[0] }}</p>
                 {% if c.highlight %}<p class="hp-case__highlight">{{ c.highlight }}</p>{% endif %}
@@ -423,7 +415,7 @@ hideFooterCta: true
     #}
     <section class="section section--light hp-voices" id="testimonials" aria-labelledby="hp-voices-title">
       <div class="container">
-        <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">03</span>In their words</p>
+        <p class="eyebrow hp-eyebrow">In their words</p>
         <h2 class="statement hp-voices__title" id="hp-voices-title">Don’t just take our word for it.</h2>
 
         <div class="hp-voices__grid">
@@ -457,7 +449,7 @@ hideFooterCta: true
     <section class="section hp-creds" id="credentials" aria-labelledby="hp-creds-title">
       <div class="container hp-creds__grid">
         <div class="hp-creds__aside">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">04</span>Credentials</p>
+          <p class="eyebrow hp-eyebrow">Credentials</p>
           <h2 class="statement hp-creds__title" id="hp-creds-title">The paperwork clients ask about.</h2>
         </div>
 
@@ -518,8 +510,8 @@ hideFooterCta: true
         alt: "A plant room with four blue pressure vessels in a row, a red expansion vessel and ducting overhead." },
       { image: "/assets/b-estate-4933.webp",
         alt: "A control panel with indicator lights and selector switches for the borehole, soft and potable tanks." },
-      { image: "/assets/b-estate-0796.webp",
-        alt: "An old brick-domed water tank with a mossy cover, set in woodland under autumn leaves." },
+      { image: "/assets/l-mill-5576.webp",
+        alt: "A plant room with a UV steriliser, an ultrafiltration module and a blue pressure vessel, plumbed in grey and blue against board walls." },
       { image: "/assets/w-estate-9241.webp",
         alt: "The side of an Invicta van on a hillside drive, with frost and snowdrops on the grass and hills beyond." },
       { image: "/assets/b-aerospace-5508.webp",
@@ -541,7 +533,7 @@ hideFooterCta: true
     <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
       <div class="container">
         <div class="hp-enquiry__inner">
-          <p class="eyebrow hp-eyebrow"><span class="hp-eyebrow__num">05</span>Get in touch</p>
+          <p class="eyebrow hp-eyebrow">Get in touch</p>
           {# NOT the footer's line. This heading and its paragraph were a
              word-for-word copy of footer.njk's CTA, which closes every other
              page on the site, and the same paragraph opened /contact/ as well:

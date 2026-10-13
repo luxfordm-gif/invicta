@@ -61,9 +61,25 @@
    number is carried as its own element and the separator is space rather than
    punctuation. Same information, house style. --- */
 .hp-eyebrow { display: inline-flex; align-items: baseline; gap: 0.85em; }
-.hp-eyebrow__num {
-  font-variant-numeric: tabular-nums;
-  opacity: 0.55;
+/* --- The logo band, as part of the intro above it -------------------------
+   clients.njk renders its heading as a .statement, which is right when the
+   band is a section in its own right on a service page. Here it is not: it is
+   the proof under the claim in .hp-intro, so it takes that section's cream
+   rather than a surface of its own, and its heading drops to the eyebrow
+   treatment every other label on this page uses. A 60px display heading over
+   a row of greyed marks was announcing a new chapter where the page only
+   wanted a caption. */
+.clients--compact { padding-block: 0 var(--hp-y-md); }
+.clients--compact .statement {
+  margin: 0 auto;
+  max-width: none;
+  text-align: center;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel);
 }
 
 /* ==========================================================================
@@ -88,8 +104,51 @@
   min-height: calc(100svh - var(--ubar-h) - var(--nav-h));
   padding-block: clamp(48px, 7vh, 104px);
 }
+/* --- Desktop: the picture runs up behind the floating nav -----------------
+   The photograph used to start BELOW the nav, so the first thing under the
+   emergency bar was a band of flat navy. The hero is now pulled up by exactly
+   what the nav occupies in the flow (--nav-h) so the picture meets the
+   emergency bar, and the nav sits on the photograph. The bar is translucent
+   at rest, so the picture carries on faintly through it.
+
+   The nav STAYS IN THE FLOW. It still takes its space and still slides away on
+   scroll; this is a negative margin on one section, not a change to how the
+   header works on every page. It paints above because .nav carries z-index 50
+   and .hp-hero makes no competing stacking context of its own (its isolate is
+   for the media behind the copy).
+
+   The padding-top puts back what the margin took away, so the headline keeps
+   its optical centre in the space BELOW the nav rather than centring in a box
+   the nav is covering the top of. */
+@media (min-width: 900px) {
+  .hp-hero {
+    margin-top: calc(-1 * var(--nav-h));
+    min-height: calc(100svh - var(--ubar-h));
+    padding-top: calc(clamp(48px, 7vh, 104px) + var(--nav-h));
+  }
+}
 .hp-hero__media { position: absolute; inset: 0; z-index: -1; }
-.hp-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+/* The frames are stacked, not laid out: every one fills the box and only the
+   one carrying .is-active is opaque. Transition on opacity alone so the
+   crossfade is a compositor job and never touches layout. The first frame has
+   no transition to fade IN from nothing on load, because it starts active. */
+.hp-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
+}
+.hp-hero__media img.is-active { opacity: 1; }
+/* No JS, no classes changed: the first frame is the hero, as before. */
+.hp-hero__media img:first-child { opacity: 1; }
+.hp-hero__media img:first-child:not(.is-active) { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero__media img { transition: none; }
+}
 /* Two washes, doing two different jobs: the horizontal one keeps the left third
    dark enough to read 118px of white type against, the vertical one lands the
    bottom edge on the navy the trust strip sits against. */
@@ -98,8 +157,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, rgb(var(--ground-rgb) / 0.95) 0%, rgb(var(--ground-rgb) / 0.82) 44%, rgb(var(--ground-rgb) / 0.52) 100%),
-    linear-gradient(to top, rgb(var(--ground-rgb) / 0.9) 0%, rgb(var(--ground-rgb) / 0) 52%);
+    radial-gradient(ellipse 68% 58% at 50% 46%, rgb(var(--ground-rgb) / 0.72) 0%, rgb(var(--ground-rgb) / 0.42) 58%, rgb(var(--ground-rgb) / 0.24) 100%),
+    linear-gradient(to top, rgb(var(--ground-rgb) / 0.82) 0%, rgb(var(--ground-rgb) / 0) 46%);
 }
 .hp-hero__title {
   /* No margin-top: --flow-heading was the gap under the eyebrow, and the eyebrow
@@ -110,17 +169,24 @@
      One scale, one place to change it. The measure still widens from 15ch,
      because smaller type needs more characters to hold the same block. */
   max-width: 17ch;
+  margin-inline: auto;
   color: var(--on-dark);
 }
 .hp-hero__lead {
   margin-top: var(--flow-lead);
+  margin-inline: auto;
   max-width: 560px;
   font-size: var(--text-lead);
   line-height: 1.55;
   color: var(--on-dark-soft);
 }
+/* CENTRED. The hero was ranged left against a wash that was itself built to
+   keep the left third dark; both change together, or the type moves off the
+   dark part and stops being readable. The wash is now an even centred one. */
+.hp-hero .container { text-align: center; }
 .hp-hero__actions {
   margin-top: clamp(32px, 4vw, 48px);
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -186,88 +252,6 @@
    turning into a link. */
 .hp-intro__lead strong { font-weight: 600; }
 .hp-intro__more { margin-top: var(--flow-lead); }
-.hp-intro__trust {
-  /* A full flow step below the link, and a hairline above it: the marks are
-     evidence for the passage, not a continuation of it, and on one flat cream
-     ground a rule is the only thing that can say so. */
-  margin-top: clamp(48px, 6vw, 88px);
-  padding-top: clamp(32px, 4vw, 56px);
-  border-top: 1px solid var(--line-light);
-  width: 100%;
-  max-width: 900px;
-  display: grid;
-  gap: var(--space-4);
-}
-
-.hp-trust { padding-block: var(--hp-y-xs); }
-/* The centred variant: the label sits ABOVE its row of marks rather than in a
-   168px column beside it, because a two-column label/logos split cannot be
-   centred, it can only be left-aligned twice. */
-.hp-trust__row--centred {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-}
-@media (min-width: 900px) {
-  .hp-trust__row--centred { grid-template-columns: none; }
-}
-.hp-trust__row { display: grid; gap: var(--space-3); align-items: center; }
-.hp-trust__row + .hp-trust__row { margin-top: var(--space-4); }
-@media (min-width: 900px) {
-  .hp-trust__row { grid-template-columns: 168px 1fr; gap: clamp(24px, 4vw, 64px); }
-}
-.hp-trust__label { margin: 0; }
-.hp-trust__logos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: clamp(20px, 3vw, 48px);
-}
-/* MONOCHROME, SO THEY READ AS A SET. Four client marks in four brand colours
-   is four logos competing; desaturated and held back they read as one line of
-   evidence, which is what the row is for. The treatment is on the slot rather
-   than on the <img>, so it survives the swap to real files. */
-.hp-trust__logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 34px;
-  filter: grayscale(1);
-  opacity: 0.62;
-}
-/* OPTICAL SCALE, the same mechanism clients.css uses and for the same reason:
-   a logo row that sets every mark to one height is wrong, because a square
-   crest at a wordmark's height reads as half the size — the wordmark spreads
-   its weight over four times the width. Chelsea's crest came in at 34x34 next
-   to GSK at 106x33 and looked like an afterthought. `--s` comes from
-   _data/clients.js, so the two rows on this site scale a mark identically and
-   there is one place to tune it. The slot keeps its 34px height, so the row
-   still sits on one baseline; only the artwork inside it grows. */
-.hp-trust__logo img {
-  max-height: calc(100% * var(--s, 1));
-  width: auto;
-  object-fit: contain;
-}
-/* The placeholder that holds the slot until the files arrive. Set in the label
-   style rather than the display face on purpose: it should read as a marker,
-   never mistakable for a wordmark we have chosen to set in type. */
-.hp-trust__logo--ph {
-  padding-inline: 14px;
-  border: 1px dashed var(--line-light);
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  white-space: nowrap;
-}
-@media (max-width: 599.98px) {
-  .hp-trust__logos { gap: 14px 20px; }
-  .hp-trust__logo { height: 28px; }
-}
-
 /* ==========================================================================
    3 — SERVICES. Problem-led routing, as an asymmetric hairline spread.
 
@@ -486,7 +470,11 @@
   }
 }
 .hp-case__media { margin: 0; border-radius: var(--radius-lg); overflow: clip; }
-.hp-case__media img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+/* 3:2, which is what the photographs ALREADY ARE (1536x1024). The slide was
+   cropping them to 4:3, so it was throwing away a band of every picture and
+   buying itself about 90px of extra depth per slide to do it. Native ratio is
+   both the shorter slide and the whole photograph. */
+.hp-case__media img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 
 .hp-case__meta {
   display: flex;
@@ -497,7 +485,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.hp-case__meta span:last-child { color: var(--steel); }
+
 .hp-case__title {
   margin-top: var(--space-2);
   font-family: var(--font-display);
@@ -632,17 +620,32 @@
 }
 .voice__mark { width: 28px; height: auto; color: var(--steel); flex: none; }
 .voice__quote { margin: var(--space-3) 0 0; }
+/* MUTED, and the same muted for all three cards. Quote bodies are long runs of
+   reading copy on a pale card: at full --ink the section became a wall of black
+   and the pull line had nothing to be louder than. --ink-muted is the token
+   every other body run on a pale surface already uses (base.css paints
+   paragraphs on .section--light / .section--paper with it), so this is the
+   site's existing body colour rather than a new one.
+
+   The hierarchy is: pull line at --ink, bodies at --ink-muted, attribution back
+   at --ink. Earlier this rule disagreed with the one below it, so the feature
+   was muted while the two beside it were full ink; now both say the same thing
+   and the difference between the cards is size alone. */
 .voice__quote p {
   font-size: var(--text-card);
   line-height: 1.6;
-  color: var(--ink);
+  color: var(--ink-muted);
 }
 .voice__quote p + p { margin-top: 0.9em; }
 /* Sized for balance, not just hierarchy: the feature's body runs at reading
    size so its card fills the height the two stacked cards give it, and the
    short two sit at card size so their pair does not outgrow it. The pull line
-   above carries the hierarchy on its own. */
-.voice--feature .voice__quote p:not(.voice__pull) { font-size: var(--text-body); color: var(--ink-muted); }
+   above carries the hierarchy on its own.
+
+   SIZE ONLY. Colour is set once, on .voice__quote p above, for all three
+   cards. This rule used to set it too, which is how the feature ended up grey
+   beside two cards in full ink. */
+.voice--feature .voice__quote p:not(.voice__pull) { font-size: var(--text-body); }
 .voice__quote .voice__pull {
   margin-bottom: var(--space-3);
   font-family: var(--font-display);
