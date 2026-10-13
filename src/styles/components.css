@@ -115,7 +115,12 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h) - var(--n
     margin-inline: auto;
     margin-block: var(--nav-gap) 0;
     border: 1px solid var(--line-dark);
-    border-radius: 999px;
+    /* --radius-md, the token for "cards, fields, panels", which is what this
+       is. NOT --btn-radius: a 999px bar reads as a very wide button, and it
+       put the brand and the enquiry pill inside a shape the same curve as the
+       pill itself. A softened rectangle sits behind its contents instead of
+       competing with them. */
+    border-radius: var(--radius-md);
     background: rgb(var(--ground-rgb) / 0.62);
   }
   .nav.is-scrolled {
