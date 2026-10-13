@@ -69,7 +69,11 @@
    .hero__inner's align-items: center then centres as a whole) and starts its
    buttons at that box's left edge, flush with the first character above. */
 .hero__actions {
-  margin-top: clamp(32px, 4vw, 48px);
+  /* +12px on the shared service-hero rule, so every service page gets the same
+     air under the lead. Expressed as the original clamp plus the nudge rather
+     than as new numbers, so the fluid behaviour is untouched and the change is
+     legible as "the old spacing, 12px more". */
+  margin-top: calc(clamp(32px, 4vw, 48px) + 12px);
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -507,7 +511,15 @@
    than sit as a third item in the flex row, hence the 100% basis: the buttons
    wrap against each other on a narrow footer and a text item in among them
    would wrap into the gap between them. Muted and small — it is a reassurance,
-   not a third thing to press. */
+   not a third thing to press.
+
+   THAT BASIS HAS A SIDE EFFECT, and it is why .footer__cta-actions has to say
+   flex-end below. .footer__cta is a space-between row, so the actions box used
+   to shrink-wrap its two buttons and land flush against the right margin.
+   Adding a 100%-basis child sized the box to THIS SENTENCE instead (793px
+   against the buttons' 453px), and the buttons, left-aligned inside it,
+   stopped at 1060px of a 1400px edge. The box is still the width of the note;
+   the contents are now right-aligned within it. */
 .footer__cta-note {
   flex: 0 0 100%;
   margin-top: var(--space-3);
@@ -523,7 +535,9 @@
     justify-content: space-between;
     gap: var(--space-6);
   }
-  .footer__cta-actions { flex-shrink: 0; }
+  .footer__cta-actions { flex-shrink: 0; justify-content: flex-end; }
+  /* Tucked under the right-hand button rather than hanging off its left. */
+  .footer__cta-note { text-align: right; }
 }
 .footer__cta + .rule { margin-top: var(--space-5); }
 .footer__grid { display: grid; gap: var(--space-6); margin-top: var(--flow-lg); }
