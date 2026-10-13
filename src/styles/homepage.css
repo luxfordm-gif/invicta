@@ -134,8 +134,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 70% at 50% 50%, rgb(var(--ground-rgb) / 0.86) 0%, rgb(var(--ground-rgb) / 0.62) 60%, rgb(var(--ground-rgb) / 0.48) 100%),
-    linear-gradient(to top, rgb(var(--ground-rgb) / 0.9) 0%, rgb(var(--ground-rgb) / 0) 52%);
+    radial-gradient(ellipse 68% 58% at 50% 46%, rgb(var(--ground-rgb) / 0.72) 0%, rgb(var(--ground-rgb) / 0.42) 58%, rgb(var(--ground-rgb) / 0.24) 100%),
+    linear-gradient(to top, rgb(var(--ground-rgb) / 0.82) 0%, rgb(var(--ground-rgb) / 0) 46%);
 }
 .hp-hero__title {
   /* No margin-top: --flow-heading was the gap under the eyebrow, and the eyebrow
