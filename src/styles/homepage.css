@@ -61,9 +61,25 @@
    number is carried as its own element and the separator is space rather than
    punctuation. Same information, house style. --- */
 .hp-eyebrow { display: inline-flex; align-items: baseline; gap: 0.85em; }
-.hp-eyebrow__num {
-  font-variant-numeric: tabular-nums;
-  opacity: 0.55;
+/* --- The logo band, as part of the intro above it -------------------------
+   clients.njk renders its heading as a .statement, which is right when the
+   band is a section in its own right on a service page. Here it is not: it is
+   the proof under the claim in .hp-intro, so it takes that section's cream
+   rather than a surface of its own, and its heading drops to the eyebrow
+   treatment every other label on this page uses. A 60px display heading over
+   a row of greyed marks was announcing a new chapter where the page only
+   wanted a caption. */
+.clients--compact { padding-block: 0 var(--hp-y-md); }
+.clients--compact .statement {
+  margin: 0 auto;
+  max-width: none;
+  text-align: center;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel);
 }
 
 /* ==========================================================================
@@ -89,7 +105,27 @@
   padding-block: clamp(48px, 7vh, 104px);
 }
 .hp-hero__media { position: absolute; inset: 0; z-index: -1; }
-.hp-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+/* The frames are stacked, not laid out: every one fills the box and only the
+   one carrying .is-active is opaque. Transition on opacity alone so the
+   crossfade is a compositor job and never touches layout. The first frame has
+   no transition to fade IN from nothing on load, because it starts active. */
+.hp-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
+}
+.hp-hero__media img.is-active { opacity: 1; }
+/* No JS, no classes changed: the first frame is the hero, as before. */
+.hp-hero__media img:first-child { opacity: 1; }
+.hp-hero__media img:first-child:not(.is-active) { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero__media img { transition: none; }
+}
 /* Two washes, doing two different jobs: the horizontal one keeps the left third
    dark enough to read 118px of white type against, the vertical one lands the
    bottom edge on the navy the trust strip sits against. */
@@ -98,7 +134,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, rgb(var(--ground-rgb) / 0.95) 0%, rgb(var(--ground-rgb) / 0.82) 44%, rgb(var(--ground-rgb) / 0.52) 100%),
+    radial-gradient(ellipse 80% 70% at 50% 50%, rgb(var(--ground-rgb) / 0.86) 0%, rgb(var(--ground-rgb) / 0.62) 60%, rgb(var(--ground-rgb) / 0.48) 100%),
     linear-gradient(to top, rgb(var(--ground-rgb) / 0.9) 0%, rgb(var(--ground-rgb) / 0) 52%);
 }
 .hp-hero__title {
@@ -110,17 +146,24 @@
      One scale, one place to change it. The measure still widens from 15ch,
      because smaller type needs more characters to hold the same block. */
   max-width: 17ch;
+  margin-inline: auto;
   color: var(--on-dark);
 }
 .hp-hero__lead {
   margin-top: var(--flow-lead);
+  margin-inline: auto;
   max-width: 560px;
   font-size: var(--text-lead);
   line-height: 1.55;
   color: var(--on-dark-soft);
 }
+/* CENTRED. The hero was ranged left against a wash that was itself built to
+   keep the left third dark; both change together, or the type moves off the
+   dark part and stops being readable. The wash is now an even centred one. */
+.hp-hero .container { text-align: center; }
 .hp-hero__actions {
   margin-top: clamp(32px, 4vw, 48px);
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -404,7 +447,11 @@
   }
 }
 .hp-case__media { margin: 0; border-radius: var(--radius-lg); overflow: clip; }
-.hp-case__media img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+/* 3:2, which is what the photographs ALREADY ARE (1536x1024). The slide was
+   cropping them to 4:3, so it was throwing away a band of every picture and
+   buying itself about 90px of extra depth per slide to do it. Native ratio is
+   both the shorter slide and the whole photograph. */
+.hp-case__media img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 
 .hp-case__meta {
   display: flex;
@@ -415,7 +462,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.hp-case__meta span:last-child { color: var(--steel); }
+
 .hp-case__title {
   margin-top: var(--space-2);
   font-family: var(--font-display);
@@ -550,10 +597,21 @@
 }
 .voice__mark { width: 28px; height: auto; color: var(--steel); flex: none; }
 .voice__quote { margin: var(--space-3) 0 0; }
+/* MUTED, and the same muted for all three cards. Quote bodies are long runs of
+   reading copy on a pale card: at full --ink the section became a wall of black
+   and the pull line had nothing to be louder than. --ink-muted is the token
+   every other body run on a pale surface already uses (base.css paints
+   paragraphs on .section--light / .section--paper with it), so this is the
+   site's existing body colour rather than a new one.
+
+   The hierarchy is: pull line at --ink, bodies at --ink-muted, attribution back
+   at --ink. Earlier this rule disagreed with the one below it, so the feature
+   was muted while the two beside it were full ink; now both say the same thing
+   and the difference between the cards is size alone. */
 .voice__quote p {
   font-size: var(--text-card);
   line-height: 1.6;
-  color: var(--ink);
+  color: var(--ink-muted);
 }
 .voice__quote p + p { margin-top: 0.9em; }
 /* Sized for balance, not just hierarchy: the feature's body runs at reading
@@ -561,10 +619,9 @@
    short two sit at card size so their pair does not outgrow it. The pull line
    above carries the hierarchy on its own.
 
-   SIZE ONLY. This rule used to set colour as well, to --ink-muted, so the long
-   quote was grey while the two beside it were full ink: the same kind of text,
-   two colours, side by side on one screen. Hierarchy here is the pull line's
-   job, and it has the display face and 40px to do it with. */
+   SIZE ONLY. Colour is set once, on .voice__quote p above, for all three
+   cards. This rule used to set it too, which is how the feature ended up grey
+   beside two cards in full ink. */
 .voice--feature .voice__quote p:not(.voice__pull) { font-size: var(--text-body); }
 .voice__quote .voice__pull {
   margin-bottom: var(--space-3);
