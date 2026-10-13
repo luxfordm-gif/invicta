@@ -105,11 +105,11 @@
   padding-block: clamp(48px, 7vh, 104px);
 }
 /* --- Desktop: the picture runs up behind the floating nav -----------------
-   The nav is a pill with air around it, so the strip of navy it was sitting
-   on was reading as a second bar under the emergency one, with the photograph
-   starting below both. The hero is pulled up by exactly what the nav occupies
-   in the flow (its own height plus the gap above it) so the picture meets the
-   emergency bar, and the nav then floats on the photograph.
+   The photograph used to start BELOW the nav, so the first thing under the
+   emergency bar was a band of flat navy. The hero is now pulled up by exactly
+   what the nav occupies in the flow (--nav-h) so the picture meets the
+   emergency bar, and the nav sits on the photograph. The bar is translucent
+   at rest, so the picture carries on faintly through it.
 
    The nav STAYS IN THE FLOW. It still takes its space and still slides away on
    scroll; this is a negative margin on one section, not a change to how the
@@ -122,9 +122,9 @@
    the nav is covering the top of. */
 @media (min-width: 900px) {
   .hp-hero {
-    margin-top: calc(-1 * (var(--nav-h) + var(--nav-gap)));
+    margin-top: calc(-1 * var(--nav-h));
     min-height: calc(100svh - var(--ubar-h));
-    padding-top: calc(clamp(48px, 7vh, 104px) + var(--nav-h) + var(--nav-gap));
+    padding-top: calc(clamp(48px, 7vh, 104px) + var(--nav-h));
   }
 }
 .hp-hero__media { position: absolute; inset: 0; z-index: -1; }

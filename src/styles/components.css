@@ -81,67 +81,11 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-/* Hairline divider under the bar. On desktop the bar becomes a floating pill
-   and the divider is replaced by a border all the way round, so this is the
-   mobile-and-tablet treatment only. */
-@media (max-width: 899.98px) {
-  .nav { border-bottom: 1px solid var(--line-dark); }
-}
+/* Hairline divider under the bar (Claude-style). */
+.nav { border-bottom: 1px solid var(--line-dark); }
 /* Smart header: the nav (and the breadcrumb below it) slide up together on
-   scroll-down and return on scroll-up. Driven by html.header-up from nav.js.
-   The extra --nav-gap is what the pill is inset from the utility bar: without
-   it the pill stops with its own gap still showing on screen. */
-html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h) - var(--nav-gap, 0px))); }
-
-/* --- Desktop: a floating pill, not a full-width bar ------------------------
-   The bar was 95px of solid navy pinned edge to edge, which is a lot of
-   furniture above a hero that is doing the actual work. This narrows it to a
-   centred pill with air around it, roughly half the height, and lets the page
-   show down both sides.
-
-   STILL STICKY, not fixed, so it keeps occupying its space in the flow and the
-   hero's `100svh - ubar - nav` sum goes on holding. Floating it over the hero
-   is a bigger change than it looks: the hero would have to grow back into the
-   space and re-pad itself to clear the pill.
-
-   Translucent at rest and only a little denser once scrolled: a pill that goes
-   fully solid stops reading as something floating above the page and starts
-   reading as a bar again, which is the thing we are getting away from. */
-@media (min-width: 900px) {
-  :root { --nav-gap: 14px; }
-  .nav {
-    top: calc(var(--ubar-h) + var(--nav-gap));
-    width: min(1180px, calc(100% - var(--container-pad) * 2));
-    margin-inline: auto;
-    margin-block: var(--nav-gap) 0;
-    border: 1px solid var(--line-dark);
-    /* --radius-md, the token for "cards, fields, panels", which is what this
-       is. NOT --btn-radius: a 999px bar reads as a very wide button, and it
-       put the brand and the enquiry pill inside a shape the same curve as the
-       pill itself. A softened rectangle sits behind its contents instead of
-       competing with them. */
-    border-radius: var(--radius-md);
-    background: rgb(var(--ground-rgb) / 0.62);
-  }
-  .nav.is-scrolled {
-    background: rgb(var(--ground-rgb) / 0.86);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-  }
-  /* The pill's own inset. .container's page gutter is wrong inside it: the
-     brand would sit a full page margin in from a rounded edge.
-
-     COMPOUND SELECTOR. This block sits above `.nav__inner { padding-block:
-     26px }`, and at equal specificity the later rule wins on source order, so
-     a lone .nav__inner here set the inline padding and silently lost the
-     block padding: the pill came out the same 100px height as the bar it was
-     replacing. */
-  .nav .nav__inner {
-    padding-block: 13px;
-    padding-inline: clamp(20px, 2vw, 32px);
-    max-width: none;
-  }
-}
+   scroll-down and return on scroll-up. Driven by html.header-up from nav.js. */
+html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 /* 3-column grid → the links are TRULY centred on the page (aligned with the
    centred utility-bar strapline), not just centred between brand and CTA. */
 .nav__inner {
