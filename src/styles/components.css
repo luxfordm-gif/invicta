@@ -461,8 +461,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .btn-inquiry--lg { font-size: 16px; padding: 18px 30px; }
 /* On light (cream) sections chalky washes out, so the pill stays a solid navy fill
    and brightens a step on hover. */
-:is(.section--light, .section--paper) .btn-inquiry { background: var(--ground); color: var(--on-dark); }
-:is(.section--light, .section--paper) .btn-inquiry:hover { background: var(--ground-raise); }
+:is(.section--light, .section--paper, .coverage-band) .btn-inquiry { background: var(--ground); color: var(--on-dark); }
+:is(.section--light, .section--paper, .coverage-band) .btn-inquiry:hover { background: var(--ground-raise); }
 
 /* Secondary / outlined pill (e.g. "Call …") */
 .btn-line {
@@ -493,8 +493,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 /* The stroke is white, so on a cream or white section the button disappeared —
    the same gap the filled pill already covers just above. Match it: ink type on
    the field stroke, and the hover fills a hair of ink rather than of white. */
-:is(.section--light, .section--paper) .btn-line { color: var(--ink); border-color: var(--line-field); }
-:is(.section--light, .section--paper) .btn-line:hover { border-color: var(--ink); background: rgba(15, 15, 15, 0.05); }
+:is(.section--light, .section--paper, .coverage-band) .btn-line { color: var(--ink); border-color: var(--line-field); }
+:is(.section--light, .section--paper, .coverage-band) .btn-line:hover { border-color: var(--ink); background: rgba(15, 15, 15, 0.05); }
 
 /* --- Pressed state (touch) ------------------------------------------------
    The browser's blue tap highlight is off (see base.css), and it was the only

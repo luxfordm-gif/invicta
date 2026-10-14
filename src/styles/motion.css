@@ -17,6 +17,7 @@
     .positioning__intro > *, .sector,
     .why-card,
     .ownership__head > *, .ownership__card,
+    .hp-stat,
     .stat,
     .clients__viewport,
     .gallery__card,
@@ -52,6 +53,8 @@
      first, so the row never feels like it is waiting on itself. */
   .why-card:nth-child(2) { --reveal-delay: 160ms; }
   .why-card:nth-child(3) { --reveal-delay: 320ms; }
+  .hp-stat:nth-child(2) { --reveal-delay: 120ms; }
+  .hp-stat:nth-child(3) { --reveal-delay: 240ms; }
   .ownership__card:nth-child(2) { --reveal-delay: 160ms; }
   .ownership__card:nth-child(3) { --reveal-delay: 320ms; }
 

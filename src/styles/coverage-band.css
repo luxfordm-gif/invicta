@@ -147,6 +147,21 @@
 }
 .coverage-band__title .em { color: var(--steel); }
 
+/* Optional buttons under the claim (coverageActions). The overlay lets clicks
+   through to the map elsewhere, so the row takes them back. */
+.coverage-band__actions {
+  margin-top: clamp(28px, 3.5vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  pointer-events: auto;
+}
+@media (max-width: 599.98px) {
+  .coverage-band__actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .coverage-band__actions > * { justify-content: center; }
+}
+
 /* --- No map at all --------------------------------------------------------
    Set by coverage-band.js when the Maps script or the county GeoJSON fails.
    Nothing is on the ground, so soften the scrim: the band should still read as

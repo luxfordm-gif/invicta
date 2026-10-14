@@ -90,23 +90,36 @@
    by window HEIGHT as well as width, so a 1366x768 laptop still gets the
    type and the whole strip without scrolling.
    ========================================================================== */
+/* NOT FORCED INTO ONE SCREEN any more (Matt, 14/10/26: "the top section
+   feels a lot crammed"). It used to fit the type AND the strip into the
+   window, so every time the strip got deeper the type lost the air around it.
+   The strip now moves with the scroll and runs on below the fold anyway, so
+   the type takes the spacing every other hero on the site has (--hero-y-top
+   above, the .hero bottom step below) and the strip simply follows. */
+/* MORE ROOM THAN AN INNER PAGE'S HERO (Matt, 14/10/26, comparing against an
+   earlier build he preferred). The home hero is the one screen that should
+   feel generous, so its air scales with the window's height as well as its
+   width: about 165px above the type at 1440x900 and about 210px on a large
+   monitor, with 80% of that below it. The inner pages keep --hero-y-top. */
 .hp-hero {
+  --hp-hero-air: clamp(72px, 7vw + 7vh, 240px);
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - var(--ubar-h) - var(--nav-h));
-  padding-top: clamp(24px, 4vh, 72px);
+  padding-top: var(--hp-hero-air);
   padding-bottom: 0;
   background: var(--ground);
   overflow: hidden;
 }
 .hp-hero__inner {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-bottom: clamp(28px, 4.5vh, 64px);
+  /* A little less below than above, as in the build Matt preferred: the
+     type sits slightly high, and a slice of the photo strip still reaches
+     the first screen on a 1366x768 laptop. */
+  padding-bottom: calc(var(--hp-hero-air) * 0.8);
 }
 /* A plain line, not an eyebrow: sentence case, regular weight, soft. */
 .hp-hero__kicker {
@@ -116,12 +129,12 @@
 .hp-hero__title {
   margin-top: var(--flow-heading);
   max-width: 24ch;   /* two lines at 96px: "Nobody else is responsible / for your water." */
-  font-size: clamp(44px, min(6.7vw, 10.5vh), 96px);
+  font-size: clamp(44px, 6.7vw, 96px);
   color: var(--on-dark);
 }
 .hp-hero__title .em { display: block; }
 .hp-hero__actions {
-  margin-top: clamp(24px, 4.5vh, 52px);
+  margin-top: clamp(32px, 4vw, 56px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -134,29 +147,39 @@
   .hp-hero__actions > * { justify-content: center; }
 }
 
-/* THE STRIP. Large frames, edge to edge, moving on their own. Two identical
-   runs in one track, translated by exactly half its width: margin-right on
-   every frame rather than gap, for the reason clients.css gives (gap leaves
-   the halves unequal and the loop jumps). The keyframes are the logo band's
-   own, clients-marquee, which clients.css loads on every page. */
+/* THE STRIP. Large frames, edge to edge, MOVED BY THE PAGE SCROLL rather
+   than running on their own (Matt, 14/10/26). The "Trusted by" logos a screen
+   below already run by themselves, and two self-moving bands that close
+   together competed. hero-media.js sets --strip-shift from the scroll
+   position: still at the top of the page, sliding left as you scroll down,
+   back as you scroll up. The track holds the frames twice so there is always
+   picture to slide into. */
 .hp-hero__strip { overflow: hidden; }
 .hp-hero__track {
   display: flex;
   width: max-content;
-  animation: clients-marquee 110s linear infinite;
+  transform: translate3d(calc(-1 * var(--strip-shift, 0px)), 0, 0);
   will-change: transform;
 }
 .hp-hero__track img {
   flex: none;
-  height: clamp(180px, 30vh, 420px);
+  /* Deeper again (Matt, 14/10/26): 30vh, then 40vh, now 50vh. The strip
+     runs past the first screen on a laptop, which reads as "there is more"
+     rather than as the band being cut off, and the scroll link carries you
+     into it. */
+  height: clamp(300px, 55vh, 740px);
   width: auto;
-  aspect-ratio: 3 / 2;
+  /* PORTRAIT FRAMES (Matt, 14/10/26: "narrower, but the image a bit
+     deeper"). 4:5 rather than the photographs' own 3:2, cropped from the
+     centre, so each frame is tall and more of them sit across the screen. */
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   margin-right: clamp(6px, 0.6vw, 10px);
 }
-.hp-hero__strip:hover .hp-hero__track { animation-play-state: paused; }
+/* Reduced motion: the script never moves it, and the band becomes a plain
+   sideways scroll instead. */
 @media (prefers-reduced-motion: reduce) {
-  .hp-hero__track { animation: none; }
+  .hp-hero__track { transform: none; }
   .hp-hero__strip { overflow-x: auto; scrollbar-width: none; }
 }
 
@@ -349,12 +372,42 @@ p.hp-intro__lead {
   line-height: 1.04;
   letter-spacing: -0.03em;
 }
-.hp-position__body {
-  margin-top: var(--space-3);        /* the 24px the brief asks for */
-  margin-inline: auto;
-  max-width: min(760px, 46ch);
-  font-size: clamp(19px, 1.75vw, 25px);   /* the home lead step, the same clamp as .service-intro__lead */
+/* THREE FIGURES under the line (14/10/26), in place of a paragraph. Big
+   numerals in the display face, a short sentence-case label under each, three
+   abreast from a tablet up and stacked on a phone. Hairlines between them on a
+   desktop, so they read as one row of evidence rather than three floating
+   numbers. They count up from zero as they arrive (scripts/count-up.js). */
+.hp-stats {
+  margin: clamp(48px, 6vw, 88px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 700px) {
+  .hp-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .hp-stat + .hp-stat { border-left: 1px solid var(--line-light); }
+}
+.hp-stat { padding-inline: var(--space-3); }
+/* p.hp-stat__figure, not the bare class: the light-surface paragraph rule
+   (:is(.section--light, .section--paper) p) outranks a single class and was
+   painting the figures ink-muted grey, the intro's old bug. Sized so "100%"
+   fits its third of the row at every width. */
+p.hp-stat__figure {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(56px, 6.5vw, 100px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.hp-stat__label {
+  margin: var(--space-2) auto 0;
+  max-width: 26ch;
+  font-size: var(--text-card);
   line-height: 1.45;
+  color: var(--ink-muted);
 }
 
 /* ==========================================================================
@@ -467,10 +520,20 @@ p.hp-intro__lead {
 }
 .hp-case__link { margin-top: var(--space-5); }
 
-/* The arrows. Hidden below 900px, where the track is a swipe with dots. */
+/* The arrows. Hidden below 900px, where the track is a swipe with dots.
+
+   LONG, THIN LINE ARROWS IN THE SIDE MARGINS (Matt's mock-up, 14/10/26):
+   no circle, no fill, no shadow, a 1.25 stroke (a touch finer than the
+   mock-up), level with the middle of the slide. They need a margin to sit
+   in, and this section ran nearly full width, so on a desktop its content
+   steps in by --work-pad and each arrow is centred in that margin. Section
+   heading, slides and dots all step in together, so the edges still line
+   up. The button keeps a 64x48 hit area around the drawn arrow. */
 .hp-cases__stage { position: relative; }
 .hp-cases__arrow { display: none; }
 @media (min-width: 900px) {
+  .hp-work { --work-pad: clamp(112px, 10vw, 180px); }
+  .hp-work > .container { padding-inline: var(--work-pad); }
   .hp-cases__arrow {
     position: absolute;
     z-index: 2;
@@ -478,29 +541,26 @@ p.hp-intro__lead {
     translate: 0 -50%;
     display: grid;
     place-items: center;
-    width: 48px;
+    width: 64px;
     height: 48px;
-    border: 1px solid var(--line-light);
-    border-radius: 999px;
-    background: var(--paper);
+    padding: 0;
+    border: 0;
+    background: none;
     color: var(--ink);
-    box-shadow: 0 6px 20px rgb(15 15 15 / 0.08);
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, scale 0.2s ease;
+    transition: color 0.2s ease, opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .hp-cases__arrow svg { width: 20px; height: 20px; }
-  /* PINNED TO THE PHOTOGRAPH'S EDGES, centred on each. Anchoring to the
-     content edge did not work: this section runs nearly full width, so at
-     1000 to 1440px "just outside the content" was 8px from the window edge,
-     the far-out position Matt had already rejected. The photograph's own
-     edges are always next to what you are looking at. Its width is the 7fr
-     share of the slide grid after the gap, the same numbers as .hp-case. */
-  .hp-cases__arrow--prev { left: -24px; }
-  .hp-cases__arrow--next { left: calc((100% - clamp(40px, 5vw, 96px)) * 7 / 12 - 24px); }
-  .hp-cases__arrow:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
-  .hp-cases__arrow:active:not(:disabled) { scale: 0.95; }
+  .hp-cases__arrow svg { width: 56px; height: 24px; overflow: visible; }
+  /* Out towards the page edge, 24px in from the container's outer edge, not
+     centred in the margin (Matt, 14/10/26: "nudged a bit further out"). */
+  .hp-cases__arrow--prev { left:  calc(24px - var(--work-pad)); }
+  .hp-cases__arrow--next { right: calc(24px - var(--work-pad)); }
+  /* A small nudge in the direction of travel, and the site's accent blue. */
+  .hp-cases__arrow:hover:not(:disabled) { color: var(--steel); }
+  .hp-cases__arrow--prev:hover:not(:disabled) { transform: translateX(-4px); }
+  .hp-cases__arrow--next:hover:not(:disabled) { transform: translateX(4px); }
   .hp-cases__arrow:disabled { opacity: 0; pointer-events: none; }
-  .hp-cases__arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .hp-cases__arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
 }
 
 .hp-cases__dots {
@@ -556,7 +616,7 @@ p.hp-intro__lead {
    anonymous and a stock face would be a lie about who said it.
    ========================================================================== */
 .hp-voices { padding-block: var(--hp-y-md); }
-.hp-voices__title { max-width: 20ch; }
+.hp-voices__title { max-width: 20ch; margin-inline: auto; text-align: center; }   /* centred over the three cards (Matt, 14/10/26) */
 .hp-voices__grid {
   margin-top: var(--flow-md);
   display: grid;
@@ -719,22 +779,4 @@ p.hp-intro__lead {
    straight on from the navy of the credentials above it.
    ========================================================================== */
 
-/* ==========================================================================
-   9 — ENQUIRY. The exit door, and the smallest section on the page.
-   ========================================================================== */
-.hp-enquiry { padding-block: var(--hp-y-sm); }
-.hp-enquiry__inner { max-width: 720px; margin-inline: auto; text-align: center; }
-.hp-enquiry__title { max-width: none; }
-.hp-enquiry__body { margin: var(--flow-lead) auto 0; max-width: 46ch; font-size: clamp(19px, 1.75vw, 25px); line-height: 1.45; }   /* the home lead step */
-.hp-enquiry__actions {
-  margin-top: clamp(32px, 4vw, 48px);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  justify-content: center;
-}
-@media (max-width: 599.98px) {
-  .hp-enquiry__actions { display: grid; gap: 12px; }
-  .hp-enquiry__actions > * { justify-content: center; }
-}
 

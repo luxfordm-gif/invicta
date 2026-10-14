@@ -67,3 +67,43 @@
   start();
   }
 })();
+
+/* --------------------------------------------------------------------------
+   The home hero's photo strip, moved by the page scroll (14/10/26).
+
+   Sets --strip-shift on the track to a share of the scroll position, so the
+   band sits still at the top of the page and slides left as you scroll down.
+   RATE is pixels of slide per pixel of scroll: at 0.6 the band travels a
+   little over half a screen's width while the hero scrolls away, enough to
+   read as movement tied to your hand without the pictures racing.
+
+   Only runs while the strip is on screen, does nothing with reduced motion
+   asked for, and writes once per frame however fast the scroll events come.
+   -------------------------------------------------------------------------- */
+(function () {
+  "use strict";
+
+  var RATE = 0.6;
+  var track = document.querySelector(".hp-hero__track");
+  if (!track) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var strip = track.parentElement;
+  var queued = false;
+
+  function update() {
+    queued = false;
+    var r = strip.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) return;   // off screen
+    track.style.setProperty("--strip-shift", (window.scrollY * RATE).toFixed(1) + "px");
+  }
+
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  update();
+})();

@@ -17,6 +17,7 @@
     ".positioning__intro > *", ".sector",
     ".why-card",
     ".ownership__head > *", ".ownership__card",
+    ".hp-stat",
     ".stat",
     ".clients__viewport",
     ".gallery__card",
