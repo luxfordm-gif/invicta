@@ -14,6 +14,10 @@
   padding-block: 0 var(--section-y);
   position: relative;
 }
+/* On the cream of the section above (service pages, 14/10/26). The bottom
+   padding is then a band of cream between the photographs and whatever navy
+   section follows, rather than navy running straight up to the frames. */
+.filmstrip--light { background: var(--light); }
 
 /* --- Track ---------------------------------------------------------------
    Frames are sized from their HEIGHT so the band fills the window whatever
