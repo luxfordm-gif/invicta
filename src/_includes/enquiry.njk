@@ -9,7 +9,7 @@
         <div class="enquiry__inner">
           <h2 class="enquiry__title" id="enquiry-title">Let's talk about your <span class="em">source.</span></h2>
           <div class="rule"></div>
-          <p class="enquiry__lead">Tell us about your property and what you need. We'll come back to you personally, usually within a working day.</p>
+          <p class="enquiry__lead">Tell us about your property and what you need.</p>
 
           <div class="enquiry__tabs" role="tablist" aria-label="Enquiry method">
             <button class="enquiry__tab is-active" type="button" data-enquiry-tab="form" role="tab" aria-selected="true">Enquiry form</button>
@@ -80,10 +80,9 @@
               </label>
               <button class="btn-inquiry btn-inquiry--lg" type="submit">Send my enquiry <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
-            {# Same reason as the contact form: the modal's lead carries this
-               promise, but it is at the top of a three-step form and the
-               hesitation is down here, at the button. #}
-            <p class="enquiry__note">We read and answer every enquiry personally, usually within a working day.</p>
+            {# No reply-time promise at the button (Matt, 14/10/26): the
+               thank-you state forms.js swaps in says it once the enquiry is
+               sent. #}
           </form>
 
           <!-- Contact details -->
