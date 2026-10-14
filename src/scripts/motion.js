@@ -9,7 +9,7 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var sel = [
-    ".hero__eyebrow", ".hero__title", ".hero__scroll", ".hero__lead",
+    ".hero__eyebrow", ".hero__title", ".hero__scroll", ".hero__lead", ".hero__actions",
     ".section .eyebrow", ".statement",
     ".coverage-band__title",
     ".services-explore__card", ".services-explore__media",
@@ -34,7 +34,12 @@
     var vh = window.innerHeight || document.documentElement.clientHeight;
     pending = pending.filter(function (el) {
       var r = el.getBoundingClientRect();
-      if (r.top < vh * 0.92 && r.bottom > 0) {
+      // Hero items reveal as soon as any of them is on screen. The 8% margin
+      // is for content further down, so it rises into view as you scroll; in a
+      // hero it left the buttons hidden on a tall screen where they sat in the
+      // bottom 8%, an empty gap until you nudged the page.
+      var limit = el.closest(".hero") ? vh : vh * 0.92;
+      if (r.top < limit && r.bottom > 0) {
         el.classList.add("is-in");
         return false;
       }

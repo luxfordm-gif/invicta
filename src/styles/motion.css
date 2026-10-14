@@ -9,7 +9,7 @@
 
   /* --- Generic content reveal: a slow, deliberate fade + rise --- */
   html.js :is(
-    .hero__eyebrow, .hero__title, .hero__scroll, .hero__lead,
+    .hero__eyebrow, .hero__title, .hero__scroll, .hero__lead, .hero__actions,
     .section .eyebrow, .statement,
     .coverage-band__title,
     .services-explore__card, .services-explore__media,
@@ -35,6 +35,10 @@
   .hero__title  { --reveal-delay: 90ms; }
   .hero__scroll { --reveal-delay: 180ms; }
   .hero__lead   { --reveal-delay: 250ms; }
+  /* The buttons arrive last, after the copy they belong to. They were left out
+     of this list, so on a screen tall enough to show the whole hero the copy
+     faded up around a pair of buttons that were already sitting there. */
+  .hero__actions { --reveal-delay: 340ms; }
   .sector:nth-child(2), .stat:nth-child(2) { --reveal-delay: 90ms; }
   .sector:nth-child(3), .stat:nth-child(3) { --reveal-delay: 180ms; }
   .sector:nth-child(4) { --reveal-delay: 270ms; }

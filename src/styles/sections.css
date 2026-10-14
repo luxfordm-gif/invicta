@@ -5,8 +5,12 @@
 /* --- Hero ----------------------------------------------------------------- */
 .hero { padding-top: var(--hero-y-top); padding-bottom: clamp(64px, 9vw, 140px); }
 .hero__inner { display: flex; flex-direction: column; align-items: center; }
+/* A LABEL, so it sits a tier below everything it introduces. At 19px uppercase
+   semibold it matched the body copy under the lead and competed with the H1;
+   13 to 15px is the range the section eyebrows use, and the tracking opens up
+   because small capitals need it to read. (Client sign-off, 14/10/26.) */
 .hero__eyebrow {
-  font-weight: 600; font-size: clamp(15px, 1.3vw, 19px); text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 600; font-size: clamp(13px, 1vw, 15px); text-transform: uppercase; letter-spacing: 0.14em;
   color: var(--lime); text-align: center;
 }
 .hero__title {
@@ -69,11 +73,12 @@
    .hero__inner's align-items: center then centres as a whole) and starts its
    buttons at that box's left edge, flush with the first character above. */
 .hero__actions {
-  /* +12px on the shared service-hero rule, so every service page gets the same
-     air under the lead. Expressed as the original clamp plus the nudge rather
-     than as new numbers, so the fluid behaviour is untouched and the change is
-     legible as "the old spacing, 12px more". */
-  margin-top: calc(clamp(32px, 4vw, 48px) + 12px);
+  /* THE BUTTONS GET THEIR OWN BEAT. The lead opens with ~86px above it, and
+     closing it with 60px under it read as the row being squeezed in beneath
+     the copy. This roughly matches the gap above: same left edge and box, so
+     the pair stays grouped with the copy, but with enough air to read as the
+     action rather than a third paragraph. (Client sign-off, 14/10/26.) */
+  margin-top: clamp(44px, 5.5vw, 88px);
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -540,27 +545,10 @@
 }
 .footer__cta-body { margin-top: var(--space-3); font-size: var(--text-lead); line-height: 1.55; color: var(--on-dark-muted); max-width: 54ch; }
 .footer__cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-/* The risk-reversal line under the pair. It has to break to its own row rather
-   than sit as a third item in the flex row, hence the 100% basis: the buttons
-   wrap against each other on a narrow footer and a text item in among them
-   would wrap into the gap between them. Muted and small — it is a reassurance,
-   not a third thing to press.
-
-   THAT BASIS HAS A SIDE EFFECT, and it is why .footer__cta-actions has to say
-   flex-end below. .footer__cta is a space-between row, so the actions box used
-   to shrink-wrap its two buttons and land flush against the right margin.
-   Adding a 100%-basis child sized the box to THIS SENTENCE instead (793px
-   against the buttons' 453px), and the buttons, left-aligned inside it,
-   stopped at 1060px of a 1400px edge. The box is still the width of the note;
-   the contents are now right-aligned within it. */
-.footer__cta-note {
-  flex: 0 0 100%;
-  margin-top: var(--space-3);
-  font-size: var(--text-card);
-  line-height: 1.5;
-  color: var(--on-dark-muted);
-}
-/* Buttons move to the right and baseline with the paragraph on wider screens. */
+/* Buttons move to the right and sit on the bottom of the paragraph on wider
+   screens. The "We visit first, and every quote is fixed-price" note that used
+   to hang under them is gone (client, 14/10/26): it pushed the pair up off the
+   copy's bottom edge and gave the row a third, smaller thing to read. */
 @media (min-width: 800px) {
   .footer__cta {
     flex-direction: row;
@@ -569,8 +557,6 @@
     gap: var(--space-6);
   }
   .footer__cta-actions { flex-shrink: 0; justify-content: flex-end; }
-  /* Tucked under the right-hand button rather than hanging off its left. */
-  .footer__cta-note { text-align: right; }
 }
 .footer__cta + .rule { margin-top: var(--space-5); }
 .footer__grid { display: grid; gap: var(--space-6); margin-top: var(--flow-lg); }
