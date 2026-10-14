@@ -147,7 +147,7 @@ module.exports = [
     note: "A converted mill in the Brecon Beacons: a borehole kiosk in the field and a plant room inside.",
     photos: [
       { src: "/assets/l-mill-1879.webp", lead: true,
-        alt: "A stone terrace at sunset, looking across fields to the hills with the sky lit gold." },
+        alt: "A stone terrace in the evening, looking across fields to the hills, with the sun low behind the clouds." },
       { src: "/assets/l-mill-1885.webp",
         alt: "A green borehole kiosk in a field with its doors open, showing the pump controllers and valves inside." },
       { src: "/assets/l-mill-5576.webp",
