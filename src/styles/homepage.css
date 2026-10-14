@@ -293,8 +293,13 @@ p.hp-intro__lead {
   line-height: 1.22;
   letter-spacing: -0.018em;
   max-width: 44ch;
+  /* Opened again on a phone (Matt, 14/10/26), where the passage runs to seven
+     centred lines at 22px: see the media query below. */
   color: var(--ink);
   text-wrap: balance;
+}
+@media (max-width: 899.98px) {
+  p.hp-intro__lead { line-height: 1.38; }
 }
 /* Stefan's name is the point of the sentence: this section exists to say a
    person is behind the work. Weight rather than colour, so it lifts without

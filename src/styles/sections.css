@@ -47,6 +47,12 @@
   color: var(--on-dark);
   max-width: none;
 }
+/* 1.12 is display leading, right for two short lines at 40px. On a phone the
+   same lead is 23px over five or six lines, and that tight it read as a block
+   (Matt, 14/10/26: "increase the line height slightly on mobile"). */
+@media (max-width: 899.98px) {
+  .hero__lead-lg { line-height: 1.32; }
+}
 /* The second, quieter half of the hero copy. It is secondary to the large lead
    above it, but it is still a full paragraph of body copy on a navy ground —
    at 60% white it greyed out and became genuinely hard to read on a phone. Use
