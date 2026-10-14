@@ -248,8 +248,6 @@ module.exports = [
         alt: "A red brick country house with tall chimneys across a wide lawn." },
       { src: "/assets/img-5193.webp",
         alt: "A timber lodge with a verandah beside a post-and-rail paddock and a gravel drive." },
-      { src: "/assets/img-1133.webp",
-        alt: "A large grey-clad commercial building under construction, with pipework in the trench at its base." },
     ],
   },
 ];
