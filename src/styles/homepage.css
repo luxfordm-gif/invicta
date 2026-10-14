@@ -158,23 +158,33 @@
      padding keeps the tap target at least 44px tall. The floating dock
      carries the emergency line on this screen too, so a second pill here
      was weight without new information. */
+/* MORE IMPACT, SECOND PASS (Matt, 14/10/26: the hero "just doesn't look
+   impactful enough"). The first pass gave the type air but left it small in a
+   lot of navy, with only a band of sky from the strip reaching the first
+   screen. Now the H1 is the largest thing a phone shows (about 52px at
+   390px, still three lines), the spacing is tightened so the photographs
+   start well up the first screen, and the strip (below) opens on a building
+   rather than on a frame of cloud. */
 @media (max-width: 599.98px) {
-  .hp-hero { --hp-hero-air: clamp(64px, 5vw + 8vh, 120px); }
+  .hp-hero { --hp-hero-air: clamp(40px, 2vw + 5vh, 80px); }
+  .hp-hero__inner { padding-bottom: clamp(40px, 6vh, 64px); }
   .hp-hero__kicker {
-    max-width: 26ch;
-    font-size: 16px;
+    max-width: 30ch;
+    font-size: 15px;
     line-height: 1.5;
     text-wrap: balance;
   }
   .hp-hero__title {
-    margin-top: 20px;
-    font-size: clamp(36px, 10.5vw, 44px);
+    margin-top: 14px;
+    font-size: clamp(44px, 13.4vw, 58px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
   }
   .hp-hero__actions {
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    margin-top: 40px;
+    gap: 10px;
+    margin-top: 30px;
   }
   .hp-hero__actions .btn-inquiry--lg { font-size: 15px; padding: 16px 28px; }
   .hp-hero__actions .btn-line {
@@ -223,6 +233,16 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   margin-right: clamp(6px, 0.6vw, 10px);
+}
+/* Phone: frames a little shorter, so more of the strip and the next frame's
+   edge sit on the first screen. And the terrace frame that opens the strip
+   on a desktop goes to the back: a phone shows one frame at a time, and that
+   one is mostly evening sky, so the first picture on the first screen was a
+   cloud. The brick tower now opens it. (order only reshuffles the boxes; the
+   scroll link still moves the track as a whole.) */
+@media (max-width: 599.98px) {
+  .hp-hero__track img { height: clamp(300px, 50vh, 440px); }
+  .hp-hero__track img:first-child { order: 1; }
 }
 /* Reduced motion: the script never moves it, and the band becomes a plain
    sideways scroll instead. */
@@ -521,6 +541,20 @@ p.hp-stat__figure {
   color: var(--ink-muted);
 }
 
+/* ON A PHONE THE HEADING TOOK FOUR LINES (Matt, 14/10/26: "it just makes
+   the whole section rather deep"). The 01 / 08 counter held a column beside
+   it, and at the 38px section size "Supplies we've designed, installed and
+   looked after." then broke into four short lines above the carousel. The
+   dots under the carousel already say where you are, so on a phone the
+   counter goes, the heading takes the full measure a step smaller, and the
+   italic half runs on after the roman one instead of starting its own line
+   (each half is too long for one line at this width, so as two blocks they
+   made two lines each). Three lines at 360 to 430px. */
+@media (max-width: 599.98px) {
+  .hp-work__count { display: none; }
+  .hp-work__title { max-width: none; font-size: clamp(30px, 8.6vw, 36px); }
+  .hp-work__title .em { display: inline; }
+}
 .hp-cases { position: relative; margin-top: var(--flow-md); }
 .hp-cases__track {
   /* POSITIONED, so it contains its own absolutely placed descendants. The
