@@ -140,11 +140,59 @@
   justify-content: center;
   gap: var(--space-2);
 }
-/* On a phone the two buttons go full width and stack, so the emergency number
-   is a whole tap target rather than half a row. */
+/* The phone icon on the emergency line is only drawn on a phone (below). */
+.hp-hero__call-icon { display: none; }
+
+/* ON A PHONE (Matt, 14/10/26: "the buttons are definitely too wide.
+   Everything looks a bit too cramped. Doesn't look premium"). The desktop
+   composition shrunk to 390px put every element against the gutters: the
+   kicker wrapped at the full measure, the H1 ran almost edge to edge, and two
+   60px pills spanning the column made one heavy block under it. Here the
+   type block gets a narrower measure and more air between its parts, and
+   the buttons stop filling the row:
+   - Book a site survey is a pill sized to its label, centred. One solid
+     button reads as the confident first move; a full-width bar reads as a
+     form.
+   - The emergency number steps down to a quiet line under it, with a phone
+     glyph and an underline so it still reads as something to tap, and its
+     padding keeps the tap target at least 44px tall. The floating dock
+     carries the emergency line on this screen too, so a second pill here
+     was weight without new information. */
 @media (max-width: 599.98px) {
-  .hp-hero__actions { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: 12px; }
-  .hp-hero__actions > * { justify-content: center; }
+  .hp-hero { --hp-hero-air: clamp(64px, 5vw + 8vh, 120px); }
+  .hp-hero__kicker {
+    max-width: 26ch;
+    font-size: 16px;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+  .hp-hero__title {
+    margin-top: 20px;
+    font-size: clamp(36px, 10.5vw, 44px);
+  }
+  .hp-hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .hp-hero__actions .btn-inquiry--lg { font-size: 15px; padding: 16px 28px; }
+  .hp-hero__actions .btn-line {
+    gap: 9px;
+    padding: 12px 8px;
+    border: 0;
+    border-radius: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--on-dark-soft);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+  }
+  .hp-hero__actions .btn-line:hover { background: none; color: var(--on-dark); }
+  .hp-hero__call-icon { display: inline-flex; }
+  .hp-hero__call-icon svg { display: block; width: 15px; height: 15px; }
 }
 
 /* THE STRIP. Large frames, edge to edge, MOVED BY THE PAGE SCROLL rather
