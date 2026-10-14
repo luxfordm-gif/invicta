@@ -61,8 +61,11 @@
         b.classList.toggle("is-active", on);
         b.setAttribute("aria-selected", on ? "true" : "false");
       });
-      if (prev) prev.disabled = i <= 0;
-      if (next) next.disabled = i >= items.length - 1;
+      // A looping carousel never disables its arrows: from the first slide,
+      // "previous" goes round to the last, and from the last "next" to the
+      // first (Matt, 14/10/26). Others stop at the ends as before.
+      if (prev) prev.disabled = !sel.loop && i <= 0;
+      if (next) next.disabled = !sel.loop && i >= items.length - 1;
       if (sel.onChange) sel.onChange(i);
     }
     setActive(0);
@@ -73,7 +76,10 @@
     var target = null, settle;
     function step(d) {
       var from = target === null ? currentIndex() : target;
-      target = Math.max(0, Math.min(items.length - 1, from + d));
+      var to = from + d;
+      target = sel.loop
+        ? (to + items.length) % items.length
+        : Math.max(0, Math.min(items.length - 1, to));
       scrollToItem(target);
       clearTimeout(settle);
       settle = setTimeout(function () { target = null; }, 900);
@@ -123,6 +129,7 @@
       dots: ".hp-cases__dots",
       dotClass: "hp-cases__dot",
       keyboard: true,
+      loop: true,
       onChange: function (i) {
         if (counter) counter.textContent = (i < 9 ? "0" : "") + (i + 1);
       }

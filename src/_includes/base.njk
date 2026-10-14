@@ -19,7 +19,16 @@
   <meta property="og:title" content="{{ ogTitle or title }}">
   <meta property="og:description" content="{{ description }}">
   {% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+  {# The share picture (14/10/26). A JPEG, not WebP: it is never loaded by a
+     visitor to the site, only fetched by WhatsApp, LinkedIn, Facebook and the
+     rest, and not all of them accept WebP. 1200x630, the size they all crop
+     to. A page can set `ogImage` to use its own. #}
+  <meta property="og:image" content="{{ site.url }}{{ ogImage or '/assets/og-default.jpg' }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ ogImageAlt or 'A stone terrace in the evening, looking across fields to the hills.' }}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ site.url }}{{ ogImage or '/assets/og-default.jpg' }}">
 
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -85,6 +94,7 @@
   <script src="{{ '/scripts/enquiry.js' | v }}" defer></script>
   <script src="{{ '/scripts/forms.js' | v }}" defer></script>
   <script src="{{ '/scripts/coverage-band.js' | v }}" defer></script>
+  <script src="{{ '/scripts/count-up.js' | v }}" defer></script>
   <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>
   <script src="{{ '/scripts/hero-media.js' | v }}" defer></script>
   <script src="{{ '/scripts/motion.js' | v }}" defer></script>

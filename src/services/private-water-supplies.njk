@@ -6,7 +6,26 @@ canonical: "https://www.invictawatertreatment.co.uk/services/private-water-suppl
 permalink: "/services/private-water-supplies/"
 current: "services"
 currentService: "/services/private-water-supplies/"
-extraStyles: ["coverage-band"]
+extraStyles: ["coverage-band", "filmstrip"]
+# The film strip under the case studies (Matt, 14/10/26): supply plant and
+# sources this page does not already show. Alt text is the gallery's.
+strip:
+  - image: "/assets/r-cottage-2765.webp"
+    alt: "A cottage across its lawn with a blue water pipe laid out over the grass to the house."
+  - image: "/assets/uppark-0846.webp"
+    alt: "A large plant room with a cold water storage tank, booster pumps and insulated pipework running along the wall."
+  - image: "/assets/roundhurst-4872.webp"
+    alt: "A plant room with two blue pressure vessels, red expansion vessels and insulated copper and steel pipework."
+  - image: "/assets/w-estate-9990.webp"
+    alt: "A stone grotto with a gilded statue over a spring-fed pond in the garden."
+  - image: "/assets/rf-estate-4339.webp"
+    alt: "A garage plant room with a water softener, three blue pressure vessels and a white vessel plumbed in a row."
+  - image: "/assets/b-estate-0796.webp"
+    alt: "An old brick-domed water tank with a mossy cover, set in woodland under autumn leaves."
+  - image: "/assets/b-estate-4916.webp"
+    alt: "Two black settling tanks and a pump set in a plywood-lined plant room."
+  - image: "/assets/img-6720.webp"
+    alt: "A brick water tower and gatehouse with an arch, seen across a lawn."
 bandImage: "/assets/img-8014.webp"
 bandAlt: "An Invicta van on the lawn of a stone manor house, with drilling spoil and a borehole hose behind it."
 bandFocus: "center 55%"
@@ -26,6 +45,8 @@ breadcrumb:
   - title: "Private Water Supplies"
 ---
 {% include "breadcrumb.njk" %}
+{% set serviceName = "Private Water Supplies" %}
+{% include "service-schema.njk" %}
 {% include "pws-flagship.njk" %}
 {% include "services-explore.njk" %}
 

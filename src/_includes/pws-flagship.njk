@@ -347,6 +347,11 @@
     {% set carouselLead = "Two failed boreholes, three sources feeding one house, and an inherited system that finally passed its EHO test." %}
     {% include "case-bento.njk" %}
 
+    {# The film strip, when the page sets `strip`: the same drag-along band
+       /about/ closes with, under the case studies here. #}
+    {% set filmstripSurface = "filmstrip--light" %}
+    {% include "filmstrip.njk" %}
+
     <!-- ===================== FAQ (dark) ===================== -->
     <section class="section faq" aria-labelledby="faq-title">
       <div class="container faq__grid">

@@ -54,6 +54,16 @@
          yields an empty SafeString. Default inside the parens, filter outside. #}
       {{ (coverageBandTitle or "Covering Surrey, Sussex, Kent <span class='em'>and the South East.</span>") | safe }}
     </h2>
+    {# The page's way out, under the claim, when the page asks for it
+       (`coverageActions`). The home page does (14/10/26): this band and an
+       enquiry section after it said "where we work, then how to start" twice
+       in a row, so the enquiry's buttons moved up here and it went. #}
+    {% if coverageActions %}
+    <div class="coverage-band__actions">
+      <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+    </div>
+    {% endif %}
   </div>
 
 </section>

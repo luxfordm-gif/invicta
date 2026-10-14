@@ -1,7 +1,7 @@
 ---
 layout: base.njk
-title: "Water Treatment, Boreholes & Legionella Control | Invicta Water Treatment"
-description: "Bespoke water treatment, chlorination and hygiene compliance across Surrey, Sussex and the South East. CHAS accredited, UKAS testing, 24-hour callout. Twenty years' experience."
+title: "Water Treatment & Private Supplies | Invicta Water Treatment"
+description: "Private water supplies, treatment and Legionella control across Surrey, Sussex and the South East. UKAS-accredited testing and a 24-hour emergency line."
 canonical: "https://www.invictawatertreatment.co.uk/"
 permalink: "/"
 current: "home"
@@ -218,13 +218,11 @@ hideFooterCta: true
     {% include "clients.njk" %}
 
     {# ===================== 3 — SERVICES =====================
-      THE PROBLEM LINE IS THE HEADING NOW (Matt, 14/10/26: "to get to the
-      services, there's a lot of copy"). The page ran a separate problem
-      section, a 47-word paragraph, a hairline and "What do you need to sort?"
-      before the first card. The problem line was the strong half, so it heads
-      this section, and the intro's "water you never have to think about"
-      hands straight to it. The paragraph and the second heading go: the
-      cards below are already the questions the visitor arrives with.
+      ONE HEADING, THEN THE CARDS (Matt, 14/10/26: "to get to the services,
+      there's a lot of copy"). The page ran a separate problem section, a
+      47-word paragraph, a hairline and "What do you need to sort?" before the
+      first card. Now one short heading introduces the four routes; the cards
+      below are already the questions the visitor arrives with.
 
       ROUTED BY PROBLEM, NOT LISTED BY SERVICE. Every heading here is the
       question the visitor arrived with, because someone who has just been
@@ -236,7 +234,13 @@ hideFooterCta: true
     #}
     <section class="section hp-services" id="services" aria-labelledby="hp-services-title">
       <div class="container">
-        <h2 class="statement hp-services__title" id="hp-services-title">The water only gets your attention <span class="em">when it goes wrong.</span></h2>
+        {# "From borehole to tap, the services we offer" (Matt, 14/10/26): the
+           customer's phrase, then a plain label for what the cards are. The problem line
+           that headed this read as a warning, not a way into four services.
+           This is the Elstead client's own phrase ("from the borehole pump
+           right through to the taps"), and it spans every card below, from the
+           source to Legionella at the outlets. #}
+        <h2 class="statement hp-services__title" id="hp-services-title">From borehole to tap, <span class="em">the services we offer.</span></h2>
 
         <div class="hp-services__grid">
           {# THE FLAGSHIP CARRIES THE PHOTOGRAPH, and the four beside it do not.
@@ -295,32 +299,42 @@ hideFooterCta: true
     </section>
 
     {# ===================== 4 — POSITIONING =====================
-      One line, centred, with nothing to click. This is the only section on the
-      page with no next step in it, which is the point: it is the argument, and
-      an argument that ends in a button reads as a pitch.
+      One line, centred, then three figures under it, with nothing to click.
+      This is the only section on the page with no next step in it, which is
+      the point: it is the argument, and an argument that ends in a button
+      reads as a pitch.
     #}
-    <section class="section section--paper hp-position" id="positioning" aria-labelledby="hp-position-line">
+    <section class="section section--light hp-position" id="positioning" aria-labelledby="hp-position-line">
       <div class="container">
         <div class="hp-position__inner">
           <h2 class="statement hp-position__line" id="hp-position-line">Water treatment isn't optional. <span class="em">Neither is doing it properly.</span></h2>
-          <p class="hp-position__body">Twenty years of bespoke systems for clients who need current compliance evidence, not just clean water. Football grounds, pharmaceutical sites, hospices and landed estates. The standard we work to is the standard your inspector expects.</p>
+          {# NUMBERS, NOT A PARAGRAPH (Matt, 14/10/26). Three figures the site
+             already stands behind: the firm's age (site.stats, and the
+             "twenty years" claims elsewhere), the 24-hour line, and the
+             credentials list's "all water analysis goes through a
+             UKAS-accredited lab". NOT site.stats' "200+ sites under our care",
+             which is still unconfirmed by the client.
+
+             They count up from zero together as the row scrolls into view (count-up.js).
+             The real figure is in the markup, so with no JS or with reduced
+             motion it simply shows; screen readers get the figure once, from
+             the visually hidden copy, rather than every step of the count. #}
+          {% set positionStats = [
+            { to: 20,  suffix: "+", label: "Years in business" },
+            { to: 24,  suffix: "h", label: "Emergency line" },
+            { to: 100, suffix: "%", label: "UKAS-accredited testing" }
+          ] %}
+          <ul class="hp-stats" role="list" data-count-group>
+            {% for s in positionStats %}
+            <li class="hp-stat">
+              <p class="hp-stat__figure"><span class="visually-hidden">{{ s.to }}{{ s.suffix }}</span><span aria-hidden="true" data-count-to="{{ s.to }}" data-count-suffix="{{ s.suffix }}">{{ s.to }}{{ s.suffix }}</span></p>
+              <p class="hp-stat__label">{{ s.label }}</p>
+            </li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
     </section>
-
-    {# ===================== 5 — COVERAGE =====================
-      WHERE WE WORK, SAID AS A MAP RATHER THAN AS A SENTENCE. This replaces the
-      typographic sectors list that used to sit here: the client asked for
-      sectors removed from the site completely (11/08/26), and the honest
-      answer to "do you come to me" was always the geography, not a list of
-      industries.
-
-      The site's own component, the same one that closes /about/ and every
-      service page, so the coverage claim is made in one place and one way.
-      Without GOOGLE_MAPS_API_KEY it falls back to the keyless embed and still
-      draws the South East; the key only buys the shaded counties.
-    #}
-    {% include "coverage-band.njk" %}
 
     {# ===================== 6 — SELECTED WORK =====================
       A CAROUSEL OF EVERY STUDY, one at a time: photograph left, the account
@@ -375,8 +389,8 @@ hideFooterCta: true
              edge. The stage wrapper exists so "the middle" means the slide's
              middle, not the slide plus the dots row under it. #}
           <div class="hp-cases__stage">
-            <button type="button" class="hp-cases__arrow hp-cases__arrow--prev" data-cc-prev aria-label="Previous case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-            <button type="button" class="hp-cases__arrow hp-cases__arrow--next" data-cc-next aria-label="Next case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+            <button type="button" class="hp-cases__arrow hp-cases__arrow--prev" data-cc-prev aria-label="Previous case study"><svg viewBox="0 0 56 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M55 12H2M12 2L2 12l10 10"/></svg></button>
+            <button type="button" class="hp-cases__arrow hp-cases__arrow--next" data-cc-next aria-label="Next case study"><svg viewBox="0 0 56 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12h53M44 2l10 10-10 10"/></svg></button>
           <div class="hp-cases__track">
             {% for c in slides %}
             {% set svc = c.services[0] %}
@@ -534,33 +548,27 @@ hideFooterCta: true
     ] %}
     {% include "filmstrip.njk" %}
 
-    {# ===================== 9 — ENQUIRY =====================
-      The exit door, and deliberately the quietest section on the page. The
-      footer's own CTA is switched off in the front matter above so this is
-      said once. "Send an enquiry" opens the site's enquiry drawer (enquiry.js
-      intercepts a[href="/enquiry/"]); without JavaScript it redirects to the
-      contact page, which carries the same form.
+    {# ===================== 8b — COVERAGE =====================
+      MOVED DOWN (Matt, 14/10/26). It sat straight after the positioning
+      line, a third of the way down, where "do you come to me" is asked too
+      early. Here it is the last thing before the enquiry, which is also where
+      it closes every service page: where we work, then how to start.
+      WHERE WE WORK, SAID AS A MAP RATHER THAN AS A SENTENCE. This replaces the
+      typographic sectors list that used to sit here: the client asked for
+      sectors removed from the site completely (11/08/26), and the honest
+      answer to "do you come to me" was always the geography, not a list of
+      industries.
+
+      The site's own component, the same one that closes /about/ and every
+      service page, so the coverage claim is made in one place and one way.
+      Without GOOGLE_MAPS_API_KEY it falls back to the keyless embed and still
+      draws the South East; the key only buys the shaded counties.
     #}
-    <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
-      <div class="container">
-        <div class="hp-enquiry__inner">
-          {# NOT the footer's line. This heading and its paragraph were a
-             word-for-word copy of footer.njk's CTA, which closes every other
-             page on the site, and the same paragraph opened /contact/ as well:
-             three places, one sentence. The footer keeps the generic
-             invitation, because a generic closer is exactly what a footer is
-             for. This one says the thing a footer cannot, which is what
-             actually happens next, and in doing so it carries the reassurance
-             the old .hp-enquiry__note was added to supply. #}
-          <h2 class="statement hp-enquiry__title" id="hp-enquiry-title">Every job starts <span class="em">the same way.</span></h2>
-          <p class="hp-enquiry__body">A visit, a proper look at your source or your system, and a UKAS-accredited analysis of what is actually in the water. The price comes from that, fixed, and not before it.</p>
-          <div class="hp-enquiry__actions">
-            <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-            <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">Call {{ site.phone }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
-          </div>
-        </div>
-      </div>
-    </section>
+    {# The closing buttons live under the map's claim on this page: the
+       enquiry section that followed said the same thing again (14/10/26). #}
+    {% set coverageActions = true %}
+    {% include "coverage-band.njk" %}
+
 
     {# base.njk owns the shared script block and is not touched by this task,
        so the new component loads from the page that adopts it. Cache-busted by

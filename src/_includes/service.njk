@@ -13,6 +13,7 @@
 {% set ctaLabel = ctaPrimary or "Book a site survey" %}
 
     {% include "breadcrumb.njk" %}
+    {% include "service-schema.njk" %}
 
     <!-- ===================== HERO ===================== -->
     <section class="hero">
@@ -152,6 +153,11 @@
     {% endif %}
     {% include "case-bento.njk" %}
 
+    {# The film strip, when the page sets `strip`: the same drag-along band
+       /about/ closes with, under the case studies here. #}
+    {% set filmstripSurface = "filmstrip--light" %}
+    {% include "filmstrip.njk" %}
+
     <!-- ===================== FAQ (dark) ===================== -->
     {% if faqs %}
     <section class="section faq" aria-labelledby="faq-title">
@@ -172,5 +178,17 @@
           {% endfor %}
         </div>
       </div>
+      {# FAQPage JSON-LD from the same `faqs` list the accordion renders, so
+         the answers search engines read are the ones on the page. Answers may
+         carry markup, hence striptags. #}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{% for f in faqs %}
+          { "@type": "Question", "name": {{ f.q | striptags | dump | safe }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | striptags | dump | safe }} } }{% if not loop.last %},{% endif %}{% endfor %}
+        ]
+      }
+      </script>
     </section>
     {% endif %}

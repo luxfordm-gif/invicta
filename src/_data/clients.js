@@ -26,13 +26,13 @@
 module.exports = [
   // Ordered so the square marks never sit next to each other, otherwise the
   // row develops a lump. Shape alternates: square, long, mid, long, square...
-  { name: "Chelsea FC",           file: "chelsea-fc.png",           w: 180,  h: 180, scale: 1.45 },
+  { name: "Chelsea FC",           file: "chelsea-fc.webp",          w: 180,  h: 180, scale: 1.45 },
   { name: "South East Water",     file: "south-east-water.svg",     w: 522,  h: 116, scale: 1.0  },
   { name: "Cowdray Estate",       file: "cowdray-estate.svg",       w: 240,  h: 87,  scale: 1.0  },
   { name: "GSK",                  file: "gsk.svg",                  w: 106,  h: 33,  scale: 0.95 },
-  { name: "Hospice in the Weald", file: "hospice-in-the-weald.png", w: 180,  h: 159, scale: 1.35 },
+  { name: "Hospice in the Weald", file: "hospice-in-the-weald.webp",w: 180,  h: 159, scale: 1.35 },
   { name: "Amgen",                file: "amgen.svg",                w: 1782, h: 454, scale: 1.0  },
-  { name: "IAC Services",         file: "iac-services.png",         w: 177,  h: 123, scale: 1.2  },
+  { name: "IAC Services",         file: "iac-services.webp",        w: 177,  h: 123, scale: 1.2  },
   { name: "Carel",                file: "carel.svg",                w: 350,  h: 175, scale: 1.05 },
-  { name: "DIS Group",            file: "dis-group.png",            w: 132,  h: 60,  scale: 1.0  },
+  { name: "DIS Group",            file: "dis-group.webp",           w: 132,  h: 60,  scale: 1.0  },
 ];
