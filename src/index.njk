@@ -275,6 +275,15 @@ hideFooterCta: true
           </a>
 
           <a class="hp-svc" href="/services/design-install/">
+            {# PHONE ONLY (Matt, 14/10/26: on a phone "you just scroll past and
+               don't realise those are the different services"). Stacked in one
+               column, four text blocks read as one long passage, so on a phone
+               every route gets a photograph to mark where it starts: the band
+               photograph from its own service page. The desktop spread keeps
+               the single lead image on the flagship (see above), so these are
+               hidden from 900px, and being lazy they are never fetched there.
+               Empty alt: inside the link, the heading already names it. #}
+            <span class="hp-svc__media hp-svc__media--phone parallax"><img src="/assets/rf-estate-4339.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async"></span>
             <h3 class="hp-svc__title">Building a new system?</h3>
             <p class="hp-svc__desc">Full design and install by our own engineers, specified to comply from day one.</p>
             <span class="hp-svc__go">Design and install <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -284,12 +293,14 @@ hideFooterCta: true
             {# Named for the thing a duty holder actually books (Matt,
                14/10/26), which is also the Water Hygiene page's own button:
                "Book a risk assessment". #}
+            <span class="hp-svc__media hp-svc__media--phone parallax"><img src="/assets/uppark-0846.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async"></span>
             <h3 class="hp-svc__title">Need a Legionella risk assessment?</h3>
             <p class="hp-svc__desc">Legal compliance is not negotiable. We handle water hygiene, sampling, temperature monitoring and Legionella control across your estate or portfolio.</p>
             <span class="hp-svc__go">Water hygiene <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
 
           <a class="hp-svc" href="/services/servicing/">
+            <span class="hp-svc__media hp-svc__media--phone parallax"><img src="/assets/b-aerospace-6636.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async"></span>
             <h3 class="hp-svc__title">System already installed?</h3>
             <p class="hp-svc__desc">Scheduled servicing, UKAS-accredited re-testing, and 24-hour callout for existing clients.</p>
             <span class="hp-svc__go">Servicing and maintenance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>

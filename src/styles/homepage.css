@@ -323,6 +323,10 @@ p.hp-intro__lead {
    only sizes a box whose height is auto, so without this line the ratio
    computes, is ignored, and the card opens with a 961px-tall photograph. */
 .hp-svc__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 30%; }
+/* The other three routes carry a photograph on a phone only; see index.njk. */
+@media (min-width: 900px) {
+  .hp-svc__media--phone { display: none; }
+}
 /* The crossfading stack. The first frame stays in flow and sets the box; the
    others lie on top of it. Only .is-active is opaque, and the fade is opacity
    alone, so it never touches layout. Without JS the first frame carries
