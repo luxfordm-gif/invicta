@@ -14,6 +14,18 @@
    colour off the vans. The ground carries the weight; nothing on it competes.
    ========================================================================== */
 :root {
+  /* --- Bare channels -----------------------------------------------------------
+     Every translucent white, ink and cream on the site is one of these three
+     colours at an alpha, written rgb(var(--x-rgb) / a). The literal
+     rgba(255, 255, 255, a) forms they replace were the same three colours
+     typed out forty times; a palette change now moves them together. */
+  --white-rgb: 255 255 255;
+  --ink-rgb: 15 15 15;
+  --light-rgb: 247 247 245;      /* == --light below */
+  --accent-rgb: 184 200 212;     /* == --lime / --blue-bright below */
+  --frost-rgb: 247 243 236;      /* the floating emergency pill's frosted cream */
+  --shadow-rgb: 0 0 0;           /* every box-shadow is black at an alpha */
+
   /* --- Grounds (architectural navy, the DEEP set) --- */
   --ground: #0B1F3A;              /* dominant navy — hero, dark sections, emergency bar */
   --ground-deep: #08182E;        /* deeper — footer base, deepest bands */
@@ -21,6 +33,7 @@
   --paper: #FFFFFF;              /* pure white — the base light surface */
   --light: #F7F7F5;              /* cool near-white — the CREAM step, a panel colour */
   --light-warm: #EFEBDF;         /* warmer cream alt */
+  --paper-warm: #F5F0E8;         /* white warmed a step: the filled pill's hover */
 
   /* Same three grounds as bare channels, for the scrims and washes that need an
      alpha. Keep these in step with the hexes above — they ARE those colours. */
@@ -54,15 +67,33 @@
 
   /* --- Text on dark ground --- */
   --on-dark: #FFFFFF;
-  --on-dark-soft: rgba(255, 255, 255, 0.82);   /* secondary body copy on navy — quieter than white, still ~9:1 */
-  --on-dark-muted: rgba(255, 255, 255, 0.60);  /* labels, crumbs, captions — short strings only */
-  --line-dark: rgba(255, 255, 255, 0.16);
+  --on-dark-soft: rgb(var(--white-rgb) / 0.82);   /* secondary body copy on navy — quieter than white, still ~9:1 */
+  --on-dark-muted: rgb(var(--white-rgb) / 0.60);  /* labels, crumbs, captions — short strings only */
+  --line-dark: rgb(var(--white-rgb) / 0.16);
 
   /* --- Text on light ground --- */
   --ink: #0F0F0F;                /* near-black text on white */
-  --ink-muted: rgba(15, 15, 15, 0.58);
-  --line-light: rgba(15, 15, 15, 0.13);
-  --line-field: rgba(15, 15, 15, 0.20);   /* slightly darker stroke for form fields */
+  --ink-muted: rgb(var(--ink-rgb) / 0.58);
+  --ink-subtle: rgb(var(--ink-rgb) / 0.42);   /* the light surfaces' --fg-subtle, and a focused field's stroke */
+  --line-light: rgb(var(--ink-rgb) / 0.13);
+  --line-field: rgb(var(--ink-rgb) / 0.20);   /* slightly darker stroke for form fields */
+
+  /* --- Image placeholder (.img-ph, sections.css): the grey stand-in for a
+     photograph that has not arrived, and its label. --- */
+  --placeholder-bg: #C6CBD2;
+  --placeholder-fg: #565C66;
+
+  /* --- COVERAGE MAP (coverage-band.css + coverage-band.js) -------------------
+     The greyed Google basemap behind the coverage heading. The band's own
+     ground is the CSS; the five below are the Maps style array, which the
+     script reads from here with getComputedStyle so the map is styled in one
+     place with everything else. The counties are shaded in --ground. */
+  --map-ground: #E6E7E7;         /* the band before the tiles arrive, and the map's own background */
+  --map-land: #E8E8E8;
+  --map-road: #DEDEDE;
+  --map-water: #D0D3D5;
+  --map-label: #8A8A8A;
+  --map-label-halo: #F2F2F2;
 
   /* --- THEMES ---------------------------------------------------------------
      Semantic colour ROLES that flip with the surface a thing sits on. Components
@@ -73,7 +104,7 @@
      the body is navy. */
   --fg: var(--on-dark);
   --fg-muted: var(--on-dark-muted);
-  --fg-subtle: rgba(255, 255, 255, 0.34);
+  --fg-subtle: rgb(var(--white-rgb) / 0.34);
   --fg-accent: var(--lime);
   --line: var(--line-dark);
   --surface: var(--ground);

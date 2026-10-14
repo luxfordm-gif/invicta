@@ -26,7 +26,7 @@
   /* Neutral ground: what shows before the tiles paint, and all that shows if
      no API key is configured. Sits between the cream section above and the
      navy footer below. */
-  background: #E6E7E7;
+  background: var(--map-ground);
   border-top: 1px solid var(--line-light);
 }
 /* A THIRD MORE BAND ON DESKTOP. At 543px the map was a strip with a sentence on
@@ -79,15 +79,15 @@
   pointer-events: none;
   background:
     radial-gradient(ellipse 62% 58% at 50% 50%,
-      rgba(247, 247, 245, 0.93) 0%,
-      rgba(247, 247, 245, 0.80) 42%,
-      rgba(247, 247, 245, 0.34) 72%,
-      rgba(247, 247, 245, 0.06) 100%),
+      rgb(var(--light-rgb) / 0.93) 0%,
+      rgb(var(--light-rgb) / 0.80) 42%,
+      rgb(var(--light-rgb) / 0.34) 72%,
+      rgb(var(--light-rgb) / 0.06) 100%),
     linear-gradient(to bottom,
-      rgba(247, 247, 245, 0.55) 0%,
-      rgba(247, 247, 245, 0) 22%,
-      rgba(247, 247, 245, 0) 78%,
-      rgba(247, 247, 245, 0.55) 100%);
+      rgb(var(--light-rgb) / 0.55) 0%,
+      rgb(var(--light-rgb) / 0) 22%,
+      rgb(var(--light-rgb) / 0) 78%,
+      rgb(var(--light-rgb) / 0.55) 100%);
 }
 
 /* Keyless variant: there is no county shading to protect, and the embed's own
@@ -97,15 +97,15 @@
 .coverage-band--embed .coverage-band__scrim {
   background:
     radial-gradient(ellipse 54% 50% at 50% 52%,
-      rgba(247, 247, 245, 0.88) 0%,
-      rgba(247, 247, 245, 0.66) 44%,
-      rgba(247, 247, 245, 0.20) 74%,
-      rgba(247, 247, 245, 0) 100%),
+      rgb(var(--light-rgb) / 0.88) 0%,
+      rgb(var(--light-rgb) / 0.66) 44%,
+      rgb(var(--light-rgb) / 0.20) 74%,
+      rgb(var(--light-rgb) / 0) 100%),
     linear-gradient(to bottom,
-      rgba(247, 247, 245, 0.62) 0%,
-      rgba(247, 247, 245, 0) 24%,
-      rgba(247, 247, 245, 0) 76%,
-      rgba(247, 247, 245, 0.62) 100%);
+      rgb(var(--light-rgb) / 0.62) 0%,
+      rgb(var(--light-rgb) / 0) 24%,
+      rgb(var(--light-rgb) / 0) 76%,
+      rgb(var(--light-rgb) / 0.62) 100%);
 }
 
 /* On a narrow screen the band is a lot smaller but the map detail is not, so
@@ -115,15 +115,15 @@
   .coverage-band--embed .coverage-band__scrim {
     background:
       radial-gradient(ellipse 80% 62% at 50% 50%,
-        rgba(247, 247, 245, 0.95) 0%,
-        rgba(247, 247, 245, 0.84) 44%,
-        rgba(247, 247, 245, 0.40) 76%,
-        rgba(247, 247, 245, 0.06) 100%),
+        rgb(var(--light-rgb) / 0.95) 0%,
+        rgb(var(--light-rgb) / 0.84) 44%,
+        rgb(var(--light-rgb) / 0.40) 76%,
+        rgb(var(--light-rgb) / 0.06) 100%),
       linear-gradient(to bottom,
-        rgba(247, 247, 245, 0.60) 0%,
-        rgba(247, 247, 245, 0) 22%,
-        rgba(247, 247, 245, 0) 78%,
-        rgba(247, 247, 245, 0.60) 100%);
+        rgb(var(--light-rgb) / 0.60) 0%,
+        rgb(var(--light-rgb) / 0) 22%,
+        rgb(var(--light-rgb) / 0) 78%,
+        rgb(var(--light-rgb) / 0.60) 100%);
   }
 }
 
@@ -169,7 +169,7 @@
 .coverage-band.is-mapless .coverage-band__frame { display: none; }
 .coverage-band.is-mapless .coverage-band__scrim {
   background: linear-gradient(to bottom,
-    rgba(247, 247, 245, 0.72) 0%,
-    rgba(247, 247, 245, 0.38) 50%,
-    rgba(247, 247, 245, 0.72) 100%);
+    rgb(var(--light-rgb) / 0.72) 0%,
+    rgb(var(--light-rgb) / 0.38) 50%,
+    rgb(var(--light-rgb) / 0.72) 100%);
 }

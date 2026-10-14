@@ -27,6 +27,14 @@
   var el = document.querySelector("[data-coverage-map]");
   if (!el) return;
 
+  // Every colour on the map is a token in tokens.css, read here rather than
+  // typed again; the fallbacks are only for a stylesheet that failed to load.
+  var cs = getComputedStyle(document.documentElement);
+  function tok(name, fallback) {
+    var v = cs.getPropertyValue(name).trim();
+    return v || fallback;
+  }
+
   var key = el.getAttribute("data-maps-key");
   var src = el.getAttribute("data-counties-src");
   if (!key || !src) return;
@@ -35,18 +43,18 @@
 
   /* --- Basemap palette: grey everything, keep place names, drop the clutter --- */
   var GREYSCALE = [
-    { elementType: "geometry", stylers: [{ color: "#e8e8e8" }] },
+    { elementType: "geometry", stylers: [{ color: tok("--map-land", "#E8E8E8") }] },
     { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-    { elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
-    { elementType: "labels.text.stroke", stylers: [{ color: "#f2f2f2" }] },
+    { elementType: "labels.text.fill", stylers: [{ color: tok("--map-label", "#8A8A8A") }] },
+    { elementType: "labels.text.stroke", stylers: [{ color: tok("--map-label-halo", "#F2F2F2") }] },
     { featureType: "administrative", elementType: "geometry", stylers: [{ visibility: "off" }] },
     { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
     { featureType: "administrative.neighborhood", stylers: [{ visibility: "off" }] },
     { featureType: "poi", stylers: [{ visibility: "off" }] },
-    { featureType: "road", elementType: "geometry", stylers: [{ color: "#dedede" }] },
+    { featureType: "road", elementType: "geometry", stylers: [{ color: tok("--map-road", "#DEDEDE") }] },
     { featureType: "road", elementType: "labels", stylers: [{ visibility: "off" }] },
     { featureType: "transit", stylers: [{ visibility: "off" }] },
-    { featureType: "water", elementType: "geometry", stylers: [{ color: "#d0d3d5" }] },
+    { featureType: "water", elementType: "geometry", stylers: [{ color: tok("--map-water", "#D0D3D5") }] },
     { featureType: "water", elementType: "labels.text", stylers: [{ visibility: "off" }] }
   ];
 
@@ -70,7 +78,7 @@
   function init() {
     var map = new google.maps.Map(el, {
       styles: GREYSCALE,
-      backgroundColor: "#E6E7E7",
+      backgroundColor: tok("--map-ground", "#E6E7E7"),
       disableDefaultUI: true,
       gestureHandling: "none",
       keyboardShortcuts: false,
@@ -81,9 +89,9 @@
     });
 
     map.data.setStyle({
-      fillColor: "#0B1F3A",                     // --ground
+      fillColor: tok("--ground", "#0B1F3A"),
       fillOpacity: 0.26,
-      strokeColor: "#0B1F3A",
+      strokeColor: tok("--ground", "#0B1F3A"),
       strokeOpacity: 0.55,
       strokeWeight: 1.2,
       clickable: false

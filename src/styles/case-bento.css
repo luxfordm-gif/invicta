@@ -226,7 +226,7 @@
   .bento__card:hover .bento__tag,
   .bento__card:focus-within .bento__tag {
     border-color: color-mix(in srgb, var(--fg) 48%, transparent);
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: rgb(var(--white-rgb) / 0.06);
   }
   .bento__card:hover .bento__reveal,
   .bento__card:focus-within .bento__reveal {
@@ -314,7 +314,7 @@
   .bento__card.theme-dark {
     --fg: var(--ink);
     --fg-muted: var(--ink-muted);
-    --fg-subtle: rgba(15, 15, 15, 0.42);
+    --fg-subtle: var(--ink-subtle);
     --fg-accent: var(--steel);
     --line: var(--line-light);
     --surface: var(--paper);
@@ -325,7 +325,7 @@
     display: block;
     background: var(--paper);
     /* Kept within the track's padding above, so none of it is clipped. */
-    box-shadow: 0 2px 4px rgb(15 15 15 / 0.05), 0 8px 20px rgb(15 15 15 / 0.09);
+    box-shadow: 0 2px 4px rgb(var(--ink-rgb) / 0.05), 0 8px 20px rgb(var(--ink-rgb) / 0.09);
   }
   /* picture in flow at the top, at a fixed height */
   .bento__media {
