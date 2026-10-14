@@ -106,14 +106,14 @@ extraStyles: ["gallery"]
             <li class="gallery__cell gallery__cell--wide">
               <figure class="gallery__card">
                 <div class="gallery__frame parallax">
-                  <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+                  <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" sizes="(max-width: 1680px) 100vw, 1520px" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
                 </div>
               </figure>
             </li>
             <li class="gallery__cell gallery__cell--narrow">
               <figure class="gallery__card">
                 <div class="gallery__frame">
-                  <img src="{{ rest[0].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[0].alt }}" width="960" height="640" loading="lazy" decoding="async">
+                  <img src="{{ rest[0].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[0].alt }}" width="960" height="640" sizes="(max-width: 599px) 50vw, (max-width: 1680px) 33vw, 510px" loading="lazy" decoding="async">
                 </div>
               </figure>
             </li>
@@ -121,7 +121,7 @@ extraStyles: ["gallery"]
           {% else %}
           <figure class="gallery__card gallery__lead">
             <div class="gallery__frame parallax">
-              <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+              <img src="{{ lead.src }}" alt="{{ lead.alt }}" width="1536" height="1024" sizes="(max-width: 599px) 50vw, (max-width: 1680px) 66vw, 1000px" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
             </div>
           </figure>
           {% endif %}
@@ -143,7 +143,7 @@ extraStyles: ["gallery"]
             {% for p in rest.slice(0, 3) %}
             <li class="gallery__cell">
               <figure class="gallery__card"><div class="gallery__frame">
-                <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" loading="lazy" decoding="async">
+                <img src="{{ p.src | replace('/assets/', '/assets/gallery/') }}" alt="{{ p.alt }}" width="960" height="640" sizes="{% if loop.first %}(max-width: 599px) 100vw, {% else %}(max-width: 599px) 50vw, {% endif %}(max-width: 1680px) 33vw, 510px" loading="lazy" decoding="async">
               </div></figure>
             </li>
             {% endfor %}
@@ -155,12 +155,12 @@ extraStyles: ["gallery"]
           <ul class="gallery__row gallery__row--pair{% if k % 2 == 1 %} gallery__row--mirror{% endif %}" role="list">
             <li class="gallery__cell gallery__cell--wide">
               <figure class="gallery__card"><div class="gallery__frame">
-                <img src="{{ rest[i].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i].alt }}" width="960" height="640" loading="lazy" decoding="async">
+                <img src="{{ rest[i].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i].alt }}" width="960" height="640" sizes="{% if k % 2 == 1 %}(max-width: 599px) 100vw, {% else %}(max-width: 599px) 50vw, {% endif %}(max-width: 1680px) 66vw, 1000px" loading="lazy" decoding="async">
               </div></figure>
             </li>
             <li class="gallery__cell gallery__cell--narrow">
               <figure class="gallery__card"><div class="gallery__frame">
-                <img src="{{ rest[i + 1].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i + 1].alt }}" width="960" height="640" loading="lazy" decoding="async">
+                <img src="{{ rest[i + 1].src | replace('/assets/', '/assets/gallery/') }}" alt="{{ rest[i + 1].alt }}" width="960" height="640" sizes="{% if k % 2 == 1 %}(max-width: 599px) 100vw, {% else %}(max-width: 599px) 50vw, {% endif %}(max-width: 1680px) 33vw, 510px" loading="lazy" decoding="async">
               </div></figure>
             </li>
           </ul>

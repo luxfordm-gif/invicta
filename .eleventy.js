@@ -1,28 +1,162 @@
 const fs = require("fs");
+const path = require("path");
 const crypto = require("crypto");
+const lightningcss = require("lightningcss");
+const terser = require("terser");
+const htmlmin = require("html-minifier-terser");
 
-module.exports = function (eleventyConfig) {
-  /* Cache-bust local CSS and JS by content.
-     Without this, a browser that has already seen /scripts/prefs.js keeps
-     serving its copy: neither the dev server nor Netlify sends a revalidation
-     header these files would fail, so an edit ships and the page quietly runs
-     the old one. That is not a theoretical problem — it cost a round of "the
-     change isn't working" on a panel whose script had in fact changed.
+const OUTPUT_DIR = "_site";
 
-     The hash is of the file's own bytes, so the URL only moves when the file
-     does: unchanged assets stay cached across deploys, changed ones cannot be.
-     Read fresh on every call rather than memoised, so `eleventy --serve` picks
-     up an edit without a restart. The files are a few KB each. */
-  eleventyConfig.addFilter("v", function (assetPath) {
-    try {
-      const bytes = fs.readFileSync("src" + assetPath);
-      const hash = crypto.createHash("sha1").update(bytes).digest("hex").slice(0, 8);
-      return assetPath + "?v=" + hash;
-    } catch (e) {
-      // A missing file is a broken link with or without a hash; let the 404 show.
-      return assetPath;
-    }
+/* Async so the image plugin, which is ESM-only, can be imported from this
+   CommonJS config without needing a Node that supports require(esm). */
+module.exports = async function (eleventyConfig) {
+  const { eleventyImageTransformPlugin } = await import("@11ty/eleventy-img");
+
+  /* --- BUNDLES (14/10/26) ---------------------------------------------------
+     The page used to load twelve stylesheets and ten scripts as separate
+     files, every one of them shipped with its comments: 218 KB of CSS on the
+     home page, of which the browser needed perhaps a third, and fourteen
+     render-blocking requests before the first paint. Now base.njk asks for
+     two stylesheets and one script:
+
+       site-<hash>.css   the ten sheets every page loads, minified, one file
+       page-<hash>.css   that page's extraStyles, if it has any
+       site-<hash>.js    all ten scripts, minified, one deferred file
+
+     The source files stay exactly as they are, comments and all, because the
+     comments are the design record; only the build strips them. Each bundle
+     is named by a hash of its minified bytes, so an unchanged bundle keeps
+     its URL (and its year-long cache, see src/_headers) across deploys and a
+     changed one cannot be served stale. Bundles are written straight into
+     the output directory, memoised per build, and the memo is cleared on
+     every build so `eleventy --serve` picks up edits. */
+  const bundles = new Map();
+  eleventyConfig.on("eleventy.before", () => bundles.clear());
+
+  function writeBundle(kind, name, code) {
+    const hash = crypto.createHash("sha1").update(code).digest("hex").slice(0, 8);
+    const url = `/${kind}/${name}-${hash}.${kind === "styles" ? "css" : "js"}`;
+    const file = path.join(OUTPUT_DIR, url);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    if (!fs.existsSync(file)) fs.writeFileSync(file, code);
+    return url;
+  }
+
+  // {{ ["tokens", "base", "components/tooltip"] | cssBundle("site") }}
+  eleventyConfig.addFilter("cssBundle", function (names, bundleName) {
+    const key = "css:" + bundleName + ":" + names.join(",");
+    if (bundles.has(key)) return bundles.get(key);
+    const source = names.map((n) => fs.readFileSync(path.join("src/styles", n + ".css"), "utf8")).join("\n");
+    const { code } = lightningcss.transform({
+      filename: bundleName + ".css",
+      code: Buffer.from(source),
+      minify: true,
+      errorRecovery: true,
+    });
+    const url = writeBundle("styles", bundleName, Buffer.from(code).toString("utf8"));
+    bundles.set(key, url);
+    return url;
   });
+
+  // {{ ["nav", "carousel"] | jsBundle("site") }}. Every script is its own
+  // IIFE, so concatenation needs no module wrapper.
+  eleventyConfig.addAsyncFilter("jsBundle", async function (names, bundleName) {
+    const key = "js:" + bundleName + ":" + names.join(",");
+    if (bundles.has(key)) return bundles.get(key);
+    const source = names.map((n) => fs.readFileSync(path.join("src/scripts", n + ".js"), "utf8")).join("\n;\n");
+    const { code } = await terser.minify(source, { compress: true, mangle: true, format: { comments: false } });
+    const url = writeBundle("scripts", bundleName, code);
+    bundles.set(key, url);
+    return url;
+  });
+
+  /* --- RESPONSIVE IMAGES ----------------------------------------------------
+     Every <img> in the built HTML is rewritten with a srcset of WebP copies
+     at these widths, generated from the 1536px source by sharp and written to
+     /img/ under hashed names. Before this every photograph was served at
+     1536px to every screen: 1.9 MB of pictures on the home page on a phone
+     that could show about a third of it. The templates keep their plain
+     <img src="/assets/..."> and the originals stay in /assets/ (the share
+     image and favicon are read from there directly).
+
+     `sizes`: an image that sets its own keeps it. Otherwise it gets the
+     default below: `auto` lets Chromium size lazy-loaded images from their
+     laid-out width exactly, and the list after it is the fallback for other
+     browsers (and for eager images), which is roughly right for the cards,
+     bands and strips on this site. SVG logos pass through untouched. */
+  const IMAGE_WIDTHS = [400, 640, 960, 1280, 1536];
+  /* The plugin reads a plain width="1536" attribute as "output this ONE
+     width", which would defeat the whole point: every <img> in the templates
+     carries width/height so the browser can reserve the box before CSS
+     arrives. This pre-pass (priority 0 runs before the plugin's -1) hands
+     every local photograph the full list through the plugin's own
+     eleventy:widths attribute instead. Widths above the source are skipped,
+     so the 960px gallery copies get three sizes, not five. */
+  eleventyConfig.htmlTransformer.addPosthtmlPlugin("html", function () {
+    return (tree) => {
+      tree.match({ tag: "img" }, (node) => {
+        const src = (node.attrs && node.attrs.src) || "";
+        if (src.startsWith("/assets/logos/")) {
+          // Client marks: SVGs, and WebPs already a few KB. Left untouched,
+          // otherwise an SVG would come out as a 1536px raster of a 20px mark.
+          node.attrs["eleventy:ignore"] = "";
+        } else if (src.startsWith("/assets/") && !node.attrs["eleventy:widths"]) {
+          node.attrs["eleventy:widths"] = IMAGE_WIDTHS.join(",");
+        }
+        return node;
+      });
+      return tree;
+    };
+  });
+
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    extensions: "html",
+    formats: ["webp"],
+    widths: IMAGE_WIDTHS,
+    urlPath: "/img/",
+    outputDir: path.join(OUTPUT_DIR, "img"),
+    svgShortCircuit: true,
+    sharpWebpOptions: { quality: 80 },
+    htmlOptions: {
+      imgAttributes: {
+        decoding: "async",
+        sizes: "auto, (max-width: 899px) 100vw, 50vw",
+      },
+    },
+  });
+
+  /* --- HTML MINIFICATION ---------------------------------------------------
+     Collapses runs of whitespace (keeping one space, so inline text never
+     closes up) and drops the HTML comments. The Nunjucks comments that carry
+     the design notes never reach the output anyway; this catches the few
+     <!-- --> ones and the indentation. About 30% off every page. */
+  eleventyConfig.addTransform("htmlmin", async function (content) {
+    if (!(this.page.outputPath || "").endsWith(".html")) return content;
+    return htmlmin.minify(content, {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      removeComments: true,
+      minifyCSS: true,
+      minifyJS: true,
+      keepClosingSlash: true,
+    });
+  });
+
+  /* --- TOUCH ICON ----------------------------------------------------------
+     iOS and Android home screens want a PNG; the favicon is an SVG. Rendered
+     from it at build time rather than kept as a second source of the mark. */
+  eleventyConfig.on("eleventy.after", async () => {
+    const sharp = require("sharp");
+    await sharp("src/assets/favicon.svg", { density: 384 })
+      .resize(180, 180)
+      .png()
+      .toFile(path.join(OUTPUT_DIR, "apple-touch-icon.png"));
+  });
+
+  /* The old `v` filter (a ?v=<hash> cache-bust on each stylesheet and
+     script) is gone: the bundles above and the images in /img/ carry the
+     hash in the filename itself, which is what lets src/_headers cache them
+     for a year. */
 
   /* --- Tooltips, applied to the copy rather than written into it ------------
      Wraps the first occurrence of each glossary term (src/_data/glossary.js) in
@@ -145,19 +279,21 @@ module.exports = function (eleventyConfig) {
     return out;
   });
 
-  // Copy static assets straight through (paths become /styles, /scripts, /assets).
-  eleventyConfig.addPassthroughCopy("src/styles");
-  eleventyConfig.addPassthroughCopy("src/scripts");
+  // Copy static assets straight through (paths become /assets, /fonts). The
+  // stylesheets and scripts are NOT copied: they reach the output only as the
+  // bundles above, so nothing unminified or unreferenced is deployed.
   eleventyConfig.addPassthroughCopy("src/assets");
-  // Netlify redirects file, copied to the site root.
+  eleventyConfig.addPassthroughCopy("src/fonts");
+  // Netlify redirects and headers files, copied to the site root.
   eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
+  eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
 
   return {
     dir: {
       input: "src",
       includes: "_includes",
       data: "_data",
-      output: "_site",
+      output: OUTPUT_DIR,
     },
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",

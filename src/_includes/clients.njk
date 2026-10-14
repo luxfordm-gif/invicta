@@ -53,7 +53,7 @@
     <ul class="clients__track" role="list">
       {% for c in clients %}
       <li class="clients__logo" style="--s: {{ c.scale }}">
-        <img src="{{ ('/assets/logos/' + c.file) | v }}" alt="{{ c.name }}"
+        <img src="{{ '/assets/logos/' + c.file }}" alt="{{ c.name }}"
              width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
       </li>
       {% endfor %}
@@ -61,7 +61,7 @@
          roster should be announced once, not twice. #}
       {% for c in clients %}
       <li class="clients__logo" style="--s: {{ c.scale }}" aria-hidden="true">
-        <img src="{{ ('/assets/logos/' + c.file) | v }}" alt=""
+        <img src="{{ '/assets/logos/' + c.file }}" alt=""
              width="{{ c.w }}" height="{{ c.h }}" decoding="async" draggable="false">
       </li>
       {% endfor %}

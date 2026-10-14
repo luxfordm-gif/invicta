@@ -150,15 +150,15 @@ hideFooterCta: true
         <p class="hp-hero__kicker">Private water supplies, treatment and hygiene</p>
         <h1 class="hp-hero__title" id="hp-hero-title">Nobody else is responsible <span class="em">for your water.</span></h1>
         <div class="hp-hero__actions">
-          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}"><span class="hp-hero__call-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z"/></svg></span>24hr emergency: {{ site.phone }}</a>
+          <a class="btn-inquiry btn-inquiry--lg" href="/contact/#enquiry">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}"><span class="hp-hero__call-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z"/></svg></span>24hr emergency: {{ site.phone }}</a>
         </div>
       </div>
 
       <div class="hp-hero__strip" aria-hidden="true">
         <div class="hp-hero__track">
           {% for run in [1, 2] %}{% for src in heroStrip %}
-          <img src="{{ src }}" alt="" width="1536" height="1024" {% if run == 1 and loop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+          <img src="{{ src }}" alt="" width="1536" height="1024" sizes="(max-width: 599px) 352px, 592px" {% if run == 1 and loop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
           {% endfor %}{% endfor %}
         </div>
       </div>

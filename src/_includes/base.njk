@@ -18,6 +18,7 @@
 
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:title" content="{{ ogTitle or title }}">
   <meta property="og:description" content="{{ description }}">
@@ -35,32 +36,31 @@
 
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"><!-- rendered from the SVG at build, see .eleventy.js -->
   <meta name="theme-color" content="#0B1F3A"><!-- == --ground in tokens.css -->
 
-  <!-- Fonts: Figtree (sans) + Playfair Display italic (emotional accent) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <!-- Fonts: Figtree (sans) + Playfair Display italic (emotional accent), self-hosted
+       (styles/fonts.css). The two latin files are what every visitor needs, so
+       they start downloading now rather than after the CSS has been parsed. -->
+  <link rel="preload" href="/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="{{ '/styles/tokens.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/base.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/components.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/sections.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/case-bento.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/stats-band.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/clients.css' | v }}">
-  {% for s in extraStyles %}<link rel="stylesheet" href="{{ ('/styles/' + s + '.css') | v }}">
-  {% endfor %}<link rel="stylesheet" href="{{ '/styles/enquiry.css' | v }}">
-  <link rel="stylesheet" href="{{ '/styles/components/tooltip.css' | v }}"><!-- site-wide: the gloss filter can put a term on any page -->
-  <link rel="stylesheet" href="{{ '/styles/motion.css' | v }}">
+  {# Styles: one bundle every page shares, then one for this page's extras.
+     Minified and content-hashed by the cssBundle filter in .eleventy.js; the
+     order here is the cascade order. tooltip.css is site-wide because the
+     gloss filter can put a term on any page. #}
+  <link rel="stylesheet" href="{{ ['fonts', 'tokens', 'base', 'components', 'sections', 'case-bento', 'stats-band', 'clients', 'enquiry', 'components/tooltip', 'motion'] | cssBundle('site') }}">
+  {% if extraStyles and extraStyles.length %}<link rel="stylesheet" href="{{ extraStyles | cssBundle('page') }}">{% endif %}
 
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "{{ site.url }}/#business",
     "name": "{{ site.name }}",
+    "url": "{{ site.url }}/",
+    "image": "{{ site.url }}/assets/og-default.jpg",
     "telephone": "{{ site.tel }}",
     "email": "{{ site.email }}",
     "areaServed": [{% for c in maps.counties %}"{{ c }}"{% if not loop.last %}, {% endif %}{% endfor %}],
@@ -91,15 +91,9 @@
 {% if not hideEmergencyCta %}{% include "emergency-cta.njk" %}{% endif %}
 {% include "enquiry.njk" %}
 
-  <script src="{{ '/scripts/nav.js' | v }}" defer></script>
-  <script src="{{ '/scripts/carousel.js' | v }}" defer></script>
-  <script src="{{ '/scripts/filmstrip.js' | v }}" defer></script>
-  <script src="{{ '/scripts/enquiry.js' | v }}" defer></script>
-  <script src="{{ '/scripts/forms.js' | v }}" defer></script>
-  <script src="{{ '/scripts/coverage-band.js' | v }}" defer></script>
-  <script src="{{ '/scripts/count-up.js' | v }}" defer></script>
-  <script src="{{ '/scripts/tooltip.js' | v }}" defer></script>
-  <script src="{{ '/scripts/hero-media.js' | v }}" defer></script>
-  <script src="{{ '/scripts/motion.js' | v }}" defer></script>
+  {# One deferred bundle of the ten scripts, in their original order (jsBundle
+     in .eleventy.js: minified, content-hashed). Each is its own IIFE and
+     no-ops on a page without its markup, as they always did. #}
+  <script src="{{ ['nav', 'carousel', 'filmstrip', 'enquiry', 'forms', 'coverage-band', 'count-up', 'tooltip', 'hero-media', 'motion'] | jsBundle('site') }}" defer></script>
 </body>
 </html>

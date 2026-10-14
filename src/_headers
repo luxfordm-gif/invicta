@@ -1,0 +1,36 @@
+# Netlify response headers. Copied to the site root by .eleventy.js.
+#
+# CACHING. Netlify's default for everything is max-age=0, must-revalidate:
+# every stylesheet, script and photograph is re-requested on every page view
+# and answered with a 304. The built files below carry a content hash in
+# their name (the CSS/JS bundles, and every image @11ty/eleventy-img writes
+# to /img/), so a changed file is a new URL and the old one can be cached for
+# as long as a browser likes. /fonts/ is not hashed: the files never change,
+# and the note in fonts.css says to rename on replacement.
+#
+# /assets/ is the raw passthrough copy (the share image, the favicon, the
+# county boundaries) under its original, unhashed names, so it gets a day.
+
+/styles/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/scripts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=86400
+
+# SECURITY. Nothing on the site needs to be framed, sniffed or given device
+# access; saying so costs nothing and Lighthouse's best-practices audit and
+# the usual scanners look for each of these.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()

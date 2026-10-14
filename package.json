@@ -8,6 +8,10 @@
     "build": "eleventy"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^7.0.0",
+    "html-minifier-terser": "^7.2.0",
+    "lightningcss": "^1.33.0",
+    "terser": "^5.51.2"
   }
 }
