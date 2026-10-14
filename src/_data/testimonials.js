@@ -21,6 +21,13 @@
    done, and the pump that failed after ten years and came back better. The
    full text is in Stefan's forwarded email if it is ever wanted back.
 
+   EXCERPTS ON THE HOME PAGE (Matt, 14/10/26: "there's a lot of copy").
+   `excerpt` is what the home cards print: whole sentences lifted verbatim
+   from `quote`, never reworded, never cut mid-sentence. Each card's `scope`
+   line ("Failed borehole system, replaced and rebuilt") carries the context
+   the dropped sentences gave. `quote` keeps the full text for anywhere that
+   wants it, and the template falls back to it when there is no excerpt.
+
    `feature: true` marks the one that takes the large card. It is the longest
    and the most specific, so it earns the room; `pull` is a sentence lifted
    verbatim from its own text and set large above the rest. Only one entry
@@ -33,6 +40,9 @@ module.exports = [
     place: "Elstead, Surrey",
     scope: "Borehole to tap redesign, servicing and testing",
     pull: "Stefan is one of those rare people who genuinely cares about doing a job properly.",
+    excerpt: [
+      "When our borehole pump finally failed after 10 years, he was incredibly quick to respond and get us back up and running.",
+    ],
     quote: [
       "We have been hugely impressed with Stefan and Invicta Water Treatment. Stefan has completely redesigned and upgraded our water system, from the borehole pump right through to the taps in our home. He also takes care of the ongoing servicing and water quality testing, so we have complete confidence in both the system and the quality of our water.",
       "What really stands out is Stefan’s knowledge, care and responsiveness. When our borehole pump finally failed after 10 years, he was incredibly quick to respond and get us back up and running. Rather than simply replacing the failed pump, he took the opportunity to improve the original design, making the system more robust and significantly reducing the likelihood of the same problem happening again.",
@@ -41,6 +51,9 @@ module.exports = [
   {
     place: "Woking, Surrey",
     scope: "Failed borehole system, replaced and rebuilt",
+    excerpt: [
+      "I am pleased to say it is now working perfectly and we are very happy to recommend you for your professionalism and attention to detail.",
+    ],
     quote: [
       "I just want to thank you for the work done on our water system. We originally had a borehole set up through another supplier. After a few months we found this system continually breaking down with poor water quality and contamination issues.",
       "Thankfully we contacted you to completely replace and rebuild the system. I am pleased to say it is now working perfectly and we are very happy to recommend you for your professionalism and attention to detail.",
@@ -49,6 +62,9 @@ module.exports = [
   {
     place: "Effingham, Surrey",
     scope: "Complex requirements, and ongoing servicing",
+    excerpt: [
+      "Always responsive, thoroughly professional and a pleasure to work with.",
+    ],
     quote: [
       "Stefan and Invicta Water Treatment have done an outstanding job in resolving our more complex water requirements and subsequent servicing needs. Always responsive, thoroughly professional and a pleasure to work with.",
     ],

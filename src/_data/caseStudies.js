@@ -116,8 +116,9 @@ module.exports = [
     location: "Cotswolds",
     county: "Gloucestershire",
     services: ["design-install"],
-    blurb:
-      "A silted spring and a saline borehole that had defeated several firms.",
+    // Not the title again: the title already says "a silted spring and a
+    // saline borehole", and the home slide prints the two one above the other.
+    blurb: "Several water treatment firms had already tried and failed.",
     body: [
       "The client had tried several water treatment companies to solve the borehole and spring problems on site. The spring had been damaged during site works and was producing a lot of silt; the borehole was saline.",
       "We reconfigured the existing system, adding a settling raw-water tank, better filtration, and redesigning the reverse osmosis to work on this fouling water. As with any revamp of old equipment there were teething problems, but as each arose, we solved it.",

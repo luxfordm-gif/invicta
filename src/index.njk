@@ -172,7 +172,12 @@ hideFooterCta: true
            and Matt cut them (14/10/26). #}
         <h2 class="visually-hidden" id="hp-intro-title">Who we are</h2>
 
-        <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham MSc</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
+        {# WHAT WE DO FIRST, Stefan as the proof, the payoff last (Matt,
+           14/10/26). It opened on who runs the company, and the reader reached
+           the part about them only at the end of fifty words. "Never have to
+           think about" now hands straight to the problem section's "only gets
+           your attention when it goes wrong". #}
+        <p class="hp-intro__lead">We design, install and look after water treatment for homes, estates and commercial sites across the South East. Every system is overseen by <strong>Stefan Massingham MSc</strong>, a water chemist of thirty years, so you are left with water you never have to think about.</p>
 
         <a class="btn-line hp-intro__more" href="/about/">More about Invicta <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
 
@@ -212,35 +217,15 @@ hideFooterCta: true
     {% set clientsSurface = "section--light" %}
     {% include "clients.njk" %}
 
-    {# ===================== 2b — THE PROBLEM =====================
-      THE BEAT THE PAGE DID NOT HAVE. It ran hero, then who we are, then a list
-      of services, which only lands on a reader who has already decided they
-      have a problem. The H1 names the discomfort in one line and nothing
-      carried it any further; meanwhile the page's actual pain lines were in
-      the CREDENTIALS list at the very bottom ("Section 80 notice? Speak to us
-      first", "the rules that will catch you out if you get it wrong"), doing
-      no work down there.
-
-      This is not a new claim. The servicing page already says a fault goes
-      unnoticed until the water changes or a test fails; this says it where a
-      reader is still deciding whether to care, and covers both audiences at
-      once — the estate whose supply simply stops, and the duty-holder whose
-      building fails an inspection months after the fact.
-
-      Navy, off the back of the light intro above it, so the colour change does
-      the separating. The hairline that would normally open a second navy block
-      belongs to SERVICES below, which is the section it introduces.
-    #}
-    <section class="section hp-problem" aria-labelledby="hp-problem-title">
-      <div class="container">
-        <div class="hp-problem__inner">
-          <h2 class="statement hp-problem__line" id="hp-problem-title">The water only gets your attention <span class="em">when it goes wrong.</span></h2>
-          <p class="hp-problem__body">A private supply fails at the borehole, not at a call centre. A building's water fails a test months after the problem started. Either way, the first you hear of it is a bill, a notice, or a property with no water in it, and by then the cheap fix has passed.</p>
-        </div>
-      </div>
-    </section>
-
     {# ===================== 3 — SERVICES =====================
+      THE PROBLEM LINE IS THE HEADING NOW (Matt, 14/10/26: "to get to the
+      services, there's a lot of copy"). The page ran a separate problem
+      section, a 47-word paragraph, a hairline and "What do you need to sort?"
+      before the first card. The problem line was the strong half, so it heads
+      this section, and the intro's "water you never have to think about"
+      hands straight to it. The paragraph and the second heading go: the
+      cards below are already the questions the visitor arrives with.
+
       ROUTED BY PROBLEM, NOT LISTED BY SERVICE. Every heading here is the
       question the visitor arrived with, because someone who has just been
       served a notice does not search for "water hygiene", they search for what
@@ -251,10 +236,7 @@ hideFooterCta: true
     #}
     <section class="section hp-services" id="services" aria-labelledby="hp-services-title">
       <div class="container">
-        {# Two navy sections in a row now, so the rule is what says a new one
-           has started. Same job it does under the hero on a service page. #}
-        <div class="rule hp-services__rule"></div>
-        <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
+        <h2 class="statement hp-services__title" id="hp-services-title">The water only gets your attention <span class="em">when it goes wrong.</span></h2>
 
         <div class="hp-services__grid">
           {# THE FLAGSHIP CARRIES THE PHOTOGRAPH, and the four beside it do not.
@@ -266,11 +248,25 @@ hideFooterCta: true
              without a word of copy. Same frame as every other photograph on
              the site: rounded, clipped, drifting on scroll. #}
           <a class="hp-svc" href="/services/private-water-supplies/">
-            <span class="hp-svc__media parallax">
-              <img src="/assets/b-estate-7931.webp" alt="A mini digger on the lawn of a timber-framed country house, with a borehole pump and hose laid out on the grass." width="1536" height="1024" loading="lazy" decoding="async">
+            {# THREE FRAMES, CROSSFADING (Matt, 14/10/26), in the order a
+               supply goes in: the dig, the pipe laid to the house, the
+               finished plant room. (The open borehole kiosk was a frame here
+               until Matt vetoed it, 14/10/26.) Same script as the home hero (hero-media.js), on a slower
+               hold so the two never change together. Only the first frame
+               carries alt text: the others are the same story told again, and
+               inside a link a screen reader would read all three. With no JS
+               or with reduced motion, the first frame simply stays. #}
+            <span class="hp-svc__media parallax" data-crossfade data-crossfade-hold="7000">
+              <img class="is-active" src="/assets/b-estate-7931.webp" alt="A mini digger on the lawn of a timber-framed country house, with a borehole pump and hose laid out on the grass." width="1536" height="1024" loading="lazy" decoding="async">
+              <img src="/assets/r-cottage-2765.webp" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" decoding="async">
+              <img src="/assets/lk-effingham-8608.webp" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" decoding="async">
             </span>
-            <h3 class="hp-svc__title">Off the mains, or wish you were?</h3>
-            <p class="hp-svc__desc">Your own supply carries on through hosepipe bans and mains failures. We design it around your source and build it to run for decades.</p>
+            {# Matt's wording (14/10/26). People weighing this up think "a
+               private water supply", not "a borehole": the borehole is how
+               it is done, not what they want. The line below starts "It" so
+               it does not say "your own" twice in a row. #}
+            <h3 class="hp-svc__title">Thinking about your own private water supply?</h3>
+            <p class="hp-svc__desc">It carries on through hosepipe bans and mains failures. We design it around your source and build it to run for decades.</p>
             <span class="hp-svc__go">Private water supplies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
 
@@ -281,7 +277,10 @@ hideFooterCta: true
           </a>
 
           <a class="hp-svc" href="/services/water-hygiene/">
-            <h3 class="hp-svc__title">Legionella and hygiene to keep on top of?</h3>
+            {# Named for the thing a duty holder actually books (Matt,
+               14/10/26), which is also the Water Hygiene page's own button:
+               "Book a risk assessment". #}
+            <h3 class="hp-svc__title">Need a Legionella risk assessment?</h3>
             <p class="hp-svc__desc">Legal compliance is not negotiable. We handle water hygiene, sampling, temperature monitoring and Legionella control across your estate or portfolio.</p>
             <span class="hp-svc__go">Water hygiene <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
@@ -351,7 +350,7 @@ hideFooterCta: true
       services: ["private-water-supplies"],
       body: ["Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation."],
       highlight: "Running continuously since 2023, and passing UKAS-accredited testing every year.",
-      blurb: "A high-volume supply for a whole estate, running without a break since 2023.",
+      blurb: "A high-volume private supply for several properties and the estate's own operations.",
       image: "/assets/img-9257.webp",
       imageAlt: "A red brick water tower beside a barn with solar panels, with an Invicta van on the drive."
     } %}
@@ -366,9 +365,18 @@ hideFooterCta: true
         </div>
 
         <div class="hp-cases" role="region" aria-roledescription="carousel" aria-label="Case studies">
-          <button type="button" class="hp-cases__arrow hp-cases__arrow--prev" data-cc-prev aria-label="Previous case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <button type="button" class="hp-cases__arrow hp-cases__arrow--next" data-cc-next aria-label="Next case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
+          {# ARROWS PINNED LEFT AND RIGHT, JUST OUTSIDE THE CONTENT (Matt,
+             14/10/26). They started out in the window's own gutters, which on a
+             wide screen put "next" at the far right edge; then they moved in
+             beside the dots, which was close but read as a control panel under
+             the slide. Now they sit either side of the stage, level with the
+             middle of the photograph, one arrow's width outside the content
+             edge. The stage wrapper exists so "the middle" means the slide's
+             middle, not the slide plus the dots row under it. #}
+          <div class="hp-cases__stage">
+            <button type="button" class="hp-cases__arrow hp-cases__arrow--prev" data-cc-prev aria-label="Previous case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button type="button" class="hp-cases__arrow hp-cases__arrow--next" data-cc-next aria-label="Next case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
           <div class="hp-cases__track">
             {% for c in slides %}
             {% set svc = c.services[0] %}
@@ -389,7 +397,10 @@ hideFooterCta: true
                    service pages' case studies; here the one-line blurb does the
                    job, and the button is where the rest of the story is. #}
                 <h3 class="hp-case__title">{{ c.title | safe }}</h3>
-                <p class="hp-case__body">{{ c.blurb }}</p>
+                {# The problem, then what we did about it, at body size (Matt,
+                   14/10/26: "a simple font with a bit more body copy, but the
+                   body copy in a smaller size"). #}
+                <p class="hp-case__body">{{ c.blurb }}{% if c.highlight %} {{ c.highlight }}{% endif %}</p>
                 <p class="hp-case__link">
                   <a class="btn-line" href="/services/{{ svc }}/">More on {{ serviceNames[svc] | lower }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
                 </p>
@@ -397,7 +408,7 @@ hideFooterCta: true
             </article>
             {% endfor %}
           </div>
-
+          </div>
           <div class="hp-cases__dots" role="tablist" aria-label="Choose a case study"></div>
         </div>
       </div>
@@ -425,7 +436,7 @@ hideFooterCta: true
             <svg class="voice__mark" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 24V14.4C0 6.2 4.3 1.4 12.2 0l1.4 3.1C9.2 4.6 7 7.4 6.8 11.2H13V24H0zm19 0V14.4C19 6.2 23.3 1.4 31.2 0l1.4 3.1c-4.4 1.5-6.6 4.3-6.8 8.1H32V24H19z"/></svg>
             <blockquote class="voice__quote">
               {% if t.pull %}<p class="voice__pull">{{ t.pull }}</p>{% endif %}
-              {% for para in t.quote %}<p>{{ para }}</p>{% endfor %}
+              {% for para in (t.excerpt or t.quote) %}<p>{{ para }}</p>{% endfor %}
             </blockquote>
             <figcaption class="voice__by">
               <span class="voice__who">Private water supply, near {{ t.place }}</span>

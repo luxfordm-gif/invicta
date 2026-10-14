@@ -1,5 +1,8 @@
 /* ==========================================================================
-   hero-media.js — the home hero's crossfading backdrop.
+   hero-media.js — crossfading image stacks: the home hero's backdrop, and
+   the flagship services card ([data-crossfade], 14/10/26). Each stack runs on
+   its own timer; data-crossfade-hold sets it, so the card can run slower
+   than the hero and the two never change together.
 
    Three <img> in .hp-hero__media, stacked by CSS, one of them carrying
    .is-active. All this does is move that class along on a timer; the fade
@@ -19,15 +22,16 @@
 (function () {
   "use strict";
 
-  var HOLD = 6000;   /* how long each frame sits before the next one starts */
+  var HOLD = 6000;   /* default: how long each frame sits before the next one starts */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  var media = document.querySelector("[data-hero-media]");
-  if (!media) return;
+  [].forEach.call(document.querySelectorAll("[data-hero-media], [data-crossfade]"), crossfade);
 
+  function crossfade(media) {
   var frames = media.querySelectorAll("img");
   if (frames.length < 2) return;
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var hold = parseInt(media.getAttribute("data-crossfade-hold"), 10) || HOLD;
   var i = 0;
   var timer = null;
 
@@ -39,7 +43,7 @@
 
   function start() {
     if (timer || reduce.matches || document.hidden) return;
-    timer = window.setInterval(step, HOLD);
+    timer = window.setInterval(step, hold);
   }
 
   function stop() {
@@ -61,4 +65,5 @@
   }
 
   start();
+  }
 })();
