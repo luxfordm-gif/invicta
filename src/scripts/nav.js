@@ -58,21 +58,21 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavH);
 
     var reduceNav = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // Smart-hide runs on desktop only. On mobile the nav is not sticky at all —
-    // it simply scrolls away with the page — so there is nothing to hide, and
-    // any breadcrumb below it pins itself to the top in CSS.
-    var deskMq = window.matchMedia("(min-width: 900px)");
+    // Smart-hide runs at every width: on a phone the nav is sticky too, and
+    // slides away on scroll-down and back on scroll-up, as on desktop.
     var lastY = window.scrollY;
     var ticking = false;
     function applyNav() {
       ticking = false;
       var y = window.scrollY < 0 ? 0 : window.scrollY;
       nav.classList.toggle("is-scrolled", y > 8);
-      // Smart header: on desktop, scrolling DOWN past the header slides the nav
-      // and breadcrumb up out of view; scrolling UP (or returning near the top)
-      // brings them back. The utility bar with the contact number stays pinned
-      // throughout. A small delta threshold avoids flicker on tiny jitters.
-      if (deskMq.matches && !reduceNav.matches) {
+      // Smart header: scrolling DOWN past the header slides the nav and
+      // breadcrumb up out of view; scrolling UP (or returning near the top)
+      // brings them back. On desktop the utility bar with the contact number
+      // stays pinned throughout. A small delta threshold avoids flicker on
+      // tiny jitters. Never while the full-screen menu is open: a transform on
+      // the nav would make it the containing block for the fixed overlay.
+      if (!reduceNav.matches && !root.classList.contains("nav-open")) {
         var delta = y - lastY;
         if (delta > 4 && y > 160) {
           root.classList.add("header-up");        // scrolling down, clear of the header

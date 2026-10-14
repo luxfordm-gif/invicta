@@ -917,18 +917,20 @@
   html.header-up .nav,
   html.header-up .breadcrumb { transform: translateY(calc(-1 * (var(--ubar-h) + var(--nav-h) + 160px))); }
 }
-/* Phones: the nav itself is not sticky (it scrolls away with the page), so on
-   the pages that have one the breadcrumb becomes the pinned bar — it travels up
-   with the content and then holds at the very top, keeping the page's position
-   in the site visible without a header parked there the whole way down.
+/* Phones: the breadcrumb pins directly under the nav. When the nav slides
+   away on scroll-down (html.header-up) the breadcrumb moves up by exactly the
+   nav's height and holds at the very top, so the page's place in the site
+   stays visible; on scroll-up the two come back down together.
    z-index sits below the nav's 50 so the full-screen menu still covers it. */
 @media (max-width: 899.98px) {
   .breadcrumb {
     position: sticky;
-    top: 0;
+    top: var(--nav-h);
     z-index: 45;
     padding-block: 13px;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  html.header-up .breadcrumb { transform: translateY(calc(-1 * var(--nav-h))); }
 }
 /* A hero under a breadcrumb gives back the breadcrumb's own height, so its
    first line (the eyebrow) lands at the same distance below the nav as the
