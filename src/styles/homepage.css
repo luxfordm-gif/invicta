@@ -140,11 +140,69 @@
   justify-content: center;
   gap: var(--space-2);
 }
-/* On a phone the two buttons go full width and stack, so the emergency number
-   is a whole tap target rather than half a row. */
+/* The phone icon on the emergency line is only drawn on a phone (below). */
+.hp-hero__call-icon { display: none; }
+
+/* ON A PHONE (Matt, 14/10/26: "the buttons are definitely too wide.
+   Everything looks a bit too cramped. Doesn't look premium"). The desktop
+   composition shrunk to 390px put every element against the gutters: the
+   kicker wrapped at the full measure, the H1 ran almost edge to edge, and two
+   60px pills spanning the column made one heavy block under it. Here the
+   type block gets a narrower measure and more air between its parts, and
+   the buttons stop filling the row:
+   - Book a site survey is a pill sized to its label, centred. One solid
+     button reads as the confident first move; a full-width bar reads as a
+     form.
+   - The emergency number steps down to a quiet line under it, with a phone
+     glyph and an underline so it still reads as something to tap, and its
+     padding keeps the tap target at least 44px tall. The floating dock
+     carries the emergency line on this screen too, so a second pill here
+     was weight without new information. */
+/* MORE IMPACT, SECOND PASS (Matt, 14/10/26: the hero "just doesn't look
+   impactful enough"). The first pass gave the type air but left it small in a
+   lot of navy, with only a band of sky from the strip reaching the first
+   screen. Now the H1 is the largest thing a phone shows (about 47px at
+   390px, still three lines), the spacing is tightened so the photographs
+   start well up the first screen, and the strip (below) opens on a building
+   rather than on a frame of cloud. */
 @media (max-width: 599.98px) {
-  .hp-hero__actions { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: 12px; }
-  .hp-hero__actions > * { justify-content: center; }
+  .hp-hero { --hp-hero-air: clamp(40px, 2vw + 5vh, 80px); }
+  .hp-hero__inner { padding-bottom: clamp(40px, 6vh, 64px); }
+  .hp-hero__kicker {
+    max-width: 30ch;
+    font-size: 15px;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+  .hp-hero__title {
+    margin-top: 14px;
+    font-size: clamp(40px, 12vw, 50px);   /* 13.4vw (52px at 390px) was too big (Matt, 14/10/26) */
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .hp-hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+  }
+  .hp-hero__actions .btn-inquiry--lg { font-size: 15px; padding: 16px 28px; }
+  .hp-hero__actions .btn-line {
+    gap: 9px;
+    padding: 12px 8px;
+    border: 0;
+    border-radius: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--on-dark-soft);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+  }
+  .hp-hero__actions .btn-line:hover { background: none; color: var(--on-dark); }
+  .hp-hero__call-icon { display: inline-flex; }
+  .hp-hero__call-icon svg { display: block; width: 15px; height: 15px; }
 }
 
 /* THE STRIP. Large frames, edge to edge, MOVED BY THE PAGE SCROLL rather
@@ -175,6 +233,16 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   margin-right: clamp(6px, 0.6vw, 10px);
+}
+/* Phone: frames a little shorter, so more of the strip and the next frame's
+   edge sit on the first screen. And the terrace frame that opens the strip
+   on a desktop goes to the back: a phone shows one frame at a time, and that
+   one is mostly evening sky, so the first picture on the first screen was a
+   cloud. The brick tower now opens it. (order only reshuffles the boxes; the
+   scroll link still moves the track as a whole.) */
+@media (max-width: 599.98px) {
+  .hp-hero__track img { height: clamp(300px, 50vh, 440px); }
+  .hp-hero__track img:first-child { order: 1; }
 }
 /* Reduced motion: the script never moves it, and the band becomes a plain
    sideways scroll instead. */
@@ -225,8 +293,13 @@ p.hp-intro__lead {
   line-height: 1.22;
   letter-spacing: -0.018em;
   max-width: 44ch;
+  /* Opened again on a phone (Matt, 14/10/26), where the passage runs to seven
+     centred lines at 22px: see the media query below. */
   color: var(--ink);
   text-wrap: balance;
+}
+@media (max-width: 899.98px) {
+  p.hp-intro__lead { line-height: 1.38; }
 }
 /* Stefan's name is the point of the sentence: this section exists to say a
    person is behind the work. Weight rather than colour, so it lifts without
@@ -275,6 +348,10 @@ p.hp-intro__lead {
    only sizes a box whose height is auto, so without this line the ratio
    computes, is ignored, and the card opens with a 961px-tall photograph. */
 .hp-svc__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 30%; }
+/* The other three routes carry a photograph on a phone only; see index.njk. */
+@media (min-width: 900px) {
+  .hp-svc__media--phone { display: none; }
+}
 /* The crossfading stack. The first frame stays in flow and sets the box; the
    others lie on top of it. Only .is-active is opaque, and the fade is opacity
    alone, so it never touches layout. Without JS the first frame carries
@@ -327,6 +404,33 @@ p.hp-intro__lead {
 .hp-svc:hover .hp-svc__go svg, .hp-svc:focus-visible .hp-svc__go svg { transform: translateX(5px); }
 @media (prefers-reduced-motion: reduce) {
   .hp-svc__go svg { transition: none; }
+}
+/* ON A PHONE THE SERVICE NAME HAS TO BE FOUND (Matt, 14/10/26: "I don't
+   notice that they're the services"). Stacked in one column, each block is a
+   22px question and a paragraph, and a 12px caps caption at the foot read as
+   small print rather than as where the block takes you. Here it is set as a
+   real link: sentence case at body size in white, with the arrow in a ringed
+   circle so it reads as something to tap. The desktop spread keeps the quiet
+   caption, where the two-column ruled layout already says "four routes". */
+@media (max-width: 899.98px) {
+  .hp-svc__go {
+    gap: 12px;
+    padding-top: var(--space-3);
+    font-size: 17px;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    color: var(--on-dark);
+  }
+  .hp-svc__go svg {
+    box-sizing: content-box;
+    width: 14px;
+    height: 14px;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    transition: transform 0.25s ease, border-color 0.2s ease;
+  }
+  .hp-svc:hover .hp-svc__go svg, .hp-svc:focus-visible .hp-svc__go svg { border-color: var(--on-dark); }
 }
 
 @media (min-width: 900px) {
@@ -442,6 +546,20 @@ p.hp-stat__figure {
   color: var(--ink-muted);
 }
 
+/* ON A PHONE THE HEADING TOOK FOUR LINES (Matt, 14/10/26: "it just makes
+   the whole section rather deep"). The 01 / 08 counter held a column beside
+   it, and at the 38px section size "Supplies we've designed, installed and
+   looked after." then broke into four short lines above the carousel. The
+   dots under the carousel already say where you are, so on a phone the
+   counter goes, the heading takes the full measure a step smaller, and the
+   italic half runs on after the roman one instead of starting its own line
+   (each half is too long for one line at this width, so as two blocks they
+   made two lines each). Three lines at 360 to 430px. */
+@media (max-width: 599.98px) {
+  .hp-work__count { display: none; }
+  .hp-work__title { max-width: none; font-size: clamp(30px, 8.6vw, 36px); }
+  .hp-work__title .em { display: inline; }
+}
 .hp-cases { position: relative; margin-top: var(--flow-md); }
 .hp-cases__track {
   /* POSITIONED, so it contains its own absolutely placed descendants. The

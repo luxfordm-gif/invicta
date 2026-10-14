@@ -108,14 +108,33 @@
    own step down from it rather than the tight within-run gap. */
 .gallery__caption + .gallery__row { margin-top: var(--space-4); }
 
-/* --- Phone: everything in one column at the photograph's own shape. A 2:1
-   lead is a letterbox at 360px wide and a 3:4 crop of a plant room is a
-   slot, so both go back to 3:2. --- */
+/* --- Phone: singles AND doubles, not one long column (Matt, 14/10/26:
+   "some images two on a row so it's not all just single images. Just breaks
+   up the page"). Every picture at full width made the run one undifferentiated
+   scroll of identical cards. Now:
+   - the lead stays a single full-width frame, back at 3:2 (a 2:1 letterbox is
+     a strip at 360px wide);
+   - a pair sits two up, both cells equal and cropped to 4:5, so they share a
+     height without the 2fr/1fr split, which leaves a sliver at this width;
+   - a trio opens on one full-width frame and puts the other two side by side;
+   - a MIRRORED pair stacks as two singles at 3:2. Pairs alternate sides on
+     the desktop, so this is every other pair: a job with four pairs reads
+     double, single, single, double, single, single rather than turning into
+     eight thumbnails in a grid.
+   The rhythm the desktop gets from its 2fr/1fr pairs, in the terms a phone
+   has room for. --- */
 @media (max-width: 599.98px) {
-  .gallery__row--pair, .gallery__row--pair.gallery__row--mirror, .gallery__row--trio { grid-template-columns: minmax(0, 1fr); }
+  .gallery__row { --g-gap: 10px; }
+  .gallery__row--pair,
+  .gallery__row--trio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery__row--pair.gallery__row--mirror { grid-template-columns: minmax(0, 1fr); }
   .gallery__row--mirror .gallery__cell--wide { order: 0; }
+  .gallery__row--trio .gallery__cell:first-child { grid-column: 1 / -1; }
   .gallery__lead .gallery__frame img,
-  .gallery__cell--narrow .gallery__frame img { aspect-ratio: 3 / 2; }
+  .gallery__row--mirror .gallery__frame img,
+  .gallery__row--trio .gallery__cell:first-child .gallery__frame img { aspect-ratio: 3 / 2; }
+  .gallery__row--pair:not(.gallery__row--mirror) .gallery__frame img,
+  .gallery__row--trio .gallery__cell:not(:first-child) .gallery__frame img { aspect-ratio: 4 / 5; }
 }
 
 /* --- Motion ---------------------------------------------------------------

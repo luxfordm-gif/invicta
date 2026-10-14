@@ -302,11 +302,17 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 
 @media (max-width: 899.98px) {
   .ubar { display: none; }          /* emergency lives in the floating button on mobile */
-  /* NOT sticky on phones. The bar scrolls away with the page and stays gone
-     until you scroll back to the top, which hands a small screen its full
-     height back. Pages that carry a breadcrumb pin that instead, once it
-     reaches the top — see the breadcrumb block in sections.css. */
-  .nav { position: static; }
+  /* THE SMART HEADER ON PHONES TOO (Matt, 14/10/26: "why doesn't the
+     navigation come back in when I start scrolling back up?"). The bar used
+     to be static here and stayed gone until you reached the top again, so
+     the menu was a long scroll away from anywhere on the page. Now it
+     behaves as on desktop: it slides away as you scroll down, which still
+     hands a small screen its full height back, and slides in as soon as you
+     scroll up. There is no utility bar on a phone, so it pins at 0 and
+     clears only its own height. Pages with a breadcrumb keep it pinned
+     under the bar; see the breadcrumb block in sections.css. */
+  .nav { position: sticky; top: 0; }
+  html.header-up .nav { transform: translateY(-100%); }
   /* A backdrop-filter on the bar would make it the containing block for the
      fixed full-screen menu (inset:0 would size to the bar, not the viewport),
      so drop the blur on mobile. It no longer sits over the hero as you scroll,
@@ -315,7 +321,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   .nav {
     -webkit-backdrop-filter: none; backdrop-filter: none;
     background: var(--ground);
-    transition: none;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
   /* Menu open: the top bar + brand + close button invert to sit on the cream menu.
      Pin the bar with position:fixed — while the menu is open <html> is

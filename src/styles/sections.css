@@ -47,6 +47,12 @@
   color: var(--on-dark);
   max-width: none;
 }
+/* 1.12 is display leading, right for two short lines at 40px. On a phone the
+   same lead is 23px over five or six lines, and that tight it read as a block
+   (Matt, 14/10/26: "increase the line height slightly on mobile"). */
+@media (max-width: 899.98px) {
+  .hero__lead-lg { line-height: 1.32; }
+}
 /* The second, quieter half of the hero copy. It is secondary to the large lead
    above it, but it is still a full paragraph of body copy on a navy ground —
    at 60% white it greyed out and became genuinely hard to read on a phone. Use
@@ -917,18 +923,20 @@
   html.header-up .nav,
   html.header-up .breadcrumb { transform: translateY(calc(-1 * (var(--ubar-h) + var(--nav-h) + 160px))); }
 }
-/* Phones: the nav itself is not sticky (it scrolls away with the page), so on
-   the pages that have one the breadcrumb becomes the pinned bar — it travels up
-   with the content and then holds at the very top, keeping the page's position
-   in the site visible without a header parked there the whole way down.
+/* Phones: the breadcrumb pins directly under the nav. When the nav slides
+   away on scroll-down (html.header-up) the breadcrumb moves up by exactly the
+   nav's height and holds at the very top, so the page's place in the site
+   stays visible; on scroll-up the two come back down together.
    z-index sits below the nav's 50 so the full-screen menu still covers it. */
 @media (max-width: 899.98px) {
   .breadcrumb {
     position: sticky;
-    top: 0;
+    top: var(--nav-h);
     z-index: 45;
     padding-block: 13px;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  html.header-up .breadcrumb { transform: translateY(calc(-1 * var(--nav-h))); }
 }
 /* A hero under a breadcrumb gives back the breadcrumb's own height, so its
    first line (the eyebrow) lands at the same distance below the nav as the
@@ -941,6 +949,14 @@
    <script> straight after the nav, so the hero is never the NEXT sibling. The
    old adjacent rule here had silently never matched. */
 .breadcrumb ~ .hero { padding-top: max(24px, calc(var(--hero-y-top) - 52px)); }
+/* BUT NOT ON A PHONE OR TABLET (Matt, 14/10/26: the gap under the breadcrumb
+   "is too tight"). Below 900px the breadcrumb is the pinned bar, a ruled band
+   of its own rather than a line inside the header, and --hero-y-top is small
+   enough there that the give-back always hit the 24px floor. The eyebrow sat
+   right under the rule. It gets a proper step instead. */
+@media (max-width: 899.98px) {
+  .breadcrumb ~ .hero { padding-top: 48px; }
+}
 .breadcrumb__list {
   display: flex;
   flex-wrap: wrap;
