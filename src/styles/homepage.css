@@ -82,120 +82,82 @@
 }
 
 /* ==========================================================================
-   1 — HERO. Outcome, then the emergency number.
+   1 — HERO. Type on clean navy, photographs running beneath it (14/10/26).
+
+   The first screen is the type block centred in whatever height is left
+   above the strip, with the strip pinned to its foot, so the photographs
+   start on the first screen at any window height. The H1 and the strip size
+   by window HEIGHT as well as width, so a 1366x768 laptop still gets the
+   type and the whole strip without scrolling.
    ========================================================================== */
 .hp-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
   display: flex;
-  /* CENTRED, not bottom-aligned. Sitting the type on the floor of the frame
-     made the sky read as a hole above it rather than as air around it, and it
-     pushed the whole block far enough down that the eyebrow, the heading, the
-     lead and two buttons arrived in one dense mass at the bottom of the screen.
-     Centred, the same copy has sky above and below and reads as composed. The
-     padding is symmetric for the same reason: with an asymmetric pad, `center`
-     centres the content box, not the picture, and lands visibly low. */
-  align-items: center;
-  /* Full viewport, LESS the two sticky bars above it. `100svh` on its own puts
-     the bottom of the hero a nav's height below the fold, so the CTAs are cut
-     off on exactly the phones where they matter most. */
+  flex-direction: column;
   min-height: calc(100svh - var(--ubar-h) - var(--nav-h));
-  padding-block: clamp(48px, 7vh, 104px);
+  padding-top: clamp(24px, 4vh, 72px);
+  padding-bottom: 0;
+  background: var(--ground);
+  overflow: hidden;
 }
-/* --- Desktop: the picture runs up behind the floating nav -----------------
-   The photograph used to start BELOW the nav, so the first thing under the
-   emergency bar was a band of flat navy. The hero is now pulled up by exactly
-   what the nav occupies in the flow (--nav-h) so the picture meets the
-   emergency bar, and the nav sits on the photograph. The bar is translucent
-   at rest, so the picture carries on faintly through it.
-
-   The nav STAYS IN THE FLOW. It still takes its space and still slides away on
-   scroll; this is a negative margin on one section, not a change to how the
-   header works on every page. It paints above because .nav carries z-index 50
-   and .hp-hero makes no competing stacking context of its own (its isolate is
-   for the media behind the copy).
-
-   The padding-top puts back what the margin took away, so the headline keeps
-   its optical centre in the space BELOW the nav rather than centring in a box
-   the nav is covering the top of. */
-@media (min-width: 900px) {
-  .hp-hero {
-    margin-top: calc(-1 * var(--nav-h));
-    min-height: calc(100svh - var(--ubar-h));
-    padding-top: calc(clamp(48px, 7vh, 104px) + var(--nav-h));
-  }
+.hp-hero__inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: clamp(28px, 4.5vh, 64px);
 }
-.hp-hero__media { position: absolute; inset: 0; z-index: -1; }
-/* The frames are stacked, not laid out: every one fills the box and only the
-   one carrying .is-active is opaque. Transition on opacity alone so the
-   crossfade is a compositor job and never touches layout. The first frame has
-   no transition to fade IN from nothing on load, because it starts active. */
-.hp-hero__media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 42%;
-  opacity: 0;
-  transition: opacity 1.6s ease-in-out;
-}
-.hp-hero__media img.is-active { opacity: 1; }
-/* No JS, no classes changed: the first frame is the hero, as before. */
-.hp-hero__media img:first-child { opacity: 1; }
-.hp-hero__media img:first-child:not(.is-active) { opacity: 0; }
-@media (prefers-reduced-motion: reduce) {
-  .hp-hero__media img { transition: none; }
-}
-/* Two washes, doing two different jobs: the horizontal one keeps the left third
-   dark enough to read 118px of white type against, the vertical one lands the
-   bottom edge on the navy the trust strip sits against. */
-.hp-hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 68% 58% at 50% 46%, rgb(var(--ground-rgb) / 0.72) 0%, rgb(var(--ground-rgb) / 0.42) 58%, rgb(var(--ground-rgb) / 0.24) 100%),
-    linear-gradient(to top, rgb(var(--ground-rgb) / 0.82) 0%, rgb(var(--ground-rgb) / 0) 46%);
-}
-.hp-hero__title {
-  /* No margin-top: --flow-heading was the gap under the eyebrow, and the eyebrow
-     has gone. Left in, it pushed the whole centred block half a line low. */
-  /* No bespoke size here any more. This started as a home-page-only override
-     when the shared h1 was 118px; the whole desktop scale has since come down
-     to 96px (see base.css), which fixes it everywhere rather than only here.
-     One scale, one place to change it. The measure still widens from 15ch,
-     because smaller type needs more characters to hold the same block. */
-  max-width: 17ch;
-  margin-inline: auto;
-  color: var(--on-dark);
-}
-.hp-hero__lead {
-  margin-top: var(--flow-lead);
-  margin-inline: auto;
-  max-width: 560px;
+/* A plain line, not an eyebrow: sentence case, regular weight, soft. */
+.hp-hero__kicker {
   font-size: var(--text-lead);
-  line-height: 1.55;
   color: var(--on-dark-soft);
 }
-/* CENTRED. The hero was ranged left against a wash that was itself built to
-   keep the left third dark; both change together, or the type moves off the
-   dark part and stops being readable. The wash is now an even centred one. */
-.hp-hero .container { text-align: center; }
+.hp-hero__title {
+  margin-top: var(--flow-heading);
+  max-width: 24ch;   /* two lines at 96px: "Nobody else is responsible / for your water." */
+  font-size: clamp(44px, min(6.7vw, 10.5vh), 96px);
+  color: var(--on-dark);
+}
+.hp-hero__title .em { display: block; }
 .hp-hero__actions {
-  margin-top: clamp(32px, 4vw, 48px);
-  justify-content: center;
+  margin-top: clamp(24px, 4.5vh, 52px);
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-2);
 }
-.hp-hero__actions > * { flex: 0 0 auto; }
 /* On a phone the two buttons go full width and stack, so the emergency number
    is a whole tap target rather than half a row. */
 @media (max-width: 599.98px) {
-  .hp-hero__actions { display: grid; gap: 12px; }
+  .hp-hero__actions { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: 12px; }
   .hp-hero__actions > * { justify-content: center; }
+}
+
+/* THE STRIP. Large frames, edge to edge, moving on their own. Two identical
+   runs in one track, translated by exactly half its width: margin-right on
+   every frame rather than gap, for the reason clients.css gives (gap leaves
+   the halves unequal and the loop jumps). The keyframes are the logo band's
+   own, clients-marquee, which clients.css loads on every page. */
+.hp-hero__strip { overflow: hidden; }
+.hp-hero__track {
+  display: flex;
+  width: max-content;
+  animation: clients-marquee 110s linear infinite;
+  will-change: transform;
+}
+.hp-hero__track img {
+  flex: none;
+  height: clamp(180px, 30vh, 420px);
+  width: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin-right: clamp(6px, 0.6vw, 10px);
+}
+.hp-hero__strip:hover .hp-hero__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero__track { animation: none; }
+  .hp-hero__strip { overflow-x: auto; scrollbar-width: none; }
 }
 
 /* ==========================================================================

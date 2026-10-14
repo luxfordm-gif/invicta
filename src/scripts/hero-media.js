@@ -1,11 +1,11 @@
 /* ==========================================================================
-   hero-media.js — crossfading image stacks: the home hero's backdrop, and
-   the flagship services card ([data-crossfade], 14/10/26). Each stack runs on
-   its own timer; data-crossfade-hold sets it, so the card can run slower
-   than the hero and the two never change together.
+   hero-media.js — crossfading image stacks ([data-crossfade]): today, the
+   flagship services card on the home page. It was written for the old home
+   hero's backdrop ([data-hero-media], still matched), which became a running
+   photo strip on 14/10/26. Each stack runs on its own timer, set by
+   data-crossfade-hold.
 
-   Three <img> in .hp-hero__media, stacked by CSS, one of them carrying
-   .is-active. All this does is move that class along on a timer; the fade
+   A few <img> stacked by CSS, one of them carrying .is-active. All this does is move that class along on a timer; the fade
    itself is a CSS opacity transition, so nothing here touches layout and the
    whole thing stays on the compositor.
 

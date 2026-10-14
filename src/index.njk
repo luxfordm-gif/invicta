@@ -120,46 +120,46 @@ hideFooterCta: true
     </script>
 
     {# ===================== 1 — HERO =====================
-      Full screen, left-aligned, and only two things to do: book the survey, or
-      call the emergency line. The photograph is a client's terrace at sunset,
-      looking out over the hills (L Mill, Brecon), held right back under two washes, so the first screen is TYPE with a
-      place behind it rather than a picture with type on it.
+      TYPE ON CLEAN NAVY, PHOTOGRAPHS BENEATH IT (Matt, 14/10/26, from a
+      reference he liked, signed off on a /preview/home-hero/ mock-up). The old
+      hero set the type over three crossfading photographs under two washes,
+      and he found it dated. Now the first screen is a centred, confident H1 in
+      white with the site's italic accent, the same two buttons, and a band of
+      large photographs running underneath on their own.
 
-      The sticky emergency bar and nav above are untouched, so the number stays
-      in view for the whole page; the outlined button here is the same number
-      said once at full size, for someone who has landed mid-crisis.
-    #}
+      The H1 is the live copy, unchanged; only the layout moved. The small line
+      above it is sentence case, not an eyebrow: the page has none now.
+
+      THE STRIP is the client logo band's technique (clients.css): two
+      identical runs side by side, translated by exactly half, so the loop is
+      seamless. It pauses on hover, and with reduced motion it stops and
+      becomes a plain sideways scroll. It is scenery under the heading, so it
+      is aria-hidden. No vans: the van livery still shows the old number. #}
+    {% set heroStrip = [
+      "/assets/l-mill-1879.webp",
+      "/assets/b-estate-0416.webp",
+      "/assets/b-estate-4927.webp",
+      "/assets/img-0428.webp",
+      "/assets/lk-effingham-8608.webp",
+      "/assets/uppark-0846.webp",
+      "/assets/b-estate-7931.webp",
+      "/assets/s-cottage-5641.webp"
+    ] %}
     <section class="section hp-hero" id="hero" aria-labelledby="hp-hero-title">
-      {# THREE FRAMES, CROSSFADING. One still picture behind the one screen
-         everybody sees; three says the range of the work without asking anyone
-         to click. All real jobs: the mill at dusk, a Tudor estate with the main
-         being laid across its lawn, and an Effingham drive with the van, a
-         telehandler and the chamber open.
-         Only the first is fetched eagerly, so the extra two cost nothing on
-         first paint. The fade and the timer live in hero-media.js, and with no
-         JS (or with reduced motion asked for) the first frame simply stays.
-         aria-hidden on the whole stack: it is scenery, and the h1 beside it
-         already says what the page is. #}
-      <div class="hp-hero__media" aria-hidden="true" data-hero-media>
-        <img class="is-active" src="/assets/l-mill-1879.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
-        <img src="/assets/b-estate-7931.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-        <img src="/assets/lk-effingham-8595.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-      </div>
-      <div class="container">
-        {# The line under this one carries the sharpest phrase on the site,
-           "properties where getting it right is a legal requirement", and the
-           H1 above it was a promise any competitor could make. This states the
-           discomfort instead, which is the beat the page was missing and the
-           one thing both audiences share: an estate off the mains and a
-           facilities manager with an ACOP L8 duty are both answering for water
-           nobody else will. Alternatives, if this reads too blunt:
-             "The water is yours to answer for."
-             "When the water is your responsibility." #}
+      <div class="container hp-hero__inner">
+        <p class="hp-hero__kicker">Private water supplies, treatment and hygiene</p>
         <h1 class="hp-hero__title" id="hp-hero-title">Nobody else is responsible <span class="em">for your water.</span></h1>
-        <p class="hp-hero__lead">Bespoke treatment, chlorination and hygiene for properties where getting it right is a legal requirement. Designed, installed and maintained personally, across Surrey, Sussex and the South East.</p>
         <div class="hp-hero__actions">
           <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/">Book a site survey <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
+        </div>
+      </div>
+
+      <div class="hp-hero__strip" aria-hidden="true">
+        <div class="hp-hero__track">
+          {% for run in [1, 2] %}{% for src in heroStrip %}
+          <img src="{{ src }}" alt="" width="1536" height="1024" {% if run == 1 and loop.index <= 3 %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+          {% endfor %}{% endfor %}
         </div>
       </div>
     </section>
