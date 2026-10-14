@@ -26,8 +26,8 @@
    photograph of that site was supplied: B Farm shows a B Estate plant room,
    B Stud shows a lodge and paddock from an unfiled job, and the alt text in
    each case describes the picture rather than the study. Nothing here is a
-   third party's photograph any more, so imageCredits.js is empty and the
-   credits page has retired itself.
+   third party's photograph any more, so the photography credits page has been
+   retired (/credits/ redirects home in _redirects).
 
    `blurb` is the CARD copy: one short sentence, all a bento card shows before
    you hover it. `highlight` is the line that slides up under it. Keep both

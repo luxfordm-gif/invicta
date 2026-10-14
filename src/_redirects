@@ -4,10 +4,43 @@
 # carries the same enquiry form.
 /enquiry/   /contact/   302
 
-# Sectors section, the Flushing & Pre-Comm service and the standalone case
-# studies index have been retired. Case studies now live only as carousels on
-# the service pages. Redirect any old inbound links so they land somewhere
-# useful rather than 404.
-/services/flushing-pre-comm/   /services/private-water-supplies/   301
-/sectors/*                     /                                    301
-/case-studies/                 /services/private-water-supplies/    301
+# The photography credits page has been retired: every photograph on the site
+# is now Invicta's own, so there is nothing left to credit.
+/credits/   /   301
+
+# --------------------------------------------------------------------------
+# OLD SITE. The previous invictawatertreatment.co.uk was a Concrete5 site; the
+# URLs below are taken from its sitemap.xml and navigation (October 2026).
+# Each one 301s to the closest page on this site so search rankings and old
+# bookmarks carry over. Netlify matches these with or without the trailing
+# slash, and passes any query string through to the destination.
+# --------------------------------------------------------------------------
+
+# Concrete5 also served every page under /index.php/. Login and tool URLs go
+# home; anything else drops the prefix and is caught again by the rules below.
+/index.php/login/*   /         301
+/index.php/tools/*   /         301
+/index.php/*         /:splat   301
+/index.php           /         301
+/login/*             /         301
+
+# Services. Flushing & Pre-Comm, and the Sectors section, have been retired;
+# pre-commission flushing and chlorination sit closest to water hygiene.
+/services/                               /                                   301
+/services/borehole-water/                /services/private-water-supplies/   301
+/services/service-contracts/             /services/servicing/                301
+/services/water-hygiene/legionella-control/   /services/water-hygiene/      301
+/services/flushing-pre-comm/             /services/water-hygiene/            301
+/sectors/*                               /                                   301
+/case-studies/                           /services/private-water-supplies/   301
+
+# Company pages.
+/contact-us/       /contact/   301
+/privacy-policy/   /privacy/   301
+/cookie-policy/    /privacy/   301
+
+# The old news blog (2011 to 2016), its search and the client login area have
+# no equivalent here.
+/news/*         /   301
+/blogsearch/*   /   301
+/client-area/*  /   301
