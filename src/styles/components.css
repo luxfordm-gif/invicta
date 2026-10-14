@@ -166,9 +166,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   background: rgb(var(--ground-rgb) / 0.985);     /* effectively opaque so bright content behind can't bleed through */
   -webkit-backdrop-filter: blur(30px) saturate(1.4);
   backdrop-filter: blur(30px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgb(var(--white-rgb) / 0.12);
   border-radius: var(--radius-md);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 60px rgb(var(--shadow-rgb) / 0.45);
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
   z-index: 60;
@@ -180,9 +180,9 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   transform: translateX(-50%) translateY(0);
 }
 .nav__menu a { display: block; padding: 10px 14px; border-radius: var(--radius-sm); transition: background-color 0.18s ease; }
-.nav__menu a:hover { background: rgba(255, 255, 255, 0.08); }
+.nav__menu a:hover { background: rgb(var(--white-rgb) / 0.08); }
 .nav__menu strong { display: block; font-size: 15px; font-weight: 600; color: var(--on-dark); letter-spacing: -0.01em; }
-.nav__menu span { display: block; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.76); margin-top: 2px; }
+.nav__menu span { display: block; font-size: 13px; line-height: 1.4; color: rgb(var(--white-rgb) / 0.76); margin-top: 2px; }
 
 /* compound selector so it beats the later .btn-inquiry base rule */
 .btn-inquiry.nav__cta {
@@ -252,15 +252,15 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     pointer-events: auto;
     display: flex; align-items: center; justify-content: center; gap: 9px;
     max-width: 100%; padding: 15px 28px; text-align: center; white-space: nowrap;
-    background: rgba(247, 243, 236, 0.80);
+    background: rgb(var(--frost-rgb) / 0.80);
     -webkit-backdrop-filter: blur(16px) saturate(1.1);
     backdrop-filter: blur(16px) saturate(1.1);
     color: var(--ground);
-    border: 1px solid rgba(255, 255, 255, 0.45);
+    border: 1px solid rgb(var(--white-rgb) / 0.45);
     border-radius: 999px;
     font-family: var(--font-body); font-weight: 600; font-size: clamp(14px, 3.6vw, 15px);
     letter-spacing: -0.005em;      /* sentence case, like every other button */
-    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 12px 32px -12px rgb(var(--shadow-rgb) / 0.55);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -272,7 +272,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   html.dock-on-light .emergency-cta {
     background: rgb(var(--ground-rgb) / 0.80);
     color: var(--on-dark);
-    border-color: rgba(255, 255, 255, 0.14);
+    border-color: rgb(var(--white-rgb) / 0.14);
   }
   /* Retreat once the footer scrolls into view — its contact details take over,
      so the floating button bows out rather than sitting over them. */
@@ -463,7 +463,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 .btn-inquiry__arrow svg { display: block; width: 14px; height: 14px; }
 .btn-inquiry:hover .btn-inquiry__arrow { transform: translateX(3px); }
 /* Hover: the chalky pill brightens to white — nothing else. */
-.btn-inquiry:hover { background: #F5F0E8; }   /* slight cream */
+.btn-inquiry:hover { background: var(--paper-warm); }   /* slight cream */
 .btn-inquiry--lg { font-size: 16px; padding: 18px 30px; }
 /* On light (cream) sections chalky washes out, so the pill stays a solid navy fill
    and brightens a step on hover. */
@@ -477,7 +477,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   gap: 10px;
   background: transparent;
   color: var(--on-dark);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgb(var(--white-rgb) / 0.4);
   font-weight: 600;
   font-size: 15px;                  /* sentence case, matching .btn-inquiry above */
   letter-spacing: -0.005em;
@@ -486,7 +486,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   white-space: nowrap;
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
 }
-.btn-line:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.09); }
+.btn-line:hover { border-color: var(--on-dark); background: rgb(var(--white-rgb) / 0.09); }
 .btn-line--lg { font-size: 16px; padding: 18px 30px; }
 /* A chevron rather than the filled pill's arrow, and the difference is the
    point: the filled button DOES something (sends the enquiry), the outlined one
@@ -500,7 +500,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
    the same gap the filled pill already covers just above. Match it: ink type on
    the field stroke, and the hover fills a hair of ink rather than of white. */
 :is(.section--light, .section--paper, .coverage-band) .btn-line { color: var(--ink); border-color: var(--line-field); }
-:is(.section--light, .section--paper, .coverage-band) .btn-line:hover { border-color: var(--ink); background: rgba(15, 15, 15, 0.05); }
+:is(.section--light, .section--paper, .coverage-band) .btn-line:hover { border-color: var(--ink); background: rgb(var(--ink-rgb) / 0.05); }
 
 /* --- Pressed state (touch) ------------------------------------------------
    The browser's blue tap highlight is off (see base.css), and it was the only
@@ -535,15 +535,24 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     gap: 8px;
     margin-top: var(--space-4);
   }
+  /* The button is a 24px target (WCAG 2.5.8; Lighthouse flagged the 7px
+     ones) and the mark is its ::before, so the dot itself stays 7px. */
   .dots__dot {
-    width: 7px; height: 7px; padding: 0;
-    border: 0; border-radius: 999px;
-    background: color-mix(in srgb, var(--fg) 24%, transparent);
+    display: grid; place-items: center;
+    width: 24px; height: 24px; padding: 0;
+    border: 0; background: none;
     cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dots__dot::before {
+    content: "";
+    width: 7px; height: 7px; border-radius: 999px;
+    background: color-mix(in srgb, var(--fg) 24%, transparent);
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
   }
-  .dots__dot.is-active { width: 22px; background: var(--fg); }
-  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .dots__dot.is-active { width: 36px; }
+  .dots__dot.is-active::before { width: 22px; background: var(--fg); }
+  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 0; border-radius: 999px; }
 }
 
 /* --- Full-bleed project band --------------------------------------------- */
@@ -626,7 +635,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   height: 100%;
   min-height: 180px;
   background:
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(135deg, rgb(var(--white-rgb) / 0.03) 0 12px, transparent 12px 24px),
     var(--ground-deep);
   border: 1px solid var(--line-dark);
   color: var(--on-dark-muted);
@@ -636,7 +645,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 }
 .ph--light {
   background:
-    repeating-linear-gradient(135deg, rgba(15,36,23,0.05) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(135deg, rgb(var(--ink-rgb) / 0.05) 0 12px, transparent 12px 24px),
     var(--light-warm);
   border-color: var(--line-light);
   color: var(--ink-muted);
@@ -678,8 +687,8 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(to right,
     transparent 0%,
-    rgba(15, 15, 15, 0.022) 9%,
-    rgba(15, 15, 15, 0.022) 91%,
+    rgb(var(--ink-rgb) / 0.022) 9%,
+    rgb(var(--ink-rgb) / 0.022) 91%,
     transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;

@@ -225,7 +225,7 @@
   aspect-ratio: 1;
   border-radius: 999px;
   border: 1px solid var(--line-dark);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(var(--white-rgb) / 0.05);
   color: var(--lime);
   flex: none;
 }
@@ -526,7 +526,7 @@
   .sector p {
     position: relative; z-index: 2; order: 1; flex: 0 0 auto; margin: 0;
     padding: 14px var(--space-3) 0;   /* title → copy gap: 16px − 2px */
-    color: rgba(255, 255, 255, 0.85);
+    color: rgb(var(--white-rgb) / 0.85);
     max-width: 34ch;
   }
 
@@ -536,7 +536,7 @@
     flex: 0 0 82%; scroll-snap-align: start; scroll-snap-stop: always;
     border-top: 0; border: 1px solid var(--line-dark); border-radius: 18px;
     padding: var(--space-3) var(--space-3) var(--space-4);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgb(var(--white-rgb) / 0.02);
   }
   .sector__media { order: -1; margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3); }
   .sector__media img, .sector__media .img-ph { aspect-ratio: 16 / 9; border-radius: 17px 17px 0 0; }
@@ -710,7 +710,7 @@
   font-size: min(calc((100vw - 2 * var(--container-pad)) * 0.352), 535px);
   line-height: 1;
   letter-spacing: -0.05em;
-  color: rgba(255, 255, 255, 0.08);
+  color: rgb(var(--white-rgb) / 0.08);
   white-space: nowrap;
   text-align: left;                /* left edge on the content margin */
   margin-bottom: -0.30em;          /* crops the bottom of the letters */
@@ -740,7 +740,7 @@
   border-radius: 8px;              /* stays a square stroked icon button */
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
-.footer__top:hover { border-color: var(--on-dark); background: rgba(255, 255, 255, 0.04); }
+.footer__top:hover { border-color: var(--on-dark); background: rgb(var(--white-rgb) / 0.04); }
 .footer__top svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
 .footer__top:hover svg { transform: translateY(-2px); }
 @media (max-width: 599.98px) {
@@ -976,7 +976,7 @@
 .img-ph {
   display: flex; align-items: center; justify-content: center; text-align: center;
   width: 100%; aspect-ratio: 4 / 3;
-  background: #C6CBD2; color: #565C66;
+  background: var(--placeholder-bg); color: var(--placeholder-fg);
 }
 .img-ph__label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; }
 

@@ -196,7 +196,7 @@
     font-weight: 500;
     color: var(--on-dark-soft);
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.35);
+    text-decoration-color: rgb(var(--white-rgb) / 0.35);
     text-decoration-thickness: 1px;
     text-underline-offset: 6px;
   }
@@ -426,7 +426,7 @@ p.hp-intro__lead {
     width: 14px;
     height: 14px;
     padding: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgb(var(--white-rgb) / 0.35);
     border-radius: 50%;
     transition: transform 0.25s ease, border-color 0.2s ease;
   }
@@ -690,6 +690,7 @@ p.hp-stat__figure {
 .hp-cases__dot {
   display: grid;
   place-items: center;
+  min-width: 28px;   /* a 24px target at least (WCAG 2.5.8); the mark itself stays 7px */
   height: 44px;
   padding-inline: 5px;
   border: 0;

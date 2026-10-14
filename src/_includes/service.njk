@@ -38,8 +38,8 @@
            down, under the intro. Ranged left against the lead rather than
            centred under it - see .hero__actions in sections.css. #}
         <div class="hero__actions">
-          <a class="btn-inquiry btn-inquiry--lg" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}" aria-label="Call the 24-hour emergency line on {{ site.phone }}">24hr emergency: {{ site.phone }}</a>
+          <a class="btn-inquiry btn-inquiry--lg" href="/contact/#enquiry" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn-line btn-line--lg" href="tel:{{ site.tel }}">24hr emergency: {{ site.phone }}</a>
         </div>
       </div>
     </section>
@@ -93,7 +93,7 @@
              point in the page where a reader who is convinced wants somewhere to
              go. A button is the more useful thing to put in front of them. #}
           <div class="service-intro__cta">
-            <a class="btn-inquiry" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ introCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry" href="/contact/#enquiry" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ introCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
           <div class="service-points__footer">
             {% if pointsLead %}<p class="service-points__lead">{{ pointsLead | safe }}</p>{% endif %}
             {% if pointsApproach %}<p class="service-points__approach">{{ pointsApproach | safe }}</p>{% endif %}
-            <a class="btn-inquiry service-points__cta" href="/enquiry/" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ pointsCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn-inquiry service-points__cta" href="/contact/#enquiry" data-enquiry-open data-enquiry-service="{{ heroEyebrow }}">{{ pointsCta or ctaLabel }} <span class="btn-inquiry__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
           </div>
         </div>
       </div>

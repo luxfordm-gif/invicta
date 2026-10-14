@@ -191,6 +191,7 @@
 
     var buttons = cards.map(function (card, i) {
       var b = document.createElement("button");
+      b.setAttribute("role", "tab");   // a tablist's children must be tabs; also what lets aria-selected apply
       b.type = "button";
       b.className = "dots__dot";
       b.setAttribute("aria-label", "Go to slide " + (i + 1));

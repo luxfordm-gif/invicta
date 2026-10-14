@@ -156,7 +156,7 @@
     flex-direction: column-reverse;
     padding: var(--space-3);
   }
-  .stat:not(.stat--plain) .stat__label { color: rgba(255, 255, 255, 0.92); }
+  .stat:not(.stat--plain) .stat__label { color: rgb(var(--white-rgb) / 0.92); }
   .stats-band .stat:not(.stat--plain) .stat__figure { color: var(--on-dark); }
 
   .stats-band .stat__figure {

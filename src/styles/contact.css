@@ -103,7 +103,7 @@
 .cfield input::placeholder,
 .cfield textarea::placeholder { color: var(--ink-muted); opacity: 0.7; }
 .cfield input:hover,
-.cfield textarea:hover { border-color: rgba(15, 15, 15, 0.28); }
+.cfield textarea:hover { border-color: rgb(var(--ink-rgb) / 0.28); }
 .cfield input:focus,
 .cfield textarea:focus {
   outline: none;
@@ -138,8 +138,8 @@
    1px ring OUTSIDE the 1px border rather than a wider border, so the card does
    not reflow its contents on hover. Mid-grey, deliberately short of black. */
 .ccard:hover {
-  border-color: rgba(15, 15, 15, 0.42);
-  box-shadow: 0 0 0 1px rgba(15, 15, 15, 0.42);
+  border-color: var(--ink-subtle);
+  box-shadow: 0 0 0 1px var(--ink-subtle);
 }
 .ccard input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .ccard__check {

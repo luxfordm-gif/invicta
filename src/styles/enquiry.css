@@ -22,7 +22,7 @@
   height: 100%;
   width: min(1180px, 90vw);
   background: var(--ground-deep);
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.22);   /* subtle depth, well down from the original */
+  box-shadow: -10px 0 40px rgb(var(--shadow-rgb) / 0.22);   /* subtle depth, well down from the original */
   display: flex;
   flex-direction: column;
   overflow: hidden;                 /* close stays pinned; inner scrolls */
@@ -81,7 +81,7 @@
   gap: 4px;
   margin: clamp(28px, 4vw, 48px) 0 clamp(24px, 3vw, 40px);
   padding: 5px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(var(--white-rgb) / 0.05);
   border-radius: 999px;
 }
 .enquiry__tab {
@@ -128,7 +128,7 @@
 .field input:focus, .field textarea:focus {
   outline: none;
   border-color: var(--lime);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgb(var(--white-rgb) / 0.03);
 }
 
 /* --- Tick-to-select service cards --- */
@@ -149,15 +149,15 @@
 /* Matches .ccard on the contact page: darker (here, brighter) border plus a 1px
    ring outside it, so the stroke reads as double weight without reflowing. */
 .ecard:hover {
-  border-color: rgba(255, 255, 255, 0.52);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.52);
+  border-color: rgb(var(--white-rgb) / 0.52);
+  box-shadow: 0 0 0 1px rgb(var(--white-rgb) / 0.52);
 }
 .ecard input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .ecard__check {
   width: 40px; height: 40px;
   display: grid; place-items: center;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgb(var(--white-rgb) / 0.06);
   color: transparent;
   transition: background-color 0.22s ease, color 0.22s ease;
 }
@@ -171,7 +171,7 @@
   letter-spacing: -0.01em;
   color: var(--on-dark);
 }
-.ecard:has(input:checked) { border-color: var(--blue-bright); background: rgb(184 200 212 / 0.12); }
+.ecard:has(input:checked) { border-color: var(--blue-bright); background: rgb(var(--accent-rgb) / 0.12); }
 .ecard:has(input:checked) .ecard__check { background: var(--blue-bright); color: var(--ground-deep); }
 .ecard:has(input:focus-visible) { outline: 2px solid var(--on-dark); outline-offset: 2px; }
 
