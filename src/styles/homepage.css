@@ -161,7 +161,7 @@
 /* MORE IMPACT, SECOND PASS (Matt, 14/10/26: the hero "just doesn't look
    impactful enough"). The first pass gave the type air but left it small in a
    lot of navy, with only a band of sky from the strip reaching the first
-   screen. Now the H1 is the largest thing a phone shows (about 52px at
+   screen. Now the H1 is the largest thing a phone shows (about 47px at
    390px, still three lines), the spacing is tightened so the photographs
    start well up the first screen, and the strip (below) opens on a building
    rather than on a frame of cloud. */
@@ -176,9 +176,9 @@
   }
   .hp-hero__title {
     margin-top: 14px;
-    font-size: clamp(44px, 13.4vw, 58px);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
+    font-size: clamp(40px, 12vw, 50px);   /* 13.4vw (52px at 390px) was too big (Matt, 14/10/26) */
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
   .hp-hero__actions {
     flex-direction: column;
