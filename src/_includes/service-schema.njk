@@ -1,0 +1,27 @@
+{#
+  Service JSON-LD for a service page (14/10/26). Says what the page offers, who
+  provides it and where, in the vocabulary search engines read. The provider
+  is the same LocalBusiness base.njk describes on every page.
+
+  Expects `serviceName` (falls back to the page's hero eyebrow), plus the page's
+  own `description` and `canonical`. Areas are the counties the coverage map
+  shades, so the claim is made in one place.
+#}
+{% set _serviceName = serviceName or heroEyebrow %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": {{ _serviceName | dump | safe }},
+  "serviceType": {{ _serviceName | dump | safe }},
+  "description": {{ description | dump | safe }},
+  "url": {{ canonical | dump | safe }},
+  "areaServed": [{% for c in maps.counties %}{{ c | dump | safe }}{% if not loop.last %}, {% endif %}{% endfor %}],
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": {{ site.name | dump | safe }},
+    "telephone": {{ site.tel | dump | safe }},
+    "url": {{ (site.url + "/") | dump | safe }}
+  }
+}
+</script>
