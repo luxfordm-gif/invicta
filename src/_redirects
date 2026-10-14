@@ -4,10 +4,97 @@
 # carries the same enquiry form.
 /enquiry/   /contact/   302
 
-# Sectors section, the Flushing & Pre-Comm service and the standalone case
-# studies index have been retired. Case studies now live only as carousels on
-# the service pages. Redirect any old inbound links so they land somewhere
-# useful rather than 404.
-/services/flushing-pre-comm/   /services/private-water-supplies/   301
-/sectors/*                     /                                    301
-/case-studies/                 /services/private-water-supplies/    301
+# The photography credits page has been retired: every photograph on the site
+# is now Invicta's own, so there is nothing left to credit.
+/credits/   /   301
+
+# --------------------------------------------------------------------------
+# OLD SITE. The previous invictawatertreatment.co.uk was a Concrete5 site; the
+# URLs below are taken from its sitemap.xml and navigation (October 2026), and
+# from the Wayback Machine's record of the domain, which also turned up two
+# earlier sites (see LEGACY SITES at the end).
+# Each one 301s to the closest page on this site so search rankings and old
+# bookmarks carry over. Netlify matches these with or without the trailing
+# slash, and passes any query string through to the destination.
+# --------------------------------------------------------------------------
+
+# Concrete5 also served every page under /index.php/. Login and tool URLs go
+# home; anything else drops the prefix and is caught again by the rules below.
+/index.php/login/*   /         301
+/index.php/tools/*   /         301
+/index.php/*         /:splat   301
+/index.php           /         301
+/login/*             /         301
+
+# Services. Flushing & Pre-Comm, and the Sectors section, have been retired;
+# pre-commission flushing and chlorination sit closest to water hygiene.
+/services/                               /                                   301
+/services/borehole-water/                /services/private-water-supplies/   301
+/services/service-contracts/             /services/servicing/                301
+/services/water-hygiene/legionella-control/   /services/water-hygiene/      301
+/services/flushing-pre-comm/             /services/water-hygiene/            301
+/services/pre-commissioning/             /services/water-hygiene/            301
+/services/legionella-control/            /services/water-hygiene/            301
+/services/aqua-nova/                     /services/private-water-supplies/   301
+/aqua-nova                               /services/private-water-supplies/   301
+/services/water-treatment/               /services/design-install/           301
+/services/boiler-feed/                   /services/design-install/           301
+/services/consultancy/                   /about/                             301
+/sectors/*                               /                                   301
+/case-studies/                           /services/private-water-supplies/   301
+
+# Company pages.
+/contact-us/          /contact/   301
+/about-us/            /about/     301
+/hs-accreditations/   /about/     301
+/projects/            /gallery/   301
+/terms-conditions/    /terms/     301
+/privacy-policy/      /privacy/   301
+/cookie-policy/       /privacy/   301
+/sitemap/             /           301
+
+# The old news blog (2011 to 2016), its search and the client login area have
+# no equivalent here. /2011/ and /category/ are a stray WordPress install's
+# "Hello world" post from the same year.
+/news/*         /   301
+/blogsearch/*   /   301
+/client-area/*  /   301
+/2011/*         /   301
+/category/*     /   301
+
+# --------------------------------------------------------------------------
+# LEGACY SITES. Before Concrete5 the domain ran two static sites: an "iwt" one
+# around 2006 and a softener, filter and UV shop around 2008 to 2010. Their
+# product pages go to Design & Install, the nearest thing to supplying and
+# fitting equipment; the shop's basket and login go home.
+# --------------------------------------------------------------------------
+/iwtabout.htm         /about/                             301
+/about_us.html        /about/                             301
+/contact.php          /contact/                           301
+/iwtprivate.htm       /services/private-water-supplies/   301
+/private_water.html   /services/private-water-supplies/   301
+/iwtwaterhygiene.htm  /services/water-hygiene/            301
+/water_hygiene.html   /services/water-hygiene/            301
+/iwtservice.htm       /services/design-install/           301
+/iwtresidential.htm   /services/design-install/           301
+/iwtindustrial.htm    /services/design-install/           301
+/iwtmycelx.htm        /services/design-install/           301
+/services.html        /services/design-install/           301
+/residential.html     /services/design-install/           301
+/industrial.html      /services/design-install/           301
+/swimming_pool.html   /services/design-install/           301
+/products.html        /services/design-install/           301
+/products.php         /services/design-install/           301
+/product_detail.php   /services/design-install/           301
+/categories.php       /services/design-install/           301
+/subCategories.php    /services/design-install/           301
+/water_softener       /services/design-install/           301
+/water_filter         /services/design-install/           301
+/uv_water_unit        /services/design-install/           301
+/mycelx.html          /services/design-install/           301
+/triogen.html         /services/design-install/           301
+/dab.html             /services/design-install/           301
+/images/*             /services/design-install/           301
+/cart.php             /                                   301
+/customer_login.php   /                                   301
+/site_map.html        /                                   301

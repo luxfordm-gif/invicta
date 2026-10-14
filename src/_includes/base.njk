@@ -7,11 +7,14 @@
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
-  {# TEMPORARY: the whole site is hidden from search engines while it runs on the
-     pre-DNS preview URL. Once the real domain is connected, delete the hardcoded
-     line below and restore the per-page {{ robots }} line that follows it. #}
-  <meta name="robots" content="noindex, nofollow">
-  {# {% if robots %}<meta name="robots" content="{{ robots }}">{% endif %} #}
+  {# LAUNCH SWITCH: site.indexable in _data/site.json. While it is false the
+     whole site is hidden from search engines (it is still only on the
+     netlify.app preview URL). Once www.invictawatertreatment.co.uk points at
+     Netlify, set it to true: every page becomes indexable except those that
+     opt out with robots: "noindex" (thank-you, and the 404 via
+     coming-soon.njk), and robots.txt opens up and lists the sitemap. #}
+  {% if not site.indexable %}<meta name="robots" content="noindex, nofollow">
+  {% elif robots %}<meta name="robots" content="{{ robots }}">{% endif %}
 
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
