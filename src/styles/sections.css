@@ -941,6 +941,14 @@
    <script> straight after the nav, so the hero is never the NEXT sibling. The
    old adjacent rule here had silently never matched. */
 .breadcrumb ~ .hero { padding-top: max(24px, calc(var(--hero-y-top) - 52px)); }
+/* BUT NOT ON A PHONE OR TABLET (Matt, 14/10/26: the gap under the breadcrumb
+   "is too tight"). Below 900px the breadcrumb is the pinned bar, a ruled band
+   of its own rather than a line inside the header, and --hero-y-top is small
+   enough there that the give-back always hit the 24px floor. The eyebrow sat
+   right under the rule. It gets a proper step instead. */
+@media (max-width: 899.98px) {
+  .breadcrumb ~ .hero { padding-top: 48px; }
+}
 .breadcrumb__list {
   display: flex;
   flex-wrap: wrap;

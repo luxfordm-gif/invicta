@@ -376,6 +376,33 @@ p.hp-intro__lead {
 @media (prefers-reduced-motion: reduce) {
   .hp-svc__go svg { transition: none; }
 }
+/* ON A PHONE THE SERVICE NAME HAS TO BE FOUND (Matt, 14/10/26: "I don't
+   notice that they're the services"). Stacked in one column, each block is a
+   22px question and a paragraph, and a 12px caps caption at the foot read as
+   small print rather than as where the block takes you. Here it is set as a
+   real link: sentence case at body size in white, with the arrow in a ringed
+   circle so it reads as something to tap. The desktop spread keeps the quiet
+   caption, where the two-column ruled layout already says "four routes". */
+@media (max-width: 899.98px) {
+  .hp-svc__go {
+    gap: 12px;
+    padding-top: var(--space-3);
+    font-size: 17px;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    color: var(--on-dark);
+  }
+  .hp-svc__go svg {
+    box-sizing: content-box;
+    width: 14px;
+    height: 14px;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    transition: transform 0.25s ease, border-color 0.2s ease;
+  }
+  .hp-svc:hover .hp-svc__go svg, .hp-svc:focus-visible .hp-svc__go svg { border-color: var(--on-dark); }
+}
 
 @media (min-width: 900px) {
   /* Asymmetric on purpose: the left column is wider because it carries the
