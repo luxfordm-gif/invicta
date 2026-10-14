@@ -2,7 +2,12 @@
 permalink: /robots.txt
 eleventyExcludeFromCollections: true
 ---
+{#- Follows the launch switch, site.indexable in _data/site.json (see base.njk). -#}
 User-agent: *
+{% if site.indexable -%}
 Allow: /
 
 Sitemap: {{ site.url }}/sitemap.xml
+{%- else -%}
+Disallow: /
+{%- endif %}
