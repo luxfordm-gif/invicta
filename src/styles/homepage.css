@@ -60,7 +60,6 @@
    eyebrows WITHOUT brackets, and for no em dashes anywhere in the copy, so the
    number is carried as its own element and the separator is space rather than
    punctuation. Same information, house style. --- */
-.hp-eyebrow { display: inline-flex; align-items: baseline; gap: 0.85em; }
 /* --- The logo band, as part of the intro above it -------------------------
    clients.njk renders its heading as a .statement, which is right when the
    band is a section in its own right on a service page. Here it is not: it is
@@ -226,9 +225,12 @@
   align-items: center;
   text-align: center;
 }
-.hp-intro__eyebrow { margin: 0; }
-.hp-intro__lead {
-  margin-top: var(--flow-heading);
+/* p.hp-intro__lead, not .hp-intro__lead: the light-surface rule in base.css
+   (:is(.section--light, .section--paper) p) outranks a bare class and was
+   painting this ink-muted grey, so the one passage the section exists for read
+   as a caption. No top margin now that the visible eyebrow above it is gone. */
+p.hp-intro__lead {
+  margin-top: 0;
   /* Between the section-heading scale and reading size: large enough to be the
      thing you read on this screen, small enough that 50 words do not become a
      wall. Measure capped in ch, not px, so it holds four or five lines at any
@@ -274,12 +276,16 @@
 .hp-problem { padding-block: var(--hp-y-lg) 0; background: var(--ground); }
 .hp-problem__inner { max-width: 860px; margin-inline: auto; text-align: center; }
 .hp-problem__line { max-width: none; }
+/* THE HOME LEAD STEP. The home page ran its body copy at 16 to 19px under 54px
+   headings, where every service page leads at 25px. Matt: "on the services
+   page we have really bold and competent-sized fonts". Same clamp as
+   .service-intro__lead, so the two read as one site. */
 .hp-problem__body {
   margin-top: var(--space-3);
   margin-inline: auto;
-  max-width: min(680px, 64ch);
-  font-size: var(--text-body);
-  line-height: 1.6;
+  max-width: min(720px, 46ch);
+  font-size: clamp(19px, 1.75vw, 25px);
+  line-height: 1.45;
   color: var(--on-dark-muted);
 }
 /* Two navy sections in a row, so the line is what says a new one has started.
@@ -330,7 +336,7 @@
 }
 .hp-svc__desc {
   margin-top: var(--space-2);
-  font-size: var(--text-card);
+  font-size: var(--text-body);
   line-height: 1.55;
   color: var(--on-dark-soft);
   max-width: 42ch;
@@ -406,8 +412,9 @@
 .hp-position__body {
   margin-top: var(--space-3);        /* the 24px the brief asks for */
   margin-inline: auto;
-  max-width: min(720px, 68ch);       /* 720px is the brief's ceiling, 68ch the site's; the narrower wins */
-  font-size: var(--text-body);
+  max-width: min(760px, 46ch);
+  font-size: clamp(19px, 1.75vw, 25px);   /* the home lead step, see .hp-problem__body */
+  line-height: 1.45;
 }
 
 /* ==========================================================================
@@ -476,42 +483,39 @@
    both the shorter slide and the whole photograph. */
 .hp-case__media img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 
-.hp-case__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.hp-case__media { position: relative; }
+/* The place, as a caption on the photograph rather than a label over the
+   title. White on a soft navy scrim so it reads on any sky. */
+.hp-case__place {
+  position: absolute;
+  left: clamp(12px, 1.4vw, 20px);
+  bottom: clamp(12px, 1.4vw, 20px);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgb(var(--ground-rgb) / 0.62);
+  color: var(--on-dark);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .hp-case__title {
-  margin-top: var(--space-2);
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(26px, 2.4vw, 36px);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  max-width: 20ch;
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
 }
+/* One line, at the home lead step. */
 .hp-case__body {
   margin-top: var(--space-3);
-  font-size: var(--text-card);
-  line-height: 1.6;
-  max-width: 52ch;
-}
-.hp-case .hp-case__highlight {
-  margin-top: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--line-light);
-  font-size: var(--text-card);
-  font-weight: 600;
-  line-height: 1.5;
+  font-size: clamp(19px, 1.75vw, 25px);
+  line-height: 1.4;
   color: var(--ink);
-  max-width: 44ch;
+  max-width: 30ch;
 }
-.hp-case__link { margin-top: var(--space-4); }
+.hp-case__link { margin-top: var(--space-5); }
 
 /* The arrows. Hidden below 900px, where the track is a swipe with dots. */
 .hp-cases__arrow { display: none; }
@@ -751,7 +755,7 @@
 .hp-enquiry { padding-block: var(--hp-y-sm); }
 .hp-enquiry__inner { max-width: 720px; margin-inline: auto; text-align: center; }
 .hp-enquiry__title { max-width: none; }
-.hp-enquiry__body { margin: var(--flow-lead) auto 0; max-width: 640px; }
+.hp-enquiry__body { margin: var(--flow-lead) auto 0; max-width: 46ch; font-size: clamp(19px, 1.75vw, 25px); line-height: 1.45; }   /* the home lead step */
 .hp-enquiry__actions {
   margin-top: clamp(32px, 4vw, 48px);
   display: flex;

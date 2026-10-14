@@ -166,10 +166,11 @@ hideFooterCta: true
 
     <section class="section section--light hp-intro" id="about-invicta" aria-labelledby="hp-intro-title">
       <div class="container hp-intro__inner">
-        {# An h2 wearing the eyebrow style. The section needs an accessible name
-           and this is the only short string in it: the paragraph below runs to
-           two sentences, and a 50-word heading is a heading in name only. #}
-        <h2 class="eyebrow hp-intro__eyebrow" id="hp-intro-title">Who we are</h2>
+        {# The section still needs an accessible name, and this is the only short
+           string in it, so the h2 stays for screen readers. It is no longer
+           SHOWN: the home page carried six eyebrows to a service page's one,
+           and Matt cut them (14/10/26). #}
+        <h2 class="visually-hidden" id="hp-intro-title">Who we are</h2>
 
         <p class="hp-intro__lead">Invicta is run, day to day, by <strong>Stefan Massingham MSc</strong>, a water chemist of thirty years, and every problem that reaches us is reviewed by him personally. We take care of the science and the compliance, so you are left with a supply you never have to think about.</p>
 
@@ -253,7 +254,6 @@ hideFooterCta: true
         {# Two navy sections in a row now, so the rule is what says a new one
            has started. Same job it does under the hero on a service page. #}
         <div class="rule hp-services__rule"></div>
-        <p class="eyebrow hp-eyebrow">Services</p>
         <h2 class="statement hp-services__title" id="hp-services-title">What do you need to sort?</h2>
 
         <div class="hp-services__grid">
@@ -351,6 +351,7 @@ hideFooterCta: true
       services: ["private-water-supplies"],
       body: ["Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation."],
       highlight: "Running continuously since 2023, and passing UKAS-accredited testing every year.",
+      blurb: "A high-volume supply for a whole estate, running without a break since 2023.",
       image: "/assets/img-9257.webp",
       imageAlt: "A red brick water tower beside a barn with solar panels, with an Invicta van on the drive."
     } %}
@@ -359,7 +360,6 @@ hideFooterCta: true
       <div class="container">
         <div class="hp-work__head">
           <div>
-            <p class="eyebrow hp-eyebrow">Selected work</p>
             <h2 class="statement hp-work__title" id="hp-work-title">Supplies we’ve designed, <span class="em">installed and looked after.</span></h2>
           </div>
           <p class="hp-work__count" aria-hidden="true"><span data-cases-current>01</span> / {% if slides.length < 10 %}0{% endif %}{{ slides.length }}</p>
@@ -375,19 +375,21 @@ hideFooterCta: true
             <article class="hp-case" role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ slides.length }}">
               <figure class="hp-case__media">
                 <img src="{{ c.image or '/assets/img-0428.webp' }}" alt="{{ c.imageAlt }}" width="1536" height="1024" loading="{{ 'eager' if loop.first else 'lazy' }}" decoding="async">
+                {# THE PLACE SITS ON THE PHOTOGRAPH, as its caption. For a
+                   regional business "Midhurst, West Sussex" is real
+                   information, but as a line above the title it read as one
+                   more eyebrow on a page that had six. #}
+                <figcaption class="hp-case__place">{{ c.location }}</figcaption>
               </figure>
               <div class="hp-case__copy">
-                {# The SERVICE half of this line is gone. It said "Private
-                   water supplies" directly above a button saying "More on
-                   private water supplies", so the eyebrow's second half was
-                   the same words twice, four lines apart. The place stays:
-                   for a regional business "Midhurst, West Sussex" is the one
-                   thing here a reader cannot get from anything else on the
-                   slide, and it is doing real work. #}
-                <p class="hp-case__meta"><span>{{ c.location }}</span></p>
+                {# TITLE, ONE LINE, ONE BUTTON (Matt, 14/10/26: "that right-hand
+                   section is just way too complicated"). It carried a place
+                   label, the title, a 50-word paragraph, a bold highlight and
+                   the button. The paragraph and highlight are still on the
+                   service pages' case studies; here the one-line blurb does the
+                   job, and the button is where the rest of the story is. #}
                 <h3 class="hp-case__title">{{ c.title | safe }}</h3>
-                <p class="hp-case__body">{{ c.body[0] }}</p>
-                {% if c.highlight %}<p class="hp-case__highlight">{{ c.highlight }}</p>{% endif %}
+                <p class="hp-case__body">{{ c.blurb }}</p>
                 <p class="hp-case__link">
                   <a class="btn-line" href="/services/{{ svc }}/">More on {{ serviceNames[svc] | lower }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
                 </p>
@@ -415,7 +417,6 @@ hideFooterCta: true
     #}
     <section class="section section--light hp-voices" id="testimonials" aria-labelledby="hp-voices-title">
       <div class="container">
-        <p class="eyebrow hp-eyebrow">In their words</p>
         <h2 class="statement hp-voices__title" id="hp-voices-title">Don’t just take our word for it.</h2>
 
         <div class="hp-voices__grid">
@@ -449,7 +450,6 @@ hideFooterCta: true
     <section class="section hp-creds" id="credentials" aria-labelledby="hp-creds-title">
       <div class="container hp-creds__grid">
         <div class="hp-creds__aside">
-          <p class="eyebrow hp-eyebrow">Credentials</p>
           <h2 class="statement hp-creds__title" id="hp-creds-title">The paperwork clients ask about.</h2>
         </div>
 
@@ -533,7 +533,6 @@ hideFooterCta: true
     <section class="section section--light hp-enquiry" id="enquiry-direct" aria-labelledby="hp-enquiry-title">
       <div class="container">
         <div class="hp-enquiry__inner">
-          <p class="eyebrow hp-eyebrow">Get in touch</p>
           {# NOT the footer's line. This heading and its paragraph were a
              word-for-word copy of footer.njk's CTA, which closes every other
              page on the site, and the same paragraph opened /contact/ as well:

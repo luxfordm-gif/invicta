@@ -311,38 +311,88 @@
   }
 }
 
-/* --- Owning your water (dark): the independence rows on /private-water-supplies/ --
-   Statement and lead as the positioning section has them, then three ruled
-   rows: question left, answer right from the desktop breakpoint, stacked below
-   it. Rows rather than cards because the why-cards two screens up already make
-   the three-abreast shape on this page. The question takes the same step as
-   .sector h3 and .why-card__q; the answer is reading copy in the open, so it
-   takes --text-body at reading strength rather than the muted card size. --- */
-.ownership .statement { max-width: 26ch; }
-.ownership__lead {
-  margin-top: var(--flow-lead);
-  max-width: 40ch;
-  font-size: clamp(20px, 2vw, 28px);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: var(--on-dark);
+/* --- Owning your water (dark): /private-water-supplies/ -------------------
+   Centred head (eyebrow, statement, one button), then three cards: a
+   photograph and two claims. Matt asked for this over the first build's three
+   ruled rows, after a testimonial layout (14/10/26).
+
+   NOT THE WHY-CARDS AGAIN. Those are three abreast too, a screen up, so these
+   are built differently on purpose: no icons, the claim set large in the
+   display face where a why-card sets a question, a label pinned to the foot,
+   and a photograph taking the first slot. Same raised navy surface, so they
+   still read as the same site.
+
+   The cards are TALL and EQUAL: the grid stretches them, and the label is
+   pushed to the foot with margin-top: auto, so the two claims can run to
+   different lengths without the labels stepping. --- */
+.ownership__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-.ownership__rows { margin-top: var(--flow-lg); border-bottom: 1px solid var(--line-dark); }
-.ownership__row {
+.ownership__head .statement { margin-top: var(--flow-heading); max-width: 22ch; }
+.ownership__cta { margin-top: var(--flow-lead); }
+
+.ownership__cards {
   display: grid;
-  gap: var(--space-2);
-  padding-block: clamp(24px, 3vw, 40px);
-  border-top: 1px solid var(--line-dark);
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: var(--flow-lg);
+}
+@media (min-width: 600px) { .ownership__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 600px) and (max-width: 899.98px) {
+  /* Two abreast on a tablet, so the photograph takes the full row above them. */
+  .ownership__card--media { grid-column: 1 / -1; }
 }
 @media (min-width: 900px) {
-  .ownership__row {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(48px, 6vw, 120px);
-    align-items: baseline;
-  }
+  .ownership__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ownership__card { min-height: clamp(420px, 36vw, 560px); }
 }
-.ownership__q { font-size: clamp(21px, 1.8vw, 26px); letter-spacing: -0.02em; line-height: 1.15; color: var(--on-dark); }
-.ownership__a { font-size: var(--text-body); line-height: 1.55; color: var(--on-dark-soft); max-width: 52ch; }
+
+.ownership__card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 2.4vw, 36px);
+  background: linear-gradient(158deg, var(--ground-raise), var(--ground) 78%);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-md);
+}
+.ownership__card--media {
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+}
+/* After the base rule, or its 4:3 wins: a wide letterbox on a tablet, where
+   the photograph spans the row; the card's full height on desktop. */
+@media (min-width: 600px) and (max-width: 899.98px) { .ownership__card--media { aspect-ratio: 16 / 9; } }
+@media (min-width: 900px) { .ownership__card--media { aspect-ratio: auto; } }
+.ownership__card--media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 60%;
+  display: block;
+}
+
+.ownership__claim {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 1.9vw, 30px);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  color: var(--on-dark);
+  text-wrap: pretty;
+}
+.ownership__label {
+  margin-top: auto;
+  padding-top: var(--space-5);
+  font-size: var(--text-card);
+  line-height: 1.45;
+  color: var(--on-dark);
+}
+.ownership__label span { display: block; color: var(--on-dark-muted); }
 
 /* --- Positioning / sectors (dark) ----------------------------------------- */
 .positioning__intro {
