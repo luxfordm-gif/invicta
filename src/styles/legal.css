@@ -5,7 +5,9 @@
    ========================================================================== */
 
 /* --- Hero (dark) --- */
-.legal-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(40px, 5vw, 72px); }
+/* Same gap both sides, for the same reason as .contact-hero: this hero also
+   ends on a surface change, where a short bottom against a tall top shows. */
+.legal-hero { padding-top: var(--hero-y-top); padding-bottom: var(--hero-y-top); }
 .legal-hero__title { margin-top: var(--flow-heading); max-width: 20ch; }
 .legal-hero__meta {
   margin-top: var(--space-4);

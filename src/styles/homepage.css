@@ -82,120 +82,82 @@
 }
 
 /* ==========================================================================
-   1 — HERO. Outcome, then the emergency number.
+   1 — HERO. Type on clean navy, photographs running beneath it (14/10/26).
+
+   The first screen is the type block centred in whatever height is left
+   above the strip, with the strip pinned to its foot, so the photographs
+   start on the first screen at any window height. The H1 and the strip size
+   by window HEIGHT as well as width, so a 1366x768 laptop still gets the
+   type and the whole strip without scrolling.
    ========================================================================== */
 .hp-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
   display: flex;
-  /* CENTRED, not bottom-aligned. Sitting the type on the floor of the frame
-     made the sky read as a hole above it rather than as air around it, and it
-     pushed the whole block far enough down that the eyebrow, the heading, the
-     lead and two buttons arrived in one dense mass at the bottom of the screen.
-     Centred, the same copy has sky above and below and reads as composed. The
-     padding is symmetric for the same reason: with an asymmetric pad, `center`
-     centres the content box, not the picture, and lands visibly low. */
-  align-items: center;
-  /* Full viewport, LESS the two sticky bars above it. `100svh` on its own puts
-     the bottom of the hero a nav's height below the fold, so the CTAs are cut
-     off on exactly the phones where they matter most. */
+  flex-direction: column;
   min-height: calc(100svh - var(--ubar-h) - var(--nav-h));
-  padding-block: clamp(48px, 7vh, 104px);
+  padding-top: clamp(24px, 4vh, 72px);
+  padding-bottom: 0;
+  background: var(--ground);
+  overflow: hidden;
 }
-/* --- Desktop: the picture runs up behind the floating nav -----------------
-   The photograph used to start BELOW the nav, so the first thing under the
-   emergency bar was a band of flat navy. The hero is now pulled up by exactly
-   what the nav occupies in the flow (--nav-h) so the picture meets the
-   emergency bar, and the nav sits on the photograph. The bar is translucent
-   at rest, so the picture carries on faintly through it.
-
-   The nav STAYS IN THE FLOW. It still takes its space and still slides away on
-   scroll; this is a negative margin on one section, not a change to how the
-   header works on every page. It paints above because .nav carries z-index 50
-   and .hp-hero makes no competing stacking context of its own (its isolate is
-   for the media behind the copy).
-
-   The padding-top puts back what the margin took away, so the headline keeps
-   its optical centre in the space BELOW the nav rather than centring in a box
-   the nav is covering the top of. */
-@media (min-width: 900px) {
-  .hp-hero {
-    margin-top: calc(-1 * var(--nav-h));
-    min-height: calc(100svh - var(--ubar-h));
-    padding-top: calc(clamp(48px, 7vh, 104px) + var(--nav-h));
-  }
+.hp-hero__inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: clamp(28px, 4.5vh, 64px);
 }
-.hp-hero__media { position: absolute; inset: 0; z-index: -1; }
-/* The frames are stacked, not laid out: every one fills the box and only the
-   one carrying .is-active is opaque. Transition on opacity alone so the
-   crossfade is a compositor job and never touches layout. The first frame has
-   no transition to fade IN from nothing on load, because it starts active. */
-.hp-hero__media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 42%;
-  opacity: 0;
-  transition: opacity 1.6s ease-in-out;
-}
-.hp-hero__media img.is-active { opacity: 1; }
-/* No JS, no classes changed: the first frame is the hero, as before. */
-.hp-hero__media img:first-child { opacity: 1; }
-.hp-hero__media img:first-child:not(.is-active) { opacity: 0; }
-@media (prefers-reduced-motion: reduce) {
-  .hp-hero__media img { transition: none; }
-}
-/* Two washes, doing two different jobs: the horizontal one keeps the left third
-   dark enough to read 118px of white type against, the vertical one lands the
-   bottom edge on the navy the trust strip sits against. */
-.hp-hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 68% 58% at 50% 46%, rgb(var(--ground-rgb) / 0.72) 0%, rgb(var(--ground-rgb) / 0.42) 58%, rgb(var(--ground-rgb) / 0.24) 100%),
-    linear-gradient(to top, rgb(var(--ground-rgb) / 0.82) 0%, rgb(var(--ground-rgb) / 0) 46%);
-}
-.hp-hero__title {
-  /* No margin-top: --flow-heading was the gap under the eyebrow, and the eyebrow
-     has gone. Left in, it pushed the whole centred block half a line low. */
-  /* No bespoke size here any more. This started as a home-page-only override
-     when the shared h1 was 118px; the whole desktop scale has since come down
-     to 96px (see base.css), which fixes it everywhere rather than only here.
-     One scale, one place to change it. The measure still widens from 15ch,
-     because smaller type needs more characters to hold the same block. */
-  max-width: 17ch;
-  margin-inline: auto;
-  color: var(--on-dark);
-}
-.hp-hero__lead {
-  margin-top: var(--flow-lead);
-  margin-inline: auto;
-  max-width: 560px;
+/* A plain line, not an eyebrow: sentence case, regular weight, soft. */
+.hp-hero__kicker {
   font-size: var(--text-lead);
-  line-height: 1.55;
   color: var(--on-dark-soft);
 }
-/* CENTRED. The hero was ranged left against a wash that was itself built to
-   keep the left third dark; both change together, or the type moves off the
-   dark part and stops being readable. The wash is now an even centred one. */
-.hp-hero .container { text-align: center; }
+.hp-hero__title {
+  margin-top: var(--flow-heading);
+  max-width: 24ch;   /* two lines at 96px: "Nobody else is responsible / for your water." */
+  font-size: clamp(44px, min(6.7vw, 10.5vh), 96px);
+  color: var(--on-dark);
+}
+.hp-hero__title .em { display: block; }
 .hp-hero__actions {
-  margin-top: clamp(32px, 4vw, 48px);
-  justify-content: center;
+  margin-top: clamp(24px, 4.5vh, 52px);
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-2);
 }
-.hp-hero__actions > * { flex: 0 0 auto; }
 /* On a phone the two buttons go full width and stack, so the emergency number
    is a whole tap target rather than half a row. */
 @media (max-width: 599.98px) {
-  .hp-hero__actions { display: grid; gap: 12px; }
+  .hp-hero__actions { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: 12px; }
   .hp-hero__actions > * { justify-content: center; }
+}
+
+/* THE STRIP. Large frames, edge to edge, moving on their own. Two identical
+   runs in one track, translated by exactly half its width: margin-right on
+   every frame rather than gap, for the reason clients.css gives (gap leaves
+   the halves unequal and the loop jumps). The keyframes are the logo band's
+   own, clients-marquee, which clients.css loads on every page. */
+.hp-hero__strip { overflow: hidden; }
+.hp-hero__track {
+  display: flex;
+  width: max-content;
+  animation: clients-marquee 110s linear infinite;
+  will-change: transform;
+}
+.hp-hero__track img {
+  flex: none;
+  height: clamp(180px, 30vh, 420px);
+  width: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin-right: clamp(6px, 0.6vw, 10px);
+}
+.hp-hero__strip:hover .hp-hero__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero__track { animation: none; }
+  .hp-hero__strip { overflow-x: auto; scrollbar-width: none; }
 }
 
 /* ==========================================================================
@@ -231,20 +193,14 @@
    as a caption. No top margin now that the visible eyebrow above it is gone. */
 p.hp-intro__lead {
   margin-top: 0;
-  /* Between the section-heading scale and reading size: large enough to be the
-     thing you read on this screen, small enough that 50 words do not become a
-     wall. Measure capped in ch, not px, so it holds four or five lines at any
-     size rather than going to seven on a wide monitor. */
-  font-size: clamp(21px, 2.05vw, 30px);
-  /* 1.3, down from 1.42. Reading copy wants the looser leading, but this is set
-     a step above reading size and centred, and at 1.42 the lines drifted apart
-     far enough that the block stopped reading as one passage. */
-  line-height: 1.3;
-  letter-spacing: -0.014em;
-  /* 44ch, not 38: at 38 the passage set to six lines, which on a centred block
-     reads as a paragraph you have to work through rather than one you take in.
-     44 holds it to four or five at desktop and still breaks well on a phone,
-     where the clamp floor does the work instead. */
+  /* BETWEEN THE TWO (Matt, 14/10/26). At 30px it read a size down from the
+     service pages; at their 40px it was "too big now", because a service
+     hero sets two short left-aligned lines at that size and this is a
+     centred 50-word passage. 34px, with the leading opened from 1.12 to 1.22
+     so five centred lines read as one passage rather than a block. */
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.22;
+  letter-spacing: -0.018em;
   max-width: 44ch;
   color: var(--ink);
   text-wrap: balance;
@@ -253,7 +209,10 @@ p.hp-intro__lead {
    person is behind the work. Weight rather than colour, so it lifts without
    turning into a link. */
 .hp-intro__lead strong { font-weight: 600; }
-.hp-intro__more { margin-top: var(--flow-lead); }
+/* About one and a half lines of the passage above (41px at desktop). At
+   --flow-lead (32px) the gap was less than a single line, so the button
+   crowded the last line once the passage went up to 34px. */
+.hp-intro__more { margin-top: clamp(36px, 3.9vw, 56px); }
 /* ==========================================================================
    3 — SERVICES. Problem-led routing, as an asymmetric hairline spread.
 
@@ -263,38 +222,8 @@ p.hp-intro__lead {
    others can sit to the right of it and beneath it rather than in a row of
    equal tiles.
    ========================================================================== */
-/* ==========================================================================
-   2b — THE PROBLEM. Centred, on the navy, off the back of the light intro.
-
-   Deliberately SMALLER than .hp-position__line. That block is the page's
-   argument said once at 76px; this one sets the question the services below
-   answer, and two 76px statements three sections apart would be two things
-   claiming to be the point of the page. Statement scale, no eyebrow, no
-   button, and its bottom padding is dropped because the hairline that opens
-   SERVICES is what separates the two navy blocks.
-   ========================================================================== */
-.hp-problem { padding-block: var(--hp-y-lg) 0; background: var(--ground); }
-.hp-problem__inner { max-width: 860px; margin-inline: auto; text-align: center; }
-.hp-problem__line { max-width: none; }
-/* THE HOME LEAD STEP. The home page ran its body copy at 16 to 19px under 54px
-   headings, where every service page leads at 25px. Matt: "on the services
-   page we have really bold and competent-sized fonts". Same clamp as
-   .service-intro__lead, so the two read as one site. */
-.hp-problem__body {
-  margin-top: var(--space-3);
-  margin-inline: auto;
-  max-width: min(720px, 46ch);
-  font-size: clamp(19px, 1.75vw, 25px);
-  line-height: 1.45;
-  color: var(--on-dark-muted);
-}
-/* Two navy sections in a row, so the line is what says a new one has started.
-   Zeroed top margin: .rule carries one for use mid-section, and here it is the
-   first thing in the container. */
-.hp-services__rule { margin-top: 0; margin-bottom: var(--flow-lg); }
-
 .hp-services { padding-block: var(--hp-y-lg); background: var(--ground); }
-.hp-services__title { max-width: 18ch; }
+.hp-services__title { max-width: none; }
 .hp-services__grid {
   margin-top: var(--flow-lg);
   display: grid;
@@ -323,6 +252,17 @@ p.hp-intro__lead {
    only sizes a box whose height is auto, so without this line the ratio
    computes, is ignored, and the card opens with a 961px-tall photograph. */
 .hp-svc__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 30%; }
+/* The crossfading stack. The first frame stays in flow and sets the box; the
+   others lie on top of it. Only .is-active is opaque, and the fade is opacity
+   alone, so it never touches layout. Without JS the first frame carries
+   .is-active in the markup and nothing moves. */
+.hp-svc__media[data-crossfade] { position: relative; }
+.hp-svc__media[data-crossfade] img { transition: opacity 1.4s ease-in-out; }
+.hp-svc__media[data-crossfade] img + img { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
+.hp-svc__media[data-crossfade] img:not(.is-active) { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-svc__media[data-crossfade] img { transition: none; }
+}
 
 .hp-svc__title {
   font-family: var(--font-display);
@@ -391,7 +331,7 @@ p.hp-intro__lead {
      stacked cell sits in column TWO, so the two do not overlap: they meet at
      the same y and draw one continuous line across the foot of the spread. */
   /* The flagship gets the extra size the two-row cell has room for. */
-  .hp-svc:nth-child(1) .hp-svc__title { font-size: clamp(30px, 3.3vw, 44px); max-width: 14ch; }
+  .hp-svc:nth-child(1) .hp-svc__title { font-size: clamp(30px, 3.3vw, 44px); max-width: 24ch; }   /* two lines for "Thinking about your own private water supply?" */
   .hp-svc:nth-child(1) .hp-svc__desc { font-size: var(--text-body); max-width: 34ch; }
 }
 
@@ -413,7 +353,7 @@ p.hp-intro__lead {
   margin-top: var(--space-3);        /* the 24px the brief asks for */
   margin-inline: auto;
   max-width: min(760px, 46ch);
-  font-size: clamp(19px, 1.75vw, 25px);   /* the home lead step, see .hp-problem__body */
+  font-size: clamp(19px, 1.75vw, 25px);   /* the home lead step, the same clamp as .service-intro__lead */
   line-height: 1.45;
 }
 
@@ -451,6 +391,13 @@ p.hp-intro__lead {
 
 .hp-cases { position: relative; margin-top: var(--flow-md); }
 .hp-cases__track {
+  /* POSITIONED, so it contains its own absolutely placed descendants. The
+     gloss filter can put a tooltip term inside a slide (it takes the first
+     use of a word on the page, which on /preview/home-hero/ was in a slide),
+     and that term's hidden absolute tooltip text took the nearest positioned
+     ancestor OUTSIDE this scroller, so it escaped the clipping and widened
+     the whole page to 5,000px. */
+  position: relative;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -472,8 +419,6 @@ p.hp-intro__lead {
     grid-template-columns: 7fr 5fr;
     gap: clamp(40px, 5vw, 96px);
     align-items: center;
-    /* Room on the right for the next arrow, which overlaps the container edge. */
-    padding-right: clamp(40px, 4vw, 72px);
   }
 }
 .hp-case__media { margin: 0; border-radius: var(--radius-lg); overflow: clip; }
@@ -499,36 +444,42 @@ p.hp-intro__lead {
   line-height: 1.3;
 }
 
+/* PLAIN SANS, NO ITALIC (Matt, 14/10/26). At 40px with a Playfair italic
+   half it was a second section heading competing with the real one above.
+   The case titles keep their <span class="em"> for the service pages, so it
+   is neutralised here rather than stripped from the data. */
 .hp-case__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(28px, 2.8vw, 40px);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  max-width: 18ch;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  max-width: 24ch;
 }
-/* One line, at the home lead step. */
+.hp-case__title .em { font-family: inherit; font-style: normal; color: inherit; display: inline; }
+/* The problem and the result, at body size and the site's muted ink. */
 .hp-case__body {
-  margin-top: var(--space-3);
-  font-size: clamp(19px, 1.75vw, 25px);
-  line-height: 1.4;
-  color: var(--ink);
-  max-width: 30ch;
+  margin-top: var(--space-2);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--ink-muted);
+  max-width: 42ch;
 }
 .hp-case__link { margin-top: var(--space-5); }
 
 /* The arrows. Hidden below 900px, where the track is a swipe with dots. */
+.hp-cases__stage { position: relative; }
 .hp-cases__arrow { display: none; }
 @media (min-width: 900px) {
   .hp-cases__arrow {
     position: absolute;
     z-index: 2;
-    top: calc(50% - 22px);        /* the track's middle, less half the dots row */
+    top: 50%;
     translate: 0 -50%;
     display: grid;
     place-items: center;
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border: 1px solid var(--line-light);
     border-radius: 999px;
     background: var(--paper);
@@ -537,9 +488,15 @@ p.hp-intro__lead {
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, scale 0.2s ease;
   }
-  .hp-cases__arrow svg { width: 22px; height: 22px; }
-  .hp-cases__arrow--prev { left: calc((100vw - 100%) / -2 + 20px); }
-  .hp-cases__arrow--next { right: calc((100vw - 100%) / -2 + 20px); }
+  .hp-cases__arrow svg { width: 20px; height: 20px; }
+  /* PINNED TO THE PHOTOGRAPH'S EDGES, centred on each. Anchoring to the
+     content edge did not work: this section runs nearly full width, so at
+     1000 to 1440px "just outside the content" was 8px from the window edge,
+     the far-out position Matt had already rejected. The photograph's own
+     edges are always next to what you are looking at. Its width is the 7fr
+     share of the slide grid after the gap, the same numbers as .hp-case. */
+  .hp-cases__arrow--prev { left: -24px; }
+  .hp-cases__arrow--next { left: calc((100% - clamp(40px, 5vw, 96px)) * 7 / 12 - 24px); }
   .hp-cases__arrow:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
   .hp-cases__arrow:active:not(:disabled) { scale: 0.95; }
   .hp-cases__arrow:disabled { opacity: 0; pointer-events: none; }
@@ -609,9 +566,12 @@ p.hp-intro__lead {
   .hp-voices__grid { grid-template-columns: 1fr 1fr; }
   .voice--feature { grid-column: 1 / -1; }
 }
+/* THREE ABREAST, the first wider (14/10/26). The feature used to span two
+   rows beside a stacked pair; once the quotes were cut to excerpts it was a
+   tall card with a hole in the middle. In one row the cards share a height,
+   and each caption sits on the same line at the foot. */
 @media (min-width: 900px) {
-  .hp-voices__grid { grid-template-columns: 7fr 5fr; }
-  .voice--feature { grid-row: span 2; }
+  .hp-voices__grid { grid-template-columns: 1.5fr 1fr 1fr; }
 }
 
 .voice {
@@ -650,6 +610,16 @@ p.hp-intro__lead {
    cards. This rule used to set it too, which is how the feature ended up grey
    beside two cards in full ink. */
 .voice--feature .voice__quote p:not(.voice__pull) { font-size: var(--text-body); }
+/* SHORT NOW (excerpts, 14/10/26), so the two smaller cards set their one
+   sentence as a quote, in the display face at full ink, rather than as a
+   grey paragraph. The feature keeps its large pull line above them. */
+.voice:not(.voice--feature) .voice__quote p {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
 .voice__quote .voice__pull {
   margin-bottom: var(--space-3);
   font-family: var(--font-display);

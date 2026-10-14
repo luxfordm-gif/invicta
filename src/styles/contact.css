@@ -4,7 +4,14 @@
    ========================================================================== */
 
 /* --- Hero --- */
-.contact-hero { padding-top: var(--hero-y-top); padding-bottom: clamp(48px, 6vw, 90px); }
+/* THE SAME GAP BOTH SIDES. The top is --hero-y-top, which grows with the
+   window's HEIGHT; the bottom was a width-only clamp that stopped at 90px. On
+   a tall screen the heading sat 136px under the nav and the copy 90px off the
+   cream, so the block looked as if it had slid down its band (Matt, 14/10/26).
+   One token for both keeps the heading and the last line evenly framed at
+   every size. The title's line box and the lead's half-leading carry about the
+   same optical slack (13px vs 10px), so equal padding reads as equal space. */
+.contact-hero { padding-top: var(--hero-y-top); padding-bottom: var(--hero-y-top); }
 /* Left-aligned to the container edge (under the logo), not a centred column. */
 /* No margin above the title: --flow-heading is the eyebrow-to-heading gap and
    this hero no longer has an eyebrow, so it was pushing the first line 24px

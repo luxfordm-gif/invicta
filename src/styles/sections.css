@@ -95,8 +95,8 @@
    pair sized to the longer label and left a ragged gap at the right instead of
    filling the row. It only ever looked full width because the whole block was
    centred; ranged left the shortfall shows. An explicit 1fr is what actually
-   stretches them. (.hp-hero__actions has the same gap between its comment and
-   its behaviour, and is still centred enough to hide it.) */
+   stretches them. (.hp-hero__actions on the home page sets the same explicit
+   1fr for the same reason.) */
 @media (max-width: 599.98px) {
   .hero__actions {
     display: grid;
