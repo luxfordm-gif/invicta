@@ -71,6 +71,11 @@
   color: var(--on-dark);
   max-width: 26ch;
 }
+/* Same call as the service-page and home leads: at 24px over seven lines on a
+   phone, 1.18 read as a block (Matt, 14/10/26). */
+@media (max-width: 899.98px) {
+  .about-intro__lead { line-height: 1.32; }
+}
 .about-intro__body { margin-top: clamp(32px, 5vw, 64px); display: grid; gap: clamp(22px, 4vw, 64px); }
 @media (min-width: 800px) {
   .about-intro__body { grid-template-columns: 1fr 1fr; margin-left: auto; max-width: 920px; }
