@@ -2,9 +2,14 @@
     <section class="hero">
       <div class="container hero__inner">
         <p class="hero__eyebrow">Private Water Supplies</p>
+        {# INDEPENDENCE, NOT COST. The client's steer of 14/10/26: what a private
+           supply means "in times of hose pipe bans and dwindling resource". The
+           old line, "Stop paying for water you could own", sold the bill; this
+           sells being off the network the bans and boil notices happen on. Cost
+           is still argued, one step down, in the why-cards. #}
         <h1 class="hero__title">
-          Stop paying for water<br>
-          <span class="em">you could own.</span>
+          Your own water,<br>
+          <span class="em">whatever the mains is doing.</span>
         </h1>
         <div class="hero__scroll" aria-hidden="true">
           <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -14,13 +19,13 @@
 
         <div class="hero__lead">
           <p class="hero__lead-lg">
-            A private water supply puts your property on its own source. Reliable, high-quality
-            water, free of rising utility charges and unaffected by mains failures.
+            Hosepipe bans, boil-water notices and burst mains all happen on the public network.
+            A private supply takes your property off it, and the house and garden carry on as they were.
           </p>
           <p class="hero__lead-sm">
-            The catch: doing this properly is not a job for generalists. We only work on bespoke
-            systems, designed around your own water chemistry, installed by our own engineers rather
-            than subcontractors, and personally maintained for as long as you need us.
+            That only holds if the system is built for your source. Every one we install is designed
+            around your own water chemistry and fitted by our own engineers. We look after it for as
+            long as you need us.
           </p>
         </div>
 
@@ -60,6 +65,58 @@
     {% set clientsClass = "clients--airy" %}
     {% set clientsSurface = "section--paper" %}
     {% include "clients.njk" %}
+
+    <!-- ============ OWNING YOUR WATER (dark) ============
+      The client's steer of 14/10/26, in his words: "a real experience of having
+      your own water supply and what that means in times of hose pipe bans and
+      dwindling resource." Three threads, one row each: rationing, mains failure,
+      scarcity. Control sits under all three, and that is what the lead says.
+
+      RULED ROWS, NOT CARDS. The why-cards above are already three abreast, and a
+      second set of three cards would read as the same section twice. Question
+      left, answer right, a hairline between each, like a ledger of what changes
+      when the supply is yours.
+
+      NOTHING HERE SAYS "DROUGHT-PROOF". Groundwater falls in a long dry spell,
+      and the FAQ says so plainly. No water company or incident is named either:
+      the register is calm, and the point stands without a villain.
+    -->
+    <section class="section ownership" aria-labelledby="ownership-title">
+      <div class="container">
+
+        <h2 id="ownership-title" class="statement">
+          The water company's problems
+          <span class="em">stop at your boundary.</span>
+        </h2>
+
+        <p class="ownership__lead">On the mains, someone else decides when you can use water and
+          what goes into it. On your own supply, you do.</p>
+
+        <div class="ownership__rows">
+          <article class="ownership__row">
+            <h3 class="ownership__q">When the neighbours are on a hosepipe ban</h3>
+            <p class="ownership__a">A temporary use ban is a water company's restriction on its own
+              customers, and it does not reach a property drawing from its own borehole or spring.
+              The garden stays watered and the pool stays full through a dry August.</p>
+          </article>
+          <article class="ownership__row">
+            <h3 class="ownership__q">When the mains goes down</h3>
+            <p class="ownership__a">When a main bursts or a boil-water notice goes out, the water
+              company works through it street by street and everyone on the network waits. Your own
+              supply is treated and tested on site, so what comes out of your taps depends on your
+              plant and the engineers who look after it.</p>
+          </article>
+          <article class="ownership__row">
+            <h3 class="ownership__q">As water gets scarcer</h3>
+            <p class="ownership__a">Demand is rising, summers are getting drier and much of the
+              network is decades old, so expect restrictions to come round more often. A supply built
+              properly runs for 25 to 40 years with routine servicing, so a decision made now holds
+              for a generation.</p>
+          </article>
+        </div>
+
+      </div>
+    </section>
 
     <!-- ============ PROJECT BAND + SERVICES (the reveal pair) ============
       Same pairing as every other service page: the band pins inside the wrapper
@@ -308,69 +365,56 @@
            five-figure bespoke install it is what everyone wants next, and it
            used to be answered last, below five questions nobody had asked yet.
            The answer is a good one and it was doing no work down there: there
-           is no typical figure, and the quote is fixed-price after a survey. #}
+           is no typical figure, and the quote is fixed-price after a survey.
+
+           Hosepipe bans and drought come straight after cost: they are the two
+           questions the hero and the ownership rows raise. The drought answer is
+           the honest half of the independence pitch: a private supply is off the
+           network, not off the weather.
+
+           ONE LIST, TWO OUTPUTS. The accordion below and the FAQPage JSON-LD
+           after it are both drawn from `faqs`, so the answers a search engine
+           reads are always the ones on the page. Edit a question here and both
+           change. Plain text only: the JSON-LD takes the strings as they are. #}
+        {% set faqs = [
+          { q: "Do I need permission to install a borehole?",
+            a: "In most cases, no formal planning permission is required, though water abstraction over 20 cubic metres per day requires a licence from the Environment Agency. We handle the paperwork and liaison as part of any install where it's needed." },
+          { q: "What does a typical install cost?",
+            a: "Every install is bespoke, so there is no typical figure. Costs depend on source depth, water chemistry, storage requirements and property demand. We provide a fixed-price quote after a site survey." },
+          { q: "Does a hosepipe ban apply to a private water supply?",
+            a: "No. A temporary use ban is imposed by a water company on its own customers, so it does not cover water you draw from your own borehole or spring. If the property also has a mains connection, the ban still applies to anything you use from the mains." },
+          { q: "What happens to a borehole in a drought?",
+            a: "Groundwater levels drop in a long dry spell, and shallow wells and springs feel it first. We measure the yield at survey and size the storage to carry the property through peak summer demand. If a source looks marginal, we tell you before you commit to anything." },
+          { q: "How long does a borehole and treatment system last?",
+            a: "A properly designed and installed system will run for 25–40 years with routine maintenance. Filtration media and UV lamps are consumables replaced on a service schedule. The borehole itself, the pump housing, and the treatment vessels are all long-life." },
+          { q: "How often does the water need testing?",
+            a: "Annually as standard, though we recommend more frequent testing if your source water is known to be variable. All testing goes through a UKAS-accredited laboratory." },
+          { q: "What happens if something goes wrong outside working hours?",
+            a: "Existing service clients have direct access to our engineers on a 24-hour emergency line. In most cases we can get to site within four hours of the call." },
+          { q: "Can you take over servicing a system installed by someone else?",
+            a: "Yes, provided the system is safe to work on and we can access the plant. We start with a full inspection and water analysis, then propose any remedial work needed before taking on the ongoing service contract." }
+        ] %}
         <div class="faq__list">
+          {% for f in faqs %}
           <details class="faq__item">
             <summary class="faq__q">
-              Do I need permission to install a borehole?
+              {{ f.q }}
               <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
             </summary>
-            <p class="faq__a">In most cases, no formal planning permission is required, though water
-              abstraction over 20 cubic metres per day requires a licence from the Environment Agency.
-              We handle the paperwork and liaison as part of any install where it's needed.</p>
+            <p class="faq__a">{{ f.a }}</p>
           </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              What does a typical install cost?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">Every install is bespoke, so there is no typical figure. Costs depend on
-              source depth, water chemistry, storage requirements and property demand. We provide a
-              fixed-price quote after a site survey.</p>
-          </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              How long does a borehole and treatment system last?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">A properly designed and installed system will run for 25–40 years with
-              routine maintenance. Filtration media and UV lamps are consumables replaced on a service
-              schedule. The borehole itself, the pump housing, and the treatment vessels are all
-              long-life.</p>
-          </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              How often does the water need testing?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">Annually as standard, though we recommend more frequent testing if your
-              source water is known to be variable. All testing goes through a UKAS-accredited
-              laboratory.</p>
-          </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              What happens if something goes wrong outside working hours?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">Existing service clients have direct access to our engineers on a 24-hour
-              emergency line. In most cases we can get to site within four hours of the call.</p>
-          </details>
-
-          <details class="faq__item">
-            <summary class="faq__q">
-              Can you take over servicing a system installed by someone else?
-              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            </summary>
-            <p class="faq__a">Yes, provided the system is safe to work on and we can access the plant.
-              We start with a full inspection and water analysis, then propose any remedial work needed
-              before taking on the ongoing service contract.</p>
-          </details>
+          {% endfor %}
         </div>
       </div>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{% for f in faqs %}
+          { "@type": "Question", "name": {{ f.q | dump | safe }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | dump | safe }} } }{% if not loop.last %},{% endif %}{% endfor %}
+        ]
+      }
+      </script>
     </section>
 
     
