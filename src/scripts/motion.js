@@ -16,6 +16,7 @@
     ".acc",
     ".positioning__intro > *", ".sector",
     ".why-card",
+    ".ownership__lead", ".ownership__row",
     ".stat",
     ".clients__viewport",
     ".gallery__card",

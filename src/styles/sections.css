@@ -306,6 +306,39 @@
   }
 }
 
+/* --- Owning your water (dark): the independence rows on /private-water-supplies/ --
+   Statement and lead as the positioning section has them, then three ruled
+   rows: question left, answer right from the desktop breakpoint, stacked below
+   it. Rows rather than cards because the why-cards two screens up already make
+   the three-abreast shape on this page. The question takes the same step as
+   .sector h3 and .why-card__q; the answer is reading copy in the open, so it
+   takes --text-body at reading strength rather than the muted card size. --- */
+.ownership .statement { max-width: 26ch; }
+.ownership__lead {
+  margin-top: var(--flow-lead);
+  max-width: 40ch;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+}
+.ownership__rows { margin-top: var(--flow-lg); border-bottom: 1px solid var(--line-dark); }
+.ownership__row {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: clamp(24px, 3vw, 40px);
+  border-top: 1px solid var(--line-dark);
+}
+@media (min-width: 900px) {
+  .ownership__row {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(48px, 6vw, 120px);
+    align-items: baseline;
+  }
+}
+.ownership__q { font-size: clamp(21px, 1.8vw, 26px); letter-spacing: -0.02em; line-height: 1.15; color: var(--on-dark); }
+.ownership__a { font-size: var(--text-body); line-height: 1.55; color: var(--on-dark-soft); max-width: 52ch; }
+
 /* --- Positioning / sectors (dark) ----------------------------------------- */
 .positioning__intro {
   display: grid;

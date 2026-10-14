@@ -16,6 +16,7 @@
     .acc,
     .positioning__intro > *, .sector,
     .why-card,
+    .ownership__lead, .ownership__row,
     .stat,
     .clients__viewport,
     .gallery__card,
@@ -47,6 +48,8 @@
      first, so the row never feels like it is waiting on itself. */
   .why-card:nth-child(2) { --reveal-delay: 160ms; }
   .why-card:nth-child(3) { --reveal-delay: 320ms; }
+  .ownership__row:nth-child(2) { --reveal-delay: 90ms; }
+  .ownership__row:nth-child(3) { --reveal-delay: 180ms; }
 
   /* --- Footer wordmark: a larger, deliberate slide-up as you reach the bottom.
      Handled separately (not in the generic list) so it RISES rather than just
