@@ -39,8 +39,16 @@ extraStyles: ["gallery"]
     <!-- ===================== HERO (dark) ===================== -->
     <section class="hero gallery-hero">
       <div class="container hero__inner">
-        <p class="hero__eyebrow">Gallery</p>
-        {# WRITTEN TO THE COPYWRITING SKILL (coreyhaines31/marketingskills).
+        {# JUST THE HEADLINE (Matt, 14/10/26: "it looks really weird and
+           empty"). Once the lead line went, the hero still carried the eyebrow,
+           the scroll cue and the full hero padding built for four pieces of
+           content, so a 196px headline sat in 547px of navy. The eyebrow went
+           (the nav already marks Gallery as the current page), the scroll cue
+           went (the photographs now start on the first screen, so there is
+           nothing to point at), and the gap below matches the gap above
+           (.gallery-hero in gallery.css).
+
+           WRITTEN TO THE COPYWRITING SKILL (coreyhaines31/marketingskills).
 
            REWRITTEN 14/10/26 at Matt's request. He did not like "Done properly,
            borehole to tap, in our own photographs", or the lead's opening on
@@ -53,27 +61,17 @@ extraStyles: ["gallery"]
            on the page. Long-ish first beat, italic second, the cut every hero
            on this site uses.
 
-           LEAD. The one fact the old lead carried that the page needs, that
-           every photograph is Invicta's own work, plus how the page is laid out.
-           No pain line: the pictures are the argument. A CTA pair sat under
-           the lead for a while; the client took it out so the pictures start
-           higher, and the nav and footer carry the ask.
+           NO LEAD (Matt, 14/10/26). "Every photograph here is from a supply
+           we designed, installed or look after, shown job by job" sat under
+           the heading, and once the copy was that short it read as a stray
+           sentence. The eyebrow and the headline are the whole hero; the
+           pictures start straight after the scroll cue. A CTA pair sat here
+           for a while too; the client took it out, and the nav and footer
+           carry the ask.
 
            Self-check run: no contrast reveal, no negation list, no colon or
            question reveal, no trailing pile-on, no em dash, no exclamation. #}
         <h1 class="hero__title">The work,<br><span class="em">as we leave it.</span></h1>
-        <div class="hero__scroll" aria-hidden="true">
-          <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
-        </div>
-        {# COPY, per the copywriting skill the client pointed at (coreyhaines31/
-           marketingskills): one claim per sentence, specific over vague, no
-           fragments or triple lists doing the work of a sentence, and a CTA that
-           says what the visitor gets rather than "enquire". The count line that
-           used to sit here ("49 photographs from 15 jobs") is gone at the
-           client's request. #}
-        <div class="hero__lead">
-          <p class="hero__lead-lg">Every photograph here is from a supply we designed, installed or look after, shown job by job.</p>
-        </div>
       </div>
     </section>
 

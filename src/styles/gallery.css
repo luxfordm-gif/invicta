@@ -21,6 +21,14 @@
 
 /* --- Run ---------------------------------------------------------------- */
 .gallery { padding-top: 0; }
+/* The hero is the headline alone now, so it takes the same air below as above
+   it (--hero-y-top, which grows with the window's height), the rule the Contact
+   hero follows. The full hero bottom padding was sized for an eyebrow, a lead
+   and a scroll cue, and with none of them it read as an empty band. No top
+   margin on the title either: --flow-heading is the eyebrow-to-heading gap, and
+   there is no eyebrow. */
+.gallery-hero { padding-bottom: var(--hero-y-top); }
+.gallery-hero .hero__title { margin-top: 0; }
 .gallery-job + .gallery-job { margin-top: var(--section-y); }
 
 .gallery__card { margin: 0; height: 100%; }
