@@ -535,15 +535,24 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     gap: 8px;
     margin-top: var(--space-4);
   }
+  /* The button is a 24px target (WCAG 2.5.8; Lighthouse flagged the 7px
+     ones) and the mark is its ::before, so the dot itself stays 7px. */
   .dots__dot {
-    width: 7px; height: 7px; padding: 0;
-    border: 0; border-radius: 999px;
-    background: color-mix(in srgb, var(--fg) 24%, transparent);
+    display: grid; place-items: center;
+    width: 24px; height: 24px; padding: 0;
+    border: 0; background: none;
     cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dots__dot::before {
+    content: "";
+    width: 7px; height: 7px; border-radius: 999px;
+    background: color-mix(in srgb, var(--fg) 24%, transparent);
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
   }
-  .dots__dot.is-active { width: 22px; background: var(--fg); }
-  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .dots__dot.is-active { width: 36px; }
+  .dots__dot.is-active::before { width: 22px; background: var(--fg); }
+  .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 0; border-radius: 999px; }
 }
 
 /* --- Full-bleed project band --------------------------------------------- */

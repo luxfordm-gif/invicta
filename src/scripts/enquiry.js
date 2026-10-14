@@ -1,5 +1,8 @@
 /* enquiry.js — slide-out enquiry drawer. Opens from any "Send Enquiry" /
-   "Arrange a site visit" trigger (a[href="/enquiry/"] or [data-enquiry-open]). */
+   "Arrange a site visit" trigger (a[href="/contact/#enquiry"] or
+   [data-enquiry-open]). The href is the real form on /contact/, which is
+   where the link goes without JS (and what a crawler sees); with JS the
+   drawer opens in place. */
 (function () {
   "use strict";
 
@@ -77,7 +80,7 @@
   }
 
   // Triggers
-  [].forEach.call(document.querySelectorAll('a[href="/enquiry/"], [data-enquiry-open]'), function (el) {
+  [].forEach.call(document.querySelectorAll('a[href="/contact/#enquiry"], [data-enquiry-open]'), function (el) {
     el.addEventListener("click", open);
   });
 
