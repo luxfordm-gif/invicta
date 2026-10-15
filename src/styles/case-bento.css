@@ -354,45 +354,8 @@
 }
 
 /* --- Page control ---------------------------------------------------------
-   Only on the swipe track: on the desktop grid every card is already on screen,
-   so there is nothing to indicate. Built from currentColor so the same markup
-   works on the navy section and on the light one. */
-.bento__dots { display: none; }
-@media (max-width: 899.98px) {
-  .bento__dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin-top: 0;              /* the track already carries 30px below the cards */
-  }
-  /* iOS-style page control: the dots are circles and the CURRENT one stretches
-     into a capsule about two dots wide, rather than only changing tone. The
-     button is the 44px-tall tap target; the visible pill is the pseudo-element,
-     so growing it cannot disturb the tap area or the spacing of its neighbours.
-     (The sectors carousel already used this shape — the case tracks match it
-     now instead of each having their own indicator.) */
-  .bento__dot {
-    width: 24px;       /* exactly the 24px target (WCAG 2.5.8), so the dots sit as
-                          close as that allows; the mark itself stays 7px */
-    display: grid;
-    place-items: center;
-    height: 44px;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-  }
-  .bento__dot::before {
-    content: "";
-    display: block;
-    width: 7px; height: 7px;
-    border-radius: 999px;
-    background: currentColor;
-    opacity: 0.26;
-    transition: width 0.34s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-  }
-  .bento__dot.is-active::before { width: 17px; opacity: 1; }
-  .bento__dot:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 999px; }
-}
-@media (prefers-reduced-motion: reduce) { .bento__dot::before { transition: none; } }
+   Only on the swipe track (.dots--tablet hides it from 900px, where every card
+   is already on screen). The shared .dots component in components.css draws
+   it; all this sets is the spacing, because the track already carries 30px
+   below the cards. --- */
+.case-bento .dots { margin-top: 0; }

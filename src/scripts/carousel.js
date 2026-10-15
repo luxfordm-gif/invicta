@@ -40,27 +40,19 @@
       return best;
     }
 
-    // --- dots ---
-    var dots = [];
+    // --- dots (dots.js) ---
+    var dots = null;
     if (dotsWrap) {
-      items.forEach(function (_, i) {
-        var b = document.createElement("button");
-        b.type = "button";
-        b.className = sel.dotClass;
-        b.setAttribute("role", "tab");
-        b.setAttribute("aria-label", "Go to case study " + (i + 1));
-        b.addEventListener("click", function () { scrollToItem(i); });
-        dotsWrap.appendChild(b);
-        dots.push(b);
+      dots = window.pageDots(dotsWrap, items.length, {
+        label: sel.label,
+        noun: "Case study",
+        go: scrollToItem,
+        step: function (d) { step(d); }
       });
     }
 
     function setActive(i) {
-      dots.forEach(function (b, j) {
-        var on = j === i;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
-      });
+      if (dots) dots.set(i);
       // A looping carousel never disables its arrows: from the first slide,
       // "previous" goes round to the last, and from the last "next" to the
       // first (Matt, 14/10/26). Others stop at the ends as before.
@@ -115,8 +107,8 @@
     wire(root, {
       track: ".bento",
       item: ".bento__cell",
-      dots: ".bento__dots",
-      dotClass: "bento__dot",
+      dots: ".dots",
+      label: "Case studies",
       keyboard: false
     });
   });
@@ -126,8 +118,8 @@
     wire(root, {
       track: ".hp-cases__track",
       item: ".hp-case",
-      dots: ".hp-cases__dots",
-      dotClass: "hp-cases__dot",
+      dots: ".dots",
+      label: "Choose a case study",
       keyboard: true,
       loop: true,
       onChange: function (i) {

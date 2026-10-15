@@ -94,6 +94,6 @@
   {# One deferred bundle of the ten scripts, in their original order (jsBundle
      in .eleventy.js: minified, content-hashed). Each is its own IIFE and
      no-ops on a page without its markup, as they always did. #}
-  <script src="{{ ['nav', 'carousel', 'filmstrip', 'enquiry', 'forms', 'coverage-band', 'count-up', 'tooltip', 'hero-media', 'motion'] | jsBundle('site') }}" defer></script>
+  <script src="{{ ['dots', 'nav', 'carousel', 'filmstrip', 'enquiry', 'forms', 'coverage-band', 'count-up', 'tooltip', 'hero-media', 'motion'] | jsBundle('site') }}" defer></script>
 </body>
 </html>

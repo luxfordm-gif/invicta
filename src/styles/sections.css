@@ -543,8 +543,8 @@
   === */
 }
 
-/* Carousel pagination dots now live in components.css as .dots — shared by
-   the sectors band and the home page USPs. */
+/* Carousel pagination dots live in components.css as .dots — shared by every
+   carousel on the site and sized by the --dot-* tokens. */
 
 /* --- Clients / trust ------------------------------------------------------
    The four-name grid that stood here is gone, replaced by the logo marquee in

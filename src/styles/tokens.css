@@ -211,6 +211,17 @@
   --text-note: 15px;                        /* captions, notes, consent lines */
   --text-legal: 13px;                       /* the copyright line */
 
+  /* --- PAGE CONTROL (carousel dots: .dots in components.css, dots.js) ------
+     Every swipe carousel on the site draws its dots from these, so they cannot
+     drift apart again. Close together like the iOS page control: the row is ONE
+     control with a 44px-tall hit area, so the dots no longer have to be 24px
+     apart each to be tappable (WCAG 2.5.8 measures the row, not the dot). --- */
+  --dot-size: 7px;              /* an idle dot */
+  --dot-active: 17px;           /* the current one stretches into a capsule */
+  --dot-gap: 7px;               /* space between marks: a dot's width, so the row reads as one object */
+  --dot-idle-opacity: 0.26;     /* idle dots are the active colour at this strength */
+  --dot-row-h: 44px;            /* height of the tap area around the marks */
+
   /* --- Sticky utility bar height (nav offsets below it) --- */
   --ubar-h: 44px;               /* desktop emergency bar height (nav sticks below this) */
   --nav-h: 87px;                /* desktop nav height incl. divider (breadcrumb sticks below ubar + this).
