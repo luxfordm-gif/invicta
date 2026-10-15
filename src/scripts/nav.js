@@ -156,9 +156,9 @@
 
 /* --- Swipe carousels: build pagination dots + keep them in sync -------------
    On phones certain grids become horizontal scroll-snap tracks. Add a row of
-   dots beneath one: tap a dot to jump to that card, and the active dot follows
-   whichever card is snapped into view. The dots are hidden by CSS above phone
-   width, so building them everywhere is harmless.
+   dots beneath one (built by dots.js): tap the row to jump to a card, and the
+   active dot follows whichever card is snapped into view. The dots are hidden
+   by CSS above phone width, so building them everywhere is harmless.
 
    Written once for a list of tracks rather than once per track: the sectors
    band did this first, the home page's three USPs now do the same thing, and a
@@ -184,40 +184,26 @@
     var cards = [].slice.call(track.querySelectorAll(cfg.card));
     if (cards.length < 2) return;
 
-    var dots = document.createElement("div");
-    dots.className = "dots";
-    dots.setAttribute("role", "tablist");
-    dots.setAttribute("aria-label", cfg.label);
+    // The row only shows below 600px (.dots--phone), where these grids are
+    // swipe tracks; above that every card is already on screen.
+    var row = document.createElement("div");
+    row.className = "dots dots--phone";
+    track.parentNode.insertBefore(row, track.nextSibling);
 
-    var buttons = cards.map(function (card, i) {
-      var b = document.createElement("button");
-      b.setAttribute("role", "tab");   // a tablist's children must be tabs; also what lets aria-selected apply
-      b.type = "button";
-      b.className = "dots__dot";
-      b.setAttribute("aria-label", "Go to slide " + (i + 1));
-      b.addEventListener("click", function () {
+    var ctl = window.pageDots(row, cards.length, {
+      label: cfg.label,
+      noun: "Slide",
+      go: function (i) {
         // inline:start aligns the card to the track's start; block:nearest keeps
         // the page from jumping vertically.
-        card.scrollIntoView({
+        cards[i].scrollIntoView({
           behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
           inline: "start",
           block: "nearest"
         });
-      });
-      dots.appendChild(b);
-      return b;
+      }
     });
-
-    track.parentNode.insertBefore(dots, track.nextSibling);
-
-    function setActive(i) {
-      buttons.forEach(function (b, j) {
-        var on = j === i;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
-      });
-    }
-    setActive(0);
+    var setActive = ctl.set;
 
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (entries) {

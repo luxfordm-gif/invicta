@@ -681,35 +681,10 @@ p.hp-stat__figure {
   .hp-cases__arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
 }
 
-.hp-cases__dots {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-3);
-  color: var(--ink);
-}
-.hp-cases__dot {
-  display: grid;
-  place-items: center;
-  min-width: 28px;   /* a 24px target at least (WCAG 2.5.8); the mark itself stays 7px */
-  height: 44px;
-  padding-inline: 5px;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-.hp-cases__dot::before {
-  content: "";
-  display: block;
-  width: 7px; height: 7px;
-  border-radius: 999px;
-  background: currentColor;
-  opacity: 0.26;
-  transition: width 0.34s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-}
-.hp-cases__dot.is-active::before { width: 17px; opacity: 1; }
-.hp-cases__dot:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 999px; }
+/* The dots under the case studies are the shared .dots component
+   (components.css), drawn in --fg like every other carousel's. */
 @media (prefers-reduced-motion: reduce) {
-  .hp-cases__dot::before, .hp-cases__arrow { transition: none; }
+  .hp-cases__arrow { transition: none; }
 }
 
 /* Phone: a little of the next photograph shows at the edge, so it reads as
