@@ -690,9 +690,10 @@ p.hp-stat__figure {
 .hp-cases__dot {
   display: grid;
   place-items: center;
-  min-width: 28px;   /* a 24px target at least (WCAG 2.5.8); the mark itself stays 7px */
+  width: 24px;       /* exactly the 24px target (WCAG 2.5.8), so the dots sit as
+                        close as that allows; the mark itself stays 7px */
   height: 44px;
-  padding-inline: 5px;
+  padding: 0;
   border: 0;
   background: none;
   cursor: pointer;

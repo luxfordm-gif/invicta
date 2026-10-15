@@ -532,7 +532,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
 @media (max-width: 599.98px) {
   .dots {
     display: flex; justify-content: center; align-items: center;
-    gap: 8px;
+    gap: 0;             /* the 24px buttons already space them; any gap reads as gappy */
     margin-top: var(--space-4);
   }
   /* The button is a 24px target (WCAG 2.5.8; Lighthouse flagged the 7px
@@ -550,7 +550,7 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
     background: color-mix(in srgb, var(--fg) 24%, transparent);
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
   }
-  .dots__dot.is-active { width: 36px; }
+  .dots__dot.is-active { width: 30px; }
   .dots__dot.is-active::before { width: 22px; background: var(--fg); }
   .dots__dot:focus-visible { outline: 2px solid var(--fg); outline-offset: 0; border-radius: 999px; }
 }
