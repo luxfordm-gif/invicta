@@ -44,11 +44,10 @@
       </div>
     </section>
 
-    <!-- ============ WHY IT MATTERS (dark) ============
-      Rides off the hero on the same navy, under a divider, so the page answers
-      "why would I want this" before it shows a photograph. See service-why.njk.
-    -->
-{% include "service-why.njk" %}
+    {# The why-cards used to ride off the hero here, so a phone read a hero and
+       three cards of copy before its first photograph (Matt, 20/10/26). They
+       now sit lower, directly above "what's involved": the photographic band
+       comes first and the argument arrives once the reader is in. #}
 
     <!-- ============ TRUST: THE LOGOS, EARLY ============
       A reader's question after "what is this" is "who else trusts you", and on
@@ -57,11 +56,9 @@
       band, at position NINE of ten, below the FAQ and the Explore list, where
       a reader who needed convincing had already gone.
 
-      Same slot as /private-water-supplies/: straight after the why-cards,
-      before the photographic band. It cannot go between the hero and the
-      why-cards, which share the navy deliberately and whose spacing depends on
-      `.hero:has(+ .service-why)`; the marks are dark ink at 72% and need the
-      pale ground anyway. One clientsId for all three, since a page only ever
+      Same slot as /private-water-supplies/: straight after the hero, before
+      the photographic band. The marks are dark ink at 72% and need the pale
+      ground, which the hero's navy is not. One clientsId for all three, since a page only ever
       shows the band once.
     -->
     {% set clientsId = "service-clients" %}
@@ -100,6 +97,13 @@
     </section>
     {% endif %}
     </div><!-- /.reveal -->
+
+    <!-- ============ WHY IT MATTERS (dark), NOW BELOW THE PHOTO BAND ============
+      Opens on the navy straight after the light intro, so it needs no hairline
+      of its own; it carries one at its foot instead, to part it from "what's
+      involved", which is navy too. See service-why.njk (whyLate). -->
+{% set whyLate = true %}
+{% include "service-why.njk" %}
 
     <!-- ===================== WHAT'S INVOLVED (dark) ===================== -->
     {% if points %}

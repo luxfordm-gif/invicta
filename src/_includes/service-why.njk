@@ -60,9 +60,9 @@
 {% endmacro %}
 
 {% if why %}
-    <section class="section service-why" aria-labelledby="why-title">
+    <section class="section service-why{% if whyLate %} service-why--late{% endif %}" aria-labelledby="why-title">
       <div class="container">
-        <div class="rule service-why__rule"></div>
+        {% if not whyLate %}<div class="rule service-why__rule"></div>{% endif %}
         <h2 id="why-title" class="service-why__title">{{ whyTitle | safe }}</h2>
 
         <ul class="why-cards" role="list">
@@ -74,6 +74,7 @@
           </li>
           {% endfor %}
         </ul>
+        {% if whyLate %}<div class="rule service-why__rule service-why__rule--foot"></div>{% endif %}
       </div>
     </section>
 {% endif %}

@@ -988,3 +988,15 @@
    it was the value that was wrong, and that is fixed at the token (see
    --section-y-join in tokens.css) for every pair on the site, not just this one.
 */
+
+/* WHY, LOWER DOWN (Matt, 20/10/26: too much copy before the first big
+   picture, on a phone above all). On the generic service pages the cards now
+   follow the light intro, so they open on a colour change and keep their
+   ordinary top padding; the hairline moves to the foot, parting them from
+   "what's involved", which is navy as well. The foot rule sits centred in its
+   gap: no section padding under the cards, and the same step above the rule
+   that the next section puts below it (the heading sits a little under
+   its section padding, hence the 1.2). */
+.service-why--late { padding-top: var(--section-y); padding-bottom: 0; }
+.service-why--late .service-why__title { margin-top: 0; }
+.service-why__rule--foot { margin-top: calc(var(--section-y) * 1.2); }
