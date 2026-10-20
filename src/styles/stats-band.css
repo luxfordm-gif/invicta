@@ -127,7 +127,8 @@
     --parallax-travel: 0%;
     --parallax-scale: 1;
     --parallax-offset: 0%;
-    object-position: center 40%;   /* the subjects all sit low in these frames */
+    /* --stat-x is set per stat in site.json (focusX) for a subject that is off-centre. */
+    object-position: var(--stat-x, center) 40%;   /* the subjects all sit low in these frames */
   }
 
   /* Scrim: clear at the top so the picture is a picture, heavy at the foot

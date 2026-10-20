@@ -499,9 +499,15 @@
   .sector__media img,
   .sector__media .img-ph {
     position: absolute; inset: 0;
-    width: 100%; height: 145%;      /* zoom + top-align drops each subject clear of the header */
+    width: 100%; height: 100%;
     aspect-ratio: auto;
-    object-fit: cover; object-position: center top;
+    /* The photographs are 3:2 landscapes in a 5:8 tile, so only about 40% of the
+       width shows; --sector-x (set per image in pws-flagship.njk) picks which
+       40%. It was a 145%-tall zoom, top-aligned, which showed a ~29% strip of
+       the top-left corner (brickwork, cladding) under the frosted header. Now
+       the picture is the card's own height and sits to the BOTTOM, where the
+       subjects are, clear of the header (Matt, 20/10/26). */
+    object-fit: cover; object-position: var(--sector-x, center) bottom;
     border-radius: 0;
   }
   /* Frosted gradient header behind the text. Its OWN top corners are rounded to
