@@ -639,6 +639,19 @@ p.hp-stat__figure {
 }
 .hp-case__link { margin-top: var(--space-5); }
 
+/* PHONE: EVEN CARDS (Matt, 20/10/26). Stacked, each slide ran as tall as its own
+   copy, so the buttons landed at a different height on every swipe and the
+   track took the tallest slide's height. The blurb already tells the story and
+   the highlight only restates it, so it goes below 600px (it stays in the
+   markup), and the button is pinned to the foot of a copy block that fills the
+   slide, so every card ends in the same place. */
+@media (max-width: 599.98px) {
+  .hp-case__more { display: none; }
+  .hp-case { grid-template-rows: auto 1fr; }
+  .hp-case__copy { display: flex; flex-direction: column; }
+  .hp-case__link { margin-top: auto; padding-top: var(--space-5); }
+}
+
 /* The arrows. Hidden below 900px, where the track is a swipe with dots.
 
    LONG, THIN LINE ARROWS IN THE SIDE MARGINS (Matt's mock-up, 14/10/26):
