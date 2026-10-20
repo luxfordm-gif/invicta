@@ -58,7 +58,7 @@
         {# The frame that clips has to hug the picture, and .stat__media carries
            padding-top above it, so the parallax sits on an inner wrapper. #}
         <div class="parallax">
-          <img src="{{ s.image }}" alt="{{ s.alt }}" width="1536" height="1024" loading="lazy" decoding="async">
+          <img src="{{ s.image }}" alt="{{ s.alt }}"{% if s.focusX %} style="--stat-x: {{ s.focusX }}"{% endif %} width="1536" height="1024" loading="lazy" decoding="async">
         </div>
       </div>
       {% endif %}
