@@ -629,9 +629,6 @@ html.header-up .nav { transform: translateY(calc(-100% - var(--ubar-h))); }
   position: relative;
   z-index: 1;
 }
-/* Dark sections draw nothing and show the body's navy; as the covering section
-   this one has to be opaque or the pinned photograph shows through. */
-.reveal > .ownership { background: var(--ground); }
 /* No scroll to travel, no reveal: hold the picture at a fixed height so a short
    window gets a plain band rather than one that pins and never moves. */
 @media (max-height: 520px) {
