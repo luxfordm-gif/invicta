@@ -68,11 +68,11 @@ hideFooterCta: true
       base.njk owns <head> and is shared by every page. JSON-LD is valid and
       indexed anywhere in the document, so the placement costs nothing.
 
-      FOLLOW-UP: base.njk already emits a minimal LocalBusiness on every page.
-      Both nodes describe the same business, so give that one the same @id as
-      the node below and the two merge into one instead of reading as two
-      businesses at one address. That edit belongs to a shared-layout task,
-      not to this page.
+      ONE BUSINESS, NOT TWO: base.njk emits a minimal LocalBusiness on every page
+      with @id /#business, and the LocalBusiness node below uses the same @id,
+      so a crawler merges them into one entity (this adds the price range and
+      the parent organisation) instead of reading two businesses at one
+      address. Service pages point at /#business too.
     #}
     <script type="application/ld+json">
     {
@@ -98,7 +98,7 @@ hideFooterCta: true
         },
         {
           "@type": "LocalBusiness",
-          "@id": "{{ site.url }}/#localbusiness",
+          "@id": "{{ site.url }}/#business",
           "parentOrganization": { "@id": "{{ site.url }}/#organization" },
           "name": "{{ site.name }}",
           "url": "{{ site.url }}/",
