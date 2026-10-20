@@ -41,12 +41,6 @@
       </div>
     </section>
 
-    <!-- ============ WHY IT MATTERS (dark) ============
-      Rides off the hero on the same navy, under a divider, so the page answers
-      "why would I want this" before it shows a photograph. See service-why.njk.
-    -->
-{% include "service-why.njk" %}
-
     <!-- ============ TRUST: THE LOGOS, EARLY ============
       A B2B reader's first question after "what is this" is "who else trusts
       you", and until now the answer was seven screens down, below the sectors.
@@ -65,6 +59,15 @@
     {% set clientsClass = "clients--airy" %}
     {% set clientsSurface = "section--paper" %}
     {% include "clients.njk" %}
+
+    <!-- ============ PROJECT BAND + OWNING YOUR WATER (the reveal pair) ============
+      The photograph comes straight after the logos (Matt, 20/10/26), as on every
+      other service page. "Owning your water" is the section that climbs over it;
+      it draws no surface of its own, so .reveal > .ownership gives it the ground.
+      See service-band.njk.
+    -->
+    <div class="reveal">
+{% include "service-band.njk" %}
 
     <!-- ============ OWNING YOUR WATER (dark) ============
       The client's steer of 14/10/26, in his words: "a real experience of having
@@ -113,13 +116,7 @@
 
       </div>
     </section>
-
-    <!-- ============ PROJECT BAND + SERVICES (the reveal pair) ============
-      Same pairing as every other service page: the band pins inside the wrapper
-      and the light section climbs over it. See service-band.njk.
-    -->
-    <div class="reveal">
-{% include "service-band.njk" %}
+    </div><!-- /.reveal -->
 
     <!-- ===================== SERVICES (light) ===================== -->
     <section class="section section--paper services" aria-labelledby="services-title">
@@ -245,7 +242,6 @@
         </div>
       </div>
     </section>
-    </div><!-- /.reveal -->
 
     <!-- ===================== POSITIONING (dark) =====================
       NOT the retired "Sectors". The client asked for sectors removed from the
