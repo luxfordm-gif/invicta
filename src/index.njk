@@ -375,16 +375,25 @@ hideFooterCta: true
     } %}
     {% set cowdray = {
       id: "cowdray",
-      title: "Cowdray Estate, <span class='em'>a private supply serving multiple properties.</span>",
+      title: "Cowdray Estate, <span class='em'>one supply serving many properties.</span>",
       location: "Midhurst, West Sussex",
       services: ["private-water-supplies"],
       body: ["Cowdray needed a reliable, high-volume private supply serving multiple properties and estate operations. We surveyed two potential borehole sites, specified the higher-yield source, and installed a treatment system built around iron and manganese reduction, pH correction to stop the water corroding pipework, and UV sterilisation."],
       highlight: "Running continuously since 2023, and passing UKAS-accredited testing every year.",
-      blurb: "A high-volume private supply for several properties and the estate's own operations.",
+      blurb: "A high-volume supply for several properties and estate operations.",
       image: "/assets/img-9257.webp",
       imageAlt: "A red brick water tower beside a barn with solar panels, with an Invicta van on the drive."
     } %}
-    {% set slides = [cowdray].concat(caseStudies) %}
+    {# GROUPED BY SERVICE, in the order we want them read (Matt, 20/10/26):
+       private supplies first as the main service, servicing next, then design
+       and install, then water hygiene. Each group keeps the file's order, and
+       Cowdray still opens. Sorted here so the service pages, which read the same
+       file, keep their own order. #}
+    {% set pool = [cowdray].concat(caseStudies) %}
+    {% set slides = [] %}
+    {% for svc in ["private-water-supplies", "servicing", "design-install", "water-hygiene"] %}
+      {% for c in pool %}{% if c.services[0] == svc %}{% set _ = slides.push(c) %}{% endif %}{% endfor %}
+    {% endfor %}
     <section class="section section--paper hp-work" id="selected-work" aria-labelledby="hp-work-title">
       <div class="container">
         <div class="hp-work__head">
@@ -430,9 +439,9 @@ hideFooterCta: true
                 {# The problem, then what we did about it, at body size (Matt,
                    14/10/26: "a simple font with a bit more body copy, but the
                    body copy in a smaller size"). #}
-                <p class="hp-case__body">{{ c.blurb }}{% if c.highlight %} {{ c.highlight }}{% endif %}</p>
+                <p class="hp-case__body">{{ c.blurb }}{% if c.highlight %} <span class="hp-case__more">{{ c.highlight }}</span>{% endif %}</p>
                 <p class="hp-case__link">
-                  <a class="btn-line" href="/services/{{ svc }}/">More on {{ serviceNames[svc] | lower }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
+                  <a class="btn-line" href="/services/{{ svc }}/">{{ serviceNames[svc] }} <span class="btn-line__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></a>
                 </p>
               </div>
             </article>
