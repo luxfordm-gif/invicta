@@ -116,10 +116,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* A little less below than above, as in the build Matt preferred: the
-     type sits slightly high, and a slice of the photo strip still reaches
-     the first screen on a 1366x768 laptop. */
-  padding-bottom: calc(var(--hp-hero-air) * 0.8);
+  /* The same air below as above (Matt, 20/10/26: the type read as sitting
+     high, the gap under the buttons was shorter than the one over the
+     kicker). It was 80% of the top; the first-screen sliver of photo on a
+     small laptop is the price. */
+  padding-bottom: var(--hp-hero-air);
 }
 /* A plain line, not an eyebrow: sentence case, regular weight, soft. */
 .hp-hero__kicker {
