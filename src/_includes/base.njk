@@ -7,12 +7,11 @@
 
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
-  {# LAUNCH SWITCH: site.indexable in _data/site.json. While it is false the
-     whole site is hidden from search engines (it is still only on the
-     netlify.app preview URL). Once www.invictawatertreatment.co.uk points at
-     Netlify, set it to true: every page becomes indexable except those that
-     opt out with robots: "noindex" (thank-you, and the 404 via
-     coming-soon.njk), and robots.txt opens up and lists the sitemap. #}
+  {# LAUNCH SWITCH: site.indexable in _data/site.json. Live as of 20 Oct 2026
+     (true): every page is indexable except those that opt out with
+     robots: "noindex" (thank-you, and the 404 via coming-soon.njk), and
+     robots.txt opens up and lists the sitemap. Set it to false to hide the
+     whole site from search engines again. #}
   {% if not site.indexable %}<meta name="robots" content="noindex, nofollow">
   {% elif robots %}<meta name="robots" content="{{ robots }}">{% endif %}
 
