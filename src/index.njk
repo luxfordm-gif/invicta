@@ -384,7 +384,16 @@ hideFooterCta: true
       image: "/assets/img-9257.webp",
       imageAlt: "A red brick water tower beside a barn with solar panels, with an Invicta van on the drive."
     } %}
-    {% set slides = [cowdray].concat(caseStudies) %}
+    {# GROUPED BY SERVICE, in the order we want them read (Matt, 20/10/26):
+       private supplies first as the main service, servicing next, then design
+       and install, then water hygiene. Each group keeps the file's order, and
+       Cowdray still opens. Sorted here so the service pages, which read the same
+       file, keep their own order. #}
+    {% set pool = [cowdray].concat(caseStudies) %}
+    {% set slides = [] %}
+    {% for svc in ["private-water-supplies", "servicing", "design-install", "water-hygiene"] %}
+      {% for c in pool %}{% if c.services[0] == svc %}{% set _ = slides.push(c) %}{% endif %}{% endfor %}
+    {% endfor %}
     <section class="section section--paper hp-work" id="selected-work" aria-labelledby="hp-work-title">
       <div class="container">
         <div class="hp-work__head">
