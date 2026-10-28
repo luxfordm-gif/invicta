@@ -151,6 +151,20 @@ module.exports = async function (eleventyConfig) {
       .resize(180, 180)
       .png()
       .toFile(path.join(OUTPUT_DIR, "apple-touch-icon.png"));
+
+    /* Browsers and crawlers still ask for /favicon.ico whatever the <link>
+       says, and Netlify logged those as 404s. A 32px PNG wrapped in a
+       one-image ICO header, which every browser accepts. */
+    const png = await sharp("src/assets/favicon.svg", { density: 384 }).resize(32, 32).png().toBuffer();
+    const head = Buffer.alloc(22);
+    head.writeUInt16LE(1, 2);            // type: icon
+    head.writeUInt16LE(1, 4);            // one image
+    head[6] = 32; head[7] = 32;          // width, height
+    head.writeUInt16LE(1, 10);           // colour planes
+    head.writeUInt16LE(32, 12);          // bits per pixel
+    head.writeUInt32LE(png.length, 14);  // image size
+    head.writeUInt32LE(22, 18);          // image offset
+    fs.writeFileSync(path.join(OUTPUT_DIR, "favicon.ico"), Buffer.concat([head, png]));
   });
 
   /* The old `v` filter (a ?v=<hash> cache-bust on each stylesheet and
