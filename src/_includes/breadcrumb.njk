@@ -17,7 +17,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" }{% for c in breadcrumb %},
-        { "@type": "ListItem", "position": {{ loop.index + 1 }}, "name": "{{ c.title }}"{% if c.href %}, "item": "{{ site.url }}{{ c.href }}"{% endif %} }{% endfor %}
+        { "@type": "ListItem", "position": {{ loop.index + 1 }}, "name": "{{ c.title }}"{% if loop.last %}, "item": "{{ site.url }}{{ page.url }}"{% else %}, "item": "{{ site.url }}{{ c.href }}"{% endif %} }{% endfor %}
       ]
     }
     </script>
